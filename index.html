@@ -50,6 +50,25 @@
   nav.steps button[data-done="true"]::after{content:"✓";margin-left:6px;color:var(--ok)}
   /* Completed step glow */
     nav.steps button[data-done="true"]{ border-color:#3a2a12; box-shadow: 0 0 0 2px rgba(255,200,71,0.15), inset 0 0 14px rgba(255,200,71,0.18); }
+  /* Responsive enhancements */
+    nav.steps{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;padding-bottom:6px;margin-bottom:4px}
+    nav.steps button{flex:0 0 auto;scroll-snap-align:start}
+    .btn{min-height:44px}
+    .wrap{padding:24px 24px calc(24px + env(safe-area-inset-bottom))}
+    @media (max-width:900px){.page{min-height:unset}.ribbon{right:12px;font-size:12px}.brand h1{font-size:clamp(18px,5vw,24px)}}
+    @media (max-width:600px){.wrap{padding:16px 12px calc(16px + env(safe-area-inset-bottom))}.btn{font-size:13px;padding:10px 12px}nav.steps{gap:6px}}
+    @media (prefers-reduced-motion: reduce){.spread{transition:none!important}.jar .drip{animation:none!important}}
+  /* Scroll hint + sticky bar */
+    .scrollhint{display:none;font-size:12px;opacity:.85;padding:6px 8px;border:1px dashed #3a2a12;border-radius:10px;color:var(--ink);transition:opacity .6s ease}
+    @media (max-width:900px){.scrollhint{display:inline-block}}
+    .stickybar{position:fixed;left:0;right:0;bottom:0;z-index:999;display:flex;gap:8px;justify-content:space-between;align-items:center;padding:12px calc(16px + env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));background:rgba(17,15,13,.82);backdrop-filter:blur(6px);border-top:1px solid #1a1816}
+    .stickybar .btn{flex:1}
+    @media (min-width:900px){.stickybar{display:none}}
+    @media print{.stickybar{display:none!important}}
+  /* Honey Sparkles (celebration) */
+    .sparkles{position:fixed;inset:0;pointer-events:none;z-index:2000;overflow:hidden}
+    .sparkles .sparkle{position:absolute;border-radius:50%;background:radial-gradient(circle, rgba(255,200,71,1) 0%, rgba(255,179,0,.85) 60%, rgba(255,200,71,0) 70%);width:10px;height:10px;opacity:0;animation:pop 1.2s ease-out forwards;filter:blur(.3px)}
+    @keyframes pop{0%{opacity:0;transform:translate(0,0) scale(.2)}10%{opacity:1}100%{opacity:0;transform:translate(var(--dx,0),var(--dy,0)) scale(1.2)}}
   </style>
 </head>
 <body>
@@ -63,6 +82,7 @@
         </div>
       </div>
       <nav aria-label="Spreads" class="steps" id="steps"></nav>
+      <span class="scrollhint" id="scrollhint">Scroll ▸</span>
       <a class="btn" href="https://tunes.plnt.earth" target="_blank" rel="noopener">Tunes</a>
       <button class="btn" id="jarToggle">Jar Mode: On</button>
     </header>
@@ -97,6 +117,11 @@
 
   <canvas id="posterCanvas" width="800" height="1000" style="display:none"></canvas>
 
+  <div class="stickybar" id="stickybar">
+    <button class="btn" id="sPrev">◀ Prev</button>
+    <button class="btn" id="sNext">Next ▶</button>
+  </div>
+
   <script>
     // --- Data: 8 spreads (incl. cyclic 142857) ----------------------------
     const spreads=[
@@ -105,7 +130,7 @@
       {id:3,title:'Moon Fractal',left:`<h2>Left · Puzzle</h2><div class="equation">1 / 42</div><p>Compute the decimal; find the repeating block.</p><div class="gridpaper"><p>0.<b>023809</b> 523809…</p></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Trace a honey circle; mark 42 points.</p></div><h3>Reflections</h3><textarea></textarea>`},
       {id:4,title:'Seed of Infinity',left:`<h2>Left · Puzzle</h2><div class="equation">(1 + 1/n)^n → e</div><p>Evaluate for n=7,14,42 and compare to e.</p><div class="gridpaper"><p>Approaches ~2.71828…</p></div><button class="btn" onclick="alert('(1+1/7)^7 ≈ '+(Math.pow(1+1/7,7)).toFixed(6)+'\n(1+1/14)^14 ≈ '+(Math.pow(1+1/14,14)).toFixed(6)+'\n(1+1/42)^42 ≈ '+(Math.pow(1+1/42,42)).toFixed(6))">Quick calc</button>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Chew one seed with honey; sense expansion toward <i>e</i>.</p></div><h3>Reflections</h3><textarea></textarea>`},
       {id:5,title:'Harmony Pair',left:`<h2>Left · Puzzle</h2><div class="equation">Fibonacci → φ</div><p>Generate up to 21 and compute ratios.</p><div class="gridpaper"><p>→ 1.618…</p></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Two drops of honey; notice balance.</p></div><h3>Reflections</h3><textarea></textarea>`},
-      {id:6,title:'Sun & Moon Cross',left:`<h2>Left · Puzzle</h2><div class="equation">sin(x) + cos(x)</div><p>Scrub phase to observe interference.</p><div class="canvasWrap"><input id="s6-phase" type="range" min="0" max="6.283" step="0.005" value="0" /><canvas id="s6-canvas" width="640" height="240"></canvas></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Taste honey, then hum a note for 10s. Feel the sum wave.</p></div><h3>Reflections</h3><textarea></textarea>`,mount:(root)=>{const cvs=root.querySelector('#s6-canvas');const phase=root.querySelector('#s6-phase');if(!cvs||!phase)return;const ctx=cvs.getContext('2d');const draw=()=>{const w=cvs.width,h=cvs.height,mid=h/2;ctx.clearRect(0,0,w,h);ctx.globalAlpha=.2;ctx.strokeStyle='#2a2622';for(let x=0;x<w;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}for(let y=0;y<h;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}ctx.globalAlpha=1;ctx.strokeStyle='#403830';ctx.beginPath();ctx.moveTo(0,mid);ctx.lineTo(w,mid);ctx.stroke();const k=(Math.PI*2)/w*40;const ph=parseFloat(phase.value||'0');const plot=(fn,color)=>{ctx.beginPath();for(let x=0;x<w;x++){const y=mid-fn(x)*80;if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.strokeStyle=color;ctx.stroke();};plot(x=>Math.sin(k*x+ph),'#ffcc66');plot(x=>Math.cos(k*x+ph),'#b08968');plot(x=>Math.sin(k*x+ph)+Math.cos(k*x+ph),'#7bd88f');};draw();phase.addEventListener('input',draw);}},
+      {id:6,title:'Sun & Moon Cross',left:`<h2>Left · Puzzle</h2><div class=\"equation\">sin(x) + cos(x)</div><p>Scrub phase to observe interference.</p><div class=\"canvasWrap\"><input id=\"s6-phase\" type=\"range\" min=\"0\" max=\"6.283\" step=\"0.005\" value=\"0\" /><canvas id=\"s6-canvas\" width=\"640\" height=\"240\"></canvas></div>`,right:`<h2>Right · Honey Ritual</h2><div class=\"callout\"><p>Taste honey, then hum a note for 10s. Feel the sum wave.</p></div><h3>Reflections</h3><textarea></textarea>`,mount:(root)=>{const cvs=root.querySelector('#s6-canvas');const phase=root.querySelector('#s6-phase');if(!cvs||!phase) return;const ctx=cvs.getContext('2d');const DPR=()=>Math.max(1,window.devicePixelRatio||1);function draw(){const dpr=DPR();const w=cvs.width/dpr,h=cvs.height/dpr,mid=h/2;ctx.save();ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);ctx.globalAlpha=.2;ctx.strokeStyle='#2a2622';const gx=Math.max(24,w/16),gy=Math.max(24,h/6);for(let x=0;x<w;x+=gx){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}for(let y=0;y<h;y+=gy){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}ctx.globalAlpha=1;ctx.strokeStyle='#403830';ctx.beginPath();ctx.moveTo(0,mid);ctx.lineTo(w,mid);ctx.stroke();const k=(Math.PI*2)/w*40;const ph=parseFloat(phase.value||'0');const plot=(fn,color)=>{ctx.beginPath();for(let x=0;x<w;x++){const y=mid-fn(x)*(h*0.33);if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.strokeStyle=color;ctx.stroke();};plot(x=>Math.sin(k*x+ph),'#ffcc66');plot(x=>Math.cos(k*x+ph),'#b08968');plot(x=>Math.sin(k*x+ph)+Math.cos(k*x+ph),'#7bd88f');ctx.restore();}function resize(){const wrap=root.querySelector('.canvasWrap');const wCSS=Math.max(300,wrap.clientWidth);const hCSS=Math.round(wCSS*0.375);const dpr=DPR();cvs.style.width=wCSS+'px';cvs.style.height=hCSS+'px';cvs.width=Math.floor(wCSS*dpr);cvs.height=Math.floor(hCSS*dpr);draw();}resize();phase.addEventListener('input',draw);window.addEventListener('resize',resize);}},
       {id:7,title:'Honey Proof',left:`<h2>Left · Puzzle</h2><div class="equation">Your Signature Equation</div><p>Lay out your proof in steps.</p><div class="gridpaper"><textarea id="s7-proof" placeholder="1) ...\n2) ...\nTherefore ..."></textarea></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Stir honey into warm tea. Read your steps aloud.</p></div><h3>Reflections</h3><textarea></textarea>`},
       {id:8,title:'Cyclic Honey',
     left:`<h2>Left · Puzzle</h2>
@@ -131,7 +156,9 @@
     const state=JSON.parse(localStorage.getItem('eoh_nb_state')||'{}');
     if(typeof state.page!== 'number') state.page=1;
     if(typeof state.completions!== 'object' || !state.completions) state.completions = {};
+    if(typeof state.celebrated !== 'boolean') state.celebrated = false;
     function save(){ localStorage.setItem('eoh_nb_state', JSON.stringify(state)); }
+    function hapticTap(){ try{ if(navigator.vibrate){ navigator.vibrate(10); return; } const AC = window.AudioContext || window.webkitAudioContext; if(!AC) return; if(!window.__hBuzzCtx) window.__hBuzzCtx = new AC(); const ctx = window.__hBuzzCtx; const o = ctx.createOscillator(), g = ctx.createGain(); o.type='square'; o.frequency.setValueAtTime(120, ctx.currentTime); o.connect(g); g.connect(ctx.destination); g.gain.setValueAtTime(0.0001, ctx.currentTime); g.gain.exponentialRampToValueAtTime(0.02, ctx.currentTime+0.01); g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime+0.05); o.start(); o.stop(ctx.currentTime+0.06); }catch(e){} }
     function getProofCode(){
       const bits = spreads.map(s=> state.completions[s.id] ? 1 : 0).join('');
       return btoa(bits).replace(/=+$/,'');
@@ -140,14 +167,7 @@
       stepsEl.innerHTML='';
       spreads.forEach(sp=>{
         const b=document.createElement('button');
-        b.textContent=`S${sp.id}: ${sp.title}`;
-        b.setAttribute('data-active', String(sp.id===state.page));
-        b.setAttribute('data-done', String(!!state.completions[sp.id]));
-        if(state.completions[sp.id]) b.style.boxShadow='0 0 12px rgba(255,200,71,0.7)'; else b.style.boxShadow='';
-        b.addEventListener('click',()=>{ state.page=sp.id; save(); render(); });
-        stepsEl.appendChild(b);
-      });
-    }: ${sp.title}`; b.setAttribute('data-active', String(sp.id===state.page)); b.addEventListener('click',()=>{ state.page=sp.id; save(); render(); }); stepsEl.appendChild(b); }); }
+        b.textContent=`S${sp.id
     function render(){
       const sp=spreads.find(s=>s.id===state.page)||spreads[0];
       ribbonEl.textContent=`Spread ${sp.id} / ${spreads.length}`;
@@ -162,7 +182,14 @@
       btn.className='btn';
       const setLabel=()=>{ btn.textContent = state.completions[sp.id] ? '✓ Marked Complete — click to undo' : 'Mark Complete'; };
       setLabel();
-      btn.addEventListener('click',()=>{ state.completions[sp.id]=!state.completions[sp.id]; save(); setLabel(); renderSteps(); });
+      btn.addEventListener('click',()=>{
+        try{ hapticTap(); }catch(e){}
+        state.completions[sp.id] = !state.completions[sp.id];
+        const allDone = spreads.every(s => state.completions[s.id]);
+        if(allDone && !state.celebrated){ state.celebrated = true; save(); try{ celebrate(); }catch(e){} }
+        if(!allDone && state.celebrated){ state.celebrated = false; }
+        save(); setLabel(); renderSteps();
+      });
       controls.appendChild(btn);
       L.appendChild(controls);
       spreadEl.appendChild(L); spreadEl.appendChild(R);
@@ -173,6 +200,10 @@
     }
     render(); save();
 
+    // Top Prev/Next with haptics + page turn
+    document.getElementById('prev').addEventListener('click',()=>{ hapticTap(); spreadEl.classList.add('turning'); state.page=Math.max(1,state.page-1); setTimeout(()=>{ render(); spreadEl.classList.remove('turning'); save(); },300); });
+    document.getElementById('next').addEventListener('click',()=>{ hapticTap(); spreadEl.classList.add('turning'); state.page=Math.min(spreads.length,state.page+1); setTimeout(()=>{ render(); spreadEl.classList.remove('turning'); save(); },300); });
+
     // --- Hotkey: C to toggle completion -----------------------------------
     document.addEventListener('keydown',(e)=>{
       const tag=(document.activeElement&&document.activeElement.tagName)||'';
@@ -182,6 +213,24 @@
         save(); renderSteps(); render();
       }
     });
+
+    function celebrate(){
+      const layer=document.createElement('div'); layer.className='sparkles'; document.body.appendChild(layer);
+      const N=80; for(let i=0;i<N;i++){
+        const s=document.createElement('span'); s.className='sparkle';
+        const x=Math.random()*100, y=Math.random()*100;
+        const dx=(Math.random()*2-1)*140, dy=(Math.random()*2-1)*140;
+        const size=6+Math.random()*10;
+        s.style.left=x+'%'; s.style.top=y+'%';
+        s.style.width=size+'px'; s.style.height=size+'px';
+        s.style.setProperty('--dx', dx+'px'); s.style.setProperty('--dy', dy+'px');
+        s.style.animationDelay=(Math.random()*0.15)+'s';
+        layer.appendChild(s);
+      }
+      setTimeout(()=>{ if(layer && layer.parentNode) layer.parentNode.removeChild(layer); }, 1700);
+      const posterBtn=document.getElementById('sharePoster');
+      if(posterBtn){ setTimeout(()=>{ posterBtn.click(); }, 1100); }
+    }
 
     // --- Jar toggle --------------------------------------------------------
     const jarToggle=document.getElementById('jarToggle');
@@ -211,6 +260,42 @@
       // list completed spread titles
       let y=430; pctx.fillStyle='#ffc847'; pctx.font='16px sans-serif'; pctx.fillText('Completed:',220,y); y+=22; pctx.fillStyle='#ffffff';
       spreads.forEach(sp=>{ if(state.completions[sp.id]){ pctx.fillText('• '+sp.title,220,y); y+=20; }});
+
+      // Link + QR-like block + printed link text
+      const base=(location.href.split('#')[0]||'');
+      const link = base + '#s=' + state.page;
+      function wrapText(ctx, text, x, y, maxWidth, lineHeight){
+        const words=text.split(' '); let line='';
+        for(let n=0;n<words.length;n++){
+          const test=line + (line? ' ':'') + words[n];
+          if(ctx.measureText(test).width > maxWidth){ ctx.fillText(line,x,y); line=words[n]; y+=lineHeight; }
+          else{ line=test; }
+        }
+        if(line) ctx.fillText(line,x,y);
+      }
+      function drawPseudoQR(ctx,x,y,size,str){
+        const N=29, cell=Math.floor(size/N), pad=(size-cell*N)/2;
+        ctx.fillStyle='#0c0b0a'; ctx.fillRect(x,y,size,size); ctx.strokeStyle='#3a2a12'; ctx.strokeRect(x,y,size,size);
+        function finder(px,py){ ctx.fillStyle='#fff'; ctx.fillRect(px,py,cell*7,cell*7); ctx.fillStyle='#0c0b0a'; ctx.fillRect(px+cell,py+cell,cell*5,cell*5); ctx.fillStyle='#fff'; ctx.fillRect(px+cell*2,py+cell*2,cell*3,cell*3); }
+        finder(x+pad,y+pad); finder(x+size-pad-cell*7,y+pad); finder(x+pad,y+size-pad-cell*7);
+        let seed=2166136261>>>0; for(let i=0;i<str.length;i++){ seed^=str.charCodeAt(i); seed=Math.imul(seed,16777619)>>>0; }
+        ctx.fillStyle='#fff';
+        for(let r=0;r<N;r++){
+          for(let c=0;c<N;c++){
+            const inFinder=(r<7&&c<7)||(r<7&&c>=N-7)||(r>=N-7&&c<7);
+            if(inFinder) continue;
+            seed=(seed*1664525+1013904223)>>>0;
+            if((seed>>>28)&1){ ctx.fillRect(x+pad+c*cell, y+pad+r*cell, cell-1, cell-1); }
+          }
+        }
+      }
+      drawPseudoQR(pctx, 560, 730, 210, link);
+      pctx.fillStyle='#ffc847'; pctx.font='12px monospace'; pctx.fillText('Open Link:', 560, 960);
+      pctx.fillStyle='#ffffff'; wrapText(pctx, link, 560, 975, 220, 14);
+
+      // download
+      const url=posterCanvas.toDataURL('image/png'); const a=document.createElement('a'); a.download='honey-proof.png'; a.href=url; a.click();
+    });
       // download
       const url=posterCanvas.toDataURL('image/png'); const a=document.createElement('a'); a.download='honey-proof.png'; a.href=url; a.click();
     });
@@ -224,6 +309,31 @@
     buzzBtn.addEventListener('click',()=>{ buzzOn=!buzzOn; if(buzzOn && audioCtx && audioCtx.state==='suspended') audioCtx.resume(); syncBuzz(); });
     document.body.addEventListener('click',()=>{ if(!buzzOn){ buzzOn=true; syncBuzz(); } },{once:true});
     document.addEventListener('visibilitychange',()=>{ if(document.hidden){ stopBuzz(); } else if(buzzOn && !osc){ startBuzz(); } });
-  </script>
+    // --- Scroll hint logic ---
+  (function(){
+    var steps=document.getElementById('steps');
+    var hint=document.getElementById('scrollhint');
+    if(!steps||!hint) return;
+    function check(){
+      var overflow = steps.scrollWidth > steps.clientWidth + 4;
+      hint.style.display = overflow ? 'inline-block' : 'none';
+      hint.style.opacity = overflow ? '1' : '0';
+      if(overflow){ setTimeout(function(){ hint.style.opacity='0'; }, 4000); }
+    }
+    steps.addEventListener('scroll', function(){ hint.style.opacity='0'; });
+    window.addEventListener('resize', check);
+    check();
+  })();
+
+  // --- Sticky bar wiring ---
+  (function(){
+    var sPrev=document.getElementById('sPrev');
+    var sNext=document.getElementById('sNext');
+    var prev=document.getElementById('prev');
+    var next=document.getElementById('next');
+    if(sPrev&&prev){ sPrev.addEventListener('click', function(){ prev.click(); }); }
+    if(sNext&&next){ sNext.addEventListener('click', function(){ next.click(); }); }
+  })();
+</script>
 </body>
 </html>
