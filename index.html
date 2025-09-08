@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Equations of Honey · Viral Notebook · Illumina</title>
+  <title>Equations of Honey · Illumina Jar</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' x='0.1em' font-size='90'%3E%F0%9F%8D%AF%3C/text%3E%3C/svg%3E" />
   <style>
     :root { --bg:#0c0b0a; --ink:#f3efe7; --honey:#ffc847; --honey-deep:#ffb300; --grid:#1e1c1a; --ok:#7bd88f; --err:#ef476f; }
@@ -16,6 +16,9 @@
     .dot{width:12px;height:12px;border-radius:999px;background:var(--honey);box-shadow:0 0 18px var(--honey)}
     h1{margin:0;font-weight:700;letter-spacing:.3px;font-size:clamp(20px,3.5vw,28px)}
     .sub{opacity:.75;font-size:13px}
+
+    .forgeBadge{border:1px solid #3a2a12;padding:6px 10px;border-radius:999px;font-size:12px;background:rgba(255,200,71,0.08);color:var(--ink)}
+
     nav.steps{display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;padding-bottom:6px;margin-bottom:4px}
     nav.steps button{flex:0 0 auto;scroll-snap-align:start;border:1px solid #26231f;background:linear-gradient(180deg,#191715,#121110);color:var(--ink);padding:8px 10px;border-radius:10px;font-size:13px;cursor:pointer}
     nav.steps button[data-active="true"]{outline:2px solid var(--honey);box-shadow:0 0 0 3px rgba(255,200,71,.18)}
@@ -84,6 +87,7 @@
           <div class="sub">A self-solving, shareable Illumina notebook</div>
         </div>
       </div>
+      <span id="forgeBadge" class="forgeBadge">Forged at Bark</span>
       <nav aria-label="Spreads" class="steps" id="steps"></nav>
       <span class="scrollhint" id="scrollhint">Scroll ▸</span>
       <a class="btn" href="https://tunes.plnt.earth" target="_blank" rel="noopener">Tunes</a>
@@ -110,7 +114,7 @@
         <div class="drip d3"></div>
         <div class="drip d4"></div>
       </div>
-      <div class="ribbon" id="ribbon">Spread 1 / 8</div>
+      <div class="ribbon" id="ribbon">Day 1 / 42</div>
       <section class="spread" id="spread"></section>
       <div class="foot">
         <div class="row">
@@ -162,17 +166,58 @@
   </div>
 
   <script>
-    // --- Spreads -----------------------------------------------------------
-    const spreads=[
-      {id:1,title:'Ratio Spark',left:`<h2>Left · Puzzle</h2><div class="equation">6 / 7 = ?</div><p>Convert to decimals. Mark the repeating block.</p><div class="gridpaper"><p>0.<b>857142</b> 857142…</p></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>One spoon of honey; whisper the digits you found.</p></div><h3>Reflections</h3><textarea></textarea>`},
-      {id:2,title:'Cycle Gate',left:`<h2>Left · Puzzle</h2><div class="equation">42 = 6 × 7</div><p>List all factors; note symmetric pairs.</p><div class="gridpaper"><p>1,2,3,6,7,14,21,42</p></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Count 42 slow breaths with honey nearby.</p></div><h3>Reflections</h3><textarea></textarea>`},
-      {id:3,title:'Moon Fractal',left:`<h2>Left · Puzzle</h2><div class="equation">1 / 42</div><p>Compute the decimal; find the repeating block.</p><div class="gridpaper"><p>0.<b>023809</b> 523809…</p></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Trace a honey circle; mark 42 points.</p></div><h3>Reflections</h3><textarea></textarea>`},
-      {id:4,title:'Seed of Infinity',left:`<h2>Left · Puzzle</h2><div class="equation">(1 + 1/n)^n → e</div><p>Evaluate for n=7,14,42 and compare to e.</p><div class="gridpaper"><p>Approaches ~2.71828…</p></div><button class="btn" onclick="alert('(1+1/7)^7 ≈ '+(Math.pow(1+1/7,7)).toFixed(6)+'\n(1+1/14)^14 ≈ '+(Math.pow(1+1/14,14)).toFixed(6)+'\n(1+1/42)^42 ≈ '+(Math.pow(1+1/42,42)).toFixed(6))">Quick calc</button>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Chew one seed with honey; sense expansion toward <i>e</i>.</p></div><h3>Reflections</h3><textarea></textarea>`},
-      {id:5,title:'Harmony Pair',left:`<h2>Left · Puzzle</h2><div class="equation">Fibonacci → φ</div><p>Generate up to 21 and compute ratios.</p><div class="gridpaper"><p>→ 1.618…</p></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Two drops of honey; notice balance.</p></div><h3>Reflections</h3><textarea></textarea>`},
-      {id:6,title:'Sun & Moon Cross',left:`<h2>Left · Puzzle</h2><div class="equation">sin(x) + cos(x)</div><p>Scrub phase to observe interference.</p><div class="canvasWrap"><input id="s6-phase" type="range" min="0" max="6.283" step="0.005" value="0" /><canvas id="s6-canvas" width="640" height="240"></canvas></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Taste honey, then hum a note for 10s. Feel the sum wave.</p></div><h3>Reflections</h3><textarea></textarea>`,mount:(root)=>{const cvs=root.querySelector('#s6-canvas');const phase=root.querySelector('#s6-phase');if(!cvs||!phase) return;const ctx=cvs.getContext('2d');const DPR=()=>Math.max(1,window.devicePixelRatio||1);function draw(){const dpr=DPR();const w=cvs.width/dpr,h=cvs.height/dpr,mid=h/2;ctx.save();ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);ctx.globalAlpha=.2;ctx.strokeStyle='#2a2622';const gx=Math.max(24,w/16),gy=Math.max(24,h/6);for(let x=0;x<w;x+=gx){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}for(let y=0;y<h;y+=gy){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}ctx.globalAlpha=1;ctx.strokeStyle='#403830';ctx.beginPath();ctx.moveTo(0,mid);ctx.lineTo(w,mid);ctx.stroke();const k=(Math.PI*2)/w*40;const ph=parseFloat(phase.value||'0');const plot=(fn,color)=>{ctx.beginPath();for(let x=0;x<w;x++){const y=mid-fn(x)*(h*0.33);if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.strokeStyle=color;ctx.stroke();};plot(x=>Math.sin(k*x+ph),'#ffcc66');plot(x=>Math.cos(k*x+ph),'#b08968');plot(x=>Math.sin(k*x+ph)+Math.cos(k*x+ph),'#7bd88f');ctx.restore();}function resize(){const wrap=root.querySelector('.canvasWrap');const wCSS=Math.max(300,wrap.clientWidth);const hCSS=Math.round(wCSS*0.375);const dpr=DPR();cvs.style.width=wCSS+'px';cvs.style.height=hCSS+'px';cvs.width=Math.floor(wCSS*dpr);cvs.height=Math.floor(hCSS*dpr);draw();}resize();phase.addEventListener('input',draw);window.addEventListener('resize',resize);}},
-      {id:7,title:'Honey Proof',left:`<h2>Left · Puzzle</h2><div class="equation">Your Signature Equation</div><p>Lay out your proof in steps.</p><div class="gridpaper"><textarea id="s7-proof" placeholder="1) ...\n2) ...\nTherefore ..."></textarea></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Stir honey into warm tea. Read your steps aloud.</p></div><h3>Reflections</h3><textarea></textarea>`},
-      {id:8,title:'Cyclic Honey',left:`<h2>Left · Puzzle</h2><div class="equation">142857 (cycle of 6/7)</div><ol><li>Spot the cycle in 6÷7 to ~30 places.</li><li>Rotation test: 142857×(1–6) → rotations; 7×→999999.</li><li>Clock map: place six rotations around a circle; connect in order.</li><li>Residues mod 7: relate to k/7 decimals.</li></ol><div id="cyclic-widget" class="gridpaper"><div class="row" style="margin-bottom:8px"><button class="btn" id="cw-generate">Show 1×…6×</button><input id="cw-test" placeholder="Test rotation (e.g., 571428)" style="flex:1" /><button class="btn" id="cw-check">Check</button></div><pre id="cw-out" style="white-space:pre-wrap;margin:0;"></pre></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Six-breath tasting: whisper 1‑4‑2‑8‑5‑7, rotate each breath.</p></div><p style="margin:6px 0 12px"><a class="btn" href="https://tunes.plnt.earth/#142857-6beat" target="_blank" rel="noopener">Play 6‑beat rotation loop</a></p><h3>Reflections</h3><textarea placeholder="Where did your rhythm lock? Did ‘57’ feel like a hinge?"></textarea>`,mount:(root)=>{const R=["142857","285714","428571","571428","714285","857142"];const o=root.querySelector('#cw-out');root.querySelector('#cw-generate').onclick=()=>{const lines=R.map((s,i)=>`${i+1}× → ${s}`);lines.push('7× → 999999');o.textContent=lines.join('\n');};root.querySelector('#cw-check').onclick=()=>{const v=(root.querySelector('#cw-test').value||'').trim();if(!/^\d{6}$/.test(v)){o.textContent='Enter a 6-digit number.';return;}o.textContent=R.includes(v)?'✓ Rotation of 142857.':'Not a rotation.';};}}
+    // --- Generate 42 core day spreads ------------------------------------
+    function dayTemplate(n){
+      const tag = n.toString().padStart(2,'0');
+      const prompts = [
+        ['Rhythm','Compute '+n+' / 7 to ~20 places. Circle any repeating block.'],
+        ['Factors','List factors of '+(6*7)+'; note symmetry pairs.'],
+        ['Fractal','Compute 1 / '+(n%42||42)+'; what repeats?'],
+        ['Growth','Evaluate (1 + 1/'+(n||1)+')^'+(n||1)+' — compare to e.'],
+        ['Harmony','Write the first 8 Fibonacci numbers; estimate φ from ratios.'],
+        ['Waves','Sketch sin(x)+cos(x) for one period; mark peaks.'],
+        ['Residues','Take k='+n+' mod 7 through 1..7; map to decimal sevenths.'],
+      ];
+      const P = prompts[n % prompts.length];
+      return {
+        core:true,
+        title:'Day '+tag,
+        left:`<h2>Left · Puzzle</h2><div class="equation">${P[0]}</div><p>${P[1]}</p><div class="gridpaper"><p>Work space</p></div>`,
+        right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>One spoon of honey before bed. Breathe ${n} slow breaths; on each exhale, repeat your key number from today.</p></div><h3>Reflections</h3><textarea placeholder="What pattern did you feel today?"></textarea>`
+      };
+    }
+    const coreSpreads = Array.from({length:42}, (_,i)=> dayTemplate(i+1));
+
+    // Six interludes (not counted toward 42)
+    const interludes = [
+      {core:false, interlude:true, key:'IL1', title:'Interlude · 🍯 Sabrina (Honey / Taste)',
+       left:`<h2>Interlude · Honey / Taste</h2><div class="callout"><p>Taste as teacher. Choose one ingredient to pair with honey tonight; write what it changes.</p></div><h3>Reflections</h3><textarea placeholder="Scent, texture, mood…"></textarea>`,
+       right:`<h2>Play</h2><div class="gridpaper"><p>Sketch a flavor wheel; place today’s taste on it.</p></div>`},
+      {core:false, interlude:true, key:'IL2', title:'Interlude · 🌙 Janet Planet (Curiosity / STEAM)',
+       left:`<h2>Interlude · Curiosity</h2><div class="callout"><p>Point a question at the night sky. What pattern do you want to measure next?</p></div><h3>Reflections</h3><textarea></textarea>`,
+       right:`<h2>Play</h2><div class="gridpaper"><p>Design a 10‑minute experiment you can run this week.</p></div>`},
+      {core:false, interlude:true, key:'IL3', title:'Interlude · ⚡ Eminem (Confrontation / Victory)',
+       left:`<h2>Interlude · Confrontation</h2><div class="callout"><p>Name one friction. Write the opposite action in 6 words.</p></div><h3>Reflections</h3><textarea></textarea>`,
+       right:`<h2>Play</h2><div class="gridpaper"><p>Draft a 2‑line Victory bar. Spit it once, softly.</p></div>`},
+      {core:false, interlude:true, key:'IL4', title:'Interlude · ☀️ Emma Stone (Identity / Masks)',
+       left:`<h2>Interlude · Identity</h2><div class="callout"><p>Which role served you today? Which mask can you set down?</p></div><h3>Reflections</h3><textarea></textarea>`,
+       right:`<h2>Play</h2><div class="gridpaper"><p>Storyboard 3 frames of “you” changing light.</p></div>`},
+      {core:false, interlude:true, key:'IL5', title:'Interlude · 🔥 Doechii (Trickster / Chaos)',
+       left:`<h2>Interlude · Trickster</h2><div class="callout"><p>Break one tiny rule in your routine. What opened?</p></div><h3>Reflections</h3><textarea></textarea>`,
+       right:`<h2>Play</h2><div class="gridpaper"><p>Write 3 playful constraints for next week.</p></div>`},
+      {core:false, interlude:true, key:'IL6', title:'Interlude · 🐝 Hot To Go! (Collective Joy)',
+       left:`<h2>Interlude · Collective Joy</h2><div class="callout"><p>Invite someone into a 6‑minute honey ritual.</p></div><h3>Reflections</h3><textarea></textarea>`,
+       right:`<h2>Play</h2><div class="gridpaper"><p>Plan a small swarm moment for Week 6.</p></div>`},
     ];
+
+    // Build master spreads, inserting an interlude after each week (7,14,21,28,35,42)
+    const spreads = [];
+    for(let i=1;i<=42;i++){
+      spreads.push(coreSpreads[i-1]);
+      if([7,14,21,28,35,42].includes(i)) spreads.push(interludes[(i/7)-1]);
+    }
+    // Add extras
+    spreads.push(extraCyclic, extraVictory);
 
     // --- State ------------------------------------------------------------
     const stepsEl=document.getElementById('steps');
@@ -192,36 +237,72 @@
     if(typeof state.jarOn!== 'boolean') state.jarOn = true;
     if(typeof state.lang!== 'string') state.lang='en';
 
-    const forge=JSON.parse(localStorage.getItem('eoh_forge')||'{}');
+    const forge=JSON.parse(localStorage.getItem('eoh_forge')||'{}') || {};
+    const forgeBadge=document.getElementById('forgeBadge');
+    if(!forge.name) forge.name = 'Forged at Bark';
+    if(forgeBadge) forgeBadge.textContent = forge.name;
 
     function save(){ localStorage.setItem('eoh_nb_state', JSON.stringify(state)); }
     function hapticTap(){ try{ if(navigator.vibrate){ navigator.vibrate(10); return; } const AC = window.AudioContext || window.webkitAudioContext; if(!AC) return; if(!window.__hBuzzCtx) window.__hBuzzCtx = new AC(); const ctx = window.__hBuzzCtx; const o = ctx.createOscillator(), g = ctx.createGain(); o.type='square'; o.frequency.setValueAtTime(120, ctx.currentTime); o.connect(g); g.connect(ctx.destination); g.gain.setValueAtTime(0.0001, ctx.currentTime); g.gain.exponentialRampToValueAtTime(0.02, ctx.currentTime+0.01); g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime+0.05); o.start(); o.stop(ctx.currentTime+0.06); }catch(e){} }
 
-    function getProofCode(){ const bits = spreads.map(s=> state.completions[s.id] ? 1 : 0).join(''); return btoa(bits).replace(/=+$/,''); }
-    function updateProgress(){ const total=spreads.length; const done=Object.values(state.completions||{}).filter(Boolean).length; const pct=Math.round((done/total)*100)||0; if(progressBar) progressBar.style.width=pct+'%'; if(progressText) progressText.textContent=pct+'%'; }
+    // core-only progress / code
+    const coreOnly = spreads.filter(s=>s.core);
+    function getProofCode(){ const bits = coreOnly.map(s=> state.completions[s.title] ? 1 : 0).join(''); return btoa(bits).replace(/=+$/,''); }
+    function updateProgress(){ const total=coreOnly.length; const done=coreOnly.reduce((acc,s)=>acc+(state.completions[s.title]?1:0),0); const pct=Math.round((done/total)*100)||0; if(progressBar) progressBar.style.width=pct+'%'; if(progressText) progressText.textContent=pct+'%'; }
 
-    function renderSteps(){ stepsEl.innerHTML=''; spreads.forEach(sp=>{ const b=document.createElement('button'); b.textContent=`S${sp.id}: ${sp.title}`; b.setAttribute('data-active', String(sp.id===state.page)); b.setAttribute('data-done', String(!!state.completions[sp.id])); b.addEventListener('click',()=>{ state.page=sp.id; save(); render(); }); stepsEl.appendChild(b); }); }
+    function renderSteps(){
+      stepsEl.innerHTML='';
+      const coreOnly = spreads.filter(s=>s.core);
+      spreads.forEach((sp,idx)=>{
+        const b=document.createElement('button');
+        if(sp.core){
+          const ci = coreOnly.indexOf(sp);
+          b.textContent = `D${String(ci+1).padStart(2,'0')}`;
+        } else if(sp.interlude){
+          const which = sp.key || 'IL';
+          b.textContent = which;
+        } else {
+          b.textContent = sp.title.includes('Victory') ? 'VS' : 'EX';
+        }
+        b.setAttribute('title', sp.title);
+        b.setAttribute('data-active', String(idx+1===state.page));
+        b.setAttribute('data-done', String(!!state.completions[sp.title]));
+        b.addEventListener('click',()=>{ state.page=idx+1; save(); render(); });
+        stepsEl.appendChild(b);
+      });
+    }` : (sp.title.includes('Victory')?'VS':'EX'); b.setAttribute('title', sp.title); b.setAttribute('data-active', String(idx+1===state.page)); b.setAttribute('data-done', String(!!state.completions[sp.title])); b.addEventListener('click',()=>{ state.page=idx+1; save(); render(); }); stepsEl.appendChild(b); }); }
 
-    function render(){ const sp=spreads.find(s=>s.id===state.page)||spreads[0]; ribbonEl.textContent=`Spread ${sp.id} / ${spreads.length}`; try{ location.hash = '#s=' + sp.id; }catch(e){}
-      spreadEl.innerHTML=''; const L=document.createElement('div'); L.className='page'; L.innerHTML=sp.left; const R=document.createElement('div'); R.className='page'; R.innerHTML=sp.right; 
-      const controls=document.createElement('div'); controls.className='row'; controls.style.marginTop='12px'; const btn=document.createElement('button'); btn.className='btn'; const setLabel=()=>{ btn.textContent = state.completions[sp.id] ? '✓ Marked Complete — click to undo' : 'Mark Complete'; }; setLabel(); btn.addEventListener('click',()=>{ hapticTap(); state.completions[sp.id]=!state.completions[sp.id]; const allDone = spreads.every(s=>state.completions[s.id]); if(allDone && !state.celebrated){ state.celebrated=true; save(); celebrate(); } if(!allDone && state.celebrated){ state.celebrated=false; } save(); setLabel(); renderSteps(); updateProgress(); }); controls.appendChild(btn); L.appendChild(controls);
-      spreadEl.appendChild(L); spreadEl.appendChild(R); if(typeof sp.mount==='function'){ sp.mount(spreadEl); } renderSteps(); statusText.textContent='Progress saved'; statusDot.classList.toggle('done', Object.values(state.completions).filter(Boolean).length===spreads.length); updateProgress(); }
+    function render(){
+      const sp=spreads[state.page-1] || spreads[0];
+      const coreOnly = spreads.filter(s=>s.core);
+      const ci = coreOnly.indexOf(sp);
+      const week = sp.core ? (Math.floor(ci/7)+1) : Math.ceil(coreOnly.length/7);
+      ribbonEl.textContent = sp.core ? `Day ${ci+1} / ${coreOnly.length} · Week ${week} / 6` : `Extra · ${sp.title}`;
+      try{ location.hash = '#s=' + state.page; }catch(e){}
+      spreadEl.innerHTML='';
+      const L=document.createElement('div'); L.className='page'; L.innerHTML=sp.left;
+      const R=document.createElement('div'); R.className='page'; R.innerHTML=sp.right;
+      const controls=document.createElement('div'); controls.className='row'; controls.style.marginTop='12px'; const btn=document.createElement('button'); btn.className='btn'; const setLabel=()=>{ btn.textContent = state.completions[sp.title] ? '✓ Marked Complete — click to undo' : 'Mark Complete'; }; setLabel(); btn.addEventListener('click',()=>{ hapticTap(); state.completions[sp.title]=!state.completions[sp.title]; const allDone = coreOnly.every(s=>state.completions[s.title]); if(allDone && !state.celebrated){ state.celebrated=true; save(); celebrate(); } if(!allDone && state.celebrated){ state.celebrated=false; } save(); setLabel(); renderSteps(); updateProgress(); }); controls.appendChild(btn); L.appendChild(controls);
+      spreadEl.appendChild(L); spreadEl.appendChild(R);
+      if(typeof sp.mount==='function'){ sp.mount(spreadEl); }
+      renderSteps(); statusText.textContent='Progress saved'; statusDot.classList.toggle('done', coreOnly.every(s=>state.completions[s.title])); updateProgress();
+    }); controls.appendChild(btn); L.appendChild(controls);
+      spreadEl.appendChild(L); spreadEl.appendChild(R); if(typeof sp.mount==='function'){ sp.mount(spreadEl); } renderSteps(); statusText.textContent='Progress saved'; statusDot.classList.toggle('done', coreOnly.every(s=>state.completions[s.title])); updateProgress(); }
 
     // init
     render(); save();
-
-    // Deep link: on load + change
+    // Deep link on load + change
     (function(){ function jump(){ const m=(location.hash||'').match(/#s=(\d+)/i); if(m){ const n=Math.max(1, Math.min(spreads.length, parseInt(m[1],10))); if(n!==state.page){ state.page=n; save(); render(); } } } window.addEventListener('hashchange', jump); jump(); })();
 
     // Top Prev/Next with haptics + smear
     document.getElementById('prev').addEventListener('click',()=>{ hapticTap(); spreadEl.classList.add('turning'); state.page=Math.max(1,state.page-1); setTimeout(()=>{ render(); spreadEl.classList.remove('turning'); save(); },300); });
     document.getElementById('next').addEventListener('click',()=>{ hapticTap(); spreadEl.classList.add('turning'); state.page=Math.min(spreads.length,state.page+1); setTimeout(()=>{ render(); spreadEl.classList.remove('turning'); save(); },300); });
 
-    // Hotkey C toggle
-    document.addEventListener('keydown',(e)=>{ const tag=(document.activeElement&&document.activeElement.tagName)||''; if((e.key==='c'||e.key==='C') && !/INPUT|TEXTAREA|SELECT/.test(tag)){ const sp=spreads.find(s=>s.id===state.page); state.completions[sp.id]=!state.completions[sp.id]; save(); renderSteps(); render(); }});
+    // Hotkey C toggle (core & extras)
+    document.addEventListener('keydown',(e)=>{ const tag=(document.activeElement&&document.activeElement.tagName)||''; if((e.key==='c'||e.key==='C') && !/INPUT|TEXTAREA|SELECT/.test(tag)){ const sp=spreads[state.page-1]; state.completions[sp.title]=!state.completions[sp.title]; save(); renderSteps(); render(); }});
 
     // Celebrate
-    function celebrate(){ try{ hapticTap(); }catch(e){} const layer=document.createElement('div'); layer.className='sparkles'; document.body.appendChild(layer); const N=80; for(let i=0;i<N;i++){ const s=document.createElement('span'); s.className='sparkle'; const x=Math.random()*100, y=Math.random()*100; const dx=(Math.random()*2-1)*140, dy=(Math.random()*2-1)*140; const size=6+Math.random()*10; s.style.left=x+'%'; s.style.top=y+'%'; s.style.width=size+'px'; s.style.height=size+'px'; s.style.setProperty('--dx', dx+'px'); s.style.setProperty('--dy', dy+'px'); s.style.animationDelay=(Math.random()*0.15)+'s'; layer.appendChild(s);} setTimeout(()=>{ layer.remove(); }, 1700); const posterBtn=document.getElementById('sharePoster'); if(posterBtn){ setTimeout(()=>{ posterBtn.click(); }, 1100); }}
+    function celebrate(){ try{ hapticTap(); }catch(e){} const layer=document.createElement('div'); layer.className='sparkles'; document.body.appendChild(layer); const N=90; for(let i=0;i<N;i++){ const s=document.createElement('span'); s.className='sparkle'; const x=Math.random()*100, y=Math.random()*100; const dx=(Math.random()*2-1)*140, dy=(Math.random()*2-1)*140; const size=6+Math.random()*10; s.style.left=x+'%'; s.style.top=y+'%'; s.style.width=size+'px'; s.style.height=size+'px'; s.style.setProperty('--dx', dx+'px'); s.style.setProperty('--dy', dy+'px'); s.style.animationDelay=(Math.random()*0.15)+'s'; layer.appendChild(s);} setTimeout(()=>{ layer.remove(); }, 1700); const posterBtn=document.getElementById('sharePoster'); if(posterBtn){ setTimeout(()=>{ posterBtn.click(); }, 1100); }}
 
     // Jar toggle
     const jarToggle=document.getElementById('jarToggle'); function syncJar(){ document.body.classList.toggle('jar-off', !state.jarOn); jarToggle.textContent='Jar Mode: '+(state.jarOn?'On':'Off'); } jarToggle.addEventListener('click',()=>{ state.jarOn=!state.jarOn; save(); syncJar(); }); syncJar();
@@ -230,18 +311,18 @@
     document.getElementById('sharePoster').addEventListener('click',()=>{
       const W=posterCanvas.width, H=posterCanvas.height; const base=(location.href.split('#')[0]||''); const link = base + '#s=' + state.page; const forgeName=(forge.name||'').trim(); const forgeHandle=(forge.handle||'').trim();
       function wrapText(ctx, text, x, y, maxWidth, lineHeight){ const words=text.split(' '); let line=''; for(let n=0;n<words.length;n++){ const test=line + (line? ' ':'') + words[n]; if(ctx.measureText(test).width > maxWidth){ ctx.fillText(line,x,y); line=words[n]; y+=lineHeight; } else { line=test; } } if(line) ctx.fillText(line,x,y); }
-      function drawBase(){ pctx.clearRect(0,0,W,H); pctx.fillStyle='#0c0b0a'; pctx.fillRect(0,0,W,H); pctx.fillStyle='#ffc847'; pctx.font='28px sans-serif'; pctx.fillText('Equations of Honey',40,60); if(forgeName){ pctx.font='14px sans-serif'; pctx.fillStyle='#ffffff'; pctx.fillText('by '+forgeName+(forgeHandle? ' '+forgeHandle : ''), 40, 80); } pctx.strokeStyle='rgba(255,200,71,0.6)'; pctx.lineWidth=6; pctx.beginPath(); pctx.moveTo(200,200); pctx.bezierCurveTo(180,160,420,160,400,200); pctx.lineTo(400,700); pctx.bezierCurveTo(420,740,180,740,200,700); pctx.closePath(); pctx.stroke(); const grad=pctx.createLinearGradient(200,160,400,160); grad.addColorStop(0,'#ffc847'); grad.addColorStop(1,'#ffb300'); pctx.fillStyle=grad; pctx.fillRect(200,160,200,30); pctx.fillStyle='#2a1b00'; pctx.font='bold 18px sans-serif'; pctx.fillText('Equations of Honey',210,182); pctx.fillStyle='rgba(58,42,18,0.8)'; pctx.fillRect(200,180,200,20); pctx.fillStyle='rgba(255,200,71,0.6)'; pctx.shadowColor='rgba(255,200,71,0.7)'; pctx.shadowBlur=15; pctx.beginPath(); pctx.arc(250,250,15,0,Math.PI*2); pctx.fill(); pctx.beginPath(); pctx.arc(330,300,12,0,Math.PI*2); pctx.fill(); pctx.shadowBlur=0; pctx.shadowColor='rgba(255,200,71,0.7)'; pctx.shadowBlur=12; pctx.fillStyle='#fff'; pctx.font='20px monospace'; pctx.fillText('Proof Code: '+getProofCode(),220,400); pctx.shadowBlur=0; let y=430; pctx.fillStyle='#ffc847'; pctx.font='16px sans-serif'; pctx.fillText('Completed:',220,y); y+=22; pctx.fillStyle='#ffffff'; spreads.forEach(sp=>{ if(state.completions[sp.id]){ pctx.fillText('• '+sp.title,220,y); y+=20; }}); }
+      function drawBase(){ pctx.clearRect(0,0,W,H); pctx.fillStyle='#0c0b0a'; pctx.fillRect(0,0,W,H); pctx.fillStyle='#ffc847'; pctx.font='28px sans-serif'; pctx.fillText('Equations of Honey',40,60); if(forgeName){ pctx.font='14px sans-serif'; pctx.fillStyle='#ffffff'; pctx.fillText('by '+forgeName+(forgeHandle? ' '+forgeHandle : ''), 40, 80); } pctx.strokeStyle='rgba(255,200,71,0.6)'; pctx.lineWidth=6; pctx.beginPath(); pctx.moveTo(200,200); pctx.bezierCurveTo(180,160,420,160,400,200); pctx.lineTo(400,700); pctx.bezierCurveTo(420,740,180,740,200,700); pctx.closePath(); pctx.stroke(); const grad=pctx.createLinearGradient(200,160,400,160); grad.addColorStop(0,'#ffc847'); grad.addColorStop(1,'#ffb300'); pctx.fillStyle=grad; pctx.fillRect(200,160,200,30); pctx.fillStyle='#2a1b00'; pctx.font='bold 18px sans-serif'; pctx.fillText('Equations of Honey',210,182); pctx.fillStyle='rgba(58,42,18,0.8)'; pctx.fillRect(200,180,200,20); pctx.fillStyle='rgba(255,200,71,0.6)'; pctx.shadowColor='rgba(255,200,71,0.7)'; pctx.shadowBlur=15; pctx.beginPath(); pctx.arc(250,250,15,0,Math.PI*2); pctx.fill(); pctx.beginPath(); pctx.arc(330,300,12,0,Math.PI*2); pctx.fill(); pctx.shadowBlur=0; pctx.shadowColor='rgba(255,200,71,0.7)'; pctx.shadowBlur=12; pctx.fillStyle='#fff'; pctx.font='20px monospace'; pctx.fillText('Proof Code: '+getProofCode(),220,400); pctx.shadowBlur=0; let y=430; pctx.fillStyle='#ffc847'; pctx.font='16px sans-serif'; pctx.fillText('Completed:',220,y); y+=22; pctx.fillStyle='#ffffff'; const doneTitles = coreOnly.filter(s=>state.completions[s.title]).map(s=>s.title); const cap=15; doneTitles.slice(0,cap).forEach(t=>{ pctx.fillText('• '+t,220,y); y+=20; }); if(doneTitles.length>cap){ pctx.fillText('… +'+(doneTitles.length-cap)+' more',220,y); }
+      }
       drawBase();
       // Try real QR image; else fallback pseudo
       const qr = new Image(); qr.crossOrigin='anonymous'; qr.onload = ()=>{ pctx.drawImage(qr, 560, 730, 210, 210); pctx.fillStyle='#ffc847'; pctx.font='12px monospace'; pctx.fillText('Open Link:', 560, 960); pctx.fillStyle='#ffffff'; wrapText(pctx, link, 560, 975, 220, 14); const url=posterCanvas.toDataURL('image/png'); const a=document.createElement('a'); a.download='honey-proof.png'; a.href=url; a.click(); };
-      qr.onerror = ()=>{ // pseudo-QR fallback
-        const N=29, cell=Math.floor(210/N), pad=(210-cell*N)/2, x=560, y=730; pctx.fillStyle='#0c0b0a'; pctx.fillRect(x,y,210,210); pctx.strokeStyle='#3a2a12'; pctx.strokeRect(x,y,210,210); function finder(px,py){ pctx.fillStyle='#fff'; pctx.fillRect(px,py,cell*7,cell*7); pctx.fillStyle='#0c0b0a'; pctx.fillRect(px+cell,py+cell,cell*5,cell*5); pctx.fillStyle='#fff'; pctx.fillRect(px+cell*2,py+cell*2,cell*3,cell*3); } finder(x+pad,y+pad); finder(x+210-pad-cell*7,y+pad); finder(x+pad,y+210-pad-cell*7); let seed=2166136261>>>0; for(let i=0;i<link.length;i++){ seed^=link.charCodeAt(i); seed=Math.imul(seed,16777619)>>>0; } pctx.fillStyle='#fff'; for(let r=0;r<N;r++){ for(let c=0;c<N;c++){ const inFinder=(r<7&&c<7)||(r<7&&c>=N-7)||(r>=N-7&&c<7); if(inFinder) continue; seed=(seed*1664525+1013904223)>>>0; if((seed>>>28)&1){ pctx.fillRect(x+pad+c*cell, y+pad+r*cell, cell-1, cell-1); } }} pctx.fillStyle='#ffc847'; pctx.font='12px monospace'; pctx.fillText('Open Link:', 560, 960); pctx.fillStyle='#ffffff'; wrapText(pctx, link, 560, 975, 220, 14); const url=posterCanvas.toDataURL('image/png'); const a=document.createElement('a'); a.download='honey-proof.png'; a.href=url; a.click(); };
+      qr.onerror = ()=>{ const N=29, cell=Math.floor(210/N), pad=(210-cell*N)/2, x=560, y=730; pctx.fillStyle='#0c0b0a'; pctx.fillRect(x,y,210,210); pctx.strokeStyle='#3a2a12'; pctx.strokeRect(x,y,210,210); function finder(px,py){ pctx.fillStyle='#fff'; pctx.fillRect(px,py,cell*7,cell*7); pctx.fillStyle='#0c0b0a'; pctx.fillRect(px+cell,py+cell,cell*5,cell*5); pctx.fillStyle='#fff'; pctx.fillRect(px+cell*2,py+cell*2,cell*3,cell*3); } finder(x+pad,y+pad); finder(x+210-pad-cell*7,y+pad); finder(x+pad,y+210-pad-cell*7); let seed=2166136261>>>0; for(let i=0;i<link.length;i++){ seed^=link.charCodeAt(i); seed=Math.imul(seed,16777619)>>>0; } pctx.fillStyle='#fff'; for(let r=0;r<N;r++){ for(let c=0;c<N;c++){ const inFinder=(r<7&&c<7)||(r<7&&c>=N-7)||(r>=N-7&&c<7); if(inFinder) continue; seed=(seed*1664525+1013904223)>>>0; if((seed>>>28)&1){ pctx.fillRect(x+pad+c*cell, y+pad+r*cell, cell-1, cell-1); } }} pctx.fillStyle='#ffc847'; pctx.font='12px monospace'; pctx.fillText('Open Link:', 560, 960); pctx.fillStyle='#ffffff'; wrapText(pctx, link, 560, 975, 220, 14); const url=posterCanvas.toDataURL('image/png'); const a=document.createElement('a'); a.download='honey-proof.png'; a.href=url; a.click(); };
       qr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=210x210&margin=0&data='+encodeURIComponent(link);
     });
 
     // Share helpers --------------------------------------------------------
     function shareLink(){ try{ return location.href.split('#')[0] + '#s=' + state.page; }catch(e){ return '#'; } }
-    function shareText(){ const done=Object.values(state.completions||{}).filter(Boolean).length; const pct=Math.round((done/spreads.length)*100)||0; const f=(forge.name? ` — ${forge.name}`: ''); return `Equations of Honey${f} — ${pct}% complete — Proof: ${getProofCode()} — ${shareLink()}`; }
+    function shareText(){ const done=coreOnly.reduce((acc,s)=>acc+(state.completions[s.title]?1:0),0); const pct=Math.round((done/coreOnly.length)*100)||0; const f=(forge.name? ` — ${forge.name}`: ''); return `Equations of Honey${f} — ${pct}% complete — Proof: ${getProofCode()} — ${shareLink()}`; }
 
     document.getElementById('copyProof').addEventListener('click',async()=>{ try{ await navigator.clipboard.writeText(getProofCode()); statusText.textContent='Proof code copied'; setTimeout(()=>statusText.textContent='Progress saved',1500);}catch(e){} });
     document.getElementById('shareX').addEventListener('click',()=>{ const txt=shareText(); const u='https://x.com/intent/post?text='+encodeURIComponent(txt); window.open(u,'_blank','noopener'); });
@@ -259,7 +340,7 @@
     (function(){ const sPrev=document.getElementById('sPrev'); const sNext=document.getElementById('sNext'); const prev=document.getElementById('prev'); const next=document.getElementById('next'); if(sPrev&&prev){ sPrev.addEventListener('click', ()=>{ hapticTap(); prev.click(); }); } if(sNext&&next){ sNext.addEventListener('click', ()=>{ hapticTap(); next.click(); }); } })();
 
     // Language quick toggle ---------------------------------------------
-    const langSelect=document.getElementById('langSelect'); const I18N={ en:{title:'Equations of Honey',subtitle:'A self-solving, shareable Illumina notebook',prev:'◀ Prev',next:'Next ▶',copy:'Copy Proof Code',poster:'Save Poster',buzz:'Buzz',tunes:'Tunes',jar:'Jar Mode',sharex:'Share to X',copyshare:'Copy Share Text',export:'Export',import:'Import',lang:'Lang:',forge:'Forge'}, es:{title:'Ecuaciones de Miel',subtitle:'Cuaderno Illumina auto‑resoluble y compartible',prev:'◀ Anterior',next:'Siguiente ▶',copy:'Copiar código',poster:'Guardar póster',buzz:'Zumbido',tunes:'Tunes',jar:'Modo Tarro',sharex:'Publicar en X',copyshare:'Copiar texto',export:'Exportar',import:'Importar',lang:'Idioma:',forge:'Forja'}, fr:{title:'Équations de Miel',subtitle:'Carnet Illumina auto‑résolutif et partageable',prev:'◀ Préc.',next:'Suiv. ▶',copy:'Copier le code',poster:'Enregistrer l’affiche',buzz:'Bourdonnement',tunes:'Tunes',jar:'Mode Bocal',sharex:'Partager sur X',copyshare:'Copier le texte',export:'Exporter',import:'Importer',lang:'Langue :',forge:'Forge'}, de:{title:'Gleichungen des Honigs',subtitle:'Selbstlösbares, teilbares Illumina‑Notizbuch',prev:'◀ Zurück',next:'Weiter ▶',copy:'Beweiscodes kopieren',poster:'Poster speichern',buzz:'Brummen',tunes:'Tunes',jar:'Glas‑Modus',sharex:'Auf X teilen',copyshare:'Text kopieren',export:'Exportieren',import:'Importieren',lang:'Sprache:',forge:'Schmiede'} };
+    const langSelect=document.getElementById('langSelect'); const I18N={ en:{title:'Equations of Honey',subtitle:'A self-solving, shareable Illumina notebook',jar:'Jar Mode',tunes:'Tunes',forge:'Forge',prev:'◀ Prev',next:'Next ▶',copy:'Copy Proof Code',poster:'Save Poster',buzz:'Buzz',sharex:'Share to X',copyshare:'Copy Share Text',export:'Export',import:'Import',lang:'Lang:'}, es:{title:'Ecuaciones de Miel',subtitle:'Cuaderno Illumina auto‑resoluble y compartible',jar:'Modo Tarro',tunes:'Tunes',forge:'Forja',prev:'◀ Anterior',next:'Siguiente ▶',copy:'Copiar código',poster:'Guardar póster',buzz:'Zumbido',sharex:'Publicar en X',copyshare:'Copiar texto',export:'Exportar',import:'Importar',lang:'Idioma:'}, fr:{title:'Équations de Miel',subtitle:'Carnet Illumina auto‑résolutif et partageable',jar:'Mode Bocal',tunes:'Tunes',forge:'Forge',prev:'◀ Préc.',next:'Suiv. ▶',copy:'Copier le code',poster:'Enregistrer l’affiche',buzz:'Bourdonnement',sharex:'Partager sur X',copyshare:'Copier le texte',export:'Exporter',import:'Importer',lang:'Langue :'}, de:{title:'Gleichungen des Honigs',subtitle:'Selbstlösbares, teilbares Illumina‑Notizbuch',jar:'Glas‑Modus',tunes:'Tunes',forge:'Schmiede',prev:'◀ Zurück',next:'Weiter ▶',copy:'Beweiscodes kopieren',poster:'Poster speichern',buzz:'Brummen',sharex:'Auf X teilen',copyshare:'Text kopieren',export:'Exportieren',import:'Importieren',lang:'Sprache:'} };
     function applyI18n(){ const L=I18N[state.lang]||I18N.en; document.querySelector('h1').textContent=L.title; document.querySelector('.sub').textContent=L.subtitle; document.getElementById('prev').textContent=L.prev; document.getElementById('next').textContent=L.next; document.getElementById('copyProof').textContent=L.copy; document.getElementById('sharePoster').textContent=L.poster; document.getElementById('toggleBuzz').textContent=L.buzz+': '+( (typeof osc==='object' && osc) ? 'On':'On'); const jt=document.getElementById('jarToggle'); if(jt) jt.textContent=L.jar+': '+(document.body.classList.contains('jar-off')?'Off':'On'); const tunes=document.querySelector('a[href^="https://tunes"]'); if(tunes) tunes.textContent=L.tunes; const lx=document.getElementById('shareX'); if(lx) lx.textContent=L.sharex; const cs=document.getElementById('copyShare'); if(cs) cs.textContent=L.copyshare; const ex=document.getElementById('exportProgress'); if(ex) ex.textContent=L.export; const im=document.getElementById('importProgress'); if(im) im.textContent=L.import; const lab=document.querySelector('label[for="langSelect"]'); if(lab) lab.textContent=L.lang; const fg=document.getElementById('forgeBtn'); if(fg) fg.textContent=L.forge; }
     if(langSelect){ langSelect.value=state.lang; langSelect.addEventListener('change',()=>{ state.lang=langSelect.value; save(); applyI18n(); }); applyI18n(); }
 
@@ -267,7 +348,7 @@
     const forgeBtn=document.getElementById('forgeBtn'); const forgeModal=document.getElementById('forgeModal'); const fgName=document.getElementById('fg-name'); const fgHandle=document.getElementById('fg-handle'); const fgSite=document.getElementById('fg-site'); const fgX=document.getElementById('fg-x'); const fgGH=document.getElementById('fg-gh'); const fgMail=document.getElementById('fg-mail'); const fgCancel=document.getElementById('fg-cancel'); const fgSave=document.getElementById('fg-save');
     function openForge(){ fgName.value=forge.name||''; fgHandle.value=forge.handle||''; fgSite.value=forge.site||''; fgX.value=forge.x||''; fgGH.value=forge.gh||''; fgMail.value=forge.mail||''; forgeModal.style.display='flex'; }
     function closeForge(){ forgeModal.style.display='none'; }
-    function saveForge(){ const data={ name:fgName.value, handle:fgHandle.value, site:fgSite.value, x:fgX.value, gh:fgGH.value, mail:fgMail.value }; localStorage.setItem('eoh_forge', JSON.stringify(data)); hapticTap(); closeForge(); }
+    function saveForge(){ const data={ name:fgName.value, handle:fgHandle.value, site:fgSite.value, x:fgX.value, gh:fgGH.value, mail:fgMail.value }; localStorage.setItem('eoh_forge', JSON.stringify(data)); if(forgeBadge) forgeBadge.textContent = data.name||'Forged at Bark'; hapticTap(); closeForge(); }
     forgeBtn.addEventListener('click', openForge); fgCancel.addEventListener('click', closeForge); fgSave.addEventListener('click', saveForge); forgeModal.addEventListener('click',(e)=>{ if(e.target===forgeModal) closeForge(); });
 
   </script>
