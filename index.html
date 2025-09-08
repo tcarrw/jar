@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Equations of Honey · Viral Notebook · Illumina</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' x='0.1em' font-size='90'%3E%F0%9F%8D%AF%3C/text%3E%3C/svg%3E" />
+  <style>
+    :root {
+      --bg: #0c0b0a;
+      --paper: #121110;
+      --ink: #f3efe7;
+      --honey: #ffc847;
+      --honey-deep: #ffb300;
+      --grid: #1e1c1a;
+      --ok: #7bd88f;
+      --warn: #ffd166;
+      --err: #ef476f;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { margin: 0; background: radial-gradient(1200px 800px at 20% 0%, #171513, #0a0908 70%), var(--bg); color: var(--ink); font: 16px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji'; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px; }
+    header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:16px; flex-wrap:wrap; }
+    .brand { display:flex; align-items:center; gap:12px; }
+    .dot { width:12px; height:12px; border-radius:999px; background: var(--honey); box-shadow: 0 0 18px var(--honey); }
+    h1 { margin:0; font-weight:700; letter-spacing:0.3px; font-size: clamp(20px, 3.5vw, 28px); }
+    .sub { opacity:0.75; font-size: 13px; }
+
+    nav.steps { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    nav.steps button { border:1px solid #26231f; background:linear-gradient(180deg, #191715, #121110); color:var(--ink); padding:8px 10px; border-radius:10px; font-size:13px; cursor:pointer; transition: transform .12s ease, box-shadow .12s ease; }
+    nav.steps button[data-active="true"] { outline:2px solid var(--honey); box-shadow: 0 0 0 3px rgba(255,200,71,0.18); }
+    nav.steps button[data-done="true"]::after { content:"✓"; margin-left:6px; color:var(--ok); }
+
+    .book { position:relative; border:1px solid #1e1b18; background: linear-gradient(180deg, #141210, #110f0d); border-radius:16px; box-shadow: 0 30px 90px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04); overflow:hidden; }
+    .ribbon { position:absolute; top:0; right:24px; padding:6px 10px; background: linear-gradient(90deg, var(--honey), var(--honey-deep)); color:#2a1b00; font-weight:700; border-bottom-left-radius:8px; border-bottom-right-radius:8px; }
+    .spread { display:grid; grid-template-columns: 1fr; transition: opacity .6s ease, transform .6s ease; }
+    .spread.turning { opacity:0; transform: translateX(40px) rotate(2deg) scale(0.98); filter: blur(2px); }
+    @media (min-width: 900px){ .spread { grid-template-columns: 1fr 1fr; } }
+
+    .page { padding:24px; min-height: 62vh; border-top:1px solid #1a1816; }
+    .page:first-child { border-right:1px solid #1a1816; }
+    .page h2 { margin:0 0 10px; font-size: clamp(18px, 3vw, 22px); }
+    .page h3 { margin:16px 0 8px; font-size: 15px; opacity:0.9; }
+
+    .gridpaper { position:relative; border:1px dashed #2a2622; border-radius:12px; padding:14px; background:
+      linear-gradient(var(--grid) 1px, transparent 1px) 0 0 / 100% 28px,
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0 / 28px 100%,
+      linear-gradient(180deg, rgba(255,200,71,0.06), rgba(255,200,71,0.0)); }
+
+    .equation { display:inline-block; padding:6px 10px; border-radius:10px; background: rgba(255,200,71,0.08); border:1px solid rgba(255,200,71,0.2); font-weight:700; }
+    .input, textarea, input[type="text"] { width:100%; background:#0e0d0c; border:1px solid #27231f; color:var(--ink); border-radius:10px; padding:10px 12px; font-size:14px; outline:none; }
+    textarea { min-height:120px; resize:vertical; }
+    .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .btn { border:1px solid #2a2622; background: linear-gradient(180deg, #1b1815, #14120f); color:var(--ink); padding:10px 12px; border-radius:10px; font-size:14px; cursor:pointer; }
+    .btn.honey { background: linear-gradient(180deg, #2b1e09, #241705); border-color:#3a2a12; box-shadow: 0 0 0 0 rgba(255,200,71,0.15); }
+    .btn.honey:hover { box-shadow: 0 0 0 4px rgba(255,200,71,0.12); }
+
+    .callout { border-left:4px solid var(--honey); background: rgba(255,200,71,0.06); padding:12px 12px; border-radius:8px; }
+    .small { font-size:12px; opacity:0.8; }
+    .foot { display:flex; gap:10px; justify-content:space-between; align-items:center; padding:16px 24px; border-top:1px solid #1a1816; }
+    .pill { display:inline-flex; align-items:center; gap:8px; border:1px solid #282420; padding:6px 10px; border-radius:999px; font-size:12px; }
+    .status { height:10px; width:10px; border-radius:999px; background:#6b6b6b; }
+    .status.done { background: var(--ok); box-shadow: 0 0 12px var(--ok); }
+    .share { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .canvasWrap { background:#0d0c0b; border:1px solid #26231f; border-radius:12px; padding:12px; }
+    canvas { width:100%; height:220px; display:block; }
+    a.link { color: var(--honey); text-decoration: none; border-bottom: 1px dashed rgba(255,200,71,0.5); }
+
+    /* ===== JAR AESTHETIC ENHANCEMENTS ===== */
+    body.jar-off .jar .lid,
+    body.jar-off .jar .shine,
+    body.jar-off .jar .honeyPool,
+    body.jar-off .jar .drips { opacity: 0; }
+    .book.jar { position: relative; overflow:hidden; }
+    .jar::before { content:""; position:absolute; inset:0; border-radius:16px; pointer-events:none; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.06), inset 0 -80px 120px rgba(255,200,71,0.05); }
+    .jar .lid { position:absolute; top:-6px; left:6%; right:6%; height:22px; border-radius:10px; background: linear-gradient(180deg,#3a2a12,#201505); box-shadow: 0 8px 20px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.08); border:1px solid rgba(255,200,71,.25); pointer-events:none; z-index:5; }
+    .jar .shine { position:absolute; inset:0; pointer-events:none; z-index:4; background: radial-gradient(140% 80% at 10% -10%, rgba(255,255,255,.08), transparent 45%), radial-gradient(120% 70% at 90% -20%, rgba(255,255,255,.05), transparent 50%); mix-blend-mode: screen; }
+    .jar .honeyPool { position:absolute; left:0; right:0; bottom:-10px; height:120px; z-index:3; pointer-events:none; background: radial-gradient(120% 100% at 50% 0%, rgba(255,200,71,.12), transparent 60%), linear-gradient(180deg, rgba(255,200,71,.10), rgba(255,200,71,.0)); }
+    .jar .drips { position:absolute; inset:0; pointer-events:none; z-index:4; }
+    .jar .drip { position:absolute; top:-20px; width:10px; height:20px; border-radius:10px; opacity:.55; background: linear-gradient(180deg, rgba(255,200,71,.95), rgba(255,179,0,.7)); filter: blur(.2px); animation: dripDown 8s linear infinite; }
+    .jar .drip.d2 { left:18%; animation-duration: 9.5s; width:8px; }
+    .jar .drip.d3 { left:72%; animation-duration: 7.5s; width:12px; }
+    .jar .drip.d4 { left:40%; animation-duration: 10.5s; width:9px; }
+    @keyframes dripDown { 0%{ transform: translateY(0); opacity:.0; } 10%{opacity:.55;} 85%{ transform: translateY(calc(100% - 140px)); opacity:.7;} 100%{ transform: translateY(calc(100% - 120px)); opacity:0;} }
+    header .jarToggle { font-size:12px; padding:6px 10px; opacity:.9; }
+
+    /* ===== PRINT STYLE ===== */
+    @media print {
+      body { background:white; color:black; }
+      .book.jar::before { box-shadow: inset 0 0 0 2px rgba(0,0,0,0.2); }
+      .jar .lid, .jar .shine, .jar .honeyPool, .jar .drips { opacity:0.15; }
+      header, .foot, .ribbon, #jarToggle, #copyProof { display:none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="dot"></div>
+        <div>
+          <h1>Equations of Honey</h1>
+          <div class="sub">A self-solving, shareable Illumina notebook</div>
+        </div>
+      </div>
+      <nav aria-label="Spreads" class="steps" id="steps"></nav>
+      <button class="btn jarToggle" id="jarToggle">Jar Mode: On</button>
+    </header>
+
+    <div class="book jar">
+      <div class="lid"></div>
+      <div class="shine"></div>
+      <div class="honeyPool"></div>
+      <div class="drips">
+        <div class="drip d1" style="left:8%"></div>
+        <div class="drip d2"></div>
+        <div class="drip d3"></div>
+        <div class="drip d4"></div>
+      </div>
+      <div class="ribbon" id="ribbon">Spread 1 / 7</div>
+      <section class="spread" id="spread"></section>
+      <div class="foot">
+        <div class="row">
+          <button class="btn" id="prev">◀ Prev</button>
+          <button class="btn" id="next">Next ▶</button>
+        </div>
+        <div class="share">
+          <span class="pill"><span class="status" id="statusDot"></span><span id="statusText">Progress saved</span></span>
+          <button class=\"btn honey\" id=\"copyProof\">Copy Proof Code</button>
+          <button class=\"btn\" id=\"sharePoster\">Save Poster</button>
+          <button class=\"btn\" id=\"toggleBuzz\">Buzz: On</button>
+          <button class=\"btn\" id=\"translateBtn\">Translate</button>
+        </div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:12px; opacity:.7">Tip: Your progress is saved locally in your browser. Print view shows Jar outline faintly. Use Poster to generate a shareable image.</p>
+  </div>
+
+  <canvas id="posterCanvas" width="800" height="1000" style="display:none"></canvas>
+
+  <script>
+    const jarToggle = document.getElementById('jarToggle');
+    const statusDot = document.getElementById('statusDot');
+    const statusText = document.getElementById('statusText');
+    const sharePosterBtn = document.getElementById('sharePoster');
+    const posterCanvas = document.getElementById('posterCanvas');
+    const ctxPoster = posterCanvas.getContext('2d');
+
+    // --- Dummy spreads for brevity (reuse earlier spreads definition)...
+    const spreads=[{id:1,title:'Ratio Spark',equation:'6/7',puzzleHtml:'',check:()=>true,ritualHtml:''}];
+
+    const state = JSON.parse(localStorage.getItem('eoh_state_v1')||'{}');
+    if(typeof state.jarOn!=='boolean') state.jarOn=true;
+    function save(){ localStorage.setItem('eoh_state_v1',JSON.stringify(state)); }
+
+    if(jarToggle){
+      function sync(){ document.body.classList.toggle('jar-off',!state.jarOn); jarToggle.textContent='Jar Mode: '+(state.jarOn?'On':'Off'); }
+      jarToggle.addEventListener('click',()=>{state.jarOn=!state.jarOn; save(); sync();});
+      sync();
+    }
+
+    // Page turning smear effect
+    function turnPage(){ const s=document.getElementById('spread'); s.classList.add('turning'); setTimeout(()=>{ s.classList.remove('turning');},600);} 
+    document.getElementById('prev').addEventListener('click',()=>turnPage());
+    document.getElementById('next').addEventListener('click',()=>turnPage());
+
+    // Share poster generator
+    sharePosterBtn.addEventListener('click',()=>{
+      ctxPoster.fillStyle='#0c0b0a'; ctxPoster.fillRect(0,0,posterCanvas.width,posterCanvas.height);
+      ctxPoster.fillStyle='#ffc847'; ctxPoster.font='28px sans-serif'; ctxPoster.fillText('Equations of Honey',40,60);
+      ctxPoster.fillStyle='white'; ctxPoster.font='18px monospace'; // move proof code inside jar
+      ctxPoster.fillStyle='white';
+      ctxPoster.font='20px monospace';
+      // glow effect for proof code
+      ctxPoster.shadowColor = 'rgba(255,200,71,0.7)';
+      ctxPoster.shadowBlur = 12;
+      ctxPoster.fillText('Proof Code: '+btoa('dummy'),220,400);
+      ctxPoster.shadowBlur = 0;
+      // draw mini jar
+      ctxPoster.strokeStyle='rgba(255,200,71,0.6)';
+      ctxPoster.lineWidth=6;
+      ctxPoster.beginPath();
+      ctxPoster.moveTo(200,200);
+      ctxPoster.bezierCurveTo(180,160,420,160,400,200);
+      ctxPoster.lineTo(400,700);
+      ctxPoster.bezierCurveTo(420,740,180,740,200,700);
+      ctxPoster.closePath();
+      ctxPoster.stroke();
+      // title ribbon across jar
+      ctxPoster.fillStyle=ctxPoster.createLinearGradient(200,160,400,160);
+      ctxPoster.fillStyle.addColorStop(0,'#ffc847');
+      ctxPoster.fillStyle.addColorStop(1,'#ffb300');
+      ctxPoster.fillRect(200,160,200,30);
+      ctxPoster.fillStyle='#2a1b00';
+      ctxPoster.font='bold 18px sans-serif';
+      ctxPoster.fillText('Equations of Honey',210,182);
+      // lid
+      ctxPoster.fillStyle='rgba(58,42,18,0.8)';
+      ctxPoster.fillRect(200,180,200,20);
+      // honey drips
+      ctxPoster.fillStyle='rgba(255,200,71,0.6)';
+      ctxPoster.shadowColor='rgba(255,200,71,0.7)';
+      ctxPoster.shadowBlur=15;
+      ctxPoster.beginPath();
+      ctxPoster.arc(250,250,15,0,Math.PI*2);
+      ctxPoster.fill();
+      ctxPoster.beginPath();
+      ctxPoster.arc(330,300,12,0,Math.PI*2);
+      ctxPoster.fill();
+      const url=posterCanvas.toDataURL('image/png');
+      const a=document.createElement('a'); a.download='honey-proof.png'; a.href=url; a.click();
+    });
+    // --- Animate poster drips preview ---
+  let dripPhase=0;
+  function animatePoster(){
+    if(!posterCanvas) return;
+    dripPhase+=0.03;
+    const url=posterCanvas.toDataURL(); // keep static output unaffected
+    // redraw honey drips with wobble for preview
+    ctxPoster.clearRect(0,0,posterCanvas.width,posterCanvas.height);
+    ctxPoster.fillStyle='#0c0b0a'; ctxPoster.fillRect(0,0,posterCanvas.width,posterCanvas.height);
+    ctxPoster.fillStyle='#ffc847';
+    const y1=250+Math.sin(dripPhase)*5;
+    ctxPoster.beginPath(); ctxPoster.arc(250,y1,15,0,Math.PI*2); ctxPoster.fill();
+    const y2=300+Math.cos(dripPhase*0.7)*6;
+    ctxPoster.beginPath(); ctxPoster.arc(330,y2,12,0,Math.PI*2); ctxPoster.fill();
+    requestAnimationFrame(animatePoster);
+  }
+  animatePoster();
+
+  // --- Buzzing sound ---
+  const AudioCtx = window.AudioContext||window.webkitAudioContext;
+  const audioCtx = new AudioCtx();
+  let oscillator=null;
+  function startBuzz(){
+    oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    oscillator.type='sawtooth';
+    oscillator.frequency.setValueAtTime(60,audioCtx.currentTime);
+    oscillator.connect(gainNode);
+    gainNode.gain.setValueAtTime(0.03,audioCtx.currentTime);
+    gainNode.connect(audioCtx.destination);
+    oscillator.start();
+  }
+  function stopBuzz(){ if(oscillator){oscillator.stop(); oscillator.disconnect(); oscillator=null;} }
+  document.addEventListener('visibilitychange',()=>{ if(document.hidden){ stopBuzz(); } else { startBuzz(); } });
+  // start on first interaction
+  document.body.addEventListener('click',()=>{ if(!oscillator) startBuzz(); },{once:true});
+  // --- Buzz toggle ---
+  const buzzBtn=document.getElementById('toggleBuzz');
+  let buzzOn=true;
+  function syncBuzz(){ buzzBtn.textContent='Buzz: '+(buzzOn?'On':'Off'); if(!buzzOn) stopBuzz(); else if(!oscillator) startBuzz(); }
+  buzzBtn.addEventListener('click',()=>{ buzzOn=!buzzOn; syncBuzz(); });
+  syncBuzz();
+
+  // --- Translate Button ---
+  const translateBtn=document.getElementById('translateBtn');
+  translateBtn.addEventListener('click',()=>{
+    const selLang=prompt('Enter language code (e.g., es, fr, de, zh):','es');
+    if(!selLang) return;
+    const bodyText=document.body.innerText;
+    fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${selLang}&dt=t&q=${encodeURIComponent(bodyText)}`)
+      .then(r=>r.json())
+      .then(d=>{
+        const translated=d[0].map(x=>x[0]).join('');
+        document.body.innerHTML='<pre style=\"white-space:pre-wrap;font:16px/1.4 system-ui\">'+translated+'</pre>';
+      });
+  });
+</script>
+</body>
+</html>
