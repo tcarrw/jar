@@ -10,16 +10,27 @@
     *{box-sizing:border-box}
     html,body{height:100%}
     body{margin:0;background:radial-gradient(1200px 800px at 20% 0%,#171513,#0a0908 70%),#0c0b0a;color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,'Helvetica Neue',Arial}
-    .wrap{max-width:1100px;margin:0 auto;padding:24px}
-    header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px 24px calc(24px + env(safe-area-inset-bottom))}
+    header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
     .brand{display:flex;align-items:center;gap:12px}
     .dot{width:12px;height:12px;border-radius:999px;background:var(--honey);box-shadow:0 0 18px var(--honey)}
     h1{margin:0;font-weight:700;letter-spacing:.3px;font-size:clamp(20px,3.5vw,28px)}
     .sub{opacity:.75;font-size:13px}
-    nav.steps{display:flex;gap:8px;flex-wrap:wrap}
-    nav.steps button{border:1px solid #26231f;background:linear-gradient(180deg,#191715,#121110);color:var(--ink);padding:8px 10px;border-radius:10px;font-size:13px;cursor:pointer}
+    nav.steps{display:flex;gap:8px;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;padding-bottom:6px;margin-bottom:4px}
+    nav.steps button{flex:0 0 auto;scroll-snap-align:start;border:1px solid #26231f;background:linear-gradient(180deg,#191715,#121110);color:var(--ink);padding:8px 10px;border-radius:10px;font-size:13px;cursor:pointer}
     nav.steps button[data-active="true"]{outline:2px solid var(--honey);box-shadow:0 0 0 3px rgba(255,200,71,.18)}
-    .btn{border:1px solid #2a2622;background:linear-gradient(180deg,#1b1815,#14120f);color:var(--ink);padding:8px 10px;border-radius:10px;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block}
+    nav.steps button[data-done="true"]{ border-color:#3a2a12; box-shadow: 0 0 0 2px rgba(255,200,71,0.15), inset 0 0 14px rgba(255,200,71,0.18); }
+    nav.steps button[data-done="true"]::after{content:"✓";margin-left:6px;color:var(--ok)}
+    .scrollhint{display:none;font-size:12px;opacity:.85;padding:6px 8px;border:1px dashed #3a2a12;border-radius:10px;color:var(--ink);transition:opacity .6s ease}
+    @media (max-width:900px){.scrollhint{display:inline-block}}
+
+    .btn{border:1px solid #2a2622;background:linear-gradient(180deg,#1b1815,#14120f);color:var(--ink);padding:10px 12px;border-radius:10px;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block;min-height:44px}
+
+    .progress{position:relative;height:10px;border-radius:999px;background:#1a1816;border:1px solid #2a2622;margin:6px 0 12px;overflow:hidden}
+    .progress .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--honey),var(--honey-deep));box-shadow:0 0 14px rgba(255,200,71,.25) inset;transition:width .4s ease}
+    .progress .txt{position:absolute;right:8px;top:-18px;font-size:12px;opacity:.85}
+    @media (max-width:600px){.progress .txt{display:none}}
+
     .book{position:relative;border:1px solid #1e1b18;background:linear-gradient(180deg,#141210,#110f0d);border-radius:16px;box-shadow:0 30px 90px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.04);overflow:hidden}
     .ribbon{position:absolute;top:0;right:24px;padding:6px 10px;background:linear-gradient(90deg,var(--honey),var(--honey-deep));color:#2a1b00;font-weight:700;border-bottom-left-radius:8px;border-bottom-right-radius:8px}
     .spread{display:grid;grid-template-columns:1fr;transition:opacity .6s ease,transform .6s ease}
@@ -35,6 +46,7 @@
     .status{height:10px;width:10px;border-radius:999px;background:#6b6b6b}
     .status.done{background:var(--ok);box-shadow:0 0 12px var(--ok)}
     .canvasWrap{background:#0d0c0b;border:1px solid #26231f;border-radius:12px;padding:12px}
+
     /* Jar visuals */
     .book.jar::before{content:"";position:absolute;inset:0;border-radius:16px;pointer-events:none;box-shadow:inset 0 0 0 2px rgba(255,255,255,.06),inset 0 -80px 120px rgba(255,200,71,.05)}
     .jar .lid{position:absolute;top:-6px;left:6%;right:6%;height:22px;border-radius:10px;background:linear-gradient(180deg,#3a2a12,#201505);box-shadow:0 8px 20px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08);border:1px solid rgba(255,200,71,.25);pointer-events:none;z-index:5}
@@ -46,29 +58,20 @@
     .jar .drip.d3{left:72%;animation-duration:7.5s;width:12px}
     .jar .drip.d4{left:40%;animation-duration:10.5s;width:9px}
     @keyframes dripDown{0%{transform:translateY(0);opacity:0}10%{opacity:.55}85%{transform:translateY(calc(100% - 140px));opacity:.7}100%{transform:translateY(calc(100% - 120px));opacity:0}}
-    @media print{body{background:#fff;color:#000}.book.jar::before{box-shadow:inset 0 0 0 2px rgba(0,0,0,.2)}.jar .lid,.jar .shine,.jar .honeyPool,.jar .drips{opacity:.15}header,.foot,.ribbon,#jarToggle,#copyProof{display:none!important}}
-  nav.steps button[data-done="true"]::after{content:"✓";margin-left:6px;color:var(--ok)}
-  /* Completed step glow */
-    nav.steps button[data-done="true"]{ border-color:#3a2a12; box-shadow: 0 0 0 2px rgba(255,200,71,0.15), inset 0 0 14px rgba(255,200,71,0.18); }
-  /* Responsive enhancements */
-    nav.steps{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;padding-bottom:6px;margin-bottom:4px}
-    nav.steps button{flex:0 0 auto;scroll-snap-align:start}
-    .btn{min-height:44px}
-    .wrap{padding:24px 24px calc(24px + env(safe-area-inset-bottom))}
-    @media (max-width:900px){.page{min-height:unset}.ribbon{right:12px;font-size:12px}.brand h1{font-size:clamp(18px,5vw,24px)}}
-    @media (max-width:600px){.wrap{padding:16px 12px calc(16px + env(safe-area-inset-bottom))}.btn{font-size:13px;padding:10px 12px}nav.steps{gap:6px}}
-    @media (prefers-reduced-motion: reduce){.spread{transition:none!important}.jar .drip{animation:none!important}}
-  /* Scroll hint + sticky bar */
-    .scrollhint{display:none;font-size:12px;opacity:.85;padding:6px 8px;border:1px dashed #3a2a12;border-radius:10px;color:var(--ink);transition:opacity .6s ease}
-    @media (max-width:900px){.scrollhint{display:inline-block}}
+
+    /* Sticky mobile bar */
     .stickybar{position:fixed;left:0;right:0;bottom:0;z-index:999;display:flex;gap:8px;justify-content:space-between;align-items:center;padding:12px calc(16px + env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left));background:rgba(17,15,13,.82);backdrop-filter:blur(6px);border-top:1px solid #1a1816}
     .stickybar .btn{flex:1}
     @media (min-width:900px){.stickybar{display:none}}
     @media print{.stickybar{display:none!important}}
-  /* Honey Sparkles (celebration) */
+
+    /* Honey Sparkles */
     .sparkles{position:fixed;inset:0;pointer-events:none;z-index:2000;overflow:hidden}
     .sparkles .sparkle{position:absolute;border-radius:50%;background:radial-gradient(circle, rgba(255,200,71,1) 0%, rgba(255,179,0,.85) 60%, rgba(255,200,71,0) 70%);width:10px;height:10px;opacity:0;animation:pop 1.2s ease-out forwards;filter:blur(.3px)}
     @keyframes pop{0%{opacity:0;transform:translate(0,0) scale(.2)}10%{opacity:1}100%{opacity:0;transform:translate(var(--dx,0),var(--dy,0)) scale(1.2)}}
+
+    @media (prefers-reduced-motion: reduce){.spread{transition:none!important}.jar .drip{animation:none!important}}
+    @media print{body{background:#fff;color:#000}.book.jar::before{box-shadow:inset 0 0 0 2px rgba(0,0,0,.2)}.jar .lid,.jar .shine,.jar .honeyPool,.jar .drips{opacity:.15}header,.foot,.ribbon,#jarToggle,#copyProof{display:none!important}}
   </style>
 </head>
 <body>
@@ -85,7 +88,17 @@
       <span class="scrollhint" id="scrollhint">Scroll ▸</span>
       <a class="btn" href="https://tunes.plnt.earth" target="_blank" rel="noopener">Tunes</a>
       <button class="btn" id="jarToggle">Jar Mode: On</button>
+      <label class="small" for="langSelect">Lang:</label>
+      <select id="langSelect" aria-label="Language">
+        <option value="en">EN</option>
+        <option value="es">ES</option>
+        <option value="fr">FR</option>
+        <option value="de">DE</option>
+      </select>
+      <button class="btn" id="forgeBtn">Forge</button>
     </header>
+
+    <div class="progress"><div class="bar" id="progressBar"></div><div class="txt" id="progressText">0%</div></div>
 
     <div class="book jar">
       <div class="lid"></div>
@@ -108,6 +121,10 @@
           <span class="pill"><span class="status" id="statusDot"></span><span id="statusText">Progress saved</span></span>
           <button class="btn" id="copyProof">Copy Proof Code</button>
           <button class="btn" id="sharePoster">Save Poster</button>
+          <button class="btn" id="shareX">Share to X</button>
+          <button class="btn" id="copyShare">Copy Share Text</button>
+          <button class="btn" id="exportProgress">Export</button>
+          <button class="btn" id="importProgress">Import</button>
           <button class="btn" id="toggleBuzz">Buzz: On</button>
         </div>
       </div>
@@ -122,218 +139,137 @@
     <button class="btn" id="sNext">Next ▶</button>
   </div>
 
+  <!-- Forge modal -->
+  <div id="forgeModal" style="position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:2001">
+    <div style="background:#14120f;border:1px solid #2a2622;border-radius:12px;max-width:640px;width:92%;padding:16px">
+      <h3 style="margin:0 0 10px">Forge Details</h3>
+      <p class="small" style="opacity:.8;margin-top:0">Stored locally on this device.</p>
+      <div class="gridpaper" style="padding:12px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <label>Forge Name<input id="fg-name" class="btn" style="display:block;width:100%;padding:8px" placeholder="e.g., PLNT Earth Forge" /></label>
+          <label>Handle<input id="fg-handle" class="btn" style="display:block;width:100%;padding:8px" placeholder="@plnt" /></label>
+          <label>Website<input id="fg-site" class="btn" style="display:block;width:100%;padding:8px" placeholder="https://plnt.earth" /></label>
+          <label>X / Twitter<input id="fg-x" class="btn" style="display:block;width:100%;padding:8px" placeholder="@yourhandle" /></label>
+          <label>GitHub<input id="fg-gh" class="btn" style="display:block;width:100%;padding:8px" placeholder="github.com/you" /></label>
+          <label>Email (optional)<input id="fg-mail" class="btn" style="display:block;width:100%;padding:8px" placeholder="you@example.com" /></label>
+        </div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+          <button class="btn" id="fg-cancel">Close</button>
+          <button class="btn" id="fg-save">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // --- Data: 8 spreads (incl. cyclic 142857) ----------------------------
+    // --- Spreads -----------------------------------------------------------
     const spreads=[
       {id:1,title:'Ratio Spark',left:`<h2>Left · Puzzle</h2><div class="equation">6 / 7 = ?</div><p>Convert to decimals. Mark the repeating block.</p><div class="gridpaper"><p>0.<b>857142</b> 857142…</p></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>One spoon of honey; whisper the digits you found.</p></div><h3>Reflections</h3><textarea></textarea>`},
       {id:2,title:'Cycle Gate',left:`<h2>Left · Puzzle</h2><div class="equation">42 = 6 × 7</div><p>List all factors; note symmetric pairs.</p><div class="gridpaper"><p>1,2,3,6,7,14,21,42</p></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Count 42 slow breaths with honey nearby.</p></div><h3>Reflections</h3><textarea></textarea>`},
       {id:3,title:'Moon Fractal',left:`<h2>Left · Puzzle</h2><div class="equation">1 / 42</div><p>Compute the decimal; find the repeating block.</p><div class="gridpaper"><p>0.<b>023809</b> 523809…</p></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Trace a honey circle; mark 42 points.</p></div><h3>Reflections</h3><textarea></textarea>`},
       {id:4,title:'Seed of Infinity',left:`<h2>Left · Puzzle</h2><div class="equation">(1 + 1/n)^n → e</div><p>Evaluate for n=7,14,42 and compare to e.</p><div class="gridpaper"><p>Approaches ~2.71828…</p></div><button class="btn" onclick="alert('(1+1/7)^7 ≈ '+(Math.pow(1+1/7,7)).toFixed(6)+'\n(1+1/14)^14 ≈ '+(Math.pow(1+1/14,14)).toFixed(6)+'\n(1+1/42)^42 ≈ '+(Math.pow(1+1/42,42)).toFixed(6))">Quick calc</button>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Chew one seed with honey; sense expansion toward <i>e</i>.</p></div><h3>Reflections</h3><textarea></textarea>`},
       {id:5,title:'Harmony Pair',left:`<h2>Left · Puzzle</h2><div class="equation">Fibonacci → φ</div><p>Generate up to 21 and compute ratios.</p><div class="gridpaper"><p>→ 1.618…</p></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Two drops of honey; notice balance.</p></div><h3>Reflections</h3><textarea></textarea>`},
-      {id:6,title:'Sun & Moon Cross',left:`<h2>Left · Puzzle</h2><div class=\"equation\">sin(x) + cos(x)</div><p>Scrub phase to observe interference.</p><div class=\"canvasWrap\"><input id=\"s6-phase\" type=\"range\" min=\"0\" max=\"6.283\" step=\"0.005\" value=\"0\" /><canvas id=\"s6-canvas\" width=\"640\" height=\"240\"></canvas></div>`,right:`<h2>Right · Honey Ritual</h2><div class=\"callout\"><p>Taste honey, then hum a note for 10s. Feel the sum wave.</p></div><h3>Reflections</h3><textarea></textarea>`,mount:(root)=>{const cvs=root.querySelector('#s6-canvas');const phase=root.querySelector('#s6-phase');if(!cvs||!phase) return;const ctx=cvs.getContext('2d');const DPR=()=>Math.max(1,window.devicePixelRatio||1);function draw(){const dpr=DPR();const w=cvs.width/dpr,h=cvs.height/dpr,mid=h/2;ctx.save();ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);ctx.globalAlpha=.2;ctx.strokeStyle='#2a2622';const gx=Math.max(24,w/16),gy=Math.max(24,h/6);for(let x=0;x<w;x+=gx){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}for(let y=0;y<h;y+=gy){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}ctx.globalAlpha=1;ctx.strokeStyle='#403830';ctx.beginPath();ctx.moveTo(0,mid);ctx.lineTo(w,mid);ctx.stroke();const k=(Math.PI*2)/w*40;const ph=parseFloat(phase.value||'0');const plot=(fn,color)=>{ctx.beginPath();for(let x=0;x<w;x++){const y=mid-fn(x)*(h*0.33);if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.strokeStyle=color;ctx.stroke();};plot(x=>Math.sin(k*x+ph),'#ffcc66');plot(x=>Math.cos(k*x+ph),'#b08968');plot(x=>Math.sin(k*x+ph)+Math.cos(k*x+ph),'#7bd88f');ctx.restore();}function resize(){const wrap=root.querySelector('.canvasWrap');const wCSS=Math.max(300,wrap.clientWidth);const hCSS=Math.round(wCSS*0.375);const dpr=DPR();cvs.style.width=wCSS+'px';cvs.style.height=hCSS+'px';cvs.width=Math.floor(wCSS*dpr);cvs.height=Math.floor(hCSS*dpr);draw();}resize();phase.addEventListener('input',draw);window.addEventListener('resize',resize);}},
+      {id:6,title:'Sun & Moon Cross',left:`<h2>Left · Puzzle</h2><div class="equation">sin(x) + cos(x)</div><p>Scrub phase to observe interference.</p><div class="canvasWrap"><input id="s6-phase" type="range" min="0" max="6.283" step="0.005" value="0" /><canvas id="s6-canvas" width="640" height="240"></canvas></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Taste honey, then hum a note for 10s. Feel the sum wave.</p></div><h3>Reflections</h3><textarea></textarea>`,mount:(root)=>{const cvs=root.querySelector('#s6-canvas');const phase=root.querySelector('#s6-phase');if(!cvs||!phase) return;const ctx=cvs.getContext('2d');const DPR=()=>Math.max(1,window.devicePixelRatio||1);function draw(){const dpr=DPR();const w=cvs.width/dpr,h=cvs.height/dpr,mid=h/2;ctx.save();ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);ctx.globalAlpha=.2;ctx.strokeStyle='#2a2622';const gx=Math.max(24,w/16),gy=Math.max(24,h/6);for(let x=0;x<w;x+=gx){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}for(let y=0;y<h;y+=gy){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}ctx.globalAlpha=1;ctx.strokeStyle='#403830';ctx.beginPath();ctx.moveTo(0,mid);ctx.lineTo(w,mid);ctx.stroke();const k=(Math.PI*2)/w*40;const ph=parseFloat(phase.value||'0');const plot=(fn,color)=>{ctx.beginPath();for(let x=0;x<w;x++){const y=mid-fn(x)*(h*0.33);if(x===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.strokeStyle=color;ctx.stroke();};plot(x=>Math.sin(k*x+ph),'#ffcc66');plot(x=>Math.cos(k*x+ph),'#b08968');plot(x=>Math.sin(k*x+ph)+Math.cos(k*x+ph),'#7bd88f');ctx.restore();}function resize(){const wrap=root.querySelector('.canvasWrap');const wCSS=Math.max(300,wrap.clientWidth);const hCSS=Math.round(wCSS*0.375);const dpr=DPR();cvs.style.width=wCSS+'px';cvs.style.height=hCSS+'px';cvs.width=Math.floor(wCSS*dpr);cvs.height=Math.floor(hCSS*dpr);draw();}resize();phase.addEventListener('input',draw);window.addEventListener('resize',resize);}},
       {id:7,title:'Honey Proof',left:`<h2>Left · Puzzle</h2><div class="equation">Your Signature Equation</div><p>Lay out your proof in steps.</p><div class="gridpaper"><textarea id="s7-proof" placeholder="1) ...\n2) ...\nTherefore ..."></textarea></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Stir honey into warm tea. Read your steps aloud.</p></div><h3>Reflections</h3><textarea></textarea>`},
-      {id:8,title:'Cyclic Honey',
-    left:`<h2>Left · Puzzle</h2>
-      <div class=\"equation\">142857 (cycle of 6/7)</div>
-      <ol>
-        <li>Spot the cycle in 6÷7 to ~30 places.</li>
-        <li>Rotation test: 142857×(1–6) → rotations; 7×→999999.</li>
-        <li>Clock map: place six rotations around a circle; connect in order.</li>
-        <li>Residues mod 7: relate to k/7 decimals.</li>
-      </ol>
-      <div id=\"cyclic-widget\" class=\"gridpaper\"><div class=\"row\" style=\"margin-bottom:8px\"><button class=\"btn\" id=\"cw-generate\">Show 1×…6×</button><input id=\"cw-test\" placeholder=\"Test rotation (e.g., 571428)\" style=\"flex:1\" /><button class=\"btn\" id=\"cw-check\">Check</button></div><pre id=\"cw-out\" style=\"white-space:pre-wrap;margin:0;\"></pre></div>`,
-    right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Six-breath tasting: whisper 1‑4‑2‑8‑5‑7, rotate each breath.</p></div><p style=\"margin:6px 0 12px\"><a class=\"btn\" href=\"https://tunes.plnt.earth/#142857-6beat\" target=\"_blank\" rel=\"noopener\">Play 6‑beat rotation loop</a></p>
-      <h3>Reflections</h3>
-      <textarea placeholder=\"Where did your rhythm lock? Did ‘57’ feel like a hinge?\"></textarea>`,mount:(root)=>{const R=["142857","285714","428571","571428","714285","857142"];const o=root.querySelector('#cw-out');root.querySelector('#cw-generate').onclick=()=>{const lines=R.map((s,i)=>`${i+1}× → ${s}`);lines.push('7× → 999999');o.textContent=lines.join('\n');};root.querySelector('#cw-check').onclick=()=>{const v=(root.querySelector('#cw-test').value||'').trim();if(!/^\d{6}$/.test(v)){o.textContent='Enter a 6-digit number.';return;}o.textContent=R.includes(v)?'✓ Rotation of 142857.':'Not a rotation.';};}}
+      {id:8,title:'Cyclic Honey',left:`<h2>Left · Puzzle</h2><div class="equation">142857 (cycle of 6/7)</div><ol><li>Spot the cycle in 6÷7 to ~30 places.</li><li>Rotation test: 142857×(1–6) → rotations; 7×→999999.</li><li>Clock map: place six rotations around a circle; connect in order.</li><li>Residues mod 7: relate to k/7 decimals.</li></ol><div id="cyclic-widget" class="gridpaper"><div class="row" style="margin-bottom:8px"><button class="btn" id="cw-generate">Show 1×…6×</button><input id="cw-test" placeholder="Test rotation (e.g., 571428)" style="flex:1" /><button class="btn" id="cw-check">Check</button></div><pre id="cw-out" style="white-space:pre-wrap;margin:0;"></pre></div>`,right:`<h2>Right · Honey Ritual</h2><div class="callout"><p>Six-breath tasting: whisper 1‑4‑2‑8‑5‑7, rotate each breath.</p></div><p style="margin:6px 0 12px"><a class="btn" href="https://tunes.plnt.earth/#142857-6beat" target="_blank" rel="noopener">Play 6‑beat rotation loop</a></p><h3>Reflections</h3><textarea placeholder="Where did your rhythm lock? Did ‘57’ feel like a hinge?"></textarea>`,mount:(root)=>{const R=["142857","285714","428571","571428","714285","857142"];const o=root.querySelector('#cw-out');root.querySelector('#cw-generate').onclick=()=>{const lines=R.map((s,i)=>`${i+1}× → ${s}`);lines.push('7× → 999999');o.textContent=lines.join('\n');};root.querySelector('#cw-check').onclick=()=>{const v=(root.querySelector('#cw-test').value||'').trim();if(!/^\d{6}$/.test(v)){o.textContent='Enter a 6-digit number.';return;}o.textContent=R.includes(v)?'✓ Rotation of 142857.':'Not a rotation.';};}}
     ];
 
-    // --- Notebook state & rendering --------------------------------------
+    // --- State ------------------------------------------------------------
     const stepsEl=document.getElementById('steps');
     const spreadEl=document.getElementById('spread');
     const ribbonEl=document.getElementById('ribbon');
     const statusDot=document.getElementById('statusDot');
     const statusText=document.getElementById('statusText');
+    const progressBar=document.getElementById('progressBar');
+    const progressText=document.getElementById('progressText');
+    const posterCanvas=document.getElementById('posterCanvas');
+    const pctx=posterCanvas.getContext('2d');
+
     const state=JSON.parse(localStorage.getItem('eoh_nb_state')||'{}');
     if(typeof state.page!== 'number') state.page=1;
     if(typeof state.completions!== 'object' || !state.completions) state.completions = {};
-    if(typeof state.celebrated !== 'boolean') state.celebrated = false;
+    if(typeof state.celebrated!== 'boolean') state.celebrated = false;
+    if(typeof state.jarOn!== 'boolean') state.jarOn = true;
+    if(typeof state.lang!== 'string') state.lang='en';
+
+    const forge=JSON.parse(localStorage.getItem('eoh_forge')||'{}');
+
     function save(){ localStorage.setItem('eoh_nb_state', JSON.stringify(state)); }
     function hapticTap(){ try{ if(navigator.vibrate){ navigator.vibrate(10); return; } const AC = window.AudioContext || window.webkitAudioContext; if(!AC) return; if(!window.__hBuzzCtx) window.__hBuzzCtx = new AC(); const ctx = window.__hBuzzCtx; const o = ctx.createOscillator(), g = ctx.createGain(); o.type='square'; o.frequency.setValueAtTime(120, ctx.currentTime); o.connect(g); g.connect(ctx.destination); g.gain.setValueAtTime(0.0001, ctx.currentTime); g.gain.exponentialRampToValueAtTime(0.02, ctx.currentTime+0.01); g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime+0.05); o.start(); o.stop(ctx.currentTime+0.06); }catch(e){} }
-    function getProofCode(){
-      const bits = spreads.map(s=> state.completions[s.id] ? 1 : 0).join('');
-      return btoa(bits).replace(/=+$/,'');
-    }
-    function renderSteps(){
-      stepsEl.innerHTML='';
-      spreads.forEach(sp=>{
-        const b=document.createElement('button');
-        b.textContent=`S${sp.id
-    function render(){
-      const sp=spreads.find(s=>s.id===state.page)||spreads[0];
-      ribbonEl.textContent=`Spread ${sp.id} / ${spreads.length}`;
-      spreadEl.innerHTML='';
-      const L=document.createElement('div');L.className='page';L.innerHTML=sp.left;
-      const R=document.createElement('div');R.className='page';R.innerHTML=sp.right;
-      // Completion toggle UI
-      const controls=document.createElement('div');
-      controls.className='row';
-      controls.style.marginTop='12px';
-      const btn=document.createElement('button');
-      btn.className='btn';
-      const setLabel=()=>{ btn.textContent = state.completions[sp.id] ? '✓ Marked Complete — click to undo' : 'Mark Complete'; };
-      setLabel();
-      btn.addEventListener('click',()=>{
-        try{ hapticTap(); }catch(e){}
-        state.completions[sp.id] = !state.completions[sp.id];
-        const allDone = spreads.every(s => state.completions[s.id]);
-        if(allDone && !state.celebrated){ state.celebrated = true; save(); try{ celebrate(); }catch(e){} }
-        if(!allDone && state.celebrated){ state.celebrated = false; }
-        save(); setLabel(); renderSteps();
-      });
-      controls.appendChild(btn);
-      L.appendChild(controls);
-      spreadEl.appendChild(L); spreadEl.appendChild(R);
-      if(typeof sp.mount==='function'){ sp.mount(spreadEl); }
-      renderSteps();
-      statusText.textContent='Progress saved';
-      statusDot.classList.toggle('done', Object.values(state.completions).filter(Boolean).length===spreads.length);
-    }
+
+    function getProofCode(){ const bits = spreads.map(s=> state.completions[s.id] ? 1 : 0).join(''); return btoa(bits).replace(/=+$/,''); }
+    function updateProgress(){ const total=spreads.length; const done=Object.values(state.completions||{}).filter(Boolean).length; const pct=Math.round((done/total)*100)||0; if(progressBar) progressBar.style.width=pct+'%'; if(progressText) progressText.textContent=pct+'%'; }
+
+    function renderSteps(){ stepsEl.innerHTML=''; spreads.forEach(sp=>{ const b=document.createElement('button'); b.textContent=`S${sp.id}: ${sp.title}`; b.setAttribute('data-active', String(sp.id===state.page)); b.setAttribute('data-done', String(!!state.completions[sp.id])); b.addEventListener('click',()=>{ state.page=sp.id; save(); render(); }); stepsEl.appendChild(b); }); }
+
+    function render(){ const sp=spreads.find(s=>s.id===state.page)||spreads[0]; ribbonEl.textContent=`Spread ${sp.id} / ${spreads.length}`; try{ location.hash = '#s=' + sp.id; }catch(e){}
+      spreadEl.innerHTML=''; const L=document.createElement('div'); L.className='page'; L.innerHTML=sp.left; const R=document.createElement('div'); R.className='page'; R.innerHTML=sp.right; 
+      const controls=document.createElement('div'); controls.className='row'; controls.style.marginTop='12px'; const btn=document.createElement('button'); btn.className='btn'; const setLabel=()=>{ btn.textContent = state.completions[sp.id] ? '✓ Marked Complete — click to undo' : 'Mark Complete'; }; setLabel(); btn.addEventListener('click',()=>{ hapticTap(); state.completions[sp.id]=!state.completions[sp.id]; const allDone = spreads.every(s=>state.completions[s.id]); if(allDone && !state.celebrated){ state.celebrated=true; save(); celebrate(); } if(!allDone && state.celebrated){ state.celebrated=false; } save(); setLabel(); renderSteps(); updateProgress(); }); controls.appendChild(btn); L.appendChild(controls);
+      spreadEl.appendChild(L); spreadEl.appendChild(R); if(typeof sp.mount==='function'){ sp.mount(spreadEl); } renderSteps(); statusText.textContent='Progress saved'; statusDot.classList.toggle('done', Object.values(state.completions).filter(Boolean).length===spreads.length); updateProgress(); }
+
+    // init
     render(); save();
 
-    // Top Prev/Next with haptics + page turn
+    // Deep link: on load + change
+    (function(){ function jump(){ const m=(location.hash||'').match(/#s=(\d+)/i); if(m){ const n=Math.max(1, Math.min(spreads.length, parseInt(m[1],10))); if(n!==state.page){ state.page=n; save(); render(); } } } window.addEventListener('hashchange', jump); jump(); })();
+
+    // Top Prev/Next with haptics + smear
     document.getElementById('prev').addEventListener('click',()=>{ hapticTap(); spreadEl.classList.add('turning'); state.page=Math.max(1,state.page-1); setTimeout(()=>{ render(); spreadEl.classList.remove('turning'); save(); },300); });
     document.getElementById('next').addEventListener('click',()=>{ hapticTap(); spreadEl.classList.add('turning'); state.page=Math.min(spreads.length,state.page+1); setTimeout(()=>{ render(); spreadEl.classList.remove('turning'); save(); },300); });
 
-    // --- Hotkey: C to toggle completion -----------------------------------
-    document.addEventListener('keydown',(e)=>{
-      const tag=(document.activeElement&&document.activeElement.tagName)||'';
-      if((e.key==='c'||e.key==='C') && !/INPUT|TEXTAREA|SELECT/.test(tag)){
-        const sp=spreads.find(s=>s.id===state.page);
-        state.completions[sp.id]=!state.completions[sp.id];
-        save(); renderSteps(); render();
-      }
-    });
+    // Hotkey C toggle
+    document.addEventListener('keydown',(e)=>{ const tag=(document.activeElement&&document.activeElement.tagName)||''; if((e.key==='c'||e.key==='C') && !/INPUT|TEXTAREA|SELECT/.test(tag)){ const sp=spreads.find(s=>s.id===state.page); state.completions[sp.id]=!state.completions[sp.id]; save(); renderSteps(); render(); }});
 
-    function celebrate(){
-      const layer=document.createElement('div'); layer.className='sparkles'; document.body.appendChild(layer);
-      const N=80; for(let i=0;i<N;i++){
-        const s=document.createElement('span'); s.className='sparkle';
-        const x=Math.random()*100, y=Math.random()*100;
-        const dx=(Math.random()*2-1)*140, dy=(Math.random()*2-1)*140;
-        const size=6+Math.random()*10;
-        s.style.left=x+'%'; s.style.top=y+'%';
-        s.style.width=size+'px'; s.style.height=size+'px';
-        s.style.setProperty('--dx', dx+'px'); s.style.setProperty('--dy', dy+'px');
-        s.style.animationDelay=(Math.random()*0.15)+'s';
-        layer.appendChild(s);
-      }
-      setTimeout(()=>{ if(layer && layer.parentNode) layer.parentNode.removeChild(layer); }, 1700);
-      const posterBtn=document.getElementById('sharePoster');
-      if(posterBtn){ setTimeout(()=>{ posterBtn.click(); }, 1100); }
-    }
+    // Celebrate
+    function celebrate(){ try{ hapticTap(); }catch(e){} const layer=document.createElement('div'); layer.className='sparkles'; document.body.appendChild(layer); const N=80; for(let i=0;i<N;i++){ const s=document.createElement('span'); s.className='sparkle'; const x=Math.random()*100, y=Math.random()*100; const dx=(Math.random()*2-1)*140, dy=(Math.random()*2-1)*140; const size=6+Math.random()*10; s.style.left=x+'%'; s.style.top=y+'%'; s.style.width=size+'px'; s.style.height=size+'px'; s.style.setProperty('--dx', dx+'px'); s.style.setProperty('--dy', dy+'px'); s.style.animationDelay=(Math.random()*0.15)+'s'; layer.appendChild(s);} setTimeout(()=>{ layer.remove(); }, 1700); const posterBtn=document.getElementById('sharePoster'); if(posterBtn){ setTimeout(()=>{ posterBtn.click(); }, 1100); }}
 
-    // --- Jar toggle --------------------------------------------------------
-    const jarToggle=document.getElementById('jarToggle');
-    if(typeof state.jarOn!== 'boolean') state.jarOn=true;
-    function syncJar(){ document.body.classList.toggle('jar-off', !state.jarOn); jarToggle.textContent='Jar Mode: '+(state.jarOn?'On':'Off'); }
-    jarToggle.addEventListener('click',()=>{ state.jarOn=!state.jarOn; save(); syncJar(); });
-    syncJar();
+    // Jar toggle
+    const jarToggle=document.getElementById('jarToggle'); function syncJar(){ document.body.classList.toggle('jar-off', !state.jarOn); jarToggle.textContent='Jar Mode: '+(state.jarOn?'On':'Off'); } jarToggle.addEventListener('click',()=>{ state.jarOn=!state.jarOn; save(); syncJar(); }); syncJar();
 
-    // --- Poster (mini Jar, code inside) -----------------------------------
-    const posterCanvas=document.getElementById('posterCanvas');
-    const pctx=posterCanvas.getContext('2d');
+    // Poster generation (QR via external with offline fallback) ----------
     document.getElementById('sharePoster').addEventListener('click',()=>{
-      // bg
-      pctx.fillStyle='#0c0b0a'; pctx.fillRect(0,0,posterCanvas.width,posterCanvas.height);
-      // title
-      pctx.fillStyle='#ffc847'; pctx.font='28px sans-serif'; pctx.fillText('Equations of Honey',40,60);
-      // mini jar outline
-      pctx.strokeStyle='rgba(255,200,71,0.6)'; pctx.lineWidth=6; pctx.beginPath(); pctx.moveTo(200,200); pctx.bezierCurveTo(180,160,420,160,400,200); pctx.lineTo(400,700); pctx.bezierCurveTo(420,740,180,740,200,700); pctx.closePath(); pctx.stroke();
-      // ribbon
-      const grad=pctx.createLinearGradient(200,160,400,160); grad.addColorStop(0,'#ffc847'); grad.addColorStop(1,'#ffb300'); pctx.fillStyle=grad; pctx.fillRect(200,160,200,30); pctx.fillStyle='#2a1b00'; pctx.font='bold 18px sans-serif'; pctx.fillText('Equations of Honey',210,182);
-      // lid
-      pctx.fillStyle='rgba(58,42,18,0.8)'; pctx.fillRect(200,180,200,20);
-      // drips
-      pctx.fillStyle='rgba(255,200,71,0.6)'; pctx.shadowColor='rgba(255,200,71,0.7)'; pctx.shadowBlur=15; pctx.beginPath(); pctx.arc(250,250,15,0,Math.PI*2); pctx.fill(); pctx.beginPath(); pctx.arc(330,300,12,0,Math.PI*2); pctx.fill(); pctx.shadowBlur=0;
-      // proof code inside
-      pctx.shadowColor='rgba(255,200,71,0.7)'; pctx.shadowBlur=12; pctx.fillStyle='#fff'; pctx.font='20px monospace'; pctx.fillText('Proof Code: '+getProofCode(),220,400); pctx.shadowBlur=0;
-      // list completed spread titles
-      let y=430; pctx.fillStyle='#ffc847'; pctx.font='16px sans-serif'; pctx.fillText('Completed:',220,y); y+=22; pctx.fillStyle='#ffffff';
-      spreads.forEach(sp=>{ if(state.completions[sp.id]){ pctx.fillText('• '+sp.title,220,y); y+=20; }});
-
-      // Link + QR-like block + printed link text
-      const base=(location.href.split('#')[0]||'');
-      const link = base + '#s=' + state.page;
-      function wrapText(ctx, text, x, y, maxWidth, lineHeight){
-        const words=text.split(' '); let line='';
-        for(let n=0;n<words.length;n++){
-          const test=line + (line? ' ':'') + words[n];
-          if(ctx.measureText(test).width > maxWidth){ ctx.fillText(line,x,y); line=words[n]; y+=lineHeight; }
-          else{ line=test; }
-        }
-        if(line) ctx.fillText(line,x,y);
-      }
-      function drawPseudoQR(ctx,x,y,size,str){
-        const N=29, cell=Math.floor(size/N), pad=(size-cell*N)/2;
-        ctx.fillStyle='#0c0b0a'; ctx.fillRect(x,y,size,size); ctx.strokeStyle='#3a2a12'; ctx.strokeRect(x,y,size,size);
-        function finder(px,py){ ctx.fillStyle='#fff'; ctx.fillRect(px,py,cell*7,cell*7); ctx.fillStyle='#0c0b0a'; ctx.fillRect(px+cell,py+cell,cell*5,cell*5); ctx.fillStyle='#fff'; ctx.fillRect(px+cell*2,py+cell*2,cell*3,cell*3); }
-        finder(x+pad,y+pad); finder(x+size-pad-cell*7,y+pad); finder(x+pad,y+size-pad-cell*7);
-        let seed=2166136261>>>0; for(let i=0;i<str.length;i++){ seed^=str.charCodeAt(i); seed=Math.imul(seed,16777619)>>>0; }
-        ctx.fillStyle='#fff';
-        for(let r=0;r<N;r++){
-          for(let c=0;c<N;c++){
-            const inFinder=(r<7&&c<7)||(r<7&&c>=N-7)||(r>=N-7&&c<7);
-            if(inFinder) continue;
-            seed=(seed*1664525+1013904223)>>>0;
-            if((seed>>>28)&1){ ctx.fillRect(x+pad+c*cell, y+pad+r*cell, cell-1, cell-1); }
-          }
-        }
-      }
-      drawPseudoQR(pctx, 560, 730, 210, link);
-      pctx.fillStyle='#ffc847'; pctx.font='12px monospace'; pctx.fillText('Open Link:', 560, 960);
-      pctx.fillStyle='#ffffff'; wrapText(pctx, link, 560, 975, 220, 14);
-
-      // download
-      const url=posterCanvas.toDataURL('image/png'); const a=document.createElement('a'); a.download='honey-proof.png'; a.href=url; a.click();
-    });
-      // download
-      const url=posterCanvas.toDataURL('image/png'); const a=document.createElement('a'); a.download='honey-proof.png'; a.href=url; a.click();
+      const W=posterCanvas.width, H=posterCanvas.height; const base=(location.href.split('#')[0]||''); const link = base + '#s=' + state.page; const forgeName=(forge.name||'').trim(); const forgeHandle=(forge.handle||'').trim();
+      function wrapText(ctx, text, x, y, maxWidth, lineHeight){ const words=text.split(' '); let line=''; for(let n=0;n<words.length;n++){ const test=line + (line? ' ':'') + words[n]; if(ctx.measureText(test).width > maxWidth){ ctx.fillText(line,x,y); line=words[n]; y+=lineHeight; } else { line=test; } } if(line) ctx.fillText(line,x,y); }
+      function drawBase(){ pctx.clearRect(0,0,W,H); pctx.fillStyle='#0c0b0a'; pctx.fillRect(0,0,W,H); pctx.fillStyle='#ffc847'; pctx.font='28px sans-serif'; pctx.fillText('Equations of Honey',40,60); if(forgeName){ pctx.font='14px sans-serif'; pctx.fillStyle='#ffffff'; pctx.fillText('by '+forgeName+(forgeHandle? ' '+forgeHandle : ''), 40, 80); } pctx.strokeStyle='rgba(255,200,71,0.6)'; pctx.lineWidth=6; pctx.beginPath(); pctx.moveTo(200,200); pctx.bezierCurveTo(180,160,420,160,400,200); pctx.lineTo(400,700); pctx.bezierCurveTo(420,740,180,740,200,700); pctx.closePath(); pctx.stroke(); const grad=pctx.createLinearGradient(200,160,400,160); grad.addColorStop(0,'#ffc847'); grad.addColorStop(1,'#ffb300'); pctx.fillStyle=grad; pctx.fillRect(200,160,200,30); pctx.fillStyle='#2a1b00'; pctx.font='bold 18px sans-serif'; pctx.fillText('Equations of Honey',210,182); pctx.fillStyle='rgba(58,42,18,0.8)'; pctx.fillRect(200,180,200,20); pctx.fillStyle='rgba(255,200,71,0.6)'; pctx.shadowColor='rgba(255,200,71,0.7)'; pctx.shadowBlur=15; pctx.beginPath(); pctx.arc(250,250,15,0,Math.PI*2); pctx.fill(); pctx.beginPath(); pctx.arc(330,300,12,0,Math.PI*2); pctx.fill(); pctx.shadowBlur=0; pctx.shadowColor='rgba(255,200,71,0.7)'; pctx.shadowBlur=12; pctx.fillStyle='#fff'; pctx.font='20px monospace'; pctx.fillText('Proof Code: '+getProofCode(),220,400); pctx.shadowBlur=0; let y=430; pctx.fillStyle='#ffc847'; pctx.font='16px sans-serif'; pctx.fillText('Completed:',220,y); y+=22; pctx.fillStyle='#ffffff'; spreads.forEach(sp=>{ if(state.completions[sp.id]){ pctx.fillText('• '+sp.title,220,y); y+=20; }}); }
+      drawBase();
+      // Try real QR image; else fallback pseudo
+      const qr = new Image(); qr.crossOrigin='anonymous'; qr.onload = ()=>{ pctx.drawImage(qr, 560, 730, 210, 210); pctx.fillStyle='#ffc847'; pctx.font='12px monospace'; pctx.fillText('Open Link:', 560, 960); pctx.fillStyle='#ffffff'; wrapText(pctx, link, 560, 975, 220, 14); const url=posterCanvas.toDataURL('image/png'); const a=document.createElement('a'); a.download='honey-proof.png'; a.href=url; a.click(); };
+      qr.onerror = ()=>{ // pseudo-QR fallback
+        const N=29, cell=Math.floor(210/N), pad=(210-cell*N)/2, x=560, y=730; pctx.fillStyle='#0c0b0a'; pctx.fillRect(x,y,210,210); pctx.strokeStyle='#3a2a12'; pctx.strokeRect(x,y,210,210); function finder(px,py){ pctx.fillStyle='#fff'; pctx.fillRect(px,py,cell*7,cell*7); pctx.fillStyle='#0c0b0a'; pctx.fillRect(px+cell,py+cell,cell*5,cell*5); pctx.fillStyle='#fff'; pctx.fillRect(px+cell*2,py+cell*2,cell*3,cell*3); } finder(x+pad,y+pad); finder(x+210-pad-cell*7,y+pad); finder(x+pad,y+210-pad-cell*7); let seed=2166136261>>>0; for(let i=0;i<link.length;i++){ seed^=link.charCodeAt(i); seed=Math.imul(seed,16777619)>>>0; } pctx.fillStyle='#fff'; for(let r=0;r<N;r++){ for(let c=0;c<N;c++){ const inFinder=(r<7&&c<7)||(r<7&&c>=N-7)||(r>=N-7&&c<7); if(inFinder) continue; seed=(seed*1664525+1013904223)>>>0; if((seed>>>28)&1){ pctx.fillRect(x+pad+c*cell, y+pad+r*cell, cell-1, cell-1); } }} pctx.fillStyle='#ffc847'; pctx.font='12px monospace'; pctx.fillText('Open Link:', 560, 960); pctx.fillStyle='#ffffff'; wrapText(pctx, link, 560, 975, 220, 14); const url=posterCanvas.toDataURL('image/png'); const a=document.createElement('a'); a.download='honey-proof.png'; a.href=url; a.click(); };
+      qr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=210x210&margin=0&data='+encodeURIComponent(link);
     });
 
-    // --- Buzz --------------------------------------------------------------
-    const buzzBtn=document.getElementById('toggleBuzz');
-    let buzzOn=false, osc=null, gain=null; let audioCtx=null;
-    function startBuzz(){ if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); osc=audioCtx.createOscillator(); gain=audioCtx.createGain(); osc.type='sawtooth'; osc.frequency.setValueAtTime(60,audioCtx.currentTime); osc.connect(gain); gain.gain.setValueAtTime(.03,audioCtx.currentTime); gain.connect(audioCtx.destination); osc.start(); }
-    function stopBuzz(){ if(osc){osc.stop(); osc.disconnect(); osc=null;} }
-    function syncBuzz(){ buzzBtn.textContent='Buzz: '+(buzzOn?'On':'Off'); if(buzzOn){ if(!osc) startBuzz(); } else { if(gain) gain.gain.setValueAtTime(0,(audioCtx?audioCtx.currentTime:0)); stopBuzz(); } }
-    buzzBtn.addEventListener('click',()=>{ buzzOn=!buzzOn; if(buzzOn && audioCtx && audioCtx.state==='suspended') audioCtx.resume(); syncBuzz(); });
-    document.body.addEventListener('click',()=>{ if(!buzzOn){ buzzOn=true; syncBuzz(); } },{once:true});
-    document.addEventListener('visibilitychange',()=>{ if(document.hidden){ stopBuzz(); } else if(buzzOn && !osc){ startBuzz(); } });
-    // --- Scroll hint logic ---
-  (function(){
-    var steps=document.getElementById('steps');
-    var hint=document.getElementById('scrollhint');
-    if(!steps||!hint) return;
-    function check(){
-      var overflow = steps.scrollWidth > steps.clientWidth + 4;
-      hint.style.display = overflow ? 'inline-block' : 'none';
-      hint.style.opacity = overflow ? '1' : '0';
-      if(overflow){ setTimeout(function(){ hint.style.opacity='0'; }, 4000); }
-    }
-    steps.addEventListener('scroll', function(){ hint.style.opacity='0'; });
-    window.addEventListener('resize', check);
-    check();
-  })();
+    // Share helpers --------------------------------------------------------
+    function shareLink(){ try{ return location.href.split('#')[0] + '#s=' + state.page; }catch(e){ return '#'; } }
+    function shareText(){ const done=Object.values(state.completions||{}).filter(Boolean).length; const pct=Math.round((done/spreads.length)*100)||0; const f=(forge.name? ` — ${forge.name}`: ''); return `Equations of Honey${f} — ${pct}% complete — Proof: ${getProofCode()} — ${shareLink()}`; }
 
-  // --- Sticky bar wiring ---
-  (function(){
-    var sPrev=document.getElementById('sPrev');
-    var sNext=document.getElementById('sNext');
-    var prev=document.getElementById('prev');
-    var next=document.getElementById('next');
-    if(sPrev&&prev){ sPrev.addEventListener('click', function(){ prev.click(); }); }
-    if(sNext&&next){ sNext.addEventListener('click', function(){ next.click(); }); }
-  })();
-</script>
+    document.getElementById('copyProof').addEventListener('click',async()=>{ try{ await navigator.clipboard.writeText(getProofCode()); statusText.textContent='Proof code copied'; setTimeout(()=>statusText.textContent='Progress saved',1500);}catch(e){} });
+    document.getElementById('shareX').addEventListener('click',()=>{ const txt=shareText(); const u='https://x.com/intent/post?text='+encodeURIComponent(txt); window.open(u,'_blank','noopener'); });
+    document.getElementById('copyShare').addEventListener('click',async()=>{ try{ await navigator.clipboard.writeText(shareText()); statusText.textContent='Share text copied'; setTimeout(()=>statusText.textContent='Progress saved',1500);}catch(e){} });
+    document.getElementById('exportProgress').addEventListener('click',()=>{ const data=JSON.stringify({page:state.page, completions:state.completions, lang:state.lang, forge},null,2); const blob=new Blob([data],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='eoh-progress.json'; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href), 5000); });
+    document.getElementById('importProgress').addEventListener('click',()=>{ const s=prompt('Paste your Equations of Honey progress JSON:'); if(!s) return; try{ const o=JSON.parse(s); if(o&&typeof o==='object'){ if(o.completions) state.completions=o.completions; if(o.page) state.page=Math.max(1,Math.min(spreads.length, o.page)); if(o.lang) state.lang=o.lang; if(o.forge) localStorage.setItem('eoh_forge', JSON.stringify(o.forge)); save(); render(); updateProgress(); } }catch(e){ alert('Could not parse JSON.'); } });
+
+    // Buzz ---------------------------------------------------------------
+    const buzzBtn=document.getElementById('toggleBuzz'); let buzzOn=false, osc=null, gain=null; let audioCtx=null; function startBuzz(){ if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)(); osc=audioCtx.createOscillator(); gain=audioCtx.createGain(); osc.type='sawtooth'; osc.frequency.setValueAtTime(60,audioCtx.currentTime); osc.connect(gain); gain.gain.setValueAtTime(.03,audioCtx.currentTime); gain.connect(audioCtx.destination); osc.start(); } function stopBuzz(){ if(osc){osc.stop(); osc.disconnect(); osc=null;} } function syncBuzz(){ buzzBtn.textContent='Buzz: '+(buzzOn?'On':'Off'); if(buzzOn){ if(!osc) startBuzz(); } else { if(gain) gain.gain.setValueAtTime(0,(audioCtx?audioCtx.currentTime:0)); stopBuzz(); } } buzzBtn.addEventListener('click',()=>{ buzzOn=!buzzOn; if(buzzOn && audioCtx && audioCtx.state==='suspended') audioCtx.resume(); syncBuzz(); }); document.body.addEventListener('click',()=>{ if(!buzzOn){ buzzOn=true; syncBuzz(); } },{once:true}); document.addEventListener('visibilitychange',()=>{ if(document.hidden){ stopBuzz(); } else if(buzzOn && !osc){ startBuzz(); } });
+
+    // Scroll hint --------------------------------------------------------
+    (function(){ const steps=document.getElementById('steps'); const hint=document.getElementById('scrollhint'); if(!steps||!hint) return; function check(){ const overflow = steps.scrollWidth > steps.clientWidth + 4; hint.style.display = overflow ? 'inline-block' : 'none'; hint.style.opacity = overflow ? '1' : '0'; if(overflow){ setTimeout(()=>{ hint.style.opacity='0'; }, 4000); } } steps.addEventListener('scroll', ()=>{ hint.style.opacity='0'; }); window.addEventListener('resize', check); check(); })();
+
+    // Sticky bar wiring --------------------------------------------------
+    (function(){ const sPrev=document.getElementById('sPrev'); const sNext=document.getElementById('sNext'); const prev=document.getElementById('prev'); const next=document.getElementById('next'); if(sPrev&&prev){ sPrev.addEventListener('click', ()=>{ hapticTap(); prev.click(); }); } if(sNext&&next){ sNext.addEventListener('click', ()=>{ hapticTap(); next.click(); }); } })();
+
+    // Language quick toggle ---------------------------------------------
+    const langSelect=document.getElementById('langSelect'); const I18N={ en:{title:'Equations of Honey',subtitle:'A self-solving, shareable Illumina notebook',prev:'◀ Prev',next:'Next ▶',copy:'Copy Proof Code',poster:'Save Poster',buzz:'Buzz',tunes:'Tunes',jar:'Jar Mode',sharex:'Share to X',copyshare:'Copy Share Text',export:'Export',import:'Import',lang:'Lang:',forge:'Forge'}, es:{title:'Ecuaciones de Miel',subtitle:'Cuaderno Illumina auto‑resoluble y compartible',prev:'◀ Anterior',next:'Siguiente ▶',copy:'Copiar código',poster:'Guardar póster',buzz:'Zumbido',tunes:'Tunes',jar:'Modo Tarro',sharex:'Publicar en X',copyshare:'Copiar texto',export:'Exportar',import:'Importar',lang:'Idioma:',forge:'Forja'}, fr:{title:'Équations de Miel',subtitle:'Carnet Illumina auto‑résolutif et partageable',prev:'◀ Préc.',next:'Suiv. ▶',copy:'Copier le code',poster:'Enregistrer l’affiche',buzz:'Bourdonnement',tunes:'Tunes',jar:'Mode Bocal',sharex:'Partager sur X',copyshare:'Copier le texte',export:'Exporter',import:'Importer',lang:'Langue :',forge:'Forge'}, de:{title:'Gleichungen des Honigs',subtitle:'Selbstlösbares, teilbares Illumina‑Notizbuch',prev:'◀ Zurück',next:'Weiter ▶',copy:'Beweiscodes kopieren',poster:'Poster speichern',buzz:'Brummen',tunes:'Tunes',jar:'Glas‑Modus',sharex:'Auf X teilen',copyshare:'Text kopieren',export:'Exportieren',import:'Importieren',lang:'Sprache:',forge:'Schmiede'} };
+    function applyI18n(){ const L=I18N[state.lang]||I18N.en; document.querySelector('h1').textContent=L.title; document.querySelector('.sub').textContent=L.subtitle; document.getElementById('prev').textContent=L.prev; document.getElementById('next').textContent=L.next; document.getElementById('copyProof').textContent=L.copy; document.getElementById('sharePoster').textContent=L.poster; document.getElementById('toggleBuzz').textContent=L.buzz+': '+( (typeof osc==='object' && osc) ? 'On':'On'); const jt=document.getElementById('jarToggle'); if(jt) jt.textContent=L.jar+': '+(document.body.classList.contains('jar-off')?'Off':'On'); const tunes=document.querySelector('a[href^="https://tunes"]'); if(tunes) tunes.textContent=L.tunes; const lx=document.getElementById('shareX'); if(lx) lx.textContent=L.sharex; const cs=document.getElementById('copyShare'); if(cs) cs.textContent=L.copyshare; const ex=document.getElementById('exportProgress'); if(ex) ex.textContent=L.export; const im=document.getElementById('importProgress'); if(im) im.textContent=L.import; const lab=document.querySelector('label[for="langSelect"]'); if(lab) lab.textContent=L.lang; const fg=document.getElementById('forgeBtn'); if(fg) fg.textContent=L.forge; }
+    if(langSelect){ langSelect.value=state.lang; langSelect.addEventListener('change',()=>{ state.lang=langSelect.value; save(); applyI18n(); }); applyI18n(); }
+
+    // Forge modal handlers -----------------------------------------------
+    const forgeBtn=document.getElementById('forgeBtn'); const forgeModal=document.getElementById('forgeModal'); const fgName=document.getElementById('fg-name'); const fgHandle=document.getElementById('fg-handle'); const fgSite=document.getElementById('fg-site'); const fgX=document.getElementById('fg-x'); const fgGH=document.getElementById('fg-gh'); const fgMail=document.getElementById('fg-mail'); const fgCancel=document.getElementById('fg-cancel'); const fgSave=document.getElementById('fg-save');
+    function openForge(){ fgName.value=forge.name||''; fgHandle.value=forge.handle||''; fgSite.value=forge.site||''; fgX.value=forge.x||''; fgGH.value=forge.gh||''; fgMail.value=forge.mail||''; forgeModal.style.display='flex'; }
+    function closeForge(){ forgeModal.style.display='none'; }
+    function saveForge(){ const data={ name:fgName.value, handle:fgHandle.value, site:fgSite.value, x:fgX.value, gh:fgGH.value, mail:fgMail.value }; localStorage.setItem('eoh_forge', JSON.stringify(data)); hapticTap(); closeForge(); }
+    forgeBtn.addEventListener('click', openForge); fgCancel.addEventListener('click', closeForge); fgSave.addEventListener('click', saveForge); forgeModal.addEventListener('click',(e)=>{ if(e.target===forgeModal) closeForge(); });
+
+  </script>
 </body>
 </html>
