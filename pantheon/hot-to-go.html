@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pantheon — Hot To Go (Collective Joy / Swarm)</title>
+<style>
+:root{
+  --bg:#fff;--ink:#121212;--soft:#ececec;
+  --gold:#caa100;--orange:#ff8a00;--vio:#7a5cff;--mint:#00d7a0;--sun:#ffd34d;--grey:#7a7a7a
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:24px}
+.header{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+h1{font-size:26px;margin:0 0 4px;font-weight:800}
+.sub{opacity:.75;font-size:13px;margin-bottom:14px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:2px solid var(--gold);background:var(--gold);color:#fff;font-weight:700;font-size:14px;padding:8px 14px;border-radius:12px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:#fff;color:var(--gold)}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-top:16px}
+.card{border:1px solid var(--soft);border-radius:14px;padding:16px;background:#fff;box-shadow:0 6px 28px rgba(0,0,0,.05)}
+.card h2{margin:0 0 10px;font-size:16px}
+.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.badge{display:inline-block;border:1px solid var(--soft);border-radius:999px;padding:4px 10px;font-size:12px;margin-right:6px}
+.label{font-size:12px;opacity:.8;margin-bottom:6px}
+textarea,input[type="text"]{width:100%;border:1px solid var(--soft);border-radius:12px;padding:10px;min-height:110px;resize:vertical;font:inherit}
+.small{min-height:auto}
+hr{border:0;border-top:1px solid var(--soft);margin:16px 0}
+svg{width:100%;height:auto;display:block}
+.footer{margin-top:20px;font-size:12px;opacity:.65;text-align:center}
+@media (max-width:880px){.grid{grid-template-columns:1fr}}
+@media print{.nav{display:none}.card{box-shadow:none;border:0}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div>
+        <h1>🐝 Hot To Go — Collective Joy / Swarm</h1>
+        <div class="sub">Interlude spread in the Illumina Pantheon. Role: **collective ignition** — synchronize small moves into a swarm moment.</div>
+      </div>
+      <div class="nav">
+        <a class="btn" href="../index.html">← Home</a>
+        <a class="btn" href="../day/index.html">Start Day 1 →</a>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- Left: Visual + Brief -->
+      <section class="card">
+        <h2>Interlude Glyph</h2>
+        <!-- Dancefloor swarm motif (no external assets) -->
+        <svg viewBox="0 0 820 520" role="img" aria-label="Hot To Go swarm dance glyph">
+          <rect x="20" y="20" width="780" height="480" rx="16" fill="#fff" stroke="var(--soft)"/>
+          <!-- grid dancefloor -->
+          <g stroke="var(--soft)" stroke-width="1" opacity=".65">
+            <!-- verticals -->
+            <path d="M100 80 V460"/><path d="M180 80 V460"/><path d="M260 80 V460"/>
+            <path d="M340 80 V460"/><path d="M420 80 V460"/><path d="M500 80 V460"/>
+            <path d="M580 80 V460"/><path d="M660 80 V460"/>
+            <!-- horizontals -->
+            <path d="M80 120 H740"/><path d="M80 180 H740"/><path d="M80 240 H740"/>
+            <path d="M80 300 H740"/><path d="M80 360 H740"/><path d="M80 420 H740"/>
+          </g>
+
+          <!-- swarm nodes (bees) pulsing rings -->
+          <g fill="none" opacity=".9">
+            <g>
+              <circle cx="220" cy="210" r="28" stroke="var(--mint)" stroke-width="3"/>
+              <circle cx="220" cy="210" r="44" stroke="var(--mint)" stroke-width="2" opacity=".5"/>
+            </g>
+            <g>
+              <circle cx="420" cy="280" r="28" stroke="var(--vio)" stroke-width="3"/>
+              <circle cx="420" cy="280" r="44" stroke="var(--vio)" stroke-width="2" opacity=".5"/>
+            </g>
+            <g>
+              <circle cx="600" cy="200" r="28" stroke="var(--sun)" stroke-width="3"/>
+              <circle cx="600" cy="200" r="44" stroke="var(--sun)" stroke-width="2" opacity=".5"/>
+            </g>
+          </g>
+
+          <!-- flow arrows connecting nodes -->
+          <g stroke="var(--orange)" stroke-width="3" fill="none" opacity=".9">
+            <path d="M220 210 C300 210, 340 260, 420 280" />
+            <path d="M420 280 C510 260, 540 230, 600 200" />
+          </g>
+
+          <!-- caption -->
+          <text x="410" y="475" text-anchor="middle" font-size="13" fill="var(--grey)">
+            Simple moves • Shared beat • Swarm lift
+          </text>
+        </svg>
+
+        <hr>
+
+        <h2>Brief</h2>
+        <p><span class="badge">Archetype</span> Collective Joy / Swarm • dancefloor, call-and-response, contagious rhythm.</p>
+        <p><span class="badge">Function</span> Turns individual beats into **shared momentum**; creates an easy on-ramp for newcomers.</p>
+        <p><span class="badge">When</span> Use for community moments, launches, streams, or anytime you want the room to **move together**.</p>
+      </section>
+
+      <!-- Right: Prompts + Notes -->
+      <section class="card">
+        <h2>Prompts & Notes</h2>
+        <div class="meta">
+          <input id="beat" type="text" class="small" placeholder="Shared beat (120 BPM? clap/step cue?)">
+          <input id="move" type="text" class="small" placeholder="Micro-move (1–2 steps anyone can do)">
+          <input id="invite" type="text" class="small" placeholder="Invite line (how you pull others in)">
+        </div>
+
+        <div class="label">🗺️ Formation (simple path)</div>
+        <textarea id="formation" placeholder="Describe the group pattern: wave, circle, line, spiral. Keep it inclusive & easy."></textarea>
+
+        <div class="label" style="margin-top:10px">📣 Call & Response (script)</div>
+        <textarea id="call" placeholder="What you say (call) → what they do (response). 2–4 beats is enough."></textarea>
+
+        <div class="label" style="margin-top:10px">🌊 Lift Moment (how you escalate)</div>
+        <textarea id="lift" placeholder="When the swarm catches: lights? camera pan? chorus drop? What’s the 10-second highlight?"></textarea>
+
+        <hr>
+        <div class="nav" style="justify-content:flex-end">
+          <button class="btn" id="clear">Clear</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer">Pantheon · Hot To Go · Part of Jar — Illumina 1</div>
+  </div>
+
+<script>
+(function(){
+  var ids=["beat","move","invite","formation","call","lift"];
+  function q(id){return document.getElementById(id)}
+  function k(id){return "pantheon_hot2go_"+id}
+  function save(id){localStorage.setItem(k(id), q(id).value)}
+  function load(id){q(id).value = localStorage.getItem(k(id)) || ""}
+
+  ids.forEach(function(id){ load(id); q(id).oninput=function(){ save(id) } });
+  document.getElementById("clear").onclick=function(){
+    ids.forEach(function(id){ localStorage.removeItem(k(id)) });
+    ids.forEach(load);
+  };
+})();
+</script>
+</body>
+</html>
