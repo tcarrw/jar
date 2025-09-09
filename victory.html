@@ -1,1 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>☀️ Victory Song — Illumina</title>
+<meta name="description" content="Victory Song spread — declare the boundary, light the flare, and archive the scorch.">
+<style>
+:root{
+  --bg:#fff;--ink:#111;--soft:#ececec;--gold:#caa100;--ember:#d46a00;--coal:#222;--grey:#7a7a7a
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:24px}
+.header{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+h1{font-size:28px;margin:0 0 4px;font-weight:900}
+.sub{opacity:.75;font-size:13px;margin-bottom:12px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:2px solid var(--gold);background:var(--gold);color:#fff;font-weight:700;font-size:14px;padding:8px 14px;border-radius:12px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:#fff;color:var(--gold)}
+.crumbs{font-size:12px;opacity:.7;margin-bottom:6px}
+.crumbs a{color:var(--gold);text-decoration:none}
+.crumbs a:hover{text-decoration:underline}
+
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-top:16px}
+.card{border:1px solid var(--soft);border-radius:16px;padding:16px;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.05)}
+.card h2{margin:0 0 10px;font-size:16px}
+.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.badge{display:inline-block;border:1px solid var(--soft);border-radius:999px;padding:4px 10px;font-size:12px;margin-right:6px}
+.label{font-size:12px;opacity:.78;margin-bottom:6px}
+textarea,input[type="text"]{width:100%;border:1px solid var(--soft);border-radius:12px;padding:10px;min-height:110px;resize:vertical;font:inherit}
+.small{min-height:auto}
+hr{border:0;border-top:1px solid var(--soft);margin:16px 0}
+svg{width:100%;height:auto;display:block}
+.footer{margin-top:20px;font-size:12px;opacity:.65;text-align:center}
+
+.scorch{position:relative;overflow:hidden}
+.scorch::after{
+  content:""; position:absolute; inset:0;
+  background:radial-gradient(600px 220px at 55% 30%, rgba(212,106,0,.10), transparent 60%),
+             radial-gradient(700px 260px at 40% 65%, rgba(34,34,34,.08), transparent 70%);
+  pointer-events:none
+}
+
+@media (max-width:880px){.grid{grid-template-columns:1fr}}
+@media print{.nav,.crumbs{display:none}.card{box-shadow:none;border:0}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div>
+        <nav class="crumbs">
+          <a href="index.html">Jar Home</a> → <span>☀️ Victory Song</span>
+        </nav>
+        <h1>☀️ Victory Song</h1>
+        <div class="sub">Declare it. Burn it into memory. Then return to Bee work. This is a flare page — rare, deliberate, unforgettable.</div>
+      </div>
+      <div class="nav">
+        <a class="btn" href="day/index.html">Start Day 1 →</a>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- Left: Scorch glyph + brief -->
+      <section class="card scorch">
+        <h2>Flare Glyph</h2>
+        <!-- Scorch / flare motif (no external assets) -->
+        <svg viewBox="0 0 820 520" role="img" aria-label="Victory flare glyph">
+          <defs>
+            <radialGradient id="flare" cx="50%" cy="35%" r="60%">
+              <stop offset="0%"  stop-color="rgba(202,161,0,.55)"/>
+              <stop offset="60%" stop-color="rgba(212,106,0,.22)"/>
+              <stop offset="100%" stop-color="rgba(212,106,0,0)"/>
+            </radialGradient>
+            <linearGradient id="bolt" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="#ffd54d"/><stop offset="100%" stop-color="#ff9900"/>
+            </linearGradient>
+          </defs>
+
+          <rect x="20" y="20" width="780" height="480" rx="16" fill="#fff" stroke="var(--soft)"/>
+          <!-- flare halo -->
+          <circle cx="410" cy="200" r="180" fill="url(#flare)"/>
+
+          <!-- bolt + ring -->
+          <g>
+            <path d="M410 80 L360 220 L460 220 L380 420 L520 220 L440 220 L510 80 Z"
+                  fill="url(#bolt)" stroke="var(--coal)" stroke-width="3"/>
+            <circle cx="410" cy="200" r="130" fill="none" stroke="var(--coal)" stroke-width="2" stroke-dasharray="6 8" opacity=".4"/>
+          </g>
+
+          <!-- caption -->
+          <text x="410" y="470" text-anchor="middle" font-size="13" fill="var(--coal)">
+            Name the line • Say it out loud • Light the way
+          </text>
+        </svg>
+
+        <hr>
+        <h2>Brief</h2>
+        <p><span class="badge">Archetype</span> Victory / Manifesto • public declaration under heat.</p>
+        <p><span class="badge">Function</span> Converts pressure into <strong>clean speech</strong> that orients the swarm; leaves a <strong>scorch mark</strong> for the Moon to archive.</p>
+        <p><span class="badge">When</span> Rare. Use when stakes are real, timing is right, and aftercare is in place.</p>
+      </section>
+
+      <!-- Right: Prompts + Notes -->
+      <section class="card">
+        <h2>Prompts & Notes</h2>
+        <div class="meta">
+          <input id="title" type="text" class="small" placeholder="Title (working)">
+          <input id="hook"  type="text" class="small" placeholder="Hook / chorus line">
+          <input id="date"  type="text" class="small" placeholder="Date (e.g., Nov 5, 2025)">
+        </div>
+
+        <div class="label">🔥 8-Line Manifesto (tight, declarative)</div>
+        <textarea id="manifesto" placeholder="8 short lines. Each: a claim, promise, or boundary."></textarea>
+
+        <div class="label" style="margin-top:10px">🚧 Boundary Statement (non-negotiable)</div>
+        <textarea id="boundary" placeholder="What line must be held? Write it once, plainly."></textarea>
+
+        <div class="label" style="margin-top:10px">🎯 Audience & Intent</div>
+        <textarea id="audience" placeholder="Who needs to hear this? What do you want to happen after they hear it?"></textarea>
+
+        <div class="label" style="margin-top:10px">🧯 Aftercare Plan</div>
+        <textarea id="aftercare" placeholder="Buffers, check-ins, debrief, cool-down steps. Protect the system after the flare."></textarea>
+
+        <div class="label" style="margin-top:10px">🌙 Archive Note (for Moon)</div>
+        <textarea id="archive" placeholder="How should the archive remember this? Include context and outcomes."></textarea>
+
+        <hr>
+        <div class="nav" style="justify-content:flex-end">
+          <button class="btn" id="clear">Clear</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer">☀️ Victory Song · Part of Jar — Illumina</div>
+  </div>
+
+<script>
+(function(){
+  var ids=["title","hook","date","manifesto","boundary","audience","aftercare","archive"];
+  function q(id){return document.getElementById(id)}
+  function k(id){return "victory_"+id}
+  function save(id){localStorage.setItem(k(id), q(id).value)}
+  function load(id){q(id).value = localStorage.getItem(k(id)) || ""}
+
+  ids.forEach(function(id){ load(id); q(id).oninput=function(){ save(id) } });
+  document.getElementById("clear").onclick=function(){
+    ids.forEach(function(id){ localStorage.removeItem(k(id)) }); ids.forEach(load);
+  };
+})();
+</script>
+</body>
+</html>
 
