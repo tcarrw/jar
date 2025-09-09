@@ -1,1 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Illumina — Two-Page Day Spread</title>
+<style>
+:root{--bg:#fff;--ink:#111;--soft:#e9e9e9;--gold:#caa100;--orange:#ff8a00;--grey:#7a7a7a}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+.header{display:flex;gap:10px;align-items:center;justify-content:center;padding:14px;border-bottom:1px solid var(--soft);position:sticky;top:0;background:#fff;z-index:2}
+.header .btn{border:1px solid var(--soft);padding:8px 12px;border-radius:12px;background:#fff;cursor:pointer}
+.header .btn:disabled{opacity:.4;cursor:not-allowed}
+.header .title{font-weight:700}
+.header select{border:1px solid var(--soft);border-radius:10px;padding:8px 10px;background:#fff}
+.grid{max-width:1200px;margin:18px auto;padding:0 18px}
+.spread{display:grid;grid-template-columns:1fr 1fr;gap:20px;position:relative}
+.page{border:1px solid var(--soft);border-radius:18px;padding:18px;min-height:72vh;position:relative;box-shadow:0 6px 30px rgba(0,0,0,.04);background:#fff}
+.fold{position:absolute;left:calc(50% - 1px);top:0;width:2px;height:100%;background:repeating-linear-gradient(#bbb 0 8px,transparent 8px 16px);opacity:.35}
+.hint{font-size:12px;opacity:.7;text-align:center;margin:10px 0}
+.h1{font-size:18px;font-weight:800;margin:0 0 8px}
+.sub{font-size:12px;opacity:.65;margin-bottom:12px}
+.mantras{display:grid;gap:10px;margin-top:10px}
+.mantras .card{border:1px solid var(--soft);border-radius:12px;padding:10px}
+.label{font-size:12px;opacity:.7;margin-bottom:6px}
+textarea,input[type="text"]{width:100%;border:1px solid var(--soft);border-radius:12px;padding:10px;min-height:100px;resize:vertical;font:inherit}
+.small{min-height:auto}
+.row{display:grid;gap:12px}
+svg{width:100%;height:auto;display:block}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.controls{display:flex;gap:10px;justify-content:center;margin-top:10px}
+.controls .btn{border:1px solid var(--soft);padding:8px 12px;border-radius:12px;background:#fff;cursor:pointer}
+.badge{display:inline-block;border:1px solid var(--soft);border-radius:999px;padding:4px 10px;font-size:12px;margin-left:8px}
+@media (max-width:900px){.spread{grid-template-columns:1fr}.fold{display:none}}
+@media print{.header,.hint,.controls{display:none}.page{border:0;box-shadow:none}}
+</style>
+</head>
+<body>
+  <div class="header">
+    <button id="prev" class="btn" aria-label="Previous Day">◀</button>
+    <div class="title">Illumina Day <span id="dayLabel">1</span><span id="weekBadge" class="badge">Week 1</span></div>
+    <select id="picker" aria-label="Jump to Day"></select>
+    <button id="next" class="btn" aria-label="Next Day">▶</button>
+    <button id="print" class="btn" aria-label="Print This Day">Print</button>
+  </div>
+
+  <div class="grid">
+    <div class="spread">
+      <div class="fold" aria-hidden="true"></div>
+
+      <!-- Left Page -->
+      <section class="page" id="leftPage">
+        <h2 class="h1">Triad • Pantheon • Watchmen</h2>
+        <div class="sub">Orbit map for this cycle. Use as a compass while you work the day.</div>
+
+        <!-- ORBIT GLYPH (inline SVG) -->
+        <svg viewBox="0 0 800 800" role="img" aria-labelledby="t d">
+          <title id="t">Illumina Orbit</title>
+          <desc id="d">Inner Triad, middle Pantheon hex, outer Watchmen ring.</desc>
+          <circle cx="400" cy="400" r="140" fill="none" stroke="var(--gold)" stroke-width="3" stroke-dasharray="6 8"/>
+          <circle cx="400" cy="400" r="260" fill="none" stroke="var(--orange)" stroke-width="3" stroke-dasharray="6 8"/>
+          <circle cx="400" cy="400" r="360" fill="none" stroke="var(--grey)" stroke-width="3" stroke-dasharray="6 8"/>
+          <g fill="var(--gold)" stroke="var(--gold)" stroke-width="2">
+            <circle cx="400" cy="300" r="8"/><circle cx="320" cy="480" r="8"/><circle cx="480" cy="480" r="8"/>
+          </g>
+          <path d="M400 300 L320 480 L480 480 Z" fill="none" stroke="var(--gold)" stroke-width="3"/>
+          <text x="400" y="272" text-anchor="middle" font-size="12">☀️ Sun — Victory</text>
+          <text x="320" y="506" text-anchor="middle" font-size="12">🐝 Bee — Honey</text>
+          <text x="480" y="506" text-anchor="middle" font-size="12">🌙 Moon — Archive</text>
+          <g fill="var(--orange)" stroke="var(--orange)" stroke-width="2">
+            <circle cx="660" cy="400" r="7"/><circle cx="530" cy="625" r="7"/><circle cx="270" cy="625" r="7"/>
+            <circle cx="140" cy="400" r="7"/><circle cx="270" cy="175" r="7"/><circle cx="530" cy="175" r="7"/>
+          </g>
+          <path d="M660 400 L530 625 L270 625 L140 400 L270 175 L530 175 Z" fill="none" stroke="var(--orange)" stroke-width="3"/>
+          <text x="690" y="400" font-size="12" text-anchor="start" fill="var(--orange)">🍯 Sabrina</text>
+          <text x="545" y="660" font-size="12" text-anchor="middle" fill="var(--orange)">🐝 Hot To Go</text>
+          <text x="255" y="660" font-size="12" text-anchor="middle" fill="var(--orange)">🔥 Doechii</text>
+          <text x="110" y="400" font-size="12" text-anchor="end" fill="var(--orange)">☀️ Emma Stone</text>
+          <text x="255" y="150" font-size="12" text-anchor="middle" fill="var(--orange)">⚡ Eminem</text>
+          <text x="545" y="150" font-size="12" text-anchor="middle" fill="var(--orange)">🌙 Janet Planet</text>
+          <g stroke="var(--grey)" stroke-width="2" stroke-dasharray="4 6">
+            <line x1="400" y1="400" x2="400" y2="40"/>
+            <line x1="400" y1="400" x2="740" y2="400"/>
+            <line x1="400" y1="400" x2="60"  y2="400"/>
+            <line x1="400" y1="400" x2="400" y2="760"/>
+            <line x1="400" y1="400" x2="660" y2="140"/>
+          </g>
+          <g fill="var(--grey)" stroke="var(--grey)" stroke-width="2">
+            <circle cx="400" cy="40"  r="7"/><circle cx="740" cy="400" r="7"/><circle cx="60"  cy="400" r="7"/>
+            <circle cx="400" cy="760" r="7"/><circle cx="660" cy="140" r="7"/>
+          </g>
+          <text x="400" y="20"  font-size="12" text-anchor="middle" fill="var(--grey)">Fred again..</text>
+          <text x="770" y="400" font-size="12" text-anchor="start"  fill="var(--grey)">Brian Eno</text>
+          <text x="30"  y="400" font-size="12" text-anchor="end"    fill="var(--grey)">Aphex Twin</text>
+          <text x="400" y="780" font-size="12" text-anchor="middle" fill="var(--grey)">James Blake</text>
+          <text x="690" y="120" font-size="12" text-anchor="start"  fill="var(--grey)">Bon Iver</text>
+        </svg>
+
+        <div class="mantras">
+          <div class="card">
+            <div class="label">☀️ Sun mantra</div>
+            <input id="sunMantra" type="text" class="small" placeholder="Victory Song cue">
+          </div>
+          <div class="card">
+            <div class="label">🐝 Bee mantra</div>
+            <input id="beeMantra" type="text" class="small" placeholder="Today’s Honey Work focus">
+          </div>
+          <div class="card">
+            <div class="label">🌙 Moon mantra</div>
+            <input id="moonMantra" type="text" class="small" placeholder="Archive/footnote cue">
+          </div>
+        </div>
+      </section>
+
+      <!-- Right Page -->
+      <section class="page" id="rightPage">
+        <h2 class="h1">Day Notes</h2>
+        <div class="meta">
+          <input id="dayTheme" type="text" class="small" placeholder="Theme / Title">
+          <input id="dayDate"  type="text" class="small" placeholder="Date (auto)">
+        </div>
+        <div class="row">
+          <div>
+            <div class="label">🌑 Weekly Intention (your words)</div>
+            <textarea id="intention" placeholder="Short raw intention"></textarea>
+          </div>
+          <div>
+            <div class="label">🛠️ Midweek Offline Sprint — Offline Win (your words)</div>
+            <textarea id="offlineWin" placeholder="What you did independently"></textarea>
+          </div>
+          <div>
+            <div class="label">🌕 Weekly Close — One Win (your words)</div>
+            <textarea id="oneWin" placeholder="Reflection in your voice"></textarea>
+          </div>
+          <div>
+            <div class="label">📜 Illumina Archive (auto-summary zone)</div>
+            <textarea id="archive" placeholder="Notes you want to keep for continuity"></textarea>
+          </div>
+        </div>
+        <div class="controls">
+          <button class="btn" id="clearDay">Clear Day</button>
+          <button class="btn" id="duplicatePrev">Duplicate From Previous Day</button>
+        </div>
+      </section>
+    </div>
+    <div class="hint">Use ◀ ▶ or the dropdown to move between days. Fields auto-save per day. Dates prefill for Illumina 1.</div>
+  </div>
+
+<script>
+(function(){
+  var TOTAL=42, day=1;
+  var qs=function(id){return document.getElementById(id)};
+  var fields=["sunMantra","beeMantra","moonMantra","dayTheme","dayDate","intention","offlineWin","oneWin","archive"];
+
+  // ---- Date Map for Illumina 1 (Nov 5 → Dec 17, 2025) ----
+  // We format as: "Wed Nov 5, 2025"
+  var dayNames=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var monNames=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var start = new Date(Date.UTC(2025,10,5)); // 2025-11-05 (month is 0-based)
+  var dates = [];
+  for(var i=0;i<TOTAL;i++){
+    var d=new Date(start.getTime()); d.setUTCDate(d.getUTCDate()+i);
+    dates.push(dayNames[d.getUTCDay()]+" "+monNames[d.getUTCMonth()]+" "+d.getUTCDate()+", "+d.getUTCFullYear());
+  }
+  // --------------------------------------------------------
+
+  function key(f){return "illumina_day_"+day+"_"+f}
+
+  function saveField(id){ localStorage.setItem(key(id), qs(id).value) }
+
+  function loadField(id){
+    var stored = localStorage.getItem(key(id));
+    if(id==="dayDate"){
+      // If user has never overridden, prefill from map
+      qs(id).value = (stored!==null && stored!=="") ? stored : dates[day-1];
+    }else{
+      qs(id).value = stored || "";
+    }
+  }
+
+  function loadAll(){ fields.forEach(loadField) }
+
+  function bindSave(){
+    fields.forEach(function(id){
+      qs(id).oninput=function(){ saveField(id) };
+    });
+  }
+
+  function weekFor(d){ return "Week "+(Math.floor((d-1)/7)+1) }
+
+  function updateHeader(){
+    qs("dayLabel").textContent=day;
+    qs("weekBadge").textContent=weekFor(day);
+    qs("prev").disabled=(day===1);
+    qs("next").disabled=(day===TOTAL);
+    qs("picker").value=String(day);
+  }
+
+  function populatePicker(){
+    var p=qs("picker");
+    for(var i=1;i<=TOTAL;i++){
+      var o=document.createElement("option");
+      o.value=String(i);
+      o.textContent="Day "+i+" — "+dates[i-1];
+      p.appendChild(o);
+    }
+  }
+
+  function goTo(d){
+    day=Math.min(Math.max(1,d),TOTAL);
+    updateHeader();
+    loadAll();
+  }
+
+  function clearDay(){
+    fields.forEach(function(id){ localStorage.removeItem(key(id)) });
+    loadAll();
+  }
+
+  function duplicatePrev(){
+    if(day<=1) return;
+    fields.forEach(function(id){
+      var v=localStorage.getItem("illumina_day_"+(day-1)+"_"+id)||"";
+      // For date: if previous day had no override, keep this day's mapped date
+      if(id==="dayDate" && v===""){ v=dates[day-1]; }
+      localStorage.setItem(key(id), v);
+    });
+    loadAll();
+  }
+
+  function hookKeys(){
+    document.addEventListener("keydown",function(e){
+      var tag=e.target.tagName;
+      if(tag==="TEXTAREA"||tag==="INPUT") return;
+      if(e.key==="ArrowLeft") goTo(day-1);
+      if(e.key==="ArrowRight") goTo(day+1);
+    });
+  }
+
+  populatePicker(); bindSave(); goTo(1); hookKeys();
+
+  qs("prev").onclick=function(){ goTo(day-1) };
+  qs("next").onclick=function(){ goTo(day+1) };
+  qs("picker").onchange=function(){ goTo(parseInt(this.value,10)) };
+  qs("print").onclick=function(){ window.print() };
+  qs("clearDay").onclick=clearDay;
+  qs("duplicatePrev").onclick=duplicatePrev;
+})();
+</script>
+</body>
+</html>
 
