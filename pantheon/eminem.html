@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pantheon — Eminem (Confrontation / Victory Song)</title>
+<style>
+:root{--bg:#fff;--ink:#0f0f0f;--soft:#ececec;--gold:#caa100;--orange:#ff8a00;--bolt:#111;--grey:#7a7a7a}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:24px}
+.header{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+h1{font-size:26px;margin:0 0 4px;font-weight:800}
+.sub{opacity:.7;font-size:13px;margin-bottom:14px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:2px solid var(--gold);background:var(--gold);color:#fff;font-weight:700;font-size:14px;padding:8px 14px;border-radius:12px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:#fff;color:var(--gold)}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-top:16px}
+.card{border:1px solid var(--soft);border-radius:14px;padding:16px;background:#fff;box-shadow:0 6px 28px rgba(0,0,0,.05)}
+.card h2{margin:0 0 10px;font-size:16px}
+.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.badge{display:inline-block;border:1px solid var(--soft);border-radius:999px;padding:4px 10px;font-size:12px;margin-right:6px}
+.label{font-size:12px;opacity:.78;margin-bottom:6px}
+textarea,input[type="text"]{width:100%;border:1px solid var(--soft);border-radius:12px;padding:10px;min-height:110px;resize:vertical;font:inherit}
+.small{min-height:auto}
+hr{border:0;border-top:1px solid var(--soft);margin:16px 0}
+svg{width:100%;height:auto;display:block}
+.footer{margin-top:20px;font-size:12px;opacity:.65;text-align:center}
+@media (max-width:880px){.grid{grid-template-columns:1fr}}
+@media print{.nav{display:none}.card{box-shadow:none;border:0}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div>
+        <h1>⚡ Eminem — Confrontation / Victory Song</h1>
+        <div class="sub">Interlude spread in the Pantheon. Role: **aggressive manifesto** — name it, claim it, draw the line, light the flare.</div>
+      </div>
+      <div class="nav">
+        <a class="btn" href="../index.html">← Home</a>
+        <a class="btn" href="../day/index.html">Start Day 1 →</a>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- Left: Visual + Brief -->
+      <section class="card">
+        <h2>Interlude Glyph</h2>
+        <!-- Lightning/amp motif (no external assets) -->
+        <svg viewBox="0 0 820 520" role="img" aria-label="Eminem lightning glyph">
+          <rect x="20" y="20" width="780" height="480" rx="16" fill="#fff" stroke="var(--soft)"/>
+          <!-- jagged background slashes -->
+          <g stroke="var(--grey)" stroke-width="2" opacity=".35">
+            <path d="M80,60 L200,20"/><path d="M140,120 L280,70"/><path d="M560,70 L740,20"/>
+            <path d="M520,130 L720,80"/><path d="M90,420 L250,360"/><path d="M560,430 L740,380"/>
+          </g>
+          <!-- main lightning bolt -->
+          <g>
+            <path d="M410 90 L360 240 L460 240 L380 430 L520 240 L440 240 L510 90 Z"
+                  fill="#ffd54d" stroke="var(--bolt)" stroke-width="3"/>
+          </g>
+          <!-- amplifier box -->
+          <g transform="translate(120,300)">
+            <rect x="0" y="0" width="200" height="120" rx="10" fill="#f7f7f7" stroke="var(--bolt)" stroke-width="2"/>
+            <circle cx="40" cy="60" r="18" fill="#ddd" stroke="var(--bolt)"/>
+            <circle cx="95" cy="60" r="18" fill="#ddd" stroke="var(--bolt)"/>
+            <rect x="140" y="30" width="40" height="60" rx="6" fill="#eaeaea" stroke="var(--bolt)"/>
+          </g>
+          <!-- label -->
+          <text x="410" y="480" text-anchor="middle" font-size="13" fill="var(--bolt)">Say it with heat • Draw the boundary • Ignite the crowd</text>
+        </svg>
+
+        <hr>
+
+        <h2>Brief</h2>
+        <p><span class="badge">Archetype</span> Confrontation / Victory Song • lightning clarity, uncompromising voice.</p>
+        <p><span class="badge">Function</span> Converts pressure into **public declaration**; catalyzes Bee momentum; leaves a scorch mark for the Moon to archive.</p>
+        <p><span class="badge">When</span> Use when stakes are high or drift is dangerous. Not daily; **decisive** moments.</p>
+      </section>
+
+      <!-- Right: Prompts + Notes -->
+      <section class="card">
+        <h2>Prompts & Notes</h2>
+        <div class="meta">
+          <input id="title" type="text" class="small" placeholder="Victory Song title (working)">
+          <input id="hook"  type="text" class="small" placeholder="Hook / chorus line">
+          <input id="boundary" type="text" class="small" placeholder="Boundary statement (non-negotiable)">
+        </div>
+
+        <div class="label">🔥 8-Line Manifesto (tight, declarative)</div>
+        <textarea id="manifesto" placeholder="Write 8 short lines. Each line: one punchy claim or promise."></textarea>
+
+        <div class="label" style="margin-top:10px">🎯 Target & Audience</div>
+        <textarea id="target" placeholder="Who needs to hear this (and why now)? Keep it direct but responsible."></textarea>
+
+        <div class="label" style="margin-top:10px">🧯 Safety / Aftercare Plan</div>
+        <textarea id="aftercare" placeholder="How do you cool down the system afterwards? (buffers, check-ins, archive note)"></textarea>
+
+        <hr>
+        <div class="nav" style="justify-content:flex-end">
+          <button class="btn" id="clear">Clear</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer">Pantheon · Eminem · Part of Jar — Illumina 1</div>
+  </div>
+
+<script>
+(function(){
+  var ids=["title","hook","boundary","manifesto","target","aftercare"];
+  function q(id){return document.getElementById(id)}
+  function k(id){return "pantheon_eminem_"+id}
+  function save(id){localStorage.setItem(k(id), q(id).value)}
+  function load(id){q(id).value = localStorage.getItem(k(id)) || ""}
+
+  ids.forEach(function(id){ load(id); q(id).oninput=function(){ save(id) } });
+  document.getElementById("clear").onclick=function(){
+    ids.forEach(function(id){ localStorage.removeItem(k(id)) });
+    ids.forEach(load);
+  };
+})();
+</script>
+</body>
+</html>
