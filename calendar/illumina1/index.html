@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jar · Illumina 1 — Watchmen Overlay Calendar</title>
+  <meta name="description" content="42‑day Illumina 1 calendar for jar.plnt.earth with Watchmen overlays (Aphex Twin, Bon Iver, Mosquito)."/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='black'/%3E%3Ccircle cx='26' cy='24' r='16' fill='%230ff'/%3E%3Ccircle cx='38' cy='36' r='22' fill='none' stroke='%230ff' stroke-width='3' stroke-dasharray='2 6'/%3E%3C/svg%3E" />
+  <style>
+    :root{
+      --bg:#05060a; --card:#0b0c12; --ink:#e7f6ff; --muted:#9aa7b4; --neon:#00f0ff; --mag:#ff3df2; --honey:#ffd166; --danger:#ff6b6b; --good:#3dff9b;
+      --grid:#131726; --grid2:#0f1420; --shadow:0 10px 30px rgba(0,0,0,.4), 0 0 60px rgba(0,240,255,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font:16px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Helvetica,Arial; background:radial-gradient(800px 600px at 70% -10%, rgba(0,240,255,.08), transparent), radial-gradient(600px 500px at -10% 110%, rgba(255,61,242,.06), transparent), var(--bg); color:var(--ink)}
+    .shell{max-width:1100px; margin:0 auto; padding:24px 18px 56px}
+    header{display:flex; align-items:center; gap:12px; position:sticky; top:0; z-index:10; padding:12px 18px; background:linear-gradient(180deg, rgba(5,6,10,.95), rgba(5,6,10,.8)); backdrop-filter: blur(6px); border-bottom:1px solid rgba(255,255,255,.06)}
+    .crumbs a{color:var(--neon); text-decoration:none}
+    .title{font-weight:800; letter-spacing:.25px}
+    .meta{margin-left:auto; color:var(--muted); font-size:13px}
+
+    .panel{background:var(--card); border:1px solid rgba(255,255,255,.08); border-radius:20px; padding:18px; box-shadow:var(--shadow)}
+    .grid{display:grid; gap:14px; grid-template-columns:repeat(12,1fr)}
+    .col-8{grid-column:span 8}
+    .col-4{grid-column:span 4}
+    .col-12{grid-column:span 12}
+    @media (max-width:1000px){ .col-8,.col-4{grid-column:span 12}}
+
+    h1{margin:.2rem 0 .2rem; font-size:clamp(22px,3.2vw,28px)}
+    h2{margin:.2rem 0 .6rem; font-size:1.1rem}
+    p{margin:.4rem 0}
+
+    /* Calendar */
+    .cal{display:grid; grid-template-columns:repeat(7,1fr); gap:8px}
+    .cell{position:relative; padding:12px; border-radius:14px; background:linear-gradient(180deg, var(--grid), var(--grid2)); border:1px solid rgba(255,255,255,.06); min-height:70px}
+    .cell .dnum{font-weight:800; opacity:.9}
+    .cell .anchor{position:absolute; right:10px; top:10px; font-size:12px; color:var(--muted)}
+    .week{grid-column:1 / -1; margin-top:8px; color:var(--muted); font-size:12px}
+
+    /* Overlays */
+    .overlay{position:absolute; left:8px; bottom:8px; display:flex; gap:8px; align-items:center}
+    .tag{display:inline-flex; align-items:center; gap:6px; font-size:12px; border:1px solid rgba(255,255,255,.12); padding:4px 8px; border-radius:999px; background:rgba(255,255,255,.03)}
+    .aphex{border-color:rgba(0,240,255,.35)}
+    .bon{border-color:rgba(255,61,242,.35)}
+    .mosq{border-color:rgba(61,255,155,.35)}
+    .tag .dot{width:8px; height:8px; border-radius:50%; background:var(--neon)}
+    .tag.bon .dot{background:var(--mag)}
+    .tag.mosq .dot{background:var(--good)}
+    .optional{opacity:.55}
+
+    .legend{display:flex; flex-wrap:wrap; gap:8px}
+
+    .toolbar{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; border:1px solid rgba(0,240,255,.35); background:rgba(0,240,255,.08); color:var(--ink); cursor:pointer; user-select:none; text-decoration:none}
+    .btn:hover{box-shadow:0 6px 18px rgba(0,240,255,.15)}
+    .btn[aria-pressed="true"]{background:rgba(0,240,255,.16)}
+
+    .note{font-size:13px; color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="crumbs"><a href="https://jar.plnt.earth/">Jar</a> / <span>Illumina 1 Calendar</span></div>
+    <div class="title">Watchmen Overlay</div>
+    <div class="meta">Nov 5 → Dec 16, 2025<span title="Day 42 night leads into morning of Dec 17">*</span></div>
+  </header>
+
+  <main class="shell">
+    <div class="grid">
+      <section class="panel col-8">
+        <div class="toolbar" style="margin-bottom:10px">
+          <button class="btn" id="toggleOverlays" aria-pressed="true">Toggle overlays</button>
+          <a class="btn" href="#legend">Legend</a>
+          <a class="btn" href="https://constellation.plnt.earth/#watchmen" target="_blank" rel="noopener">Open constellation ↗</a>
+        </div>
+
+        <h1>Illumina 1 — 42‑Day Grid</h1>
+        <p class="note">Backbone anchors: W1 Sabrina · W2 Janet · W3 Doechii · W4 Emma · W5 Hot To Go! · W6 Eminem.</p>
+
+        <div class="cal" id="calendar">
+          <div class="week">Week 1 · Days 1–7 · Nov 5–11</div>
+          <!-- Days 1..7 -->
+          <div class="cell" data-day="1"><div class="dnum">1</div><div class="anchor">Sabrina</div></div>
+          <div class="cell" data-day="2"><div class="dnum">2</div><div class="anchor">Sabrina</div></div>
+          <div class="cell" data-day="3"><div class="dnum">3</div><div class="anchor">Sabrina</div></div>
+          <div class="cell" data-day="4"><div class="dnum">4</div><div class="anchor">Sabrina</div></div>
+          <div class="cell" data-day="5"><div class="dnum">5</div><div class="anchor">Sabrina</div></div>
+          <div class="cell" data-day="6"><div class="dnum">6</div><div class="anchor">Sabrina</div></div>
+          <div class="cell" data-day="7"><div class="dnum">7</div><div class="anchor">Sabrina</div></div>
+
+          <div class="week">Week 2 · Days 8–14 · Nov 12–18</div>
+          <!-- Days 8..14 -->
+          <div class="cell" data-day="8"><div class="dnum">8</div><div class="anchor">Janet</div></div>
+          <div class="cell" data-day="9"><div class="dnum">9</div><div class="anchor">Janet</div></div>
+          <div class="cell" data-day="10"><div class="dnum">10</div><div class="anchor">Janet</div><div class="overlay"><span class="tag bon" title="Bon Iver overlay"><span class="dot"></span>Bon Iver</span></div></div>
+          <div class="cell" data-day="11"><div class="dnum">11</div><div class="anchor">Janet</div><div class="overlay"><span class="tag bon" title="Bon Iver overlay"><span class="dot"></span>Bon Iver</span></div></div>
+          <div class="cell" data-day="12"><div class="dnum">12</div><div class="anchor">Janet</div></div>
+          <div class="cell" data-day="13"><div class="dnum">13</div><div class="anchor">Janet</div></div>
+          <div class="cell" data-day="14"><div class="dnum">14</div><div class="anchor">Janet</div></div>
+
+          <div class="week">Week 3 · Days 15–21 · Nov 19–25</div>
+          <!-- Days 15..21 -->
+          <div class="cell" data-day="15"><div class="dnum">15</div><div class="anchor">Doechii</div></div>
+          <div class="cell" data-day="16"><div class="dnum">16</div><div class="anchor">Doechii</div></div>
+          <div class="cell" data-day="17"><div class="dnum">17</div><div class="anchor">Doechii</div></div>
+          <div class="cell" data-day="18"><div class="dnum">18</div><div class="anchor">Doechii</div><div class="overlay"><span class="tag aphex" title="Aphex Twin overlay"><span class="dot"></span>Aphex</span></div></div>
+          <div class="cell" data-day="19"><div class="dnum">19</div><div class="anchor">Doechii</div><div class="overlay"><span class="tag aphex" title="Aphex Twin overlay"><span class="dot"></span>Aphex</span></div></div>
+          <div class="cell" data-day="20"><div class="dnum">20</div><div class="anchor">Doechii</div></div>
+          <div class="cell" data-day="21"><div class="dnum">21</div><div class="anchor">Doechii</div></div>
+
+          <div class="week">Week 4 · Days 22–28 · Nov 26–Dec 2</div>
+          <!-- Days 22..28 -->
+          <div class="cell" data-day="22"><div class="dnum">22</div><div class="anchor">Emma</div></div>
+          <div class="cell" data-day="23"><div class="dnum">23</div><div class="anchor">Emma</div></div>
+          <div class="cell" data-day="24"><div class="dnum">24</div><div class="anchor">Emma</div></div>
+          <div class="cell" data-day="25"><div class="dnum">25</div><div class="anchor">Emma</div></div>
+          <div class="cell" data-day="26"><div class="dnum">26</div><div class="anchor">Emma</div></div>
+          <div class="cell" data-day="27"><div class="dnum">27</div><div class="anchor">Emma</div></div>
+          <div class="cell" data-day="28"><div class="dnum">28</div><div class="anchor">Emma → H2G</div><div class="overlay"><span class="tag mosq" title="Mosquito overlay"><span class="dot"></span>Mosquito</span></div></div>
+
+          <div class="week">Week 5 · Days 29–35 · Dec 3–9</div>
+          <!-- Days 29..35 -->
+          <div class="cell" data-day="29"><div class="dnum">29</div><div class="anchor">Hot To Go!</div></div>
+          <div class="cell" data-day="30"><div class="dnum">30</div><div class="anchor">Hot To Go!</div></div>
+          <div class="cell" data-day="31"><div class="dnum">31</div><div class="anchor">Hot To Go!</div></div>
+          <div class="cell" data-day="32"><div class="dnum">32</div><div class="anchor">Hot To Go!</div></div>
+          <div class="cell" data-day="33"><div class="dnum">33</div><div class="anchor">Hot To Go!</div></div>
+          <div class="cell" data-day="34"><div class="dnum">34</div><div class="anchor">Hot To Go!</div></div>
+          <div class="cell" data-day="35"><div class="dnum">35</div><div class="anchor">Hot To Go!</div></div>
+
+          <div class="week">Week 6 · Days 36–42 · Dec 10–16</div>
+          <!-- Days 36..42 -->
+          <div class="cell" data-day="36"><div class="dnum">36</div><div class="anchor">Eminem</div></div>
+          <div class="cell" data-day="37"><div class="dnum">37</div><div class="anchor">Eminem</div></div>
+          <div class="cell" data-day="38"><div class="dnum">38</div><div class="anchor">Eminem</div></div>
+          <div class="cell" data-day="39"><div class="dnum">39</div><div class="anchor">Eminem</div><div class="overlay optional"><span class="tag aphex" title="Optional Aphex Twin counterpoint"><span class="dot"></span>Aphex?</span></div></div>
+          <div class="cell" data-day="40"><div class="dnum">40</div><div class="anchor">Eminem</div></div>
+          <div class="cell" data-day="41"><div class="dnum">41</div><div class="anchor">Eminem</div></div>
+          <div class="cell" data-day="42"><div class="dnum">42</div><div class="anchor">Eminem</div></div>
+        </div>
+      </section>
+
+      <aside class="panel col-4" id="legend">
+        <h2>Legend · Watchmen</h2>
+        <div class="legend" style="margin-bottom:8px">
+          <span class="tag aphex"><span class="dot"></span>Aphex Twin (Disruptor)</span>
+          <span class="tag bon"><span class="dot"></span>Bon Iver (Healer)</span>
+          <span class="tag mosq"><span class="dot"></span>Mosquito (Micro‑trickster)</span>
+        </div>
+        <p class="note">Overlays add a lens to the day — they don’t replace the week’s anchor.</p>
+        <h2>Links</h2>
+        <ul style="padding-left:1rem; margin:.2rem 0">
+          <li><a href="https://constellation.plnt.earth/#watchmen-aphex" target="_blank" rel="noopener">Open Aphex in Constellation ↗</a></li>
+          <li><a href="https://constellation.plnt.earth/#watchmen-bon" target="_blank" rel="noopener">Open Bon Iver in Constellation ↗</a></li>
+          <li><a href="https://constellation.plnt.earth/#watchmen-mosquito" target="_blank" rel="noopener">Open Mosquito in Constellation ↗</a></li>
+        </ul>
+        <h2>Edit Notes</h2>
+        <p class="note">To change overlay days, edit the cells with <code>.overlay</code> blocks. To switch anchors, update the small label in the top‑right of each cell.</p>
+      </aside>
+
+      <section class="panel col-12">
+        <h2>Why these placements?</h2>
+        <ul style="margin:.2rem 0 0 1rem; padding-left:1rem">
+          <li><strong>Bon Iver</strong> during <em>Janet Planet</em> week (Days 10–11): winter reflection under the telescope motif.</li>
+          <li><strong>Aphex Twin</strong> during <em>Doechii</em> week (Days 18–19): controlled disruption to calibrate chaos.</li>
+          <li><strong>Mosquito</strong> at <em>Emma → Hot To Go!</em> handoff (Day 28): irritation spark, then swarm joy.</li>
+          <li><strong>Aphex (optional)</strong> counterpoint late in Victory Song week (Day 39): friction against triumph.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // No console logs. Minimal JS for overlay toggle.
+    (function(){
+      var btn = document.getElementById('toggleOverlays');
+      var cal = document.getElementById('calendar');
+      if(!btn || !cal) return;
+      var on = true;
+      function set(v){ on = v; btn.setAttribute('aria-pressed', String(on)); cal.querySelectorAll('.overlay').forEach(function(el){ el.style.display = on ? '' : 'none'; }); }
+      btn.addEventListener('click', function(){ set(!on); });
+      set(true);
+    })();
+  </script>
+</body>
+</html>
