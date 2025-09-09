@@ -1,113 +1,217 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Jar — Illumina 1 Cover</title>
-<style>
-:root{--bg:#fff;--ink:#111;--soft:#e9e9e9;--gold:#caa100;--orange:#ff8a00;--grey:#7a7a7a}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;display:flex;align-items:center;justify-content:center;padding:20px}
-.wrap{max-width:980px;width:100%;text-align:center}
-h1{font-size:28px;margin:0 0 12px;font-weight:800}
-h2{font-size:16px;margin:0 0 24px;font-weight:400;opacity:.7}
-svg{width:100%;max-width:640px;height:auto;display:block;margin:0 auto 24px}
-button, .btn{
-  border:2px solid var(--gold);background:var(--gold);color:#fff;
-  font-weight:700;font-size:18px;padding:12px 22px;border-radius:14px;cursor:pointer;transition:.2s;
-  display:inline-block;text-decoration:none
-}
-button:hover, .btn:hover{background:#fff;color:var(--gold)}
-hr{border:0;border-top:1px solid var(--soft);margin:24px 0}
-.section h3{margin:0 0 10px;font-size:14px;opacity:.8}
-.grid{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:10px;max-width:720px;margin:10px auto 0
-}
-.interlude{
-  border:1px solid var(--soft);border-radius:12px;padding:12px;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  font-weight:700
-}
-.interlude span{opacity:.8;font-weight:600}
-.footer{margin-top:26px;font-size:12px;opacity:.65}
-@media (max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jar · Index — Moon Notes + Links</title>
+  <meta name="description" content="Jar home: log Moon notes with local persistence and jump to Constellation and Illumina calendars."/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='black'/%3E%3Ccircle cx='26' cy='24' r='16' fill='%230ff'/%3E%3Ccircle cx='38' cy='36' r='22' fill='none' stroke='%230ff' stroke-width='3' stroke-dasharray='2 6'/%3E%3C/svg%3E" />
+  <style>
+    :root{ --bg:#05060a; --card:#0b0c12; --ink:#e7f6ff; --muted:#9aa7b4; --neon:#00f0ff; --mag:#ff3df2; --honey:#ffd166; --good:#3dff9b; --danger:#ff6b6b; --border:rgba(255,255,255,.08); --shadow:0 10px 30px rgba(0,0,0,.4), 0 0 60px rgba(0,240,255,.08); }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; font:16px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,Helvetica,Arial; background:radial-gradient(800px 600px at 70% -10%, rgba(0,240,255,.08), transparent), radial-gradient(600px 500px at -10% 110%, rgba(255,61,242,.06), transparent), var(--bg); color:var(--ink)}
+    header{position:sticky; top:0; z-index:10; display:flex; gap:12px; align-items:center; padding:14px 18px; background:linear-gradient(180deg, rgba(5,6,10,.95), rgba(5,6,10,.8)); border-bottom:1px solid var(--border); backdrop-filter:blur(6px)}
+    .brand{font-weight:800; letter-spacing:.25px}
+    .nav{margin-left:auto; display:flex; gap:10px; flex-wrap:wrap}
+    .btn{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:999px; border:1px solid rgba(0,240,255,.35); background:rgba(0,240,255,.08); color:var(--ink); text-decoration:none}
+    .btn:hover{box-shadow:0 6px 18px rgba(0,240,255,.15)}
+
+    .shell{max-width:1100px; margin:0 auto; padding:24px 18px 56px}
+    .grid{display:grid; gap:16px; grid-template-columns:repeat(12,1fr)}
+    .col-8{grid-column:span 8}
+    .col-4{grid-column:span 4}
+    .col-12{grid-column:span 12}
+    @media (max-width:960px){ .col-8,.col-4{grid-column:span 12} }
+
+    .card{background:var(--card); border:1px solid var(--border); border-radius:20px; padding:18px; box-shadow:var(--shadow)}
+    h1{margin:.1rem 0 .6rem; font-size:clamp(22px,3.2vw,30px)}
+    h2{margin:.2rem 0 .5rem; font-size:1.1rem}
+    p{margin:.3rem 0}
+
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    label{font-size:14px; color:var(--muted)}
+    input, select, textarea{background:#0f1420; color:var(--ink); border:1px solid var(--border); border-radius:12px; padding:10px 12px; font:inherit}
+    textarea{min-height:120px; width:100%; resize:vertical}
+    .controls{display:flex; gap:10px; flex-wrap:wrap}
+    .pill{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; border:1px solid var(--border); background:rgba(255,255,255,.03); font-size:12px; color:var(--muted)}
+
+    table{width:100%; border-collapse:separate; border-spacing:0}
+    th,td{padding:10px 12px; border-bottom:1px solid var(--border)}
+    th{text-align:left}
+    tr:hover td{background:rgba(255,255,255,.03)}
+
+    .right{margin-left:auto}
+    .muted{color:var(--muted)}
+    .danger{color:var(--danger)}
+  </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>🌕 Illumina 1 — Launch Cycle</h1>
-    <h2>Nov 5 – Dec 17, 2025 · Theme: Honey + Victory + Archive</h2>
+  <header>
+    <div class="brand">Jar</div>
+    <nav class="nav">
+      <a class="btn" href="/constellation/">Constellation ↗</a>
+      <a class="btn" href="/calendar/illumina1/">Illumina 1 Calendar ↗</a>
+    </nav>
+  </header>
 
-    <!-- Orbit glyph -->
-    <svg viewBox="0 0 800 800" role="img" aria-label="Illumina Orbit Glyph">
-      <circle cx="400" cy="400" r="140" fill="none" stroke="var(--gold)" stroke-width="3" stroke-dasharray="6 8"/>
-      <circle cx="400" cy="400" r="260" fill="none" stroke="var(--orange)" stroke-width="3" stroke-dasharray="6 8"/>
-      <circle cx="400" cy="400" r="360" fill="none" stroke="var(--grey)" stroke-width="3" stroke-dasharray="6 8"/>
-      <g fill="var(--gold)" stroke="var(--gold)" stroke-width="2">
-        <circle cx="400" cy="300" r="8"/><circle cx="320" cy="480" r="8"/><circle cx="480" cy="480" r="8"/>
-      </g>
-      <path d="M400 300 L320 480 L480 480 Z" fill="none" stroke="var(--gold)" stroke-width="3"/>
-      <text x="400" y="272" text-anchor="middle" font-size="12">☀️ Sun</text>
-      <text x="320" y="506" text-anchor="middle" font-size="12">🐝 Bee</text>
-      <text x="480" y="506" text-anchor="middle" font-size="12">🌙 Moon</text>
-      <g fill="var(--orange)" stroke="var(--orange)" stroke-width="2">
-        <circle cx="660" cy="400" r="7"/><circle cx="530" cy="625" r="7"/><circle cx="270" cy="625" r="7"/>
-        <circle cx="140" cy="400" r="7"/><circle cx="270" cy="175" r="7"/><circle cx="530" cy="175" r="7"/>
-      </g>
-      <path d="M660 400 L530 625 L270 625 L140 400 L270 175 L530 175 Z" fill="none" stroke="var(--orange)" stroke-width="3"/>
-      <text x="690" y="400" font-size="12" text-anchor="start" fill="var(--orange)">🍯 Sabrina</text>
-      <text x="545" y="660" font-size="12" text-anchor="middle" fill="var(--orange)">🐝 Hot To Go</text>
-      <text x="255" y="660" font-size="12" text-anchor="middle" fill="var(--orange)">🔥 Doechii</text>
-      <text x="110" y="400" font-size="12" text-anchor="end" fill="var(--orange)">☀️ Emma Stone</text>
-      <text x="255" y="150" font-size="12" text-anchor="middle" fill="var(--orange)">⚡ Eminem</text>
-      <text x="545" y="150" font-size="12" text-anchor="middle" fill="var(--orange)">🌙 Janet Planet</text>
-      <g stroke="var(--grey)}" stroke-width="2" stroke-dasharray="4 6">
-        <line x1="400" y1="400" x2="400" y2="40"/>
-        <line x1="400" y1="400" x2="740" y2="400"/>
-        <line x1="400" y1="400" x2="60"  y2="400"/>
-        <line x1="400" y1="400" x2="400" y2="760"/>
-        <line x1="400" y1="400" x2="660" y2="140"/>
-      </g>
-      <g fill="var(--grey)" stroke="var(--grey)" stroke-width="2">
-        <circle cx="400" cy="40"  r="7"/><circle cx="740" cy="400" r="7"/><circle cx="60"  cy="400" r="7"/>
-        <circle cx="400" cy="760" r="7"/><circle cx="660" cy="140" r="7"/>
-      </g>
-      <text x="400" y="20"  font-size="12" text-anchor="middle" fill="var(--grey)">Fred again..</text>
-      <text x="770" y="400" font-size="12" text-anchor="start"  fill="var(--grey)">Brian Eno</text>
-      <text x="30"  y="400" font-size="12" text-anchor="end"    fill="var(--grey)">Aphex Twin</text>
-      <text x="400" y="780" font-size="12" text-anchor="middle" fill="var(--grey)">James Blake</text>
-      <text x="690" y="120" font-size="12" text-anchor="start"  fill="var(--grey)">Bon Iver</text>
-    </svg>
-
-    <a class="btn" href="day/index.html">Start Day 1 →</a>
-
-    <hr>
-
-    <div class="section">
-      <h3>Pantheon Interludes</h3>
-      <div class="grid">
-        <a class="interlude" href="pantheon/sabrina.html">🍯 <span>Sabrina</span></a>
-        <a class="interlude" href="pantheon/janet-planet.html">🌙 <span>Janet Planet</span></a>
-        <a class="interlude" href="pantheon/eminem.html">⚡ <span>Eminem</span></a>
-        <a class="interlude" href="pantheon/emma-stone.html">☀️ <span>Emma Stone</span></a>
-        <a class="interlude" href="pantheon/doechii.html">🔥 <span>Doechii</span></a>
-        <a class="interlude" href="pantheon/hot-to-go.html">🐝 <span>Hot To Go</span></a>
+  <main class="shell">
+    <section class="card col-12" style="margin-bottom:16px">
+      <h1>Moon Notes</h1>
+      <p class="muted">Log a quick Moon note per day. Saved locally on this device (no account). You can export/import later.</p>
+      <div class="row" style="margin:10px 0 12px">
+        <label for="date">Date</label>
+        <input id="date" type="date" />
+        <label for="day">Day # (1–42)</label>
+        <input id="day" type="number" min="1" max="42" step="1" style="width:90px" />
+        <label for="week">Week</label>
+        <select id="week">
+          <option value="">Auto</option>
+          <option value="1">Week 1</option>
+          <option value="2">Week 2</option>
+          <option value="3">Week 3</option>
+          <option value="4">Week 4</option>
+          <option value="5">Week 5</option>
+          <option value="6">Week 6</option>
+        </select>
+        <span class="pill">One‑seed? <input id="oneSeed" type="checkbox"/></span>
+        <span class="pill">Honey? <input id="honey" type="checkbox"/></span>
+        <span class="pill">Smoke? <input id="smoke" type="checkbox"/></span>
+        <span class="pill">Dream vivid? <input id="dream" type="checkbox"/></span>
+        <span class="pill">Comfort 0–10 <input id="comfort" type="number" min="0" max="10" step="1" style="width:64px"/></span>
       </div>
-    </div>
-
-    <hr>
-
-    <div class="section">
-      <h3>Other Spreads</h3>
-      <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
-        <a class="interlude" href="victory.html">☀️ <span>Victory Song</span></a>
-        <a class="interlude" href="archive.html">🌙 <span>End-of-Cycle Archive</span></a>
+      <textarea id="note" placeholder="Write your Moon note in your own words…"></textarea>
+      <div class="controls" style="margin-top:10px">
+        <button class="btn" id="save">Save</button>
+        <button class="btn" id="new">New</button>
+        <span class="right"></span>
+        <button class="btn" id="export">Export JSON</button>
+        <label class="btn" for="importFile">Import JSON</label>
+        <input id="importFile" type="file" accept="application/json" style="display:none" />
+        <button class="btn danger" id="clearAll">Clear All</button>
       </div>
-    </div>
+    </section>
 
-    <div class="footer">Part of Jar · Illumina 1 (Launch Cycle) · PLNT Earth</div>
-  </div>
+    <section class="grid">
+      <div class="card col-8">
+        <h2>Saved Notes</h2>
+        <div class="row" style="margin-bottom:8px">
+          <label for="filterWeek">Filter</label>
+          <select id="filterWeek">
+            <option value="">All weeks</option>
+            <option value="1">Week 1</option>
+            <option value="2">Week 2</option>
+            <option value="3">Week 3</option>
+            <option value="4">Week 4</option>
+            <option value="5">Week 5</option>
+            <option value="6">Week 6</option>
+          </select>
+          <label for="search" class="right">Search</label>
+          <input id="search" type="text" placeholder="find words…" />
+        </div>
+        <table id="table">
+          <thead>
+            <tr><th>Date</th><th>Day</th><th>Week</th><th>Flags</th><th>Comfort</th><th>Note</th><th></th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="card col-4">
+        <h2>Quick Links</h2>
+        <p><a class="btn" href="/constellation/">Open Constellation</a></p>
+        <p><a class="btn" href="/calendar/illumina1/">Open Illumina 1 Calendar</a></p>
+        <h2>Tips</h2>
+        <ul style="margin:.2rem 0 0 1rem; padding-left:1rem">
+          <li>One‑seed protocol before bed → log here on waking.</li>
+          <li>Pair with honey for taste ignition; avoid stacking unknowns.</li>
+          <li>Use flags to track honey/smoke/dream vividness quickly.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function(){
+      var LS_KEY = 'jar_moon_notes_v1';
+      var dateEl = document.getElementById('date');
+      var dayEl = document.getElementById('day');
+      var weekEl = document.getElementById('week');
+      var oneSeedEl = document.getElementById('oneSeed');
+      var honeyEl = document.getElementById('honey');
+      var smokeEl = document.getElementById('smoke');
+      var dreamEl = document.getElementById('dream');
+      var comfortEl = document.getElementById('comfort');
+      var noteEl = document.getElementById('note');
+      var saveBtn = document.getElementById('save');
+      var newBtn = document.getElementById('new');
+      var expBtn = document.getElementById('export');
+      var impFile = document.getElementById('importFile');
+      var clearBtn = document.getElementById('clearAll');
+      var tableBody = document.querySelector('#table tbody');
+      var fWeek = document.getElementById('filterWeek');
+      var search = document.getElementById('search');
+
+      function load(){ try{ return JSON.parse(localStorage.getItem(LS_KEY)||'[]'); }catch(e){ return []; } }
+      function saveAll(rows){ localStorage.setItem(LS_KEY, JSON.stringify(rows)); }
+      function weekFromDay(d){ if(!d) return ''; return String(Math.ceil(d/7)); }
+      function flags(r){ var arr=[]; if(r.oneSeed) arr.push('seed'); if(r.honey) arr.push('honey'); if(r.smoke) arr.push('smoke'); if(r.dream) arr.push('dream'); return arr.join(', '); }
+
+      function render(){
+        var rows = load();
+        var fw = fWeek.value; var q = (search.value||'').toLowerCase();
+        tableBody.innerHTML = '';
+        rows
+          .filter(function(r){ return !fw || String(r.week)===fw; })
+          .filter(function(r){ return !q || (r.note||'').toLowerCase().includes(q); })
+          .sort(function(a,b){ return (a.date||'').localeCompare(b.date||''); })
+          .forEach(function(r, idx){
+            var tr = document.createElement('tr');
+            function td(t){ var el=document.createElement('td'); el.textContent=t; return el; }
+            tr.appendChild(td(r.date||''));
+            tr.appendChild(td(r.day||''));
+            tr.appendChild(td(r.week||''));
+            tr.appendChild(td(flags(r)));
+            tr.appendChild(td(r.comfort==null?'':String(r.comfort)));
+            var noteTd = document.createElement('td'); noteTd.textContent = r.note||''; tr.appendChild(noteTd);
+            var actions = document.createElement('td');
+            var edit = document.createElement('a'); edit.href='#'; edit.textContent='Edit'; edit.addEventListener('click', function(ev){ ev.preventDefault(); fillForm(r); });
+            var del = document.createElement('a'); del.href='#'; del.textContent='Delete'; del.style.marginLeft='10px'; del.addEventListener('click', function(ev){ ev.preventDefault(); var all=load(); all.splice(idx,1); saveAll(all); render(); });
+            actions.appendChild(edit); actions.appendChild(del);
+            tr.appendChild(actions);
+            tableBody.appendChild(tr);
+          });
+      }
+
+      function fillForm(r){
+        dateEl.value = r.date||''; dayEl.value = r.day||''; weekEl.value = r.week||'';
+        oneSeedEl.checked = !!r.oneSeed; honeyEl.checked = !!r.honey; smokeEl.checked = !!r.smoke; dreamEl.checked = !!r.dream;
+        comfortEl.value = r.comfort==null?'' : r.comfort; noteEl.value = r.note||'';
+      }
+
+      function clearForm(){ dateEl.value=''; dayEl.value=''; weekEl.value=''; oneSeedEl.checked=honeyEl.checked=smokeEl.checked=dreamEl.checked=false; comfortEl.value=''; noteEl.value=''; }
+
+      function onSave(){
+        var r = { date: dateEl.value, day: parseInt(dayEl.value,10)||'', week: weekEl.value||weekFromDay(parseInt(dayEl.value,10)||0), oneSeed: oneSeedEl.checked, honey: honeyEl.checked, smoke: smokeEl.checked, dream: dreamEl.checked, comfort: (comfortEl.value==='')?null:parseInt(comfortEl.value,10), note: noteEl.value };
+        var rows = load();
+        var idx = rows.findIndex(function(x){ return x.date===r.date && r.date; });
+        if(idx>=0) rows[idx]=r; else rows.push(r);
+        saveAll(rows); render();
+      }
+
+      function onExport(){ var data = JSON.stringify(load(), null, 2); var blob = new Blob([data], {type:'application/json'}); var url = URL.createObjectURL(blob); var a = document.createElement('a'); a.href=url; a.download='jar_moon_notes.json'; a.click(); URL.revokeObjectURL(url); }
+      function onImport(ev){ var file = ev.target.files && ev.target.files[0]; if(!file) return; var fr = new FileReader(); fr.onload = function(){ try{ var rows = JSON.parse(fr.result||'[]'); if(Array.isArray(rows)) { saveAll(rows); render(); } }catch(e){} }; fr.readAsText(file); }
+      function onClear(){ saveAll([]); render(); }
+
+      saveBtn.addEventListener('click', onSave);
+      newBtn.addEventListener('click', clearForm);
+      expBtn.addEventListener('click', onExport);
+      impFile.addEventListener('change', onImport);
+      clearBtn.addEventListener('click', onClear);
+      fWeek.addEventListener('change', render);
+      search.addEventListener('input', render);
+
+      render();
+    })();
+  </script>
 </body>
 </html>
