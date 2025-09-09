@@ -16,6 +16,9 @@ h1{font-size:26px;margin:0 0 4px;font-weight:800}
 .nav{display:flex;gap:10px;flex-wrap:wrap}
 .btn{border:2px solid var(--gold);background:var(--gold);color:#fff;font-weight:700;font-size:14px;padding:8px 14px;border-radius:12px;cursor:pointer;text-decoration:none;display:inline-block}
 .btn:hover{background:#fff;color:var(--gold)}
+.crumbs{font-size:12px;opacity:.7;margin-bottom:6px}
+.crumbs a{color:var(--gold);text-decoration:none}
+.crumbs a:hover{text-decoration:underline}
 .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-top:16px}
 .card{border:1px solid var(--soft);border-radius:14px;padding:16px;background:#fff;box-shadow:0 6px 28px rgba(0,0,0,.04)}
 .card h2{margin:0 0 10px;font-size:16px}
@@ -28,15 +31,18 @@ hr{border:0;border-top:1px solid var(--soft);margin:16px 0}
 svg{width:100%;height:auto;display:block}
 .footer{margin-top:20px;font-size:12px;opacity:.65;text-align:center}
 @media (max-width:880px){.grid{grid-template-columns:1fr}}
-@media print{.nav{display:none}.card{box-shadow:none;border:0}}
+@media print{.nav,.crumbs{display:none}.card{box-shadow:none;border:0}}
 </style>
 </head>
 <body>
   <div class="wrap">
     <div class="header">
       <div>
+        <nav class="crumbs">
+          <a href="index.html">Pantheon Home</a> → <span>🌙 Janet Planet</span>
+        </nav>
         <h1>🌙 Janet Planet — Cosmic Teacher</h1>
-        <div class="sub">Interlude spread in the Illumina Pantheon. Role: **STEAM/curiosity anchor** — points the telescope, frames questions, and logs discoveries.</div>
+        <div class="sub">Interlude spread in the Illumina Pantheon. Role: <strong>STEAM/curiosity anchor</strong> — points the telescope, frames questions, and logs discoveries.</div>
       </div>
       <div class="nav">
         <a class="btn" href="../index.html">← Home</a>
@@ -86,7 +92,7 @@ svg{width:100%;height:auto;display:block}
 
         <h2>Brief</h2>
         <p><span class="badge">Archetype</span> Cosmic Teacher • curiosity, method, playful rigor.</p>
-        <p><span class="badge">Function</span> Turns sparks into **inquiry**; transforms vibes into **experiments**; feeds the Moon’s archive.</p>
+        <p><span class="badge">Function</span> Turns sparks into <strong>inquiry</strong>; transforms vibes into <strong>experiments</strong>; feeds the Moon’s archive.</p>
         <p><span class="badge">When</span> Best on orientation days, post-victory decompression, or anytime you want to convert awe → understanding.</p>
       </section>
 
@@ -127,7 +133,10 @@ svg{width:100%;height:auto;display:block}
   function load(id){q(id).value = localStorage.getItem(k(id)) || ""}
 
   ids.forEach(function(id){ load(id); q(id).oninput=function(){ save(id) } });
-  q("clear").onclick=function(){ ids.forEach(function(id){ localStorage.removeItem(k(id)) }); ids.forEach(load) };
+  document.getElementById("clear").onclick=function(){
+    ids.forEach(function(id){ localStorage.removeItem(k(id)) });
+    ids.forEach(load);
+  };
 })();
 </script>
 </body>
