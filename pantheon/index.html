@@ -17,15 +17,12 @@ h1{font-size:28px;margin:0 0 4px;font-weight:800}
 .nav{display:flex;gap:10px;flex-wrap:wrap}
 .btn{border:2px solid var(--gold);background:var(--gold);color:#fff;font-weight:700;font-size:14px;padding:8px 14px;border-radius:12px;cursor:pointer;text-decoration:none;display:inline-block}
 .btn:hover{background:#fff;color:var(--gold)}
+.crumbs{font-size:12px;opacity:.7;margin-bottom:6px}
+.crumbs a{color:var(--gold);text-decoration:none}
+.crumbs a:hover{text-decoration:underline}
 .hr{border:0;border-top:1px solid var(--soft);margin:18px 0}
-.grid{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px
-}
-.tile{
-  border:1px solid var(--soft);border-radius:14px;padding:14px;background:#fff;
-  text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;
-  box-shadow:0 6px 26px rgba(0,0,0,.04)
-}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.tile{border:1px solid var(--soft);border-radius:14px;padding:14px;background:#fff;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;box-shadow:0 6px 26px rgba(0,0,0,.04)}
 .tile:hover{outline:2px solid var(--gold);outline-offset:-2px}
 .tile h3{margin:0;font-size:16px}
 .badges{display:flex;gap:8px;flex-wrap:wrap}
@@ -36,18 +33,20 @@ svg{width:100%;height:auto;display:block}
 .footer{margin-top:22px;font-size:12px;opacity:.65;text-align:center}
 @media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:620px){.grid{grid-template-columns:1fr}.svgWrap{grid-template-columns:1fr}}
-@media print{.nav{display:none}.tile{box-shadow:none;border:0}}
+@media print{.nav,.crumbs{display:none}.tile{box-shadow:none;border:0}}
 </style>
 </head>
 <body>
   <div class="wrap">
     <div class="header">
       <div>
+        <nav class="crumbs">
+          <a href="../index.html">Jar Home</a> → <span>Pantheon Hub</span>
+        </nav>
         <h1>Illumina Pantheon — Interludes</h1>
         <div class="sub">Six archetypal interruptions that puncture rhythm and feed the swarm.</div>
       </div>
       <div class="nav">
-        <a class="btn" href="../index.html">← Home</a>
         <a class="btn" href="../day/index.html">Start Day 1 →</a>
       </div>
     </div>
@@ -74,7 +73,7 @@ svg{width:100%;height:auto;display:block}
 
       <div>
         <p style="margin:0 0 10px"><strong>How to use:</strong> drop an interlude when the cycle needs a mood switch. Each page gives a visual cue, a brief, and focused prompts—then flows back into the daily Jar.</p>
-        <p style="margin:0"><span class="badge">Tip</span> Interludes aren’t homework. Think **2–10 minutes**: ignite a feeling, capture a note, return to Bee work.</p>
+        <p style="margin:0"><span class="badge">Tip</span> Interludes aren’t homework. Think <strong>2–10 minutes</strong>: ignite a feeling, capture a note, return to Bee work.</p>
       </div>
     </div>
 
@@ -122,4 +121,3 @@ svg{width:100%;height:auto;display:block}
   </div>
 </body>
 </html>
-
