@@ -16,6 +16,9 @@ h1{font-size:26px;margin:0 0 4px;font-weight:800}
 .nav{display:flex;gap:10px;flex-wrap:wrap}
 .btn{border:2px solid var(--gold);background:var(--gold);color:#fff;font-weight:700;font-size:14px;padding:8px 14px;border-radius:12px;cursor:pointer;text-decoration:none;display:inline-block}
 .btn:hover{background:#fff;color:var(--gold)}
+.crumbs{font-size:12px;opacity:.7;margin-bottom:6px}
+.crumbs a{color:var(--gold);text-decoration:none}
+.crumbs a:hover{text-decoration:underline}
 .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-top:16px}
 .card{border:1px solid var(--soft);border-radius:14px;padding:16px;background:#fff;box-shadow:0 6px 28px rgba(0,0,0,.05)}
 .card h2{margin:0 0 10px;font-size:16px}
@@ -28,15 +31,18 @@ hr{border:0;border-top:1px solid var(--soft);margin:16px 0}
 svg{width:100%;height:auto;display:block}
 .footer{margin-top:20px;font-size:12px;opacity:.65;text-align:center}
 @media (max-width:880px){.grid{grid-template-columns:1fr}}
-@media print{.nav{display:none}.card{box-shadow:none;border:0}}
+@media print{.nav,.crumbs{display:none}.card{box-shadow:none;border:0}}
 </style>
 </head>
 <body>
   <div class="wrap">
     <div class="header">
       <div>
+        <nav class="crumbs">
+          <a href="index.html">Pantheon Home</a> → <span>⚡ Eminem</span>
+        </nav>
         <h1>⚡ Eminem — Confrontation / Victory Song</h1>
-        <div class="sub">Interlude spread in the Pantheon. Role: **aggressive manifesto** — name it, claim it, draw the line, light the flare.</div>
+        <div class="sub">Interlude spread in the Pantheon. Role: <strong>aggressive manifesto</strong> — name it, claim it, draw the line, light the flare.</div>
       </div>
       <div class="nav">
         <a class="btn" href="../index.html">← Home</a>
@@ -48,7 +54,7 @@ svg{width:100%;height:auto;display:block}
       <!-- Left: Visual + Brief -->
       <section class="card">
         <h2>Interlude Glyph</h2>
-        <!-- Lightning/amp motif (no external assets) -->
+        <!-- Lightning/amp motif -->
         <svg viewBox="0 0 820 520" role="img" aria-label="Eminem lightning glyph">
           <rect x="20" y="20" width="780" height="480" rx="16" fill="#fff" stroke="var(--soft)"/>
           <!-- jagged background slashes -->
@@ -57,10 +63,8 @@ svg{width:100%;height:auto;display:block}
             <path d="M520,130 L720,80"/><path d="M90,420 L250,360"/><path d="M560,430 L740,380"/>
           </g>
           <!-- main lightning bolt -->
-          <g>
-            <path d="M410 90 L360 240 L460 240 L380 430 L520 240 L440 240 L510 90 Z"
-                  fill="#ffd54d" stroke="var(--bolt)" stroke-width="3"/>
-          </g>
+          <path d="M410 90 L360 240 L460 240 L380 430 L520 240 L440 240 L510 90 Z"
+                fill="#ffd54d" stroke="var(--bolt)" stroke-width="3"/>
           <!-- amplifier box -->
           <g transform="translate(120,300)">
             <rect x="0" y="0" width="200" height="120" rx="10" fill="#f7f7f7" stroke="var(--bolt)" stroke-width="2"/>
@@ -69,15 +73,16 @@ svg{width:100%;height:auto;display:block}
             <rect x="140" y="30" width="40" height="60" rx="6" fill="#eaeaea" stroke="var(--bolt)"/>
           </g>
           <!-- label -->
-          <text x="410" y="480" text-anchor="middle" font-size="13" fill="var(--bolt)">Say it with heat • Draw the boundary • Ignite the crowd</text>
+          <text x="410" y="480" text-anchor="middle" font-size="13" fill="var(--bolt)">
+            Say it with heat • Draw the boundary • Ignite the crowd
+          </text>
         </svg>
 
         <hr>
-
         <h2>Brief</h2>
         <p><span class="badge">Archetype</span> Confrontation / Victory Song • lightning clarity, uncompromising voice.</p>
-        <p><span class="badge">Function</span> Converts pressure into **public declaration**; catalyzes Bee momentum; leaves a scorch mark for the Moon to archive.</p>
-        <p><span class="badge">When</span> Use when stakes are high or drift is dangerous. Not daily; **decisive** moments.</p>
+        <p><span class="badge">Function</span> Converts pressure into <strong>public declaration</strong>; catalyzes Bee momentum; leaves a scorch mark for the Moon to archive.</p>
+        <p><span class="badge">When</span> Use when stakes are high or drift is dangerous. Not daily; decisive moments only.</p>
       </section>
 
       <!-- Right: Prompts + Notes -->
@@ -93,7 +98,7 @@ svg{width:100%;height:auto;display:block}
         <textarea id="manifesto" placeholder="Write 8 short lines. Each line: one punchy claim or promise."></textarea>
 
         <div class="label" style="margin-top:10px">🎯 Target & Audience</div>
-        <textarea id="target" placeholder="Who needs to hear this (and why now)? Keep it direct but responsible."></textarea>
+        <textarea id="target" placeholder="Who needs to hear this (and why now)?"></textarea>
 
         <div class="label" style="margin-top:10px">🧯 Safety / Aftercare Plan</div>
         <textarea id="aftercare" placeholder="How do you cool down the system afterwards? (buffers, check-ins, archive note)"></textarea>
