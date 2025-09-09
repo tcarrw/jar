@@ -2,10 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Pantheon — Sabrina (Honey / Taste Spark)</title>
 <style>
-:root{--bg:#fff;--ink:#121212;--soft:#ececec;--gold:#caa100;--orange:#ff8a00;--grey:#7a7a7a}
+/* ==== Modes: base + Honey + Neon ==== */
+:root{
+  --bg:#ffffff; --ink:#111; --soft:#e9e9e9;
+  --gold:#caa100; --orange:#ff8a00; --grey:#6f6f6f;
+  --accent:#caa100;
+}
+:root[data-mode="honey"]{
+  --bg:#fffaf1; --ink:#17140f; --soft:#efe3cc;
+  --gold:#d2a300; --orange:#ff9e33; --grey:#6a5e49;
+  --accent:#d2a300;
+}
+:root[data-mode="neon"]{
+  --bg:#0e0f14; --ink:#f7f7f7; --soft:#1f2230;
+  --gold:#ffd34d; --orange:#ff7a18; --grey:#9aa0b2;
+  --accent:#7cff00;
+}
+
+/* Base layout */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
@@ -14,13 +31,14 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-app
 h1{font-size:26px;margin:0 0 4px;font-weight:800}
 .sub{opacity:.7;font-size:13px;margin-bottom:14px}
 .nav{display:flex;gap:10px;flex-wrap:wrap}
-.btn{border:2px solid var(--gold);background:var(--gold);color:#fff;font-weight:700;font-size:14px;padding:8px 14px;border-radius:12px;cursor:pointer;text-decoration:none;display:inline-block}
-.btn:hover{background:#fff;color:var(--gold)}
+.btn{border:2px solid var(--accent);background:var(--accent);color:#fff;font-weight:700;font-size:14px;padding:8px 14px;border-radius:12px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:transparent;color:var(--accent)}
 .crumbs{font-size:12px;opacity:.7;margin-bottom:6px}
-.crumbs a{color:var(--gold);text-decoration:none}
+.crumbs a{color:var(--accent);text-decoration:none}
 .crumbs a:hover{text-decoration:underline}
-.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-top:16px}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-top:10px}
 .card{border:1px solid var(--soft);border-radius:14px;padding:16px;background:#fff;box-shadow:0 6px 28px rgba(0,0,0,.04)}
+:root[data-mode="neon"] .card{background:#121420}
 .card h2{margin:0 0 10px;font-size:16px}
 .meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
 .badge{display:inline-block;border:1px solid var(--soft);border-radius:999px;padding:4px 10px;font-size:12px;margin-right:6px}
@@ -30,8 +48,17 @@ textarea,input[type="text"]{width:100%;border:1px solid var(--soft);border-radiu
 hr{border:0;border-top:1px solid var(--soft);margin:16px 0}
 svg{width:100%;height:auto;display:block}
 .footer{margin-top:20px;font-size:12px;opacity:.65;text-align:center}
-@media (max-width:880px){.grid{grid-template-columns:1fr}}
-@media print{.nav,.crumbs{display:none}.card{box-shadow:none;border:0}}
+
+/* Top strip (Tunes + Modes) */
+.topstrip{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:6px 0 8px}
+.topstrip a, .topstrip button{border:1px solid var(--soft);border-radius:12px;padding:6px 10px;background:transparent;color:inherit;text-decoration:none;cursor:pointer}
+.topstrip .active{outline:2px solid var(--accent);outline-offset:-2px}
+
+/* Print optimization — A3 default */
+@page { size: A3 portrait; margin: 10mm; }
+@media (min-width:1200px){ .wrap{max-width:1180px} }
+@media (max-width:880px){ .grid{grid-template-columns:1fr} }
+@media print{ .nav,.crumbs,.topstrip,.printhelp{display:none} .card{box-shadow:none;border:0} body{background:#fff} }
 </style>
 </head>
 <body>
@@ -49,6 +76,27 @@ svg{width:100%;height:auto;display:block}
         <a class="btn" href="../day/index.html">Start Day 1 →</a>
       </div>
     </div>
+
+    <!-- Tunes + Modes -->
+    <div class="topstrip" role="toolbar" aria-label="Global controls">
+      <a id="tunesLink" href="https://tunes.plnt.earth" target="_blank" rel="noopener">🎵 Tunes</a>
+      <span style="opacity:.6;font-size:12px;margin-left:4px">Mode:</span>
+      <button type="button" data-mode="classic" id="modeClassic">Classic</button>
+      <button type="button" data-mode="honey"   id="modeHoney">Honey</button>
+      <button type="button" data-mode="neon"    id="modeNeon">Neon</button>
+    </div>
+
+    <!-- Print tips -->
+    <details class="printhelp" style="margin:6px 0 0">
+      <summary style="cursor:pointer;font-size:12px;opacity:.75">🖨️ Print tips</summary>
+      <div style="font-size:12px;opacity:.8;line-height:1.5;margin-top:6px">
+        • Best on <b>A3</b> (portrait).<br>
+        • In the browser print dialog, set <b>Margins</b> to “Default” or “None”.<br>
+        • Enable “<b>Background graphics</b>” for glyph color.<br>
+        • If text feels small, switch to A3 <b>landscape</b> (then two columns look great).<br>
+        • To archive digitally, use “Save as PDF”.
+      </div>
+    </details>
 
     <div class="grid">
       <!-- Left: Visual + Brief -->
@@ -70,14 +118,14 @@ svg{width:100%;height:auto;display:block}
             <path d="M400 190 C430 210 445 240 435 270 C427 295 407 312 400 330 C393 312 373 295 365 270 C355 240 370 210 400 190 Z"
                   fill="rgba(202,161,0,.35)" stroke="var(--gold)" stroke-width="2"/>
           </g>
-          <text x="400" y="365" text-anchor="middle" font-size="13">Taste Spark • Magnetism • Sweet Focus</text>
+          <text x="400" y="365" text-anchor="middle" font-size="13" fill="var(--ink)">Taste Spark • Magnetism • Sweet Focus</text>
         </svg>
 
         <hr>
         <h2>Brief</h2>
         <p><span class="badge">Archetype</span> Magnet / Honey / Taste • pulls attention gently, invites savoring, rewards small rituals.</p>
         <p><span class="badge">Function</span> Punctures routine with sweet interludes; pairs well with micro-doses of delight (tea, fruit, a song, a note).</p>
-        <p><span class="badge">When</span> Drop this spread on transition days, or to recover momentum during a lull.</p>
+        <p><span class="badge">When</span> Transition days, or to recover momentum during a lull.</p>
       </section>
 
       <!-- Right: Prompts + Notes -->
@@ -109,15 +157,34 @@ svg{width:100%;height:auto;display:block}
   </div>
 
 <script>
+/* Persist interlude fields */
 (function(){
   var ids=["cue","ritual","pair","tasteNote","song","reflection"];
   function q(id){return document.getElementById(id)}
   function k(id){return "pantheon_sabrina_"+id}
   function save(id){localStorage.setItem(k(id), q(id).value)}
   function load(id){q(id).value = localStorage.getItem(k(id)) || ""}
-
   ids.forEach(function(id){ load(id); q(id).oninput=function(){ save(id) } });
-  q("clear").onclick=function(){ ids.forEach(function(id){ localStorage.removeItem(k(id)) }); ids.forEach(load) };
+  document.getElementById("clear").onclick=function(){ ids.forEach(function(id){ localStorage.removeItem(k(id)) }); ids.forEach(load) };
+})();
+
+/* Modes (Classic / Honey / Neon) — shared behavior */
+(function(){
+  var KEY="jar_mode";
+  function apply(mode){
+    document.documentElement.setAttribute("data-mode", mode);
+    localStorage.setItem(KEY, mode);
+    ["modeClassic","modeHoney","modeNeon"].forEach(function(id){
+      var b=document.getElementById(id); if(!b) return;
+      b.classList.toggle("active", b.getAttribute("data-mode")===mode);
+    });
+  }
+  var saved = localStorage.getItem(KEY) || "classic";
+  apply(saved);
+  ["modeClassic","modeHoney","modeNeon"].forEach(function(id){
+    var b=document.getElementById(id); if(!b) return;
+    b.onclick = function(){ apply(b.getAttribute("data-mode")); };
+  });
 })();
 </script>
 </body>
