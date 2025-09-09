@@ -9,13 +9,30 @@
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;display:flex;align-items:center;justify-content:center;padding:20px}
-.wrap{max-width:900px;width:100%;text-align:center}
+.wrap{max-width:980px;width:100%;text-align:center}
 h1{font-size:28px;margin:0 0 12px;font-weight:800}
-h2{font-size:16px;margin:0 0 30px;font-weight:400;opacity:.7}
-svg{width:100%;max-width:600px;height:auto;display:block;margin:0 auto 24px}
-button{border:2px solid var(--gold);background:var(--gold);color:#fff;font-weight:700;font-size:18px;padding:14px 26px;border-radius:14px;cursor:pointer;transition:.2s}
-button:hover{background:#fff;color:var(--gold)}
-footer{margin-top:30px;font-size:12px;opacity:.65}
+h2{font-size:16px;margin:0 0 24px;font-weight:400;opacity:.7}
+svg{width:100%;max-width:640px;height:auto;display:block;margin:0 auto 24px}
+button, .btn{
+  border:2px solid var(--gold);background:var(--gold);color:#fff;
+  font-weight:700;font-size:18px;padding:12px 22px;border-radius:14px;cursor:pointer;transition:.2s;
+  display:inline-block;text-decoration:none
+}
+button:hover, .btn:hover{background:#fff;color:var(--gold)}
+hr{border:0;border-top:1px solid var(--soft);margin:24px 0}
+.section h3{margin:0 0 10px;font-size:14px;opacity:.8}
+.grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;max-width:720px;margin:10px auto 0
+}
+.interlude{
+  border:1px solid var(--soft);border-radius:12px;padding:12px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  font-weight:700
+}
+.interlude span{opacity:.8;font-weight:600}
+.footer{margin-top:26px;font-size:12px;opacity:.65}
+@media (max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -23,8 +40,8 @@ footer{margin-top:30px;font-size:12px;opacity:.65}
     <h1>🌕 Illumina 1 — Launch Cycle</h1>
     <h2>Nov 5 – Dec 17, 2025 · Theme: Honey + Victory + Archive</h2>
 
-    <!-- Orbit glyph reused -->
-    <svg viewBox="0 0 800 800" role="img">
+    <!-- Orbit glyph -->
+    <svg viewBox="0 0 800 800" role="img" aria-label="Illumina Orbit Glyph">
       <circle cx="400" cy="400" r="140" fill="none" stroke="var(--gold)" stroke-width="3" stroke-dasharray="6 8"/>
       <circle cx="400" cy="400" r="260" fill="none" stroke="var(--orange)" stroke-width="3" stroke-dasharray="6 8"/>
       <circle cx="400" cy="400" r="360" fill="none" stroke="var(--grey)" stroke-width="3" stroke-dasharray="6 8"/>
@@ -46,7 +63,7 @@ footer{margin-top:30px;font-size:12px;opacity:.65}
       <text x="110" y="400" font-size="12" text-anchor="end" fill="var(--orange)">☀️ Emma Stone</text>
       <text x="255" y="150" font-size="12" text-anchor="middle" fill="var(--orange)">⚡ Eminem</text>
       <text x="545" y="150" font-size="12" text-anchor="middle" fill="var(--orange)">🌙 Janet Planet</text>
-      <g stroke="var(--grey)" stroke-width="2" stroke-dasharray="4 6">
+      <g stroke="var(--grey)}" stroke-width="2" stroke-dasharray="4 6">
         <line x1="400" y1="400" x2="400" y2="40"/>
         <line x1="400" y1="400" x2="740" y2="400"/>
         <line x1="400" y1="400" x2="60"  y2="400"/>
@@ -64,11 +81,33 @@ footer{margin-top:30px;font-size:12px;opacity:.65}
       <text x="690" y="120" font-size="12" text-anchor="start"  fill="var(--grey)">Bon Iver</text>
     </svg>
 
-    <a href="day/index.html"><button>Start Day 1 →</button></a>
+    <a class="btn" href="day/index.html">Start Day 1 →</a>
 
-    <footer>
-      Part of Jar · Illumina 1 (Launch Cycle) · PLNT Earth
-    </footer>
+    <hr>
+
+    <div class="section">
+      <h3>Pantheon Interludes</h3>
+      <div class="grid">
+        <a class="interlude" href="pantheon/sabrina.html">🍯 <span>Sabrina</span></a>
+        <a class="interlude" href="pantheon/janet-planet.html">🌙 <span>Janet Planet</span></a>
+        <a class="interlude" href="pantheon/eminem.html">⚡ <span>Eminem</span></a>
+        <a class="interlude" href="pantheon/emma-stone.html">☀️ <span>Emma Stone</span></a>
+        <a class="interlude" href="pantheon/doechii.html">🔥 <span>Doechii</span></a>
+        <a class="interlude" href="pantheon/hot-to-go.html">🐝 <span>Hot To Go</span></a>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="section">
+      <h3>Other Spreads</h3>
+      <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+        <a class="interlude" href="victory.html">☀️ <span>Victory Song</span></a>
+        <a class="interlude" href="archive.html">🌙 <span>End-of-Cycle Archive</span></a>
+      </div>
+    </div>
+
+    <div class="footer">Part of Jar · Illumina 1 (Launch Cycle) · PLNT Earth</div>
   </div>
 </body>
 </html>
