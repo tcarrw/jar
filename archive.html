@@ -1,1 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🌙 Archive — End of Cycle</title>
+<meta name="description" content="Moon’s end-of-cycle review: summarize outcomes, highlight wins, capture lessons, and seed the next Illumina.">
+<style>
+:root{
+  --bg:#fff;--ink:#111;--soft:#ececec;--gold:#caa100;--orange:#ff8a00;--space:#1f2b44;--grey:#7a7a7a
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:24px}
+.header{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+h1{font-size:28px;margin:0 0 4px;font-weight:900}
+.sub{opacity:.75;font-size:13px;margin-bottom:12px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:2px solid var(--gold);background:var(--gold);color:#fff;font-weight:700;font-size:14px;padding:8px 14px;border-radius:12px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:#fff;color:var(--gold)}
+.crumbs{font-size:12px;opacity:.7;margin-bottom:6px}
+.crumbs a{color:var(--gold);text-decoration:none}
+.crumbs a:hover{text-decoration:underline}
+
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:16px}
+.card{border:1px solid var(--soft);border-radius:16px;padding:16px;background:#fff;box-shadow:0 10px 30px rgba(0,0,0,.04)}
+.card h2{margin:0 0 10px;font-size:16px}
+.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.badge{display:inline-block;border:1px solid var(--soft);border-radius:999px;padding:4px 10px;font-size:12px;margin-right:6px}
+.label{font-size:12px;opacity:.78;margin-bottom:6px}
+textarea,input[type="text"]{width:100%;border:1px solid var(--soft);border-radius:12px;padding:10px;min-height:110px;resize:vertical;font:inherit}
+.small{min-height:auto}
+hr{border:0;border-top:1px solid var(--soft);margin:16px 0}
+svg{width:100%;height:auto;display:block}
+.footer{margin-top:20px;font-size:12px;opacity:.65;text-align:center}
+.kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+
+.taglist{display:flex;gap:6px;flex-wrap:wrap}
+.tag{border:1px dashed var(--soft);border-radius:999px;padding:2px 10px;font-size:12px;opacity:.85}
+
+@media (max-width:980px){.grid{grid-template-columns:1fr}}
+@media print{.nav,.crumbs{display:none}.card{box-shadow:none;border:0}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div>
+        <nav class="crumbs">
+          <a href="index.html">Jar Home</a> → <span>🌙 Archive</span>
+        </nav>
+        <h1>🌙 End-of-Cycle Archive</h1>
+        <div class="sub">Moon’s review: calm, clinical, complete. Summarize what happened, why it mattered, and what you’ll carry forward.</div>
+      </div>
+      <div class="nav">
+        <a class="btn" href="day/index.html">Open Day Spreads →</a>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- LEFT COLUMN -->
+      <section class="card">
+        <h2>Cycle Summary</h2>
+        <div class="meta">
+          <input id="cycleName" class="small" type="text" placeholder="Cycle name (e.g., Illumina 1 — Launch)">
+          <input id="cycleDates" class="small" type="text" placeholder="Dates (e.g., Nov 5 – Dec 17, 2025)">
+          <input id="theme" class="small" type="text" placeholder="Theme (e.g., Honey + Victory + Archive)">
+        </div>
+        <div class="label">Executive Summary (5–8 sentences)</div>
+        <textarea id="exec" placeholder="What this cycle tried to do, what happened, what changed."></textarea>
+
+        <hr>
+        <h2>Highlights & Evidence</h2>
+        <div class="label">Top 3–5 Wins (with pointers)</div>
+        <textarea id="wins" placeholder="• Win #1 — link, metric, or artifact
+• Win #2 — …
+• Win #3 — …"></textarea>
+
+        <div class="kv">
+          <div>
+            <div class="label" style="margin-top:10px">Artifacts / Sources (links or notes)</div>
+            <textarea id="sources" placeholder="URLs, filenames, locations (playlist, repo, docs, posts)"></textarea>
+          </div>
+          <div>
+            <div class="label" style="margin-top:10px">Metrics Snapshot</div>
+            <textarea id="metrics" placeholder="Key numbers only (traffic, sales, watch time, posts, etc.)"></textarea>
+          </div>
+        </div>
+
+        <hr>
+        <h2>Lessons & Risks</h2>
+        <div class="kv">
+          <div>
+            <div class="label">What worked (keep / scale)</div>
+            <textarea id="worked" placeholder="Patterns, formats, timings that helped."></textarea>
+          </div>
+          <div>
+            <div class="label">What didn’t (stop / change)</div>
+            <textarea id="didnt" placeholder="Frictions, dead ends, safety flags."></textarea>
+          </div>
+        </div>
+
+        <div class="label" style="margin-top:10px">Open Questions (parking lot)</div>
+        <textarea id="questions" placeholder="What still puzzles you? What needs a Janet Planet experiment?"></textarea>
+      </section>
+
+      <!-- RIGHT COLUMN -->
+      <section class="card">
+        <h2>Timeline (Key Moments)</h2>
+        <div class="label">Anchor beats across the 42 days (dates optional)</div>
+        <textarea id="timeline" placeholder="Day 1 — …
+Day 7 — …
+Day 14 — …
+Day 21 — …
+Day 28 — …
+Day 35 — …
+Day 42 — …"></textarea>
+
+        <hr>
+        <h2>Interludes Used</h2>
+        <div class="taglist" id="interludes">
+          <span class="tag">🍯 Sabrina</span>
+          <span class="tag">🌙 Janet Planet</span>
+          <span class="tag">⚡ Eminem</span>
+          <span class="tag">☀️ Emma Stone</span>
+          <span class="tag">🔥 Doechii</span>
+          <span class="tag">🐝 Hot To Go</span>
+        </div>
+        <div class="label" style="margin-top:10px">Notes on interludes (where they helped/hurt)</div>
+        <textarea id="interludeNotes" placeholder="Which interludes landed? Which felt off? Why?"></textarea>
+
+        <hr>
+        <h2>Next Illumina Setup</h2>
+        <div class="meta">
+          <input id="nextDates" class="small" type="text" placeholder="Next cycle dates (tentative)">
+          <input id="nextTheme" class="small" type="text" placeholder="Next theme / intent">
+          <input id="firstBeat" class="small" type="text" placeholder="Day 1 first move">
+        </div>
+        <div class="label">Carry-Forwards (assets, habits, formats to keep)</div>
+        <textarea id="carry" placeholder="What you’ll bring into the next 42 days."></textarea>
+
+        <div class="label" style="margin-top:10px">Sun/Bee/Moon Notes</div>
+        <div class="kv">
+          <textarea id="sun" placeholder="☀️ Sun — any pending Victory follow-ups?"></textarea>
+          <textarea id="bee" placeholder="🐝 Bee — routines to lock in?"></textarea>
+        </div>
+        <textarea id="moon" style="margin-top:10px" placeholder="🌙 Moon — filing notes, naming convention, where to store artifacts."></textarea>
+
+        <hr>
+        <div class="nav" style="justify-content:flex-end;gap:10px">
+          <button class="btn" id="reset">Clear</button>
+          <button class="btn" id="print">Print</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer">🌙 Archive · Part of Jar — Illumina</div>
+  </div>
+
+<script>
+(function(){
+  // All field IDs to persist
+  var ids=[
+    "cycleName","cycleDates","theme","exec","wins","sources","metrics",
+    "worked","didnt","questions","timeline","interludeNotes",
+    "nextDates","nextTheme","firstBeat","carry","sun","bee","moon"
+  ];
+  function q(id){return document.getElementById(id)}
+  function k(id){return "archive_"+id}
+  function save(id){localStorage.setItem(k(id), q(id).value)}
+  function load(id){q(id).value = localStorage.getItem(k(id)) || ""}
+
+  ids.forEach(function(id){ load(id); q(id).oninput=function(){ save(id) } });
+
+  q("reset").onclick=function(){
+    ids.forEach(function(id){ localStorage.removeItem(k(id)) });
+    ids.forEach(load);
+  };
+  q("print").onclick=function(){ window.print() };
+})();
+</script>
+</body>
+</html>
 
