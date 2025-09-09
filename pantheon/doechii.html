@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pantheon — Doechii (Trickster / Chaos)</title>
+<style>
+:root{
+  --bg:#fff;--ink:#121212;--soft:#ececec;
+  --gold:#caa100;--orange:#ff8a00;--neon:#00ffd0;--mag:#ff2fb9;--acid:#7cff00;--grey:#7a7a7a
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:24px}
+.header{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+h1{font-size:26px;margin:0 0 4px;font-weight:800}
+.sub{opacity:.75;font-size:13px;margin-bottom:14px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+  border:2px solid var(--gold);background:var(--gold);color:#fff;
+  font-weight:700;font-size:14px;padding:8px 14px;border-radius:12px;cursor:pointer;
+  text-decoration:none;display:inline-block
+}
+.btn:hover{background:#fff;color:var(--gold)}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;margin-top:16px}
+.card{border:1px solid var(--soft);border-radius:14px;padding:16px;background:#fff;box-shadow:0 6px 28px rgba(0,0,0,.05)}
+.card h2{margin:0 0 10px;font-size:16px}
+.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.badge{display:inline-block;border:1px solid var(--soft);border-radius:999px;padding:4px 10px;font-size:12px;margin-right:6px}
+.label{font-size:12px;opacity:.8;margin-bottom:6px}
+textarea,input[type="text"]{width:100%;border:1px solid var(--soft);border-radius:12px;padding:10px;min-height:110px;resize:vertical;font:inherit}
+.small{min-height:auto}
+hr{border:0;border-top:1px solid var(--soft);margin:16px 0}
+svg{width:100%;height:auto;display:block}
+.footer{margin-top:20px;font-size:12px;opacity:.65;text-align:center}
+@media (max-width:880px){.grid{grid-template-columns:1fr}}
+@media print{.nav{display:none}.card{box-shadow:none;border:0}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <div>
+        <h1>🔥 Doechii — Trickster / Chaos</h1>
+        <div class="sub">Interlude spread in the Illumina Pantheon. Role: **playful disruption** — break pattern, inject neon energy, flip the frame (safely).</div>
+      </div>
+      <div class="nav">
+        <a class="btn" href="../index.html">← Home</a>
+        <a class="btn" href="../day/index.html">Start Day 1 →</a>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- Left: Visual + Brief -->
+      <section class="card">
+        <h2>Interlude Glyph</h2>
+        <!-- Neon graffiti motif (SVG-only, with soft glow) -->
+        <svg viewBox="0 0 820 520" role="img" aria-label="Doechii neon graffiti glyph">
+          <defs>
+            <!-- soft neon glow -->
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="6" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <linearGradient id="spray" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stop-color="var(--neon)"/>
+              <stop offset="100%" stop-color="var(--mag)"/>
+            </linearGradient>
+          </defs>
+
+          <rect x="20" y="20" width="780" height="480" rx="16" fill="#fff" stroke="var(--soft)"/>
+
+          <!-- paint splashes -->
+          <g opacity=".14">
+            <circle cx="140" cy="120" r="40" fill="var(--neon)"/>
+            <circle cx="250" cy="90"  r="22" fill="var(--mag)"/>
+            <circle cx="620" cy="120" r="28" fill="var(--acid)"/>
+            <circle cx="700" cy="200" r="22" fill="var(--neon)"/>
+            <circle cx="220" cy="360" r="34" fill="var(--acid)"/>
+            <circle cx="560" cy="410" r="40" fill="var(--mag)"/>
+          </g>
+
+          <!-- wild strokes -->
+          <g filter="url(#glow)" fill="none" stroke-width="7" stroke-linecap="round">
+            <path d="M120 240 Q210 170 300 240 T480 240 T720 260"
+                  stroke="url(#spray)"/>
+            <path d="M150 310 C220 380, 320 330, 380 360 S520 420, 650 330"
+                  stroke="var(--acid)"/>
+            <path d="M180 180 L230 200 L210 250 L260 270" stroke="var(--neon)"/>
+          </g>
+
+          <!-- trickster tag -->
+          <text x="410" y="475" text-anchor="middle" font-size="13" fill="var(--grey)">
+            Break pattern • Play the move • Debrief the chaos
+          </text>
+        </svg>
+
+        <hr>
+
+        <h2>Brief</h2>
+        <p><span class="badge">Archetype</span> Trickster / Chaos • graffiti, remix, rules-as-toys.</p>
+        <p><span class="badge">Function</span> Shocks the swarm out of stagnation; reveals hidden options via **playful violation** of routine.</p>
+        <p><span class="badge">When</span> When things feel stuck/over-serious. Use with **clear safety rails**.</p>
+      </section>
+
+      <!-- Right: Prompts + Notes -->
+      <section class="card">
+        <h2>Prompts & Notes</h2>
+        <div class="meta">
+          <input id="rule" type="text" class="small" placeholder="Which rule/pattern will you bend?">
+          <input id="move" type="text" class="small" placeholder="Play move (1 small disruption)">
+          <input id="budget" type="text" class="small" placeholder="Risk budget (time/energy/scope)">
+        </div>
+
+        <div class="label">🎲 Setup (constraints + consent)</div>
+        <textarea id="setup" placeholder="What boundaries keep this playful and safe? Who needs to be informed?"></textarea>
+
+        <div class="label" style="margin-top:10px">💥 The Flip (what you actually did)</div>
+        <textarea id="flip" placeholder="Describe the disruption. Keep it reversible where possible."></textarea>
+
+        <div class="label" style="margin-top:10px">🧩 Outcome → Next Move</div>
+        <textarea id="outcome" placeholder="What shifted? Did energy return? What’s the next playful nudge?"></textarea>
+
+        <hr>
+        <div class="nav" style="justify-content:flex-end">
+          <button class="btn" id="clear">Clear</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer">Pantheon · Doechii · Part of Jar — Illumina 1</div>
+  </div>
+
+<script>
+(function(){
+  var ids=["rule","move","budget","setup","flip","outcome"];
+  function q(id){return document.getElementById(id)}
+  function k(id){return "pantheon_doechii_"+id}
+  function save(id){localStorage.setItem(k(id), q(id).value)}
+  function load(id){q(id).value = localStorage.getItem(k(id)) || ""}
+
+  ids.forEach(function(id){ load(id); q(id).oninput=function(){ save(id) } });
+  document.getElementById("clear").onclick=function(){
+    ids.forEach(function(id){ localStorage.removeItem(k(id)) });
+    ids.forEach(load);
+  };
+})();
+</script>
+</body>
+</html>
