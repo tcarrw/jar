@@ -1,153 +1,586 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Day • Jar</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>🗓️</text></svg>">
-<meta name="description" content="Single Day view for Illumina cycles with Watchman overlay, tunes, and notes."/>
-<style>
-  :root{--bg:#0b1220;--card:#0f1830;--ink:#e8e7e3;--muted:#a9b0c3;--accent:#c7f284;
-    --radius:16px;--shadow:0 10px 30px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.03)}
-  body{margin:0;background:radial-gradient(1200px 600px at 20% -10%,#101a33 0%,#0b1220 60%) no-repeat var(--bg);
-    color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial}
-  a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
-  header{position:sticky;top:0;z-index:5;backdrop-filter:saturate(140%) blur(10px);
-    background:linear-gradient(180deg,rgba(11,18,32,.9),rgba(11,18,32,.65));border-bottom:1px solid rgba(255,255,255,.06)}
-  .wrap{max-width:1000px;margin:auto;padding:16px}
-  .bar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem .95rem;border:1px solid rgba(255,255,255,.1);
-    border-radius:12px;background:rgba(255,255,255,.02);color:var(--ink)}
-  .btn:hover{border-color:rgba(255,255,255,.2)}
-  .card{background:linear-gradient(180deg,var(--card),#0a142a);border:1px solid rgba(255,255,255,.06);
-    border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin:12px 0}
-  .pill{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem .6rem;border:1px solid rgba(255,255,255,.1);
-    border-radius:999px;background:rgba(255,255,255,.02);margin-right:8px}
-  .glyph{font-size:28px}
-  .yt-wrap{position:relative;width:100%;padding-top:56.25%;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
-  .yt-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
-  textarea{width:100%;min-height:200px;resize:vertical;color:var(--ink);background:#0c152b;
-    border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px;font:15px/1.5 ui-monospace,Menlo,Consolas}
-  .muted{color:var(--muted)}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jar — Day</title>
+  <meta name="color-scheme" content="light dark" />
+  <style>
+    :root{
+      --bg: #0b0f14;
+      --surface: #111827;
+      --surface-2:#0f172a;
+      --text: #e5e7eb;
+      --muted:#94a3b8;
+      --border:#1f2737;
+      --accent:#7c3aed;
+      --accent-ink:#ffffff;
+      --success:#10b981;
+      --danger:#ef4444;
+      --shadow: 0 8px 24px rgba(0,0,0,.28);
+      --radius: 12px;
+      --radius-sm: 10px;
+      --radius-xs: 8px;
+      --ring: 0 0 0 2px color-mix(in oklab, var(--accent) 30%, transparent);
+    }
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg:#f7fafc;
+        --surface:#ffffff;
+        --surface-2:#f8fafc;
+        --text:#0f172a;
+        --muted:#475569;
+        --border:#e2e8f0;
+        --accent:#6d28d9;
+        --accent-ink:#ffffff;
+        --shadow: 0 8px 20px rgba(17,24,39,.08);
+      }
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font: 16px/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 20% -10%, color-mix(in oklab, var(--accent) 16%, transparent), transparent) , var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    .shell{max-width: 960px; margin: 24px auto 56px; padding: 0 16px}
+    header{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px; background: linear-gradient(180deg, color-mix(in oklab, var(--surface) 94%, transparent), var(--surface));
+      border:1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; box-shadow: var(--shadow);
+      position:sticky; top:12px; z-index:5; backdrop-filter:saturate(1.2) blur(6px)
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; font-weight:700; letter-spacing:.2px
+    }
+    .glyph{display:inline-grid; place-items:center; width:32px; height:32px; border-radius:8px; background: var(--accent); color:var(--accent-ink); font-size:18px}
+    .brand h1{font-size:18px; margin:0}
+    .datebar{display:flex; flex-wrap:wrap; gap:8px; align-items:center}
+    .datebar input[type="date"]{
+      appearance:none; border:1px solid var(--border); background: var(--surface-2); color:var(--text);
+      border-radius: var(--radius-xs); padding:10px 12px; min-width: 180px;
+    }
+    .btn{
+      border:1px solid var(--border); background: var(--surface-2); color:var(--text);
+      padding:10px 12px; border-radius: var(--radius-xs); cursor:pointer; transition: transform .04s ease;
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .btn:focus-visible{outline:none; box-shadow: var(--ring)}
+    .btn.primary{background: var(--accent); color:var(--accent-ink); border-color: color-mix(in oklab, var(--accent) 40%, var(--border))}
+    .btn.ghost{background: transparent}
+    main{margin-top:18px; display:grid; grid-template-columns: 1.2fr .8fr; gap:18px}
+    @media (max-width: 880px){ main{grid-template-columns: 1fr;}}
+    .card{
+      background: var(--surface); border:1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow);
+      padding:18px
+    }
+    .stack{display:grid; gap:14px}
+    .row{display:flex; gap:12px; flex-wrap:wrap}
+    label{font-size:13px; color:var(--muted)}
+    select, textarea, input[type="text"]{
+      width:100%; border:1px solid var(--border); background: var(--surface-2); color:var(--text);
+      padding:10px 12px; border-radius: var(--radius-xs)
+    }
+    select{min-width: 180px}
+    textarea{min-height: 96px; resize: vertical}
+    .actions{display:flex; gap:10px; justify-content:flex-end}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius: 999px;
+      border:1px solid var(--border); background: var(--surface-2); font-size:12px; color:var(--muted)
+    }
+    .pill[data-type="Honey"]{background: color-mix(in oklab, var(--success) 18%, var(--surface-2)); color: color-mix(in oklab, var(--success) 84%, var(--text))}
+    .pill[data-type="Gratitude"]{background: color-mix(in oklab, #f59e0b 22%, var(--surface-2)); color: color-mix(in oklab, #f59e0b 84%, var(--text))}
+    .pill[data-type="Spark"]{background: color-mix(in oklab, var(--accent) 22%, var(--surface-2)); color: color-mix(in oklab, var(--accent) 84%, var(--text))}
+    .pill[data-type="Task"]{background: color-mix(in oklab, #3b82f6 22%, var(--surface-2)); color: color-mix(in oklab, #3b82f6 86%, var(--text))}
+    .pill[data-type="Note"]{background: color-mix(in oklab, #a3a3a3 22%, var(--surface-2)); color: color-mix(in oklab, #a3a3a3 90%, var(--text))}
+    .entry{
+      display:grid; gap:10px; padding:14px; border:1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface-2)
+    }
+    .entry-head{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap}
+    .entry-text{white-space: pre-wrap; line-height:1.55}
+    .entry-tags{display:flex; gap:8px; flex-wrap:wrap}
+    .tag{
+      display:inline-flex; align-items:center; padding:4px 8px; border-radius: 999px; background:transparent; border:1px dashed var(--border); font-size:11px; color:var(--muted)
+    }
+    .entry-ops{display:flex; gap:8px}
+    .entry-ops .mini{font-size:12px; padding:6px 8px}
+    .muted{color:var(--muted); font-size:12px}
+    .grid-slim{display:grid; gap:10px}
+    .toolbar{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between}
+    .statbar{display:flex; gap:8px; flex-wrap:wrap}
+    .toast{
+      position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%);
+      background: var(--surface); border:1px solid var(--border); border-radius: 10px; padding:10px 14px;
+      box-shadow: var(--shadow); opacity:0; pointer-events:none; transition: opacity .18s ease, transform .18s ease;
+    }
+    .toast.show{opacity:1; pointer-events:auto; transform: translateX(-50%) translateY(-4px)}
+    .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+    a.link{color: color-mix(in oklab, var(--accent) 88%, var(--text)); text-decoration:none; border-bottom:1px dashed color-mix(in oklab, var(--accent) 60%, var(--border))}
+    a.link:hover{border-bottom-style:solid}
+  </style>
 </head>
+
 <body>
-<header>
-  <div class="wrap bar">
-    <div>🌕 Day</div>
-    <div>
-      <a id="prev" class="btn">← Prev</a>
-      <a id="next" class="btn">Next →</a>
-      <button id="copy" class="btn">Copy Link</button>
-    </div>
+  <a class="sr-only" href="#content">Skip to content</a>
+
+  <div class="shell">
+    <header>
+      <div class="brand" aria-live="polite" aria-atomic="true">
+        <div class="glyph" aria-hidden="true">🍯</div>
+        <h1 id="brand">Jar — Day</h1>
+      </div>
+      <div class="datebar">
+        <button class="btn" id="prevDay" aria-label="Previous day">←</button>
+        <input id="datePicker" type="date" />
+        <button class="btn" id="nextDay" aria-label="Next day">→</button>
+        <button class="btn ghost" id="jumpToday">Today</button>
+      </div>
+    </header>
+
+    <main id="content">
+      <section class="card stack" aria-labelledby="addLabel">
+        <div class="toolbar">
+          <h2 id="addLabel" style="margin:0;font-size:16px;">Add to today’s jar</h2>
+          <div class="muted" id="todayCounter" aria-live="polite"></div>
+        </div>
+
+        <form id="entryForm" class="stack" autocomplete="off">
+          <div class="row">
+            <div style="min-width:200px;flex:1">
+              <label for="type">Type</label>
+              <select id="type" name="type" required>
+                <option value="Honey">Honey (win)</option>
+                <option value="Gratitude">Gratitude</option>
+                <option value="Spark">Spark (idea)</option>
+                <option value="Task">Task</option>
+                <option value="Note">Note</option>
+              </select>
+            </div>
+            <div style="flex:2;min-width:220px">
+              <label for="tags">Tags (use # or spaces)</label>
+              <input id="tags" name="tags" type="text" inputmode="text" placeholder="#flow #morning" />
+            </div>
+          </div>
+
+          <div>
+            <label for="text">Text</label>
+            <textarea id="text" name="text" placeholder="What’s the drop you’re adding to the jar today?" required></textarea>
+          </div>
+
+          <div class="actions">
+            <button class="btn" type="reset" id="resetForm">Clear</button>
+            <button class="btn primary" type="submit">Add to Jar</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card stack" aria-labelledby="listLabel">
+        <div class="toolbar">
+          <h2 id="listLabel" style="margin:0;font-size:16px;">Entries for <span id="humanDate"></span></h2>
+          <div class="statbar" id="statbar"></div>
+        </div>
+        <div class="grid-slim" id="emptyState" hidden>
+          <p class="muted">No entries yet. Add your first drop above.</p>
+        </div>
+        <div class="stack" id="entries"></div>
+      </section>
+
+      <section class="card stack" aria-labelledby="toolsLabel">
+        <h2 id="toolsLabel" style="margin:0;font-size:16px;">Tools</h2>
+        <div class="row">
+          <button class="btn" id="exportDay">Export Day JSON</button>
+          <label class="btn" for="importFile" style="cursor:pointer">Import JSON</label>
+          <input id="importFile" type="file" accept="application/json" hidden />
+          <button class="btn" id="clearDay">Clear Day</button>
+        </div>
+        <p class="muted">Data is stored locally in your browser. Export regularly if you need backups or to merge elsewhere.</p>
+      </section>
+    </main>
   </div>
-</header>
 
-<main class="wrap">
-  <section class="card">
-    <h1 id="title">Day</h1>
-    <p id="subtitle" class="muted">Universal day view.</p>
-    <div>
-      <span id="pillIllumina" class="pill"></span>
-      <span id="pillDay" class="pill"></span>
-      <span id="pillDate" class="pill"></span>
-      <span id="pillWatch" class="pill"><span id="watchGlyph" class="glyph"></span><span id="watchName"></span></span>
-    </div>
-  </section>
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
-  <section class="card">
-    <h2 style="margin:0 0 8px">🎵 Tune of the Day</h2>
-    <p id="songTitle"></p>
-    <div class="yt-wrap"><iframe id="ytFrame"></iframe></div>
-    <div style="margin-top:8px"><a id="ytOpen" class="btn" target="_blank">Open in YouTube</a></div>
-  </section>
+  <script src="/api/config.js" defer></script>
+  <script defer>
+    (function(){
+      "use strict";
 
-  <section class="card">
-    <h2>📝 Your Note</h2>
-    <textarea id="note"></textarea>
-    <small id="status" class="muted">Autosave ready</small>
-  </section>
-</main>
+      const $ = (sel, root=document) => root.querySelector(sel);
+      const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
 
-<script>
-// --- Playlist data (from illumina 1 JSON) ---
-const playlist = [
-  {title:"Eminem - White America",id:"RZIzD0ZfTFg"},
-  {title:"Chappell Roan - HOT TO GO!",id:"xaPNR-_Cfn0"},
-  {title:"Robyn - Honey",id:"Mru9GG3ur9U"},
-  {title:"Coldplay - Strawberry Swing",id:"h3pJZSTQqIg"},
-  {title:"Mariah Carey - Honey",id:"w3KOowB4k_k"},
-  {title:"Kendrick Lamar - HUMBLE.",id:"tvTRZJ-4EyI"},
-  {title:"The Temper Trap - Sweet Disposition",id:"jxKjOOR9sPU"},
-  {title:"Tyga - Taste",id:"LjxulQ1bEWg"},
-  {title:"MARINA - Froot",id:"WZzcY7ASQno"},
-  {title:"Chloe x Halle - Do It",id:"a9HIaGcBocc"},
-  {title:"Lizzo - Good As Hell",id:"SmbmeOgWsqE"},
-  {title:"Lizzo - Truth Hurts",id:"P00HMxdsVZI"},
-  {title:"Madonna - Take A Bow",id:"XDeiovnCv1o"},
-  {title:"The Verve - Bitter Sweet Symphony",id:"1lyu1KKwC74"},
-  {title:"Missy Elliott - Work It",id:"cjIvu7e6Wq8"},
-  {title:"Lizzo - Juice",id:"XaCrQL_8eMY"},
-  {title:"Prince - Controversy",id:"4gazNwzC4H0"},
-  {title:"Lana Del Rey - Cinnamon Girl",id:"DCYmJDO2_IE"},
-  {title:"Florence + The Machine - Dog Days Are Over",id:"iWOyfLBYtuU"},
-  {title:"Dua Lipa - Don't Start Now",id:"oygrmJFKYZY"},
-  {title:"Post Malone & Swae Lee - Sunflower",id:"ApXoWvfEYVU"},
-  {title:"Beyoncé - Formation",id:"WDZJPJV__bQ"},
-  {title:"Hurts - Illuminated",id:"6CvuyaKmLnw"},
-  {title:"Måneskin - HONEY (ARE U COMING?)",id:"HZnNt9nnEhw"},
-  {title:"Madonna - Express Yourself",id:"GsVcUzP_O_8"},
-  {title:"Megan Thee Stallion - Savage Remix ft. Beyoncé",id:"lEIqjoO0-Bs"},
-  {title:"M.I.A. - Paper Planes",id:"ewRjZoRtu0Y"},
-  {title:"Coldplay - Viva La Vida",id:"dvgZkm1xWPE"},
-  {title:"Eminem - Lose Yourself",id:"xFYQQPAOz7Y"},
-  {title:"Taylor Swift - Shake It Off",id:"nfWlot6h_JM"},
-  {title:"Dua Lipa - Levitating",id:"TUVcZfQe-Kw"},
-  {title:"Beyoncé - ENERGY",id:"O9rk6ldyFkA"},
-  {title:"Fleetwood Mac - Dreams",id:"5oWyMakvQew"},
-  {title:"Stevie Nicks - Edge of Seventeen",id:"UmPgMc3R8zg"},
-  {title:"Lady Gaga - Born This Way",id:"wV1FrqwZyKw"},
-  {title:"Coldplay - Fix You",id:"k4V3Mo61fJM"},
-  {title:"Kendrick Lamar - Alright",id:"Z-48u_uWMHY"},
-  {title:"Ariana Grande - thank u, next",id:"gl1aHhXnN1k"},
-  {title:"Amy Winehouse - Back To Black",id:"TJAfLE39ZZ8"},
-  {title:"Beyoncé - XO",id:"3xUfCUFPL-8"},
-  {title:"Frank Ocean - Nights",id:"r4l9bFqgMaQ"},
-  {title:"Semisonic - Closing Time",id:"xGytDsqkQY8"}
-];
+      const els = {
+        brand: $("#brand"),
+        prevDay: $("#prevDay"),
+        nextDay: $("#nextDay"),
+        jumpToday: $("#jumpToday"),
+        datePicker: $("#datePicker"),
+        form: $("#entryForm"),
+        type: $("#type"),
+        tags: $("#tags"),
+        text: $("#text"),
+        resetForm: $("#resetForm"),
+        entries: $("#entries"),
+        empty: $("#emptyState"),
+        statbar: $("#statbar"),
+        humanDate: $("#humanDate"),
+        todayCounter: $("#todayCounter"),
+        exportDay: $("#exportDay"),
+        importFile: $("#importFile"),
+        clearDay: $("#clearDay"),
+        toast: $("#toast")
+      };
 
-// --- URL params ---
-const p=new URLSearchParams(location.search);
-const illumina=parseInt(p.get("illumina")||"0",10);
-const day=parseInt(p.get("day")||"0",10);
+      const cfg = (window.APP_CONFIG && typeof window.APP_CONFIG === "object") ? window.APP_CONFIG : {};
+      const ns = cfg.namespace || cfg.appId || "default";
+      const storageKey = `jar.v1.${ns}`;
+      const accent = (cfg.theme && cfg.theme.accent) ? String(cfg.theme.accent) : null;
+      if (accent) document.documentElement.style.setProperty("--accent", accent);
+      if (cfg.brand || cfg.title){
+        const label = `${cfg.brand || cfg.title} — Day`;
+        els.brand.textContent = label;
+        document.title = label;
+      }
 
-// --- DOM ---
-const title=document.getElementById("title");
-const pillIllumina=document.getElementById("pillIllumina");
-const pillDay=document.getElementById("pillDay");
-const pillDate=document.getElementById("pillDate");
-const songTitle=document.getElementById("songTitle");
-const ytFrame=document.getElementById("ytFrame");
-const ytOpen=document.getElementById("ytOpen");
+      const todayISO = () => {
+        const d = new Date();
+        const y = d.getFullYear();
+        const m = String(d.getMonth()+1).padStart(2,"0");
+        const dd = String(d.getDate()).padStart(2,"0");
+        return `${y}-${m}-${dd}`;
+      };
+      const shiftISO = (iso, days) => {
+        const [y,m,d] = iso.split("-").map(Number);
+        const dt = new Date(y, m-1, d);
+        dt.setDate(dt.getDate() + days);
+        const yy = dt.getFullYear();
+        const mm = String(dt.getMonth()+1).padStart(2,"0");
+        const dd = String(dt.getDate()).padStart(2,"0");
+        return `${yy}-${mm}-${dd}`;
+      };
+      const humanize = (iso) => {
+        const [y,m,d] = iso.split("-").map(Number);
+        const dt = new Date(y, m-1, d);
+        return dt.toLocaleDateString(undefined, {weekday:"short", year:"numeric", month:"short", day:"numeric"});
+      };
 
-// --- Fill ---
-if(illumina===1 && day>=1 && day<=42){
-  title.textContent="Day "+day+" — Illumina 1";
-  pillIllumina.textContent="Illumina 1"; pillDay.textContent="Day "+day;
+      let memoryDB = {};
+      const readDB = () => {
+        try{
+          const raw = localStorage.getItem(storageKey);
+          if (!raw) return {};
+          const parsed = JSON.parse(raw);
+          return (parsed && typeof parsed === "object") ? parsed : {};
+        }catch(_){ return Object.assign({}, memoryDB); }
+      };
+      const writeDB = (obj) => {
+        try{
+          localStorage.setItem(storageKey, JSON.stringify(obj));
+        }catch(_){
+          memoryDB = Object.assign({}, obj);
+        }
+      };
 
-  // Date label
-  const base=new Date(Date.UTC(2025,10,5)); // Nov 5 2025
-  const d=new Date(base.getTime()+(day-1)*86400000);
-  pillDate.textContent=d.toDateString();
+      const uid = () => Math.random().toString(36).slice(2) + Date.now().toString(36);
+      const nowISO = () => new Date().toISOString();
 
-  // Song of the day
-  const track=playlist[day-1];
-  if(track){
-    songTitle.textContent=track.title;
-    ytFrame.src="https://www.youtube-nocookie.com/embed/"+track.id+"?rel=0&modestbranding=1";
-    ytOpen.href="https://www.youtube.com/watch?v="+track.id;
-  }
-}
-</script>
+      const getDay = (iso) => {
+        const db = readDB();
+        return Array.isArray(db[iso]) ? db[iso] : [];
+      };
+      const setDay = (iso, arr) => {
+        const db = readDB();
+        db[iso] = arr;
+        writeDB(db);
+      };
+
+      const parseTags = (raw) => {
+        if (!raw) return [];
+        return raw
+          .split(/[\s,]+/)
+          .map(s => s.trim().replace(/^#/, ""))
+          .filter(Boolean)
+          .slice(0, 12);
+      };
+
+      const showToast = (msg) => {
+        els.toast.textContent = msg;
+        els.toast.classList.add("show");
+        window.setTimeout(() => els.toast.classList.remove("show"), 1400);
+      };
+
+      const renderStats = (entries) => {
+        const counts = entries.reduce((acc, e) => (acc[e.type] = (acc[e.type]||0)+1, acc), {});
+        const total = entries.length;
+        els.statbar.innerHTML = "";
+        if (total === 0) return;
+        const frag = document.createDocumentFragment();
+        Object.entries(counts).forEach(([k,v])=>{
+          const n = document.createElement("div");
+          n.className = "pill";
+          n.dataset.type = k;
+          n.textContent = `${k}: ${v}`;
+          frag.appendChild(n);
+        });
+        const t = document.createElement("div");
+        t.className = "pill";
+        t.textContent = `Total: ${total}`;
+        frag.appendChild(t);
+        els.statbar.appendChild(frag);
+        els.todayCounter.textContent = `${total} item${total===1?"":"s"} today`;
+      };
+
+      const entryCard = (entry, dateIso) => {
+        const wrap = document.createElement("div");
+        wrap.className = "entry";
+        wrap.dataset.id = entry.id;
+
+        const head = document.createElement("div");
+        head.className = "entry-head";
+
+        const left = document.createElement("div");
+        left.style.display = "flex";
+        left.style.gap = "8px";
+        left.style.alignItems = "center";
+        const pill = document.createElement("span");
+        pill.className = "pill";
+        pill.dataset.type = entry.type;
+        pill.textContent = entry.type;
+        const time = document.createElement("span");
+        time.className = "muted";
+        time.textContent = new Date(entry.createdAt).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
+        left.appendChild(pill);
+        left.appendChild(time);
+
+        const ops = document.createElement("div");
+        ops.className = "entry-ops";
+        const edit = document.createElement("button");
+        edit.type = "button";
+        edit.className = "btn mini";
+        edit.textContent = "Edit";
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "btn mini";
+        del.textContent = "Delete";
+        ops.appendChild(edit);
+        ops.appendChild(del);
+
+        head.appendChild(left);
+        head.appendChild(ops);
+
+        const text = document.createElement("div");
+        text.className = "entry-text";
+        text.textContent = entry.text;
+
+        const tags = document.createElement("div");
+        tags.className = "entry-tags";
+        if (entry.tags && entry.tags.length){
+          entry.tags.forEach(t=>{
+            const chip = document.createElement("span");
+            chip.className = "tag";
+            chip.textContent = `#${t}`;
+            tags.appendChild(chip);
+          });
+        } else {
+          const none = document.createElement("span");
+          none.className = "muted";
+          none.textContent = "No tags";
+          tags.appendChild(none);
+        }
+
+        wrap.appendChild(head);
+        wrap.appendChild(text);
+        wrap.appendChild(tags);
+
+        edit.addEventListener("click", () => {
+          if (wrap.querySelector("form")) return;
+          const form = document.createElement("form");
+          form.className = "stack";
+          const row = document.createElement("div");
+          row.className = "row";
+
+          const selWrap = document.createElement("div");
+          selWrap.style.minWidth = "160px";
+          selWrap.style.flex = "1";
+          const sel = document.createElement("select");
+          ["Honey","Gratitude","Spark","Task","Note"].forEach(opt=>{
+            const o = document.createElement("option");
+            o.value = opt; o.textContent = opt;
+            if (opt === entry.type) o.selected = true;
+            sel.appendChild(o);
+          });
+          selWrap.appendChild(sel);
+
+          const tagWrap = document.createElement("div");
+          tagWrap.style.flex = "2"; tagWrap.style.minWidth = "200px";
+          const tagIn = document.createElement("input");
+          tagIn.type = "text";
+          tagIn.value = (entry.tags||[]).map(t => `#${t}`).join(" ");
+          tagWrap.appendChild(tagIn);
+
+          const ta = document.createElement("textarea");
+          ta.value = entry.text;
+
+          const act = document.createElement("div");
+          act.className = "actions";
+          const cancel = document.createElement("button");
+          cancel.type = "button"; cancel.className = "btn"; cancel.textContent = "Cancel";
+          const save = document.createElement("button");
+          save.type = "submit"; save.className = "btn primary"; save.textContent = "Save";
+          act.appendChild(cancel); act.appendChild(save);
+
+          row.appendChild(selWrap);
+          row.appendChild(tagWrap);
+          form.appendChild(row);
+          form.appendChild(ta);
+          form.appendChild(act);
+
+          wrap.appendChild(form);
+          edit.disabled = true;
+
+          cancel.addEventListener("click", () => {
+            form.remove();
+            edit.disabled = false;
+          });
+
+          form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const entries = getDay(dateIso);
+            const idx = entries.findIndex(x => x.id === entry.id);
+            if (idx === -1) return;
+            const updated = {
+              ...entries[idx],
+              type: sel.value,
+              text: String(ta.value || "").trim(),
+              tags: parseTags(tagIn.value),
+              updatedAt: nowISO()
+            };
+            entries[idx] = updated;
+            setDay(dateIso, entries);
+            renderList(dateIso);
+            showToast("Entry updated");
+          });
+        });
+
+        del.addEventListener("click", () => {
+          if (!confirm("Delete this entry?")) return;
+          const entries = getDay(dateIso).filter(x => x.id !== entry.id);
+          setDay(dateIso, entries);
+          renderList(dateIso);
+          showToast("Entry deleted");
+        });
+
+        return wrap;
+      };
+
+      const renderList = (iso) => {
+        const entries = getDay(iso).sort((a,b)=> (a.createdAt > b.createdAt ? 1 : -1));
+        els.entries.innerHTML = "";
+        els.empty.hidden = entries.length > 0;
+        els.humanDate.textContent = humanize(iso);
+        renderStats(entries);
+        if (!entries.length) return;
+        const frag = document.createDocumentFragment();
+        entries.forEach(e => frag.appendChild(entryCard(e, iso)));
+        els.entries.appendChild(frag);
+      };
+
+      const onAdd = (e) => {
+        e.preventDefault();
+        const type = els.type.value;
+        const text = String(els.text.value || "").trim();
+        if (!text) return;
+        const tags = parseTags(els.tags.value);
+        const iso = els.datePicker.value;
+        const entry = { id: uid(), type, text, tags, createdAt: nowISO(), updatedAt: null };
+        const day = getDay(iso);
+        day.push(entry);
+        setDay(iso, day);
+        els.form.reset();
+        renderList(iso);
+        showToast("Added to jar");
+      };
+
+      const onExport = () => {
+        const iso = els.datePicker.value;
+        const payload = { date: iso, entries: getDay(iso) };
+        const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `jar-${iso}.json`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      };
+
+      const onImport = async (file) => {
+        if (!file) return;
+        const text = await file.text();
+        let data;
+        try { data = JSON.parse(text); } catch(_){ showToast("Invalid JSON"); return; }
+        const iso = els.datePicker.value;
+        if (Array.isArray(data)){
+          const merged = getDay(iso).concat(data);
+          setDay(iso, merged);
+          renderList(iso);
+          showToast("Imported entries");
+          return;
+        }
+        if (data && Array.isArray(data.entries)){
+          const merged = getDay(data.date || iso).concat(data.entries);
+          setDay(data.date || iso, merged);
+          if ((data.date || iso) === iso) renderList(iso);
+          showToast("Imported entries");
+          return;
+        }
+        if (data && typeof data === "object"){
+          const db = readDB();
+          writeDB(Object.assign({}, db, data));
+          if (data[iso]) renderList(iso);
+          showToast("Imported data");
+          return;
+        }
+        showToast("Nothing to import");
+      };
+
+      const initDate = () => {
+        const t = todayISO();
+        els.datePicker.value = els.datePicker.value || t;
+        renderList(els.datePicker.value);
+      };
+
+      els.form.addEventListener("submit", onAdd);
+      els.resetForm.addEventListener("click", () => els.form.reset());
+
+      els.prevDay.addEventListener("click", () => {
+        els.datePicker.value = shiftISO(els.datePicker.value, -1);
+        renderList(els.datePicker.value);
+      });
+      els.nextDay.addEventListener("click", () => {
+        els.datePicker.value = shiftISO(els.datePicker.value, 1);
+        renderList(els.datePicker.value);
+      });
+      els.jumpToday.addEventListener("click", () => {
+        els.datePicker.value = todayISO();
+        renderList(els.datePicker.value);
+      });
+      els.datePicker.addEventListener("change", () => renderList(els.datePicker.value));
+
+      els.exportDay.addEventListener("click", onExport);
+      els.importFile.addEventListener("change", (e) => onImport(e.target.files && e.target.files[0]));
+      els.clearDay.addEventListener("click", () => {
+        if (!confirm("Clear all entries for this day?")) return;
+        setDay(els.datePicker.value, []);
+        renderList(els.datePicker.value);
+        showToast("Day cleared");
+      });
+
+      initDate();
+    })();
+  </script>
 </body>
 </html>
