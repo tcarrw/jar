@@ -171,5 +171,21 @@
     <p class="sub">All day tiles link to Moon Notes with <code>?illumina=1&day=##</code>.</p>
   </footer>
 </main>
+    <script>
+  (function(){
+    // Illumina 1 runs Nov 5 – Dec 16, 2025
+    var dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    var monNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    var baseUTC = Date.UTC(2025, 10, 5); // 10 = November
+
+    var cells = document.querySelectorAll(".grid .cell");
+    cells.forEach(function(cell, idx){
+      var d = new Date(baseUTC + idx * 24*60*60*1000);
+      var label = dayNames[d.getUTCDay()] + " · " + monNames[d.getUTCMonth()] + " " + d.getUTCDate() + ", " + d.getUTCFullYear();
+      var dateEl = cell.querySelector(".date");
+      if(dateEl) dateEl.textContent = label;
+    });
+  })();
+</script>
 </body>
 </html>
