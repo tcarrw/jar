@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Moon Notes</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>📝</text></svg>">
+  <meta name="description" content="Moon Notes for Illumina cycles with Watchman overlays and local autosave."/>
+  <style>
+    :root{
+      --bg:#0b1220; --card:#0f1830; --ink:#e8e7e3; --muted:#a9b0c3; --accent:#c7f284;
+      --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03)
+    }
+    *{box-sizing:border-box}
+    body{margin:0; background:radial-gradient(1200px 600px at 20% -10%, #101a33 0%, #0b1220 60%) no-repeat var(--bg);
+      color:var(--ink); font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial}
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    header{position:sticky; top:0; z-index:5; backdrop-filter:saturate(140%) blur(10px);
+      background:linear-gradient(180deg, rgba(11,18,32,.9), rgba(11,18,32,.65)); border-bottom:1px solid rgba(255,255,255,.06)}
+    .wrap{max-width:900px; margin:auto; padding:16px}
+    .bar{display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap}
+    .crumbs{display:flex; gap:14px; flex-wrap:wrap}
+    main{padding:28px 16px 60px}
+    .card{
+      background:linear-gradient(180deg, var(--card), #0a142a);
+      border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); box-shadow:var(--shadow);
+      padding:18px; margin-bottom:16px
+    }
+    h1{margin:0 0 4px; font-size:clamp(22px, 2.6vw, 30px)}
+    .sub{color:var(--muted); margin:0 0 12px}
+    .meta{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
+    .pill{display:inline-flex; align-items:center; gap:.5rem; padding:.35rem .6rem; border:1px solid rgba(255,255,255,.08);
+      border-radius:999px; background:rgba(255,255,255,.02); color:var(--ink); font-size:.95rem}
+    .glyph{font-size:28px; line-height:1; filter:drop-shadow(0 2px 6px rgba(199,242,132,.25))}
+    .controls{display:flex; gap:8px; flex-wrap:wrap}
+    .btn{display:inline-flex; align-items:center; gap:.5rem; padding:.6rem .9rem; border:1px solid rgba(255,255,255,.1);
+      border-radius:12px; background:rgba(255,255,255,.02); color:var(--ink); cursor:pointer}
+    .btn:hover{border-color:rgba(255,255,255,.2)}
+    textarea{width:100%; min-height:260px; resize:vertical; color:var(--ink); background:#0c152b; border:1px solid rgba(255,255,255,.1);
+      border-radius:12px; padding:14px; font:15px/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono"}
+    .row{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:space-between}
+    .muted{color:var(--muted)}
+    .grid{display:grid; gap:10px; grid-template-columns:1fr 1fr}
+    @media (max-width:720px){.grid{grid-template-columns:1fr}}
+    .badge{display:inline-flex; align-items:center; gap:.5rem; padding:.35rem .6rem; border:1px solid rgba(255,255,255,.08);
+      border-radius:999px; background:rgba(255,255,255,.02); color:var(--ink); font-size:.9rem}
+    .g{font-size:18px}
+    footer{margin-top:20px; color:var(--muted)}
+    .pantheon{display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 20px}
+    .anchor{font-size:22px; padding:.25rem .6rem; border:1px solid rgba(255,255,255,.08);
+      border-radius:999px; background:rgba(255,255,255,.02)}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <div class="crumbs">
+      <a href="https://jar.plnt.earth/">Jar</a>
+      <span class="muted">/</span>
+      <a href="https://jar.plnt.earth/calendar/illumina1/">Calendar (Illumina 1)</a>
+      <span class="muted">/</span>
+      <span>Moon Notes</span>
+    </div>
+    <div class="controls">
+      <a id="prev" class="btn" href="#">← Prev</a>
+      <a id="next" class="btn" href="#">Next →</a>
+      <button id="copy" class="btn" type="button">Copy Link</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="card">
+    <h1 id="title">Moon Notes</h1>
+    <p id="subtitle" class="sub">Open a day via <code>?illumina=1&day=##</code>.</p>
+
+    <!-- Pantheon Header -->
+    <div class="pantheon" aria-label="Pantheon Anchors">
+      <span class="anchor">🍯 Sabrina</span>
+      <span class="anchor">🌙 Janet Planet</span>
+      <span class="anchor">⚡ Eminem</span>
+      <span class="anchor">☀️ Emma Stone</span>
+      <span class="anchor">🔥 Doechii</span>
+      <span class="anchor">🐝 Hot To Go</span>
+    </div>
+
+    <div class="meta">
+      <span id="watchmanPill" class="pill" hidden><span id="wmGlyph" class="glyph"></span><span id="wmName"></span></span>
+      <span id="dayPill" class="pill" hidden></span>
+      <span id="datePill" class="pill" hidden></span>
+      <span id="illuminaPill" class="pill" hidden></span>
+    </div>
+  </section>
+
+  <section class="card">
+    <label for="note" class="muted">Your note</label>
+    <textarea id="note" placeholder="Type your Moon Note…"></textarea>
+    <div class="row">
+      <small id="status" class="muted">Autosave ready</small>
+      <div class="grid">
+        <div>
+          <span class="badge"><span class="g">🐱📈</span> Roaring Kitty</span>
+          <span class="badge"><span class="g">🔍🌙</span> Cleo Abrams</span>
+          <span class="badge"><span class="g">💼📡</span> Kinsey Grant</span>
+          <span class="badge"><span class="g">🌌🔭</span> N. deGrasse Tyson</span>
+          <span class="badge"><span class="g">🎭📢</span> Jon Stewart</span>
+        </div>
+        <div>
+          <span class="badge"><span class="g">🌱⚡</span> Greta Thunberg</span>
+          <span class="badge"><span class="g">🎁🌍</span> MrBeast</span>
+          <span class="badge"><span class="g">👤💻</span> Anonymous</span>
+          <span class="badge"><span class="g">🔥📺</span> Hasan Piker</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>Moon Notes are local-only. Saved per Illumina/day in your browser.</footer>
+</main>
+
+<script>
+(function(){
+  var p = new URLSearchParams(location.search);
+  var illumina = parseInt(p.get("illumina")||"0",10);
+  var day = parseInt(p.get("day")||"0",10);
+
+  // Watchmen map for Illumina 1
+  var wm = {
+    1:["🐱📈","Roaring Kitty"],2:["🔍🌙","Cleo Abrams"],3:["💼📡","Kinsey Grant"],4:["🌌🔭","Neil deGrasse Tyson"],
+    5:["🎭📢","Jon Stewart"],6:["🌱⚡","Greta Thunberg"],7:["🎁🌍","MrBeast"],8:["👤💻","Anonymous"],
+    9:["🐱📈","Roaring Kitty"],10:["🔍🌙","Cleo Abrams"],11:["💼📡","Kinsey Grant"],12:["🌌🔭","Neil deGrasse Tyson"],
+    13:["🎭📢","Jon Stewart"],14:["🌱⚡","Greta Thunberg"],15:["🎁🌍","MrBeast"],16:["👤💻","Anonymous"],
+    17:["🐱📈","Roaring Kitty"],18:["🔍🌙","Cleo Abrams"],19:["💼📡","Kinsey Grant"],20:["🌌🔭","Neil deGrasse Tyson"],
+    21:["🎭📢","Jon Stewart"],22:["🌱⚡","Greta Thunberg"],23:["🎁🌍","MrBeast"],24:["👤💻","Anonymous"],
+    25:["🐱📈","Roaring Kitty"],26:["🔍🌙","Cleo Abrams"],27:["💼📡","Kinsey Grant"],28:["🌌🔭","Neil deGrasse Tyson"],
+    29:["🎭📢","Jon Stewart"],30:["🌱⚡","Greta Thunberg"],31:["🎁🌍","MrBeast"],32:["👤💻","Anonymous"],
+    33:["🐱📈","Roaring Kitty"],34:["🔍🌙","Cleo Abrams"],35:["💼📡","Kinsey Grant"],36:["🌌🔭","Neil deGrasse Tyson"],
+    37:["🎭📢","Jon Stewart"],38:["🌱⚡","Greta Thunberg"],39:["🎁🌍","MrBeast"],40:["👤💻","Anonymous"],
+    41:["🐱📈","Roaring Kitty"],42:["🔥📺","Hasan Piker"]
+  };
+
+  // --- Date helpers (Illumina 1 runs Nov 5 – Dec 16, 2025) ---
+  var dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var monNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  // Return "Wed · Nov 5, 2025" for Day N
+  function labelForDay(n){
+    // base = 2025-11-05 local time
+    var base = new Date(2025, 10, 5); // months: 0=Jan → 10=Nov
+    var d = new Date(base.getFullYear(), base.getMonth(), base.getDate() + (n-1));
+    return dayNames[d.getDay()] + " · " + monNames[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear();
+  }
+
+  // DOM
+  var title=document.getElementById("title");
+  var subtitle=document.getElementById("subtitle");
+  var watchmanPill=document.getElementById("watchmanPill");
+  var wmGlyph=document.getElementById("wmGlyph");
+  var wmName=document.getElementById("wmName");
+  var dayPill=document.getElementById("dayPill");
+  var datePill=document.getElementById("datePill");
+  var illuminaPill=document.getElementById("illuminaPill");
+  var note=document.getElementById("note");
+  var status=document.getElementById("status");
+  var prev=document.getElementById("prev");
+  var next=document.getElementById("next");
+  var copyBtn=document.getElementById("copy");
+
+  function key(i,d){return "moonnotes:v1:illumina:"+i+":day:"+d}
+  function setStatus(m){status.textContent=m}
+
+  if(illumina===1 && day>=1 && day<=42){
+    var info=wm[day];
+    var dateLabel = labelForDay(day);
+
+    title.textContent="Moon Notes — Illumina "+illumina+" · Day "+day;
+    subtitle.textContent="Watchman overlay for this day:";
+    watchmanPill.hidden=false; wmGlyph.textContent=info[0]; wmName.textContent=info[1];
+    dayPill.hidden=false; dayPill.textContent="Day "+day;
+    datePill.hidden=false; datePill.textContent=dateLabel;
+    illuminaPill.hidden=false; illuminaPill.textContent="Illumina "+illumina;
+
+    // Load saved note
+    var k=key(illumina,day);
+    try{var saved=localStorage.getItem(k); if(saved) note.value=saved}catch(_){}
+
+    // Prev/Next + copy
+    prev.href=day>1?"?illumina=1&day="+(day-1):"?illumina=1&day=1";
+    next.href=day<42?"?illumina=1&day="+(day+1):"?illumina=1&day=42";
+    copyBtn.addEventListener("click",function(){
+      var u=location.origin+location.pathname+"?illumina=1&day="+day;
+      navigator.clipboard.writeText(u);
+      setStatus("Link copied"); setTimeout(function(){setStatus("Autosave ready")},1200);
+    });
+
+    // Autosave
+    var t;
+    note.addEventListener("input",function(){
+      setStatus("Saving…"); clearTimeout(t);
+      t=setTimeout(function(){
+        try{localStorage.setItem(k,note.value)}catch(_){}
+        setStatus("Saved"); setTimeout(function(){setStatus("Autosave ready")},900);
+      },300);
+    });
+  }else{
+    title.textContent="Moon Notes — Choose a Day";
+    subtitle.innerHTML='Add <code>?illumina=1&day=##</code> to the URL (1–42), or go back to the <a href="https://jar.plnt.earth/calendar/illumina1/">Illumina 1 calendar</a>.';
+    prev.style.display="none"; next.style.display="none"; copyBtn.style.display="none";
+    note.placeholder="Open a specific day to take a note…"; note.disabled=true;
+  }
+})();
+</script>
+  <script>
+  (function(){
+    // Illumina 1 runs Nov 5 – Dec 16, 2025
+    var dayNames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    var monNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    var baseUTC = Date.UTC(2025, 10, 5); // 10 = November
+
+    var cells = document.querySelectorAll(".grid .cell");
+    cells.forEach(function(cell, idx){
+      var d = new Date(baseUTC + idx * 24*60*60*1000);
+      var label = dayNames[d.getUTCDay()] + " · " + monNames[d.getUTCMonth()] + " " + d.getUTCDate() + ", " + d.getUTCFullYear();
+      var dateEl = cell.querySelector(".date");
+      if(dateEl) dateEl.textContent = label;
+    });
+  })();
+</script>
+
+</body>
+</html>
