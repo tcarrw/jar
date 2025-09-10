@@ -302,7 +302,8 @@
       var glyph = info[0], who = info[1];
       var dateText = (layerId===1) ? dateLabelForDay(day) : ("Day "+day);
       var label = "Illumina "+layerId+" — Day "+day+" — "+dateText+" — "+who;
-      var url = "https://jar.plnt.earth/moon-notes/?illumina="+layerId+"&day="+day;
+      var url = "https://jar.plnt.earth/day/?illumina="+layerId+"&day="+day;
+
 
       nodesG.appendChild(makeNode(pos.x, pos.y, label, url, glyph));
     }
