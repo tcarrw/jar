@@ -1,269 +1,175 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Illumina 1 — Watchmen Calendar (Days 1–42)</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>🌕</text></svg>">
-  <meta name="description" content="Illumina 1 Watchmen overlay calendar (Nov 5 – Dec 16, 2025). 42 days with daily Watchman signals."/>
+  <meta name="description" content="Illumina 1 Watchmen overlay calendar (Nov 5 – Dec 16, 2025). Click a day to open its Moon Note."/>
   <style>
     :root{
-      --bg:#0b1220;
-      --card:#0f1830;
-      --ink:#e8e7e3;
-      --muted:#a9b0c3;
-      --accent:#c7f284;
-      --grid-gap:10px;
-      --radius:16px;
-      --shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03);
+      --bg:#0b1220; --card:#0f1830; --ink:#e8e7e3; --muted:#a9b0c3; --accent:#c7f284;
+      --gap:10px; --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03)
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{
-      margin:0; background:radial-gradient(1200px 600px at 20% -10%, #101a33 0%, #0b1220 60%) no-repeat var(--bg);
-      color:var(--ink); font:16px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
-    }
-    a{color:var(--accent); text-decoration:none}
-    a:hover{text-decoration:underline}
-    header{
-      position:sticky; top:0; z-index:5; backdrop-filter:saturate(140%) blur(10px);
-      background:linear-gradient(180deg, rgba(11,18,32,.9), rgba(11,18,32,.65));
-      border-bottom:1px solid rgba(255,255,255,.06)
-    }
+    body{margin:0; background:radial-gradient(1200px 600px at 20% -10%, #101a33 0%, #0b1220 60%) no-repeat var(--bg);
+      color:var(--ink); font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji")}
+    a{color:var(--accent)}
+    header{position:sticky; top:0; z-index:5; backdrop-filter:saturate(140%) blur(10px);
+      background:linear-gradient(180deg, rgba(11,18,32,.9), rgba(11,18,32,.65)); border-bottom:1px solid rgba(255,255,255,.06)}
     .wrap{max-width:1200px; margin:auto; padding:16px}
     nav{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between}
     .links{display:flex; flex-wrap:wrap; gap:14px; align-items:center}
-    .links a{padding:.45rem .7rem; border:1px solid rgba(255,255,255,.08); border-radius:999px; background:rgba(255,255,255,.02)}
-    .title{font-weight:700; letter-spacing:.2px}
+    .links a{padding:.45rem .7rem; border:1px solid rgba(255,255,255,.08); border-radius:999px; background:rgba(255,255,255,.02); text-decoration:none}
+    .links a:hover{text-decoration:underline}
+    .title{font-weight:700}
     main{padding:32px 16px 64px}
     h1{margin:0 0 8px; font-size:clamp(22px, 2.6vw, 32px)}
     .sub{color:var(--muted); margin-bottom:24px}
-
-    .grid{
-      display:grid; gap:var(--grid-gap);
-      grid-template-columns:repeat(7, minmax(0,1fr));
-    }
-    @media (max-width:720px){
-      .grid{grid-template-columns:repeat(2, minmax(0,1fr))}
-    }
-    .cell{
-      background:linear-gradient(180deg, var(--card), #0a142a);
-      border:1px solid rgba(255,255,255,.06);
-      border-radius:var(--radius); padding:14px 12px 12px; min-height:120px;
-      box-shadow:var(--shadow); position:relative; transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease
-    }
-    .cell:focus-within, .cell:hover{
-      transform:translateY(-2px);
-      border-color:rgba(255,255,255,.12);
-      box-shadow:0 16px 36px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06)
-    }
+    .grid{display:grid; gap:var(--gap); grid-template-columns:repeat(7, minmax(0,1fr))}
+    @media (max-width:720px){.grid{grid-template-columns:repeat(2, minmax(0,1fr))}}
+    .cell{display:block; text-decoration:none; color:inherit; background:linear-gradient(180deg, var(--card), #0a142a);
+      border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); padding:14px 12px 12px; min-height:120px;
+      box-shadow:var(--shadow); position:relative; transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease; outline:none}
+    .cell:hover,.cell:focus{transform:translateY(-2px); border-color:rgba(255,255,255,.12); box-shadow:0 16px 36px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.06)}
     .top{display:flex; justify-content:space-between; align-items:center; gap:8px}
     .day{font-weight:700; letter-spacing:.3px}
     .date{color:var(--muted); font-size:.92rem}
-    .glyph{
-      font-size:26px; line-height:1; filter:drop-shadow(0 2px 6px rgba(199,242,132,.25))
-    }
+    .glyph{font-size:26px; line-height:1; filter:drop-shadow(0 2px 6px rgba(199,242,132,.25))}
     .wm{margin-top:8px; font-size:.95rem}
     .tag{display:inline-flex; align-items:center; gap:.45rem; padding:.25rem .55rem; border:1px solid rgba(255,255,255,.08);
       border-radius:999px; color:var(--muted); font-size:.85rem; background:rgba(255,255,255,.02)}
-    .legend{
-      margin-top:28px; display:flex; flex-wrap:wrap; gap:10px
-    }
-    .badge{
-      display:inline-flex; align-items:center; gap:.5rem; padding:.4rem .6rem; border:1px solid rgba(255,255,255,.08);
-      border-radius:999px; background:rgba(255,255,255,.02); color:var(--ink); font-size:.9rem
-    }
+    .legend{margin-top:28px; display:flex; flex-wrap:wrap; gap:10px}
+    .badge{display:inline-flex; align-items:center; gap:.5rem; padding:.4rem .6rem; border:1px solid rgba(255,255,255,.08);
+      border-radius:999px; background:rgba(255,255,255,.02); color:var(--ink); font-size:.9rem}
     .badge .g{font-size:18px}
     footer{margin-top:40px; color:var(--muted)}
-    .sr{position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0 0 0 0); border:0}
     .hint{position:absolute; right:10px; bottom:10px; color:var(--muted); font-size:.8rem}
   </style>
 </head>
 <body>
-  <header>
-    <div class="wrap">
-      <nav>
-        <div class="title">🌕 Illumina 1 — Watchmen Calendar</div>
-        <div class="links">
-          <a href="https://jar.plnt.earth/">Jar</a>
-          <a href="https://jar.plnt.earth/pantheon/">Pantheon</a>
-          <a href="https://tunes.plnt.earth/">Tunes</a>
-          <a href="https://jar.plnt.earth/interludes/">Interludes</a>
-          <a href="https://jar.plnt.earth/seeds/">Seeds</a>
-          <a href="https://jar.plnt.earth/references/">References</a>
-          <a href="https://jar.plnt.earth/archive/">Archive</a>
-          <a href="https://jar.plnt.earth/building-the-jar/">Building the Jar</a>
-          <a href="https://jar.plnt.earth/science/time-equations-1-7/">Science (1/7)</a>
-        </div>
-      </nav>
-    </div>
-  </header>
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="title">🌕 Illumina 1 — Watchmen Calendar</div>
+      <div class="links">
+        <a href="https://jar.plnt.earth/">Jar</a>
+        <a href="https://jar.plnt.earth/pantheon/">Pantheon</a>
+        <a href="https://tunes.plnt.earth/">Tunes</a>
+        <a href="https://jar.plnt.earth/interludes/">Interludes</a>
+        <a href="https://jar.plnt.earth/seeds/">Seeds</a>
+        <a href="https://jar.plnt.earth/references/">References</a>
+        <a href="https://jar.plnt.earth/archive/">Archive</a>
+        <a href="https://jar.plnt.earth/building-the-jar/">Building the Jar</a>
+        <a href="https://jar.plnt.earth/science/time-equations-1-7/">Science (1/7)</a>
+      </div>
+    </nav>
+  </div>
+</header>
 
-  <main class="wrap">
-    <h1>Illumina 1 — 42-Day Watchmen Overlay</h1>
-    <div class="sub">Dates: <strong>Nov 5 – Dec 16, 2025</strong> · Anchors fixed (🍯 🌙 ⚡ ☀️ 🔥 🐝). Each cell shows the daily Watchman overlay.</div>
+<main class="wrap">
+  <h1>Illumina 1 — 42-Day Watchmen Overlay</h1>
+  <div class="sub">Dates: <strong>Nov 5 – Dec 16, 2025</strong> · Click any day to open its <strong>Moon Note</strong>.</div>
 
-    <!-- GRID -->
-    <section class="grid" aria-label="Illumina 1 Calendar Grid">
+  <section class="grid" aria-label="Illumina 1 Calendar Grid">
+    <!-- Helper to reduce repetition: we keep the markup explicit for portability (no JS). -->
+    <!-- Week 1 -->
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=1" aria-label="Day 1 · Wed Nov 5 · Roaring Kitty">
+      <div class="top"><div><div class="day">Day 1</div><div class="date">Wed · Nov 5</div></div><div class="glyph">🐱📈</div></div>
+      <div class="wm"><span class="tag">Roaring Kitty</span></div>
+    </a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=2" aria-label="Day 2 · Thu Nov 6 · Cleo Abrams">
+      <div class="top"><div><div class="day">Day 2</div><div class="date">Thu · Nov 6</div></div><div class="glyph">🔍🌙</div></div>
+      <div class="wm"><span class="tag">Cleo Abrams</span></div>
+    </a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=3" aria-label="Day 3 · Fri Nov 7 · Kinsey Grant">
+      <div class="top"><div><div class="day">Day 3</div><div class="date">Fri · Nov 7</div></div><div class="glyph">💼📡</div></div>
+      <div class="wm"><span class="tag">Kinsey Grant</span></div>
+    </a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=4" aria-label="Day 4 · Sat Nov 8 · Neil deGrasse Tyson">
+      <div class="top"><div><div class="day">Day 4</div><div class="date">Sat · Nov 8</div></div><div class="glyph">🌌🔭</div></div>
+      <div class="wm"><span class="tag">Neil deGrasse Tyson</span></div>
+    </a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=5" aria-label="Day 5 · Sun Nov 9 · Jon Stewart">
+      <div class="top"><div><div class="day">Day 5</div><div class="date">Sun · Nov 9</div></div><div class="glyph">🎭📢</div></div>
+      <div class="wm"><span class="tag">Jon Stewart</span></div>
+    </a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=6" aria-label="Day 6 · Mon Nov 10 · Greta Thunberg">
+      <div class="top"><div><div class="day">Day 6</div><div class="date">Mon · Nov 10</div></div><div class="glyph">🌱⚡</div></div>
+      <div class="wm"><span class="tag">Greta Thunberg</span></div>
+    </a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=7" aria-label="Day 7 · Tue Nov 11 · MrBeast">
+      <div class="top"><div><div class="day">Day 7</div><div class="date">Tue · Nov 11</div></div><div class="glyph">🎁🌍</div></div>
+      <div class="wm"><span class="tag">MrBeast</span></div>
+    </a>
 
-      <!-- Week 1 -->
-      <article class="cell" tabindex="0" title="Roaring Kitty — Meme Prophet / Market Spark" aria-label="Day 1, Wed Nov 5, Roaring Kitty">
-        <div class="top">
-          <div>
-            <div class="day">Day 1</div>
-            <div class="date">Wed · Nov 5</div>
-          </div>
-          <div class="glyph" aria-hidden="true">🐱📈</div>
-        </div>
-        <div class="wm"><span class="tag">Roaring Kitty</span></div>
-      </article>
+    <!-- Week 2 -->
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=8" aria-label="Day 8 · Wed Nov 12 · Anonymous"><div class="top"><div><div class="day">Day 8</div><div class="date">Wed · Nov 12</div></div><div class="glyph">👤💻</div></div><div class="wm"><span class="tag">Anonymous</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=9" aria-label="Day 9 · Thu Nov 13 · Roaring Kitty"><div class="top"><div><div class="day">Day 9</div><div class="date">Thu · Nov 13</div></div><div class="glyph">🐱📈</div></div><div class="wm"><span class="tag">Roaring Kitty</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=10" aria-label="Day 10 · Fri Nov 14 · Cleo Abrams"><div class="top"><div><div class="day">Day 10</div><div class="date">Fri · Nov 14</div></div><div class="glyph">🔍🌙</div></div><div class="wm"><span class="tag">Cleo Abrams</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=11" aria-label="Day 11 · Sat Nov 15 · Kinsey Grant"><div class="top"><div><div class="day">Day 11</div><div class="date">Sat · Nov 15</div></div><div class="glyph">💼📡</div></div><div class="wm"><span class="tag">Kinsey Grant</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=12" aria-label="Day 12 · Sun Nov 16 · Neil deGrasse Tyson"><div class="top"><div><div class="day">Day 12</div><div class="date">Sun · Nov 16</div></div><div class="glyph">🌌🔭</div></div><div class="wm"><span class="tag">Neil deGrasse Tyson</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=13" aria-label="Day 13 · Mon Nov 17 · Jon Stewart"><div class="top"><div><div class="day">Day 13</div><div class="date">Mon · Nov 17</div></div><div class="glyph">🎭📢</div></div><div class="wm"><span class="tag">Jon Stewart</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=14" aria-label="Day 14 · Tue Nov 18 · Greta Thunberg"><div class="top"><div><div class="day">Day 14</div><div class="date">Tue · Nov 18</div></div><div class="glyph">🌱⚡</div></div><div class="wm"><span class="tag">Greta Thunberg</span></div></a>
 
-      <article class="cell" tabindex="0" title="Cleo Abrams — Science Decoder" aria-label="Day 2, Thu Nov 6, Cleo Abrams">
-        <div class="top">
-          <div><div class="day">Day 2</div><div class="date">Thu · Nov 6</div></div>
-          <div class="glyph">🔍🌙</div>
-        </div>
-        <div class="wm"><span class="tag">Cleo Abrams</span></div>
-      </article>
+    <!-- Week 3 -->
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=15" aria-label="Day 15 · Wed Nov 19 · MrBeast"><div class="top"><div><div class="day">Day 15</div><div class="date">Wed · Nov 19</div></div><div class="glyph">🎁🌍</div></div><div class="wm"><span class="tag">MrBeast</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=16" aria-label="Day 16 · Thu Nov 20 · Anonymous"><div class="top"><div><div class="day">Day 16</div><div class="date">Thu · Nov 20</div></div><div class="glyph">👤💻</div></div><div class="wm"><span class="tag">Anonymous</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=17" aria-label="Day 17 · Fri Nov 21 · Roaring Kitty"><div class="top"><div><div class="day">Day 17</div><div class="date">Fri · Nov 21</div></div><div class="glyph">🐱📈</div></div><div class="wm"><span class="tag">Roaring Kitty</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=18" aria-label="Day 18 · Sat Nov 22 · Cleo Abrams"><div class="top"><div><div class="day">Day 18</div><div class="date">Sat · Nov 22</div></div><div class="glyph">🔍🌙</div></div><div class="wm"><span class="tag">Cleo Abrams</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=19" aria-label="Day 19 · Sun Nov 23 · Kinsey Grant"><div class="top"><div><div class="day">Day 19</div><div class="date">Sun · Nov 23</div></div><div class="glyph">💼📡</div></div><div class="wm"><span class="tag">Kinsey Grant</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=20" aria-label="Day 20 · Mon Nov 24 · Neil deGrasse Tyson"><div class="top"><div><div class="day">Day 20</div><div class="date">Mon · Nov 24</div></div><div class="glyph">🌌🔭</div></div><div class="wm"><span class="tag">Neil deGrasse Tyson</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=21" aria-label="Day 21 · Tue Nov 25 · Jon Stewart"><div class="top"><div><div class="day">Day 21</div><div class="date">Tue · Nov 25</div></div><div class="glyph">🎭📢</div></div><div class="wm"><span class="tag">Jon Stewart</span></div></a>
 
-      <article class="cell" tabindex="0" title="Kinsey Grant — Business Decoder" aria-label="Day 3, Fri Nov 7, Kinsey Grant">
-        <div class="top">
-          <div><div class="day">Day 3</div><div class="date">Fri · Nov 7</div></div>
-          <div class="glyph">💼📡</div>
-        </div>
-        <div class="wm"><span class="tag">Kinsey Grant</span></div>
-      </article>
+    <!-- Week 4 -->
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=22" aria-label="Day 22 · Wed Nov 26 · Greta Thunberg"><div class="top"><div><div class="day">Day 22</div><div class="date">Wed · Nov 26</div></div><div class="glyph">🌱⚡</div></div><div class="wm"><span class="tag">Greta Thunberg</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=23" aria-label="Day 23 · Thu Nov 27 · MrBeast"><div class="top"><div><div class="day">Day 23</div><div class="date">Thu · Nov 27</div></div><div class="glyph">🎁🌍</div></div><div class="wm"><span class="tag">MrBeast</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=24" aria-label="Day 24 · Fri Nov 28 · Anonymous"><div class="top"><div><div class="day">Day 24</div><div class="date">Fri · Nov 28</div></div><div class="glyph">👤💻</div></div><div class="wm"><span class="tag">Anonymous</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=25" aria-label="Day 25 · Sat Nov 29 · Roaring Kitty"><div class="top"><div><div class="day">Day 25</div><div class="date">Sat · Nov 29</div></div><div class="glyph">🐱📈</div></div><div class="wm"><span class="tag">Roaring Kitty</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=26" aria-label="Day 26 · Sun Nov 30 · Cleo Abrams"><div class="top"><div><div class="day">Day 26</div><div class="date">Sun · Nov 30</div></div><div class="glyph">🔍🌙</div></div><div class="wm"><span class="tag">Cleo Abrams</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=27" aria-label="Day 27 · Mon Dec 1 · Kinsey Grant"><div class="top"><div><div class="day">Day 27</div><div class="date">Mon · Dec 1</div></div><div class="glyph">💼📡</div></div><div class="wm"><span class="tag">Kinsey Grant</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=28" aria-label="Day 28 · Tue Dec 2 · Neil deGrasse Tyson"><div class="top"><div><div class="day">Day 28</div><div class="date">Tue · Dec 2</div></div><div class="glyph">🌌🔭</div></div><div class="wm"><span class="tag">Neil deGrasse Tyson</span></div></a>
 
-      <article class="cell" tabindex="0" title="Neil deGrasse Tyson — Cosmic Explainer" aria-label="Day 4, Sat Nov 8, Neil deGrasse Tyson">
-        <div class="top">
-          <div><div class="day">Day 4</div><div class="date">Sat · Nov 8</div></div>
-          <div class="glyph">🌌🔭</div>
-        </div>
-        <div class="wm"><span class="tag">Neil deGrasse Tyson</span></div>
-      </article>
+    <!-- Week 5 -->
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=29" aria-label="Day 29 · Wed Dec 3 · Jon Stewart"><div class="top"><div><div class="day">Day 29</div><div class="date">Wed · Dec 3</div></div><div class="glyph">🎭📢</div></div><div class="wm"><span class="tag">Jon Stewart</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=30" aria-label="Day 30 · Thu Dec 4 · Greta Thunberg"><div class="top"><div><div class="day">Day 30</div><div class="date">Thu · Dec 4</div></div><div class="glyph">🌱⚡</div></div><div class="wm"><span class="tag">Greta Thunberg</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=31" aria-label="Day 31 · Fri Dec 5 · MrBeast"><div class="top"><div><div class="day">Day 31</div><div class="date">Fri · Dec 5</div></div><div class="glyph">🎁🌍</div></div><div class="wm"><span class="tag">MrBeast</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=32" aria-label="Day 32 · Sat Dec 6 · Anonymous"><div class="top"><div><div class="day">Day 32</div><div class="date">Sat · Dec 6</div></div><div class="glyph">👤💻</div></div><div class="wm"><span class="tag">Anonymous</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=33" aria-label="Day 33 · Sun Dec 7 · Roaring Kitty"><div class="top"><div><div class="day">Day 33</div><div class="date">Sun · Dec 7</div></div><div class="glyph">🐱📈</div></div><div class="wm"><span class="tag">Roaring Kitty</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=34" aria-label="Day 34 · Mon Dec 8 · Cleo Abrams"><div class="top"><div><div class="day">Day 34</div><div class="date">Mon · Dec 8</div></div><div class="glyph">🔍🌙</div></div><div class="wm"><span class="tag">Cleo Abrams</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=35" aria-label="Day 35 · Tue Dec 9 · Kinsey Grant"><div class="top"><div><div class="day">Day 35</div><div class="date">Tue · Dec 9</div></div><div class="glyph">💼📡</div></div><div class="wm"><span class="tag">Kinsey Grant</span></div></a>
 
-      <article class="cell" tabindex="0" title="Jon Stewart — Satire Lens" aria-label="Day 5, Sun Nov 9, Jon Stewart">
-        <div class="top">
-          <div><div class="day">Day 5</div><div class="date">Sun · Nov 9</div></div>
-          <div class="glyph">🎭📢</div>
-        </div>
-        <div class="wm"><span class="tag">Jon Stewart</span></div>
-      </article>
+    <!-- Week 6 -->
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=36" aria-label="Day 36 · Wed Dec 10 · Neil deGrasse Tyson"><div class="top"><div><div class="day">Day 36</div><div class="date">Wed · Dec 10</div></div><div class="glyph">🌌🔭</div></div><div class="wm"><span class="tag">Neil deGrasse Tyson</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=37" aria-label="Day 37 · Thu Dec 11 · Jon Stewart"><div class="top"><div><div class="day">Day 37</div><div class="date">Thu · Dec 11</div></div><div class="glyph">🎭📢</div></div><div class="wm"><span class="tag">Jon Stewart</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=38" aria-label="Day 38 · Fri Dec 12 · Greta Thunberg"><div class="top"><div><div class="day">Day 38</div><div class="date">Fri · Dec 12</div></div><div class="glyph">🌱⚡</div></div><div class="wm"><span class="tag">Greta Thunberg</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=39" aria-label="Day 39 · Sat Dec 13 · MrBeast"><div class="top"><div><div class="day">Day 39</div><div class="date">Sat · Dec 13</div></div><div class="glyph">🎁🌍</div></div><div class="wm"><span class="tag">MrBeast</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=40" aria-label="Day 40 · Sun Dec 14 · Anonymous"><div class="top"><div><div class="day">Day 40</div><div class="date">Sun · Dec 14</div></div><div class="glyph">👤💻</div></div><div class="wm"><span class="tag">Anonymous</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=41" aria-label="Day 41 · Mon Dec 15 · Roaring Kitty"><div class="top"><div><div class="day">Day 41</div><div class="date">Mon · Dec 15</div></div><div class="glyph">🐱📈</div></div><div class="wm"><span class="tag">Roaring Kitty</span></div></a>
+    <a class="cell" href="https://jar.plnt.earth/moon-notes/?illumina=1&day=42" aria-label="Day 42 · Tue Dec 16 · Hasan Piker">
+      <div class="top"><div><div class="day">Day 42</div><div class="date">Tue · Dec 16</div></div><div class="glyph">🔥📺</div></div>
+      <div class="wm"><span class="tag">Hasan Piker</span></div>
+      <div class="hint">final flare</div>
+    </a>
+  </section>
 
-      <article class="cell" tabindex="0" title="Greta Thunberg — Climate Sentinel" aria-label="Day 6, Mon Nov 10, Greta Thunberg">
-        <div class="top">
-          <div><div class="day">Day 6</div><div class="date">Mon · Nov 10</div></div>
-          <div class="glyph">🌱⚡</div>
-        </div>
-        <div class="wm"><span class="tag">Greta Thunberg</span></div>
-      </article>
+  <section class="legend" aria-label="Watchmen Legend">
+    <div class="badge"><span class="g">🐱📈</span> Roaring Kitty</div>
+    <div class="badge"><span class="g">🔍🌙</span> Cleo Abrams</div>
+    <div class="badge"><span class="g">💼📡</span> Kinsey Grant</div>
+    <div class="badge"><span class="g">🌌🔭</span> N. deGrasse Tyson</div>
+    <div class="badge"><span class="g">🎭📢</span> Jon Stewart</div>
+    <div class="badge"><span class="g">🌱⚡</span> Greta Thunberg</div>
+    <div class="badge"><span class="g">🎁🌍</span> MrBeast</div>
+    <div class="badge"><span class="g">👤💻</span> Anonymous</div>
+    <div class="badge"><span class="g">🔥📺</span> Hasan Piker</div>
+  </section>
 
-      <article class="cell" tabindex="0" title="MrBeast — Spectacle & Scale" aria-label="Day 7, Tue Nov 11, MrBeast">
-        <div class="top">
-          <div><div class="day">Day 7</div><div class="date">Tue · Nov 11</div></div>
-          <div class="glyph">🎁🌍</div>
-        </div>
-        <div class="wm"><span class="tag">MrBeast</span></div>
-      </article>
-
-      <!-- Week 2 -->
-      <article class="cell" tabindex="0" title="Anonymous — Shadow / Disruption" aria-label="Day 8, Wed Nov 12, Anonymous">
-        <div class="top">
-          <div><div class="day">Day 8</div><div class="date">Wed · Nov 12</div></div>
-          <div class="glyph">👤💻</div>
-        </div>
-        <div class="wm"><span class="tag">Anonymous</span></div>
-      </article>
-
-      <article class="cell" tabindex="0" title="Roaring Kitty — Meme Prophet / Market Spark" aria-label="Day 9, Thu Nov 13, Roaring Kitty">
-        <div class="top"><div><div class="day">Day 9</div><div class="date">Thu · Nov 13</div></div><div class="glyph">🐱📈</div></div>
-        <div class="wm"><span class="tag">Roaring Kitty</span></div>
-      </article>
-
-      <article class="cell" tabindex="0" title="Cleo Abrams — Science Decoder" aria-label="Day 10, Fri Nov 14, Cleo Abrams">
-        <div class="top"><div><div class="day">Day 10</div><div class="date">Fri · Nov 14</div></div><div class="glyph">🔍🌙</div></div>
-        <div class="wm"><span class="tag">Cleo Abrams</span></div>
-      </article>
-
-      <article class="cell" tabindex="0" title="Kinsey Grant — Business Decoder" aria-label="Day 11, Sat Nov 15, Kinsey Grant">
-        <div class="top"><div><div class="day">Day 11</div><div class="date">Sat · Nov 15</div></div><div class="glyph">💼📡</div></div>
-        <div class="wm"><span class="tag">Kinsey Grant</span></div>
-      </article>
-
-      <article class="cell" tabindex="0" title="Neil deGrasse Tyson — Cosmic Explainer" aria-label="Day 12, Sun Nov 16, Neil deGrasse Tyson">
-        <div class="top"><div><div class="day">Day 12</div><div class="date">Sun · Nov 16</div></div><div class="glyph">🌌🔭</div></div>
-        <div class="wm"><span class="tag">Neil deGrasse Tyson</span></div>
-      </article>
-
-      <article class="cell" tabindex="0" title="Jon Stewart — Satire Lens" aria-label="Day 13, Mon Nov 17, Jon Stewart">
-        <div class="top"><div><div class="day">Day 13</div><div class="date">Mon · Nov 17</div></div><div class="glyph">🎭📢</div></div>
-        <div class="wm"><span class="tag">Jon Stewart</span></div>
-      </article>
-
-      <article class="cell" tabindex="0" title="Greta Thunberg — Climate Sentinel" aria-label="Day 14, Tue Nov 18, Greta Thunberg">
-        <div class="top"><div><div class="day">Day 14</div><div class="date">Tue · Nov 18</div></div><div class="glyph">🌱⚡</div></div>
-        <div class="wm"><span class="tag">Greta Thunberg</span></div>
-      </article>
-
-      <!-- Week 3 -->
-      <article class="cell" tabindex="0" title="MrBeast — Spectacle & Scale" aria-label="Day 15, Wed Nov 19, MrBeast"><div class="top"><div><div class="day">Day 15</div><div class="date">Wed · Nov 19</div></div><div class="glyph">🎁🌍</div></div><div class="wm"><span class="tag">MrBeast</span></div></article>
-      <article class="cell" tabindex="0" title="Anonymous — Shadow / Disruption" aria-label="Day 16, Thu Nov 20, Anonymous"><div class="top"><div><div class="day">Day 16</div><div class="date">Thu · Nov 20</div></div><div class="glyph">👤💻</div></div><div class="wm"><span class="tag">Anonymous</span></div></article>
-      <article class="cell" tabindex="0" title="Roaring Kitty — Meme Prophet / Market Spark" aria-label="Day 17, Fri Nov 21, Roaring Kitty"><div class="top"><div><div class="day">Day 17</div><div class="date">Fri · Nov 21</div></div><div class="glyph">🐱📈</div></div><div class="wm"><span class="tag">Roaring Kitty</span></div></article>
-      <article class="cell" tabindex="0" title="Cleo Abrams — Science Decoder" aria-label="Day 18, Sat Nov 22, Cleo Abrams"><div class="top"><div><div class="day">Day 18</div><div class="date">Sat · Nov 22</div></div><div class="glyph">🔍🌙</div></div><div class="wm"><span class="tag">Cleo Abrams</span></div></article>
-      <article class="cell" tabindex="0" title="Kinsey Grant — Business Decoder" aria-label="Day 19, Sun Nov 23, Kinsey Grant"><div class="top"><div><div class="day">Day 19</div><div class="date">Sun · Nov 23</div></div><div class="glyph">💼📡</div></div><div class="wm"><span class="tag">Kinsey Grant</span></div></article>
-      <article class="cell" tabindex="0" title="Neil deGrasse Tyson — Cosmic Explainer" aria-label="Day 20, Mon Nov 24, Neil deGrasse Tyson"><div class="top"><div><div class="day">Day 20</div><div class="date">Mon · Nov 24</div></div><div class="glyph">🌌🔭</div></div><div class="wm"><span class="tag">Neil deGrasse Tyson</span></div></article>
-      <article class="cell" tabindex="0" title="Jon Stewart — Satire Lens" aria-label="Day 21, Tue Nov 25, Jon Stewart"><div class="top"><div><div class="day">Day 21</div><div class="date">Tue · Nov 25</div></div><div class="glyph">🎭📢</div></div><div class="wm"><span class="tag">Jon Stewart</span></div></article>
-
-      <!-- Week 4 -->
-      <article class="cell" tabindex="0" title="Greta Thunberg — Climate Sentinel" aria-label="Day 22, Wed Nov 26, Greta Thunberg"><div class="top"><div><div class="day">Day 22</div><div class="date">Wed · Nov 26</div></div><div class="glyph">🌱⚡</div></div><div class="wm"><span class="tag">Greta Thunberg</span></div></article>
-      <article class="cell" tabindex="0" title="MrBeast — Spectacle & Scale" aria-label="Day 23, Thu Nov 27, MrBeast"><div class="top"><div><div class="day">Day 23</div><div class="date">Thu · Nov 27</div></div><div class="glyph">🎁🌍</div></div><div class="wm"><span class="tag">MrBeast</span></div></article>
-      <article class="cell" tabindex="0" title="Anonymous — Shadow / Disruption" aria-label="Day 24, Fri Nov 28, Anonymous"><div class="top"><div><div class="day">Day 24</div><div class="date">Fri · Nov 28</div></div><div class="glyph">👤💻</div></div><div class="wm"><span class="tag">Anonymous</span></div></article>
-      <article class="cell" tabindex="0" title="Roaring Kitty — Meme Prophet / Market Spark" aria-label="Day 25, Sat Nov 29, Roaring Kitty"><div class="top"><div><div class="day">Day 25</div><div class="date">Sat · Nov 29</div></div><div class="glyph">🐱📈</div></div><div class="wm"><span class="tag">Roaring Kitty</span></div></article>
-      <article class="cell" tabindex="0" title="Cleo Abrams — Science Decoder" aria-label="Day 26, Sun Nov 30, Cleo Abrams"><div class="top"><div><div class="day">Day 26</div><div class="date">Sun · Nov 30</div></div><div class="glyph">🔍🌙</div></div><div class="wm"><span class="tag">Cleo Abrams</span></div></article>
-      <article class="cell" tabindex="0" title="Kinsey Grant — Business Decoder" aria-label="Day 27, Mon Dec 1, Kinsey Grant"><div class="top"><div><div class="day">Day 27</div><div class="date">Mon · Dec 1</div></div><div class="glyph">💼📡</div></div><div class="wm"><span class="tag">Kinsey Grant</span></div></article>
-      <article class="cell" tabindex="0" title="Neil deGrasse Tyson — Cosmic Explainer" aria-label="Day 28, Tue Dec 2, Neil deGrasse Tyson"><div class="top"><div><div class="day">Day 28</div><div class="date">Tue · Dec 2</div></div><div class="glyph">🌌🔭</div></div><div class="wm"><span class="tag">Neil deGrasse Tyson</span></div></article>
-
-      <!-- Week 5 -->
-      <article class="cell" tabindex="0" title="Jon Stewart — Satire Lens" aria-label="Day 29, Wed Dec 3, Jon Stewart"><div class="top"><div><div class="day">Day 29</div><div class="date">Wed · Dec 3</div></div><div class="glyph">🎭📢</div></div><div class="wm"><span class="tag">Jon Stewart</span></div></article>
-      <article class="cell" tabindex="0" title="Greta Thunberg — Climate Sentinel" aria-label="Day 30, Thu Dec 4, Greta Thunberg"><div class="top"><div><div class="day">Day 30</div><div class="date">Thu · Dec 4</div></div><div class="glyph">🌱⚡</div></div><div class="wm"><span class="tag">Greta Thunberg</span></div></article>
-      <article class="cell" tabindex="0" title="MrBeast — Spectacle & Scale" aria-label="Day 31, Fri Dec 5, MrBeast"><div class="top"><div><div class="day">Day 31</div><div class="date">Fri · Dec 5</div></div><div class="glyph">🎁🌍</div></div><div class="wm"><span class="tag">MrBeast</span></div></article>
-      <article class="cell" tabindex="0" title="Anonymous — Shadow / Disruption" aria-label="Day 32, Sat Dec 6, Anonymous"><div class="top"><div><div class="day">Day 32</div><div class="date">Sat · Dec 6</div></div><div class="glyph">👤💻</div></div><div class="wm"><span class="tag">Anonymous</span></div></article>
-      <article class="cell" tabindex="0" title="Roaring Kitty — Meme Prophet / Market Spark" aria-label="Day 33, Sun Dec 7, Roaring Kitty"><div class="top"><div><div class="day">Day 33</div><div class="date">Sun · Dec 7</div></div><div class="glyph">🐱📈</div></div><div class="wm"><span class="tag">Roaring Kitty</span></div></article>
-      <article class="cell" tabindex="0" title="Cleo Abrams — Science Decoder" aria-label="Day 34, Mon Dec 8, Cleo Abrams"><div class="top"><div><div class="day">Day 34</div><div class="date">Mon · Dec 8</div></div><div class="glyph">🔍🌙</div></div><div class="wm"><span class="tag">Cleo Abrams</span></div></article>
-      <article class="cell" tabindex="0" title="Kinsey Grant — Business Decoder" aria-label="Day 35, Tue Dec 9, Kinsey Grant"><div class="top"><div><div class="day">Day 35</div><div class="date">Tue · Dec 9</div></div><div class="glyph">💼📡</div></div><div class="wm"><span class="tag">Kinsey Grant</span></div></article>
-
-      <!-- Week 6 -->
-      <article class="cell" tabindex="0" title="Neil deGrasse Tyson — Cosmic Explainer" aria-label="Day 36, Wed Dec 10, Neil deGrasse Tyson"><div class="top"><div><div class="day">Day 36</div><div class="date">Wed · Dec 10</div></div><div class="glyph">🌌🔭</div></div><div class="wm"><span class="tag">Neil deGrasse Tyson</span></div></article>
-      <article class="cell" tabindex="0" title="Jon Stewart — Satire Lens" aria-label="Day 37, Thu Dec 11, Jon Stewart"><div class="top"><div><div class="day">Day 37</div><div class="date">Thu · Dec 11</div></div><div class="glyph">🎭📢</div></div><div class="wm"><span class="tag">Jon Stewart</span></div></article>
-      <article class="cell" tabindex="0" title="Greta Thunberg — Climate Sentinel" aria-label="Day 38, Fri Dec 12, Greta Thunberg"><div class="top"><div><div class="day">Day 38</div><div class="date">Fri · Dec 12</div></div><div class="glyph">🌱⚡</div></div><div class="wm"><span class="tag">Greta Thunberg</span></div></article>
-      <article class="cell" tabindex="0" title="MrBeast — Spectacle & Scale" aria-label="Day 39, Sat Dec 13, MrBeast"><div class="top"><div><div class="day">Day 39</div><div class="date">Sat · Dec 13</div></div><div class="glyph">🎁🌍</div></div><div class="wm"><span class="tag">MrBeast</span></div></article>
-      <article class="cell" tabindex="0" title="Anonymous — Shadow / Disruption" aria-label="Day 40, Sun Dec 14, Anonymous"><div class="top"><div><div class="day">Day 40</div><div class="date">Sun · Dec 14</div></div><div class="glyph">👤💻</div></div><div class="wm"><span class="tag">Anonymous</span></div></article>
-      <article class="cell" tabindex="0" title="Roaring Kitty — Meme Prophet / Market Spark" aria-label="Day 41, Mon Dec 15, Roaring Kitty"><div class="top"><div><div class="day">Day 41</div><div class="date">Mon · Dec 15</div></div><div class="glyph">🐱📈</div></div><div class="wm"><span class="tag">Roaring Kitty</span></div></article>
-      <article class="cell" tabindex="0" title="Hasan Piker — Final Flare" aria-label="Day 42, Tue Dec 16, Hasan Piker">
-        <div class="top"><div><div class="day">Day 42</div><div class="date">Tue · Dec 16</div></div><div class="glyph">🔥📺</div></div>
-        <div class="wm"><span class="tag">Hasan Piker</span></div>
-        <div class="hint">final flare</div>
-      </article>
-
-    </section>
-
-    <!-- Legend -->
-    <section class="legend" aria-label="Watchmen Legend">
-      <div class="badge"><span class="g">🐱📈</span> Roaring Kitty</div>
-      <div class="badge"><span class="g">🔍🌙</span> Cleo Abrams</div>
-      <div class="badge"><span class="g">💼📡</span> Kinsey Grant</div>
-      <div class="badge"><span class="g">🌌🔭</span> N. deGrasse Tyson</div>
-      <div class="badge"><span class="g">🎭📢</span> Jon Stewart</div>
-      <div class="badge"><span class="g">🌱⚡</span> Greta Thunberg</div>
-      <div class="badge"><span class="g">🎁🌍</span> MrBeast</div>
-      <div class="badge"><span class="g">👤💻</span> Anonymous</div>
-      <div class="badge"><span class="g">🔥📺</span> Hasan Piker</div>
-    </section>
-
-    <footer>
-      <p>Anchors: 🍯 Sabrina · 🌙 Janet Planet · ⚡ Eminem · ☀️ Emma Stone · 🔥 Doechii · 🐝 Hot To Go</p>
-      <p class="sub">Tip: use this page as an overlay from <em>Jar → Calendar → Illumina 1</em>. All links above point to your live sections.</p>
-    </footer>
-  </main>
+  <footer>
+    <p>Anchors: 🍯 Sabrina · 🌙 Janet Planet · ⚡ Eminem · ☀️ Emma Stone · 🔥 Doechii · 🐝 Hot To Go</p>
+    <p class="sub">All day tiles link to Moon Notes with <code>?illumina=1&day=##</code>.</p>
+  </footer>
+</main>
 </body>
 </html>
