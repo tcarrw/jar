@@ -1,1 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Constellation — Jar Map (Rolling Illuminas)</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='80'>✨</text></svg>">
+<meta name="description" content="Pantheon hex + rolling Watchmen rings across Illuminas. Click any node to open its Moon Note."/>
+<style>
+  :root{
+    --bg:#0b1220; --ink:#e8e7e3; --muted:#a9b0c3; --accent:#c7f284;
+    --card:#0f1830; --stroke:rgba(255,255,255,.12); --ring:rgba(255,255,255,.06);
+    --radius:16px; --shadow:0 10px 30px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.03)
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; color:var(--ink);
+    background:radial-gradient(1400px 700px at 20% -10%, #101a33 0%, #0b1220 60%) no-repeat #0b1220;
+    font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  header{
+    position:sticky; top:0; z-index:5; backdrop-filter:saturate(140%) blur(10px);
+    background:linear-gradient(180deg, rgba(11,18,32,.9), rgba(11,18,32,.65));
+    border-bottom:1px solid rgba(255,255,255,.06)
+  }
+  .wrap{max-width:1200px; margin:auto; padding:16px}
+  nav{display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap}
+  .links{display:flex; gap:14px; flex-wrap:wrap}
+  .links a{padding:.45rem .7rem; border:1px solid rgba(255,255,255,.08); border-radius:999px; background:rgba(255,255,255,.02)}
+  h1{margin:12px 0 4px; font-size:clamp(22px,2.6vw,32px)}
+  .sub{color:var(--muted); margin:0 0 14px}
+
+  .canvas{
+    margin:20px auto; width:min(1200px, 96vw); height:min(96vh, 800px);
+    background:radial-gradient(1000px 1000px at 50% 30%, rgba(255,255,255,.04), transparent 60%);
+    border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); box-shadow:var(--shadow);
+    position:relative; overflow:hidden
+  }
+  .panel{
+    position:absolute; right:14px; top:14px; z-index:3;
+    background:rgba(15,24,48,.8); border:1px solid rgba(255,255,255,.08);
+    border-radius:14px; padding:10px; display:flex; flex-direction:column; gap:6px
+  }
+  .panel label{display:flex; align-items:center; gap:8px; color:var(--ink); font-size:.95rem}
+  .panel .hdr{font-weight:700; margin-bottom:2px}
+  .legend{
+    position:absolute; left:14px; bottom:14px; z-index:3;
+    background:rgba(15,24,48,.8); border:1px solid rgba(255,255,255,.08);
+    border-radius:14px; padding:10px; display:flex; gap:8px; flex-wrap:wrap; color:var(--muted)
+  }
+  .badge{display:inline-flex; align-items:center; gap:.4rem; padding:.35rem .6rem;
+    border:1px solid rgba(255,255,255,.08); border-radius:999px; background:rgba(255,255,255,.02); color:var(--ink); font-size:.9rem}
+  .g{font-size:18px}
+
+  .card{
+    background:linear-gradient(180deg, var(--card), #0a142a);
+    border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:14px; margin:10px 0
+  }
+  .pantheon{display:flex; flex-wrap:wrap; gap:8px}
+  .anchor{font-size:22px; padding:.25rem .6rem; border:1px solid rgba(255,255,255,.08);
+    border-radius:999px; background:rgba(255,255,255,.02)}
+  .sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);border:0}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <nav>
+      <div>
+        <div>🌕 Constellation — Jar Map</div>
+        <div class="sub">Pantheon hex + Watchmen rings. Click any node to open Moon Notes.</div>
+      </div>
+      <div class="links">
+        <a href="https://jar.plnt.earth/">Jar</a>
+        <a href="https://jar.plnt.earth/pantheon/">Pantheon</a>
+        <a href="https://jar.plnt.earth/calendar/illumina1/">Calendar</a>
+        <a href="https://jar.plnt.earth/moon-notes/">Moon Notes</a>
+        <a href="https://tunes.plnt.earth/">Tunes</a>
+        <a href="https://jar.plnt.earth/references/">References</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="card">
+    <strong>Pantheon (fixed)</strong>
+    <div class="pantheon" aria-label="Pantheon Anchors">
+      <span class="anchor">🍯 Sabrina</span>
+      <span class="anchor">🌙 Janet Planet</span>
+      <span class="anchor">⚡ Eminem</span>
+      <span class="anchor">☀️ Emma Stone</span>
+      <span class="anchor">🔥 Doechii</span>
+      <span class="anchor">🐝 Hot To Go</span>
+    </div>
+  </section>
+</div>
+
+<main class="wrap">
+  <div class="canvas" id="canvas">
+    <!-- Toggle panel -->
+    <div class="panel" id="panel">
+      <div class="hdr">Layers</div>
+      <label><input type="checkbox" data-layer="1" checked> Illumina 1 (Nov 5–Dec 16, 2025)</label>
+      <label><input type="checkbox" data-layer="2"> Illumina 2</label>
+      <label><input type="checkbox" data-layer="3"> Illumina 3</label>
+      <label><input type="checkbox" data-layer="4"> Illumina 4</label>
+      <label><input type="checkbox" data-layer="5"> Illumina 5</label>
+      <label><input type="checkbox" data-layer="6"> Illumina 6</label>
+      <label><input type="checkbox" data-layer="7"> Illumina 7</label>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+      <span class="badge"><span class="g">🐱📈</span> Roaring Kitty</span>
+      <span class="badge"><span class="g">🔍🌙</span> Cleo Abrams</span>
+      <span class="badge"><span class="g">💼📡</span> Kinsey Grant</span>
+      <span class="badge"><span class="g">🌌🔭</span> N. deGrasse Tyson</span>
+      <span class="badge"><span class="g">🎭📢</span> Jon Stewart</span>
+      <span class="badge"><span class="g">🌱⚡</span> Greta Thunberg</span>
+      <span class="badge"><span class="g">🎁🌍</span> MrBeast</span>
+      <span class="badge"><span class="g">👤💻</span> Anonymous</span>
+      <span class="badge"><span class="g">🔥📺</span> Hasan Piker</span>
+    </div>
+
+    <!-- SVG map -->
+    <svg id="sky" viewBox="-600 -400 1200 800" width="100%" height="100%" aria-label="Constellation Map">
+      <!-- starfield -->
+      <defs>
+        <radialGradient id="glow" r="1">
+          <stop offset="0%" stop-color="white" stop-opacity=".9"/>
+          <stop offset="100%" stop-color="white" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <g id="stars" opacity=".35"></g>
+
+      <!-- Pantheon hex -->
+      <g id="pantheon" stroke="var(--stroke)" stroke-width="1.2">
+        <circle cx="0" cy="0" r="6" fill="url(#glow)"/>
+      </g>
+
+      <!-- Rings container -->
+      <g id="rings"></g>
+      <!-- Nodes container -->
+      <g id="nodes"></g>
+    </svg>
+  </div>
+</main>
+
+<script>
+(function(){
+  // ---------- Utility & data ----------
+  function rand(n){return Math.random()*n}
+  function polar(r,deg){var a=(deg*Math.PI)/180; return {x:r*Math.cos(a), y:r*Math.sin(a)}}
+  function tex(el, t){el.textContent=t; return el}
+
+  // Starfield
+  var stars = document.getElementById("stars");
+  for(var i=0;i<230;i++){
+    var s = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    s.setAttribute("cx", (rand(1200)-600).toFixed(1));
+    s.setAttribute("cy", (rand(800)-400).toFixed(1));
+    s.setAttribute("r", (Math.random()<.96? rand(1.2)+.2 : rand(2.5)+.8).toFixed(2));
+    s.setAttribute("fill", "white");
+    s.setAttribute("opacity", (Math.random()*0.8+0.2).toFixed(2));
+    stars.appendChild(s);
+  }
+
+  // Pantheon hex points & labels (fixed)
+  var pantheon = [
+    {g:"🍯", name:"Sabrina"},
+    {g:"🌙", name:"Janet Planet"},
+    {g:"⚡", name:"Eminem"},
+    {g:"☀️", name:"Emma Stone"},
+    {g:"🔥", name:"Doechii"},
+    {g:"🐝", name:"Hot To Go"},
+  ];
+  var hexR = 140, pant = document.getElementById("pantheon");
+  var hexLine = document.createElementNS("http://www.w3.org/2000/svg","polyline");
+  var pts = [];
+  pantheon.forEach(function(p,i){
+    var ang = -90 + i*60; // nice upright hex
+    var pos = polar(hexR, ang);
+    pts.push(pos.x+","+pos.y);
+    var star = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    star.setAttribute("cx", pos.x); star.setAttribute("cy", pos.y);
+    star.setAttribute("r", 6); star.setAttribute("fill", "url(#glow)");
+    pant.appendChild(star);
+
+    var lbl = document.createElementNS("http://www.w3.org/2000/svg","text");
+    lbl.setAttribute("x", pos.x); lbl.setAttribute("y", pos.y-16);
+    lbl.setAttribute("text-anchor","middle"); lbl.setAttribute("font-size","22");
+    lbl.setAttribute("filter","drop-shadow(0 0 6px rgba(255,255,255,.5))");
+    tex(lbl, p.g);
+    pant.appendChild(lbl);
+  });
+  hexLine.setAttribute("points", pts.join(" "));
+  hexLine.setAttribute("fill","none");
+  pant.appendChild(hexLine);
+
+  // ---------- Illumina data layers ----------
+  // Illumina 1 (Nov 5 – Dec 16, 2025) — Watchman map and date labels
+  var wm1 = {
+    1:["🐱📈","Roaring Kitty"],2:["🔍🌙","Cleo Abrams"],3:["💼📡","Kinsey Grant"],4:["🌌🔭","Neil deGrasse Tyson"],
+    5:["🎭📢","Jon Stewart"],6:["🌱⚡","Greta Thunberg"],7:["🎁🌍","MrBeast"],8:["👤💻","Anonymous"],
+    9:["🐱📈","Roaring Kitty"],10:["🔍🌙","Cleo Abrams"],11:["💼📡","Kinsey Grant"],12:["🌌🔭","Neil deGrasse Tyson"],
+    13:["🎭📢","Jon Stewart"],14:["🌱⚡","Greta Thunberg"],15:["🎁🌍","MrBeast"],16:["👤💻","Anonymous"],
+    17:["🐱📈","Roaring Kitty"],18:["🔍🌙","Cleo Abrams"],19:["💼📡","Kinsey Grant"],20:["🌌🔭","Neil deGrasse Tyson"],
+    21:["🎭📢","Jon Stewart"],22:["🌱⚡","Greta Thunberg"],23:["🎁🌍","MrBeast"],24:["👤💻","Anonymous"],
+    25:["🐱📈","Roaring Kitty"],26:["🔍🌙","Cleo Abrams"],27:["💼📡","Kinsey Grant"],28:["🌌🔭","Neil deGrasse Tyson"],
+    29:["🎭📢","Jon Stewart"],30:["🌱⚡","Greta Thunberg"],31:["🎁🌍","MrBeast"],32:["👤💻","Anonymous"],
+    33:["🐱📈","Roaring Kitty"],34:["🔍🌙","Cleo Abrams"],35:["💼📡","Kinsey Grant"],36:["🌌🔭","Neil deGrasse Tyson"],
+    37:["🎭📢","Jon Stewart"],38:["🌱⚡","Greta Thunberg"],39:["🎁🌍","MrBeast"],40:["👤💻","Anonymous"],
+    41:["🐱📈","Roaring Kitty"],42:["🔥📺","Hasan Piker"]
+  };
+  var dnames = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  var mnames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var baseUTC = Date.UTC(2025,10,5); // Nov 5 2025
+
+  function dateLabelForDay(n){
+    var d = new Date(baseUTC + (n-1)*24*60*60*1000);
+    return dnames[d.getUTCDay()]+" · "+mnames[d.getUTCMonth()]+" "+d.getUTCDate()+", "+d.getUTCFullYear();
+  }
+
+  // Layers registry
+  var LAYERS = {
+    1: { name: "Illumina 1", baseUTC: baseUTC, wm: wm1 },
+    2: { name: "Illumina 2", baseUTC: null, wm: {} }, // add later
+    3: { name: "Illumina 3", baseUTC: null, wm: {} },
+    4: { name: "Illumina 4", baseUTC: null, wm: {} },
+    5: { name: "Illumina 5", baseUTC: null, wm: {} },
+    6: { name: "Illumina 6", baseUTC: null, wm: {} },
+    7: { name: "Illumina 7", baseUTC: null, wm: {} },
+  };
+
+  // ---------- Draw rings & nodes ----------
+  var ringsG = document.getElementById("rings");
+  var nodesG = document.getElementById("nodes");
+
+  // Pre-draw 6 concentric rings (weeks) — shared for all layers (thin)
+  var ringBase = 210; // starting radius past the pantheon hex
+  var ringStep = 45;  // distance between rings
+  for(var w=0; w<6; w++){
+    var cir = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    cir.setAttribute("cx", 0); cir.setAttribute("cy", 0);
+    cir.setAttribute("r", ringBase + w*ringStep);
+    cir.setAttribute("fill", "none");
+    cir.setAttribute("stroke", "var(--ring)");
+    cir.setAttribute("stroke-width", 1);
+    ringsG.appendChild(cir);
+  }
+
+  function makeNode(x,y,label,url,glyph){
+    var a = document.createElementNS("http://www.w3.org/2000/svg","a");
+    a.setAttributeNS("http://www.w3.org/1999/xlink","xlink:href", url);
+    a.setAttribute("target","_self");
+    a.setAttribute("aria-label", label);
+
+    var glow = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    glow.setAttribute("cx", x); glow.setAttribute("cy", y); glow.setAttribute("r", 10);
+    glow.setAttribute("fill", "url(#glow)"); glow.setAttribute("opacity",".9");
+    a.appendChild(glow);
+
+    var t = document.createElementNS("http://www.w3.org/2000/svg","text");
+    t.setAttribute("x", x); t.setAttribute("y", y+6);
+    t.setAttribute("text-anchor","middle"); t.setAttribute("font-size","16");
+    t.setAttribute("pointer-events","none");
+    t.textContent = glyph;
+    a.appendChild(t);
+
+    // tooltip
+    a.addEventListener("mouseenter", function(){
+      a.style.filter = "drop-shadow(0 0 6px rgba(199,242,132,.8))";
+    });
+    a.addEventListener("mouseleave", function(){
+      a.style.filter = "";
+    });
+
+    return a;
+  }
+
+  // Place 42 nodes per layer (6 rings x 7 nodes)
+  function drawLayer(layerId){
+    var layer = LAYERS[layerId];
+    var wm = layer.wm;
+    for(var day=1; day<=42; day++){
+      // Which ring & which slot (0..6)
+      var wIndex = Math.floor((day-1)/7);        // 0..5
+      var slot   = (day-1) % 7;                  // 0..6
+      var r = ringBase + wIndex*ringStep;
+      // Spread 7 evenly around circle; rotate each ring a bit for a spiral feel
+      var baseAngle = -90 + wIndex*6;            // gentle rotation per week
+      var angle = baseAngle + slot*(360/7);
+      var pos = polar(r, angle);
+
+      var info = wm[day];
+      if(!info){ continue; } // empty layer; nothing to draw yet
+
+      var glyph = info[0], who = info[1];
+      var dateText = (layerId===1) ? dateLabelForDay(day) : ("Day "+day);
+      var label = "Illumina "+layerId+" — Day "+day+" — "+dateText+" — "+who;
+      var url = "https://jar.plnt.earth/moon-notes/?illumina="+layerId+"&day="+day;
+
+      nodesG.appendChild(makeNode(pos.x, pos.y, label, url, glyph));
+    }
+  }
+
+  // Initial draw: Illumina 1 layer
+  drawLayer(1);
+
+  // Toggle logic: wipe & redraw nodes based on checkboxes
+  var panel = document.getElementById("panel");
+  panel.addEventListener("change", function(){
+    // clear nodes
+    while(nodesG.firstChild) nodesG.removeChild(nodesG.firstChild);
+    // draw each enabled layer (order 1..7 keeps depth consistent)
+    var checks = panel.querySelectorAll("input[type=checkbox]");
+    var enabled = [];
+    checks.forEach(function(c){ if(c.checked) enabled.push(parseInt(c.getAttribute("data-layer"),10)); });
+    enabled.sort(function(a,b){return a-b});
+    enabled.forEach(drawLayer);
+  });
+
+})();
+</script>
+</body>
+</html>
 
