@@ -1,1 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Archive • jar.plnt.earth</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='black'/><circle cx='40' cy='50' r='38' fill='white'/></svg>">
+  <style>
+    :root { --bg:#0b0b0c; --card:#141417; --text:#e9e9ef; --muted:#9a9aab; --accent:#b2f5ea; --ring:#2a2a33; }
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
+    header{background:var(--card);border-bottom:1px solid var(--ring);position:sticky;top:0;z-index:10}
+    nav{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;gap:16px;flex-wrap:wrap}
+    nav a{text-decoration:none;color:var(--text);font-size:14px}
+    nav a:hover{color:var(--accent)}
+    main{max-width:1000px;margin:0 auto;padding:24px 16px}
+    h1{margin:8px 0}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    .card{background:var(--card);border:1px solid var(--ring);border-radius:16px;padding:18px}
+    .muted{color:var(--muted)}
+    .btn{display:inline-block;border:1px solid var(--ring);border-radius:10px;padding:8px 14px;color:var(--text);text-decoration:none;background:none;cursor:pointer}
+    .btn:hover{border-color:var(--accent);color:var(--accent)}
+    .flex{display:flex;gap:10px;flex-wrap:wrap}
+    code{color:#bde0ff}
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Home</a><a href="/calendar/illumina1/">Calendar</a><a href="/day/">Day</a>
+      <a href="/notes/moon/">Moon Notes</a><a href="/notes/day/">Day Notes</a>
+      <a href="/pantheon/">Pantheon</a><a href="/references/">References</a><a href="/science/">Science</a>
+      <a href="/archive/">Archive</a><a href="https://tunes.plnt.earth" target="_blank">Tunes ↗</a>
+      <a href="https://youtube.com/playlist?list=PL2H7n7qLAdf7VTOrmFlY9G-PaE94VrHAY&si=vblXKmAvTj-Ve5iV" target="_blank">Playlist ↗</a>
+    </nav>
+  </header>
+  <main>
+    <h1>🗂️ Archive</h1>
+    <p class="muted">Exports and backups for Illumina 1. Data stays local unless you download and share it.</p>
 
+    <div class="grid">
+      <div class="card">
+        <h3>Cycle Data (server files)</h3>
+        <p class="muted">Authoritative playlist + integration data.</p>
+        <div class="flex">
+          <a class="btn" href="/data/illumina1.json" target="_blank" rel="noopener">illumina1.json</a>
+          <a class="btn" href="/data/illumina1.csv" target="_blank" rel="noopener">illumina1.csv</a>
+        </div>
+        <p class="muted" style="margin-top:8px">CSV link requires that you upload <code>/data/illumina1.csv</code> to your repo.</p>
+      </div>
+
+      <div class="card">
+        <h3>Export Moon Notes (local)</h3>
+        <p class="muted">Bundles all keys like <code>moon:YYYY-MM-DD</code> from this browser.</p>
+        <div class="flex">
+          <button class="btn" id="dlMoonJson">Download JSON</button>
+          <button class="btn" id="dlMoonCsv">Download CSV</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Export Day Notes (local)</h3>
+        <p class="muted">Bundles all keys like <code>day:NN</code> from this browser.</p>
+        <div class="flex">
+          <button class="btn" id="dlDayJson">Download JSON</button>
+          <button class="btn" id="dlDayCsv">Download CSV</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Export Calendar (from JSON)</h3>
+        <p class="muted">Fetches <code>/data/illumina1.json</code> and exports a CSV of Day/Date/Moon/Track/Figure/Seed/URL.</p>
+        <div class="flex">
+          <button class="btn" id="dlCalCsv">Download Calendar CSV</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function csvEscape(v){
+      if(v==null) return "";
+      const s = String(v).replace(/"/g,'""');
+      return /[",\n]/.test(s) ? `"{s}"`.replace("{s}", s) : s;
+    }
+    function arrayToCsv(rows){
+      return rows.map(r => r.map(csvEscape).join(",")).join("\n");
+    }
+    function download(name, text, type="text/plain"){
+      const blob = new Blob([text], {type});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = name;
+      a.click();
+    }
+    function lsKeys(prefix){
+      return Object.keys(localStorage).filter(k=>k.startsWith(prefix));
+    }
+
+    document.getElementById("dlMoonJson").addEventListener("click", ()=>{
+      const keys = lsKeys("moon:");
+      const out = keys.map(k=>{{ try{{ return {{ key:k, ...JSON.parse(localStorage.getItem(k)||"{{}}"), date:k.slice(5) }}; }}catch(e){{ return {{ key:k, date:k.slice(5) }}; }} }});
+      download("moon-notes.json", JSON.stringify(out, null, 2), "application/json");
+    });
+    document.getElementById("dlMoonCsv").addEventListener("click", ()=>{
+      const keys = lsKeys("moon:");
+      const rows = [["date","title","comfort","seedUsed","timeOfDay","text"]];
+      keys.forEach(k=>{{
+        try{{ const v = JSON.parse(localStorage.getItem(k)||"{{}}");
+          rows.push([k.slice(5), v.title||"", v.comfort??"", v.seedUsed||"", v.timeOfDay||"", v.text||""]);
+        }}catch(e){{}}
+      }});
+      download("moon-notes.csv", arrayToCsv(rows), "text/csv");
+    });
+
+    document.getElementById("dlDayJson").addEventListener("click", ()=>{
+      const keys = lsKeys("day:");
+      const out = keys.map(k=>{{ try{{ return {{ key:k, day:+k.slice(4), ...JSON.parse(localStorage.getItem(k)||"{{}}") }}; }}catch(e){{ return {{ key:k, day:+k.slice(4) }}; }} }});
+      download("day-notes.json", JSON.stringify(out, null, 2), "application/json");
+    });
+    document.getElementById("dlDayCsv").addEventListener("click", ()=>{
+      const keys = lsKeys("day:");
+      const rows = [["day","intention","sprint","amplify","reflection","score","tags"]];
+      keys.forEach(k=>{{ try{{ const v = JSON.parse(localStorage.getItem(k)||"{{}}");
+        rows.push([+k.slice(4), v.intention||"", v.sprint||"", v.amplify||"", v.reflection||"", v.score??"", v.tags||""]);
+      }}catch(e){{}} }});
+      download("day-notes.csv", arrayToCsv(rows), "text/csv");
+    });
+
+    document.getElementById("dlCalCsv").addEventListener("click", async ()=>{
+      try{{
+        const res = await fetch("/data/illumina1.json");
+        const data = await res.json();
+        const rows = [["Day","Date","MoonPhase","Track","Figure","SeedRitual","URL"]];
+        data.sort((a,b)=>a.Day-b.Day).forEach(d=>{{
+          rows.push([d.Day, d.Date, d.MoonPhase, d.Track, d.Figure||"", d.SeedRitual||"", d.URL||""]);
+        }});
+        download("illumina1-calendar.csv", arrayToCsv(rows), "text/csv");
+      }}catch(e){{
+        alert("Couldn't fetch /data/illumina1.json");
+      }}
+    });
+  </script>
+</body>
+</html>
