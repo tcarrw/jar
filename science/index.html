@@ -26,7 +26,7 @@
     <nav>
       <a href="/">Home</a><a href="/calendar/illumina1/">Calendar</a><a href="/day/">Day</a>
       <a href="/notes/moon/">Moon Notes</a><a href="/notes/day/">Day Notes</a>
-      <a href="/pantheon/">Pantheon</a><a href="/references/">References</a>
+      <a href="/pantheon/">Pantheon</a><a href="/victory/">Victory</a><a href="/references/">References</a>
       <a href="/seeds/">Seeds</a><a href="/archive/">Archive</a>
       <a href="https://tunes.plnt.earth" target="_blank">Tunes ↗</a>
           <a href="https://youtube.com/playlist?list=PL2H7n7qLAdf7VTOrmFlY9G-PaE94VrHAY&si=vblXKmAvTj-Ve5iV" target="_blank">Playlist ↗</a>
@@ -101,6 +101,38 @@ Map any date to its cycle position by floor((date - start)/7).</pre>
       <p><em>Practical note:</em> Keep entries atomic; review every 7 days; produce a final Dream Map on Day 42.</p>
     </div>
 
+  
+    <div class="card">
+      <h3 style="margin-top:0">Downloads</h3>
+      <p class="muted">Export any paper as Markdown. (Use your browser's Print → Save as PDF for PDFs.)</p>
+      <div style="display:flex;flex-wrap:wrap;gap:10px">
+        <button class="btn" onclick="downloadPaper('p-17')">1/7 Temporal Rhythm (MD)</button>
+        <button class="btn" onclick="downloadPaper('p-23')">Seed-Ritual Coupling (MD)</button>
+        <button class="btn" onclick="downloadPaper('p-31')">Sun–Bee–Moon (MD)</button>
+        <button class="btn" onclick="downloadPaper('p-38')">Victory Songs (MD)</button>
+        <button class="btn" onclick="downloadPaper('p-41')">Dream Trace (MD)</button>
+      </div>
+    </div>
+
   </main>
+
+  <script>
+    function sectionToMarkdown(id){
+      const el = document.getElementById(id);
+      if(!el) return "";
+      const title = el.querySelector("h3")?.textContent || id;
+      const body = Array.from(el.querySelectorAll("p")).map(p=>p.textContent).join("\n\n");
+      return `# ${title}\n\n${body}\n`;
+    }
+    function downloadPaper(id){
+      const md = sectionToMarkdown(id);
+      const a = document.createElement("a");
+      const blob = new Blob([md], {type:"text/markdown"});
+      a.href = URL.createObjectURL(blob);
+      a.download = `${id}.md`;
+      a.click();
+    }
+  </script>
 </body>
 </html>
+
