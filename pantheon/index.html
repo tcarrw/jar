@@ -31,7 +31,8 @@
     .muted{color:var(--muted)}
     .btn{display:inline-block;border:1px solid var(--ring);border-radius:10px;padding:8px 14px;color:var(--text);text-decoration:none;background:none;cursor:pointer}
     .btn:hover{border-color:var(--accent);color:var(--accent)}
-    .pill{display:inline-block;padding:4px 8px;border:1px solid var(--ring);border-radius:999px;color:var(--muted);font-size:12px;margin-right:6px}
+    .section-title{margin:22px 0 10px;font-size:18px;color:var(--muted)}
+    .top-actions{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 18px}
   </style>
 </head>
 <body>
@@ -48,64 +49,79 @@
       <a href="/seeds/">Seeds</a>
       <a href="/archive/">Archive</a>
       <a href="https://tunes.plnt.earth" target="_blank">Tunes ↗</a>
+      <a href="https://youtube.com/playlist?list=PL2H7n7qLAdf7VTOrmFlY9G-PaE94VrHAY&si=vblXKmAvTj-Ve5iV" target="_blank">Playlist ↗</a>
     </nav>
   </header>
 
   <main>
     <h1>✨ Pantheon</h1>
-    <div class="meta">Six interludes anchoring Illumina 1. Click any card to explore related days via the Constellation map.</div>
+    <div class="meta">Core interludes + Watchmen from your playlist. Click a card to open the Constellation filtered to that figure.</div>
+    <div class="top-actions">
+      <a class="btn" href="/pantheon/constellation/">Open Constellation</a>
+      <a class="btn" href="https://youtube.com/playlist?list=PL2H7n7qLAdf7VTOrmFlY9G-PaE94VrHAY&si=vblXKmAvTj-Ve5iV" target="_blank" rel="noopener">Open YouTube Playlist ↗</a>
+    </div>
 
+    <h2 class="section-title">Core Interludes</h2>
     <div class="grid">
       <div class="card">
         <h2 class="title">🍯 Sabrina — Honey / Taste Spark</h2>
         <div class="muted">Sensual magnet archetype. Taste ignition, playful pull.</div>
-        <div style="margin-top:10px">
-          <a class="btn" href="/pantheon/constellation/?figure=Sabrina">Open in Constellation</a>
-        </div>
+        <div style="margin-top:10px"><a class="btn" href="/pantheon/constellation/?figure=Sabrina">Open in Constellation</a></div>
       </div>
       <div class="card">
         <h2 class="title">🌙 Janet Planet — Cosmic Teacher</h2>
         <div class="muted">STEAM curiosity anchor. Telescope motif, learning arcs.</div>
-        <div style="margin-top:10px">
-          <a class="btn" href="/pantheon/constellation/?figure=Janet">Open in Constellation</a>
-        </div>
+        <div style="margin-top:10px"><a class="btn" href="/pantheon/constellation/?figure=Janet">Open in Constellation</a></div>
       </div>
       <div class="card">
         <h2 class="title">⚡ Eminem — Victory Song / Confrontation</h2>
         <div class="muted">Manifesto moments, lightning aesthetic, identity flare.</div>
-        <div style="margin-top:10px">
-          <a class="btn" href="/pantheon/constellation/?figure=Eminem">Open in Constellation</a>
-        </div>
+        <div style="margin-top:10px"><a class="btn" href="/pantheon/constellation/?figure=Eminem">Open in Constellation</a></div>
       </div>
       <div class="card">
         <h2 class="title">☀️ Emma Stone — Identity Flare</h2>
         <div class="muted">Spotlight, masks/roles, cinematic presence.</div>
-        <div style="margin-top:10px">
-          <a class="btn" href="/pantheon/constellation/?figure=Emma">Open in Constellation</a>
-        </div>
+        <div style="margin-top:10px"><a class="btn" href="/pantheon/constellation/?figure=Emma">Open in Constellation</a></div>
       </div>
       <div class="card">
         <h2 class="title">🔥 Doechii — Trickster / Chaos</h2>
         <div class="muted">Graffiti, neon splashes, playful disruption.</div>
-        <div style="margin-top:10px">
-          <a class="btn" href="/pantheon/constellation/?figure=Doechii">Open in Constellation</a>
-        </div>
+        <div style="margin-top:10px"><a class="btn" href="/pantheon/constellation/?figure=Doechii">Open in Constellation</a></div>
       </div>
       <div class="card">
         <h2 class="title">🐝 Hot To Go! — Collective Joy / Swarm</h2>
         <div class="muted">Neon dancefloor, glitter pollen, swarm resonance.</div>
-        <div style="margin-top:10px">
-          <a class="btn" href="/pantheon/constellation/?figure=Hot%20To%20Go">Open in Constellation</a>
-        </div>
+        <div style="margin-top:10px"><a class="btn" href="/pantheon/constellation/?figure=Hot%20To%20Go">Open in Constellation</a></div>
       </div>
     </div>
 
-    <div class="card" style="margin-top:20px">
-      <div class="muted">Looking for a specific person, anchor, or watchman? Use the Constellation to filter by Figure and click directly into each Day.</div>
-      <div style="margin-top:10px">
-        <a class="btn" href="/pantheon/constellation/">Open Constellation</a>
-      </div>
-    </div>
+    <h2 class="section-title">Watchmen (from playlist)</h2>
+    <div id="watchmen" class="grid"></div>
   </main>
+
+  <script>
+    const DATA_URL = "/data/illumina1.json";
+    const CORE = new Set(["Sabrina","Janet","Eminem","Emma","Doechii","Hot To Go"]);
+    function cardHtml(name){
+      const safe = encodeURIComponent(name);
+      return `<div class="card">
+        <h2 class="title">${name}</h2>
+        <div class="muted">Appears in Illumina 1 playlist.</div>
+        <div style="margin-top:10px"><a class="btn" href="/pantheon/constellation/?figure=${safe}">Open in Constellation</a></div>
+      </div>`;
+    }
+    async function boot(){
+      try{
+        const res = await fetch(DATA_URL);
+        const data = await res.json();
+        const figs = Array.from(new Set(data.map(d=>d.Figure))).filter(Boolean);
+        const watch = figs.filter(f => !CORE.has(f));
+        document.getElementById("watchmen").innerHTML = watch.map(cardHtml).join("");
+      }catch(e){
+        document.getElementById("watchmen").innerHTML = "<div class='muted'>Could not load figures.</div>";
+      }
+    }
+    boot();
+  </script>
 </body>
 </html>
