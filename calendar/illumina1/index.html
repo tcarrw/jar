@@ -75,6 +75,15 @@
       .c-seed { grid-column: 2 / span 1; }
       .c-url { grid-column: 1 / span 2; }
     }
+  
+    .legend-card {
+      background: var(--card); border: 1px solid var(--ring); border-radius: 12px;
+      padding: 12px; margin: 12px 0 16px;
+    }
+    .legend-grid { display:flex; flex-wrap:wrap; gap: 8px 10px; align-items:center; }
+    .legend-title { font-size:12px; color: var(--muted); text-transform: uppercase; letter-spacing:.4px; margin-right: 8px; }
+    .pill { display:inline-block; padding:4px 8px; border:1px solid var(--ring); border-radius:999px; color: var(--muted); font-size:12px; }
+
   </style>
 </head>
 <body>
@@ -100,6 +109,20 @@
   </header>
   <main>
     <div class="wrap">
+      
+      <div class="legend-card" aria-label="Seed cadence legend">
+        <div class="legend-grid">
+          <span class="legend-title">Seed cadence:</span>
+          <span class="pill">1 Cosmic Apple — swallow</span>
+          <span class="pill">2 Pumpkin — chew + honey</span>
+          <span class="pill">3 Mustard — swallow</span>
+          <span class="pill">4 Cumin — chew + honey (smoke optional)</span>
+          <span class="pill">5 Gala Apple — chew</span>
+          <span class="pill">6 Pumpkin — swallow</span>
+          <span class="pill">7 Royal Orange — swallow + honey</span>
+        </div>
+      </div>
+
       <div class="table-card">
         <table id="tbl">
           <thead>
