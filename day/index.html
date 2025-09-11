@@ -1,43 +1,211 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Jar · Day View</title>
-<style>
-  body { margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; background:#0a0a0a; color:#eee; }
-  header, footer { padding:16px; text-align:center; }
-  a { color:#ffd36b; text-decoration:none; }
-  .wrap { max-width:820px; margin:0 auto; padding:24px; }
-  .title { font-size:28px; margin:8px 0 18px; }
-  .card { border:1px solid #222; background:#111; padding:16px; border-radius:10px; margin-bottom:18px; }
-  .btn { display:inline-block; padding:8px 12px; border:1px solid #333; border-radius:8px; }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Day • jar.plnt.earth</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='black'/><circle cx='40' cy='50' r='38' fill='white'/></svg>">
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --card: #141417;
+      --text: #e9e9ef;
+      --muted: #9a9aab;
+      --accent: #b2f5ea;
+      --ring: #2a2a33;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
+    header{background:var(--card);border-bottom:1px solid var(--ring);position:sticky;top:0;z-index:10}
+    nav{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;flex-wrap:wrap;gap:16px}
+    nav a{text-decoration:none;color:var(--text);font-size:14px}
+    nav a:hover{color:var(--accent)}
+    main{max-width:900px;margin:0 auto;padding:24px 16px}
+    .card{background:var(--card);border:1px solid var(--ring);border-radius:16px;padding:20px;margin-bottom:24px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+    .row{display:flex;flex-wrap:wrap;gap:16px}
+    .col{flex:1 1 280px}
+    h1{margin:0 0 6px 0}
+    .meta{color:var(--muted);margin-bottom:12px}
+    .btn{display:inline-block;border:1px solid var(--ring);border-radius:10px;padding:8px 14px;color:var(--text);text-decoration:none}
+    .btn:hover{border-color:var(--accent);color:var(--accent)}
+    .pill{display:inline-block;padding:4px 8px;border:1px solid var(--ring);border-radius:999px;color:var(--muted);font-size:12px;margin-right:6px}
+    iframe{width:100%;aspect-ratio:16/9;border:1px solid var(--ring);border-radius:12px;background:#000}
+    footer{color:var(--muted);text-align:center;padding:24px 0;font-size:13px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:720px){.grid{grid-template-columns:1fr}}
+  </style>
 </head>
 <body>
-<header>
-  <a class="btn" href="/jar/calendar/illumina1/">← Calendar</a>
-  <a class="btn" href="/jar/interludes/">Interludes</a>
-  <a class="btn" href="/jar/victory/illumina1.html">Victory Song</a>
-</header>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/calendar/illumina1/">Calendar</a>
+      <a href="/day/">Day</a>
+      <a href="/notes/moon/">Moon Notes</a>
+      <a href="/notes/day/">Day Notes</a>
+      <a href="/pantheon/">Pantheon</a>
+      <a href="/references/">References</a>
+      <a href="/seeds/">Seeds</a>
+      <a href="/archive/">Archive</a>
+      <a href="https://tunes.plnt.earth" target="_blank">Tunes ↗</a>
+    </nav>
+  </header>
 
-<div class="wrap">
-  <div id="interlude-hook"></div>
-  <div class="title">Day View</div>
-  <div class="card">
-    <h3>Notes</h3>
-    <p>Write your Moon Note or reflection here.</p>
-  </div>
-  <div class="card">
-    <h3>Playlist</h3>
-    <p>Optional embed: link to today’s song from the Illumina 1 playlist.</p>
-  </div>
-</div>
+  <main>
+    <div class="card">
+      <div id="header">
+        <h1 id="dayTitle">Day</h1>
+        <div class="meta" id="dateMeta"></div>
+        <div id="pills"></div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <div class="col">
+          <div id="playerWrap">
+            <div id="playerFallback" class="meta">No embed available.</div>
+          </div>
+          <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+            <a id="openLink" class="btn" href="#" target="_blank" rel="noopener">Open Track ↗</a>
+            <a id="openCalendar" class="btn" href="/calendar/illumina1/">Back to Calendar</a>
+          </div>
+        </div>
+        <div class="col">
+          <div class="grid">
+            <div class="card">
+              <h3 style="margin-top:0">Seed Ritual</h3>
+              <div id="seed"></div>
+            </div>
+            <div class="card">
+              <h3 style="margin-top:0">Actions</h3>
+              <div style="display:flex;gap:10px;flex-wrap:wrap">
+                <a id="moonNote" class="btn" href="#">Write Moon Note</a>
+                <a id="dayNote" class="btn" href="#">Write Day Note</a>
+                <a id="pantheon" class="btn" href="/pantheon/">Pantheon</a>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h3 style="margin-top:0">Prev / Next</h3>
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <a id="prev" class="btn" href="#">← Previous</a>
+              <a id="next" class="btn" href="#">Next →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
 
-<footer>
-  <a class="btn" href="/jar/">Jar Home</a>
-</footer>
+  <footer>
+    Day view • Illumina 1 • Absolute links only
+  </footer>
 
-<script src="/jar/day/interlude-hook.js"></script>
+  <script>
+    const DATA_URL = "/data/illumina1.json";
+
+    function qs(name){
+      const m = new URLSearchParams(window.location.search).get(name);
+      return m;
+    }
+    function getParamDay(data){
+      const n = qs("n");
+      const dateParam = qs("date");
+      if(n){
+        const day = parseInt(n,10);
+        return data.find(d => +d.Day === day);
+      }
+      if(dateParam){
+        // JSON Date is "YYYY-MM-DD (Dow)"; match prefix
+        return data.find(d => (d.Date || "").startsWith(dateParam));
+      }
+      // fallback to today's local date
+      const today = new Date();
+      const y = today.getFullYear();
+      const m = String(today.getMonth()+1).padStart(2,"0");
+      const dd = String(today.getDate()).padStart(2,"0");
+      const iso = `${y}-${m}-${dd}`;
+      return data.find(d => (d.Date || "").startsWith(iso));
+    }
+    function ytid(url){
+      try{
+        if(!url) return null;
+        const u = new URL(url);
+        if(u.hostname.includes("youtube.com")){
+          return u.searchParams.get("v");
+        }
+        if(u.hostname.includes("youtu.be")){
+          // /VIDEOID
+          const parts = u.pathname.split("/").filter(Boolean);
+          return parts[0] || null;
+        }
+        return null;
+      }catch(e){ return null; }
+    }
+    function render(entry){
+      const title = document.getElementById("dayTitle");
+      const dateMeta = document.getElementById("dateMeta");
+      const pills = document.getElementById("pills");
+      const seed = document.getElementById("seed");
+      const playerWrap = document.getElementById("playerWrap");
+      const playerFallback = document.getElementById("playerFallback");
+
+      title.textContent = `Day ${entry.Day} — ${entry.Track}`;
+      dateMeta.textContent = `${entry.Date} • ${entry.MoonPhase} • ${entry.Figure}`;
+
+      pills.innerHTML = `<span class="pill">${entry.MoonPhase}</span><span class="pill">${entry.Figure}</span>`;
+      seed.textContent = entry.SeedRitual || "—";
+
+      // Open track link
+      const openLink = document.getElementById("openLink");
+      if(entry.URL){
+        openLink.href = entry.URL;
+        openLink.style.display = "inline-block";
+      } else {
+        openLink.style.display = "none";
+      }
+
+      // Notes links with ?n=
+      const n = +entry.Day;
+      document.getElementById("moonNote").href = `/notes/moon/?n=${n}`;
+      document.getElementById("dayNote").href  = `/notes/day/?n=${n}`;
+
+      // Prev/Next
+      const prev = document.getElementById("prev");
+      const next = document.getElementById("next");
+      prev.href = `/day/?n=${Math.max(1, n-1)}`;
+      next.href = `/day/?n=${Math.min(42, n+1)}`;
+      if(n<=1) prev.classList.add("muted");
+      if(n>=42) next.classList.add("muted");
+
+      // Try YouTube embed
+      const id = ytid(entry.URL);
+      if(id){
+        const iframe = document.createElement("iframe");
+        iframe.setAttribute("allowfullscreen","");
+        iframe.setAttribute("title","YouTube player");
+        iframe.src = `https://www.youtube.com/embed/${id}`;
+        playerWrap.innerHTML = "";
+        playerWrap.appendChild(iframe);
+      } else {
+        playerFallback.textContent = "No YouTube URL found. Use Open Track to listen.";
+      }
+    }
+
+    async function boot(){
+      try{
+        const res = await fetch(DATA_URL);
+        const data = await res.json();
+        const entry = getParamDay(data);
+        if(!entry){
+          document.getElementById("dayTitle").textContent = "Day not found";
+          document.getElementById("dateMeta").textContent = "Verify ?n=NN or ?date=YYYY-MM-DD";
+          return;
+        }
+        render(entry);
+      }catch(e){
+        document.getElementById("dayTitle").textContent = "Error loading data";
+      }
+    }
+    boot();
+  </script>
 </body>
 </html>
