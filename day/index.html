@@ -44,7 +44,7 @@
       <a href="/notes/moon/">Moon Notes</a>
       <a href="/notes/day/">Day Notes</a>
       <a href="/pantheon/">Pantheon</a>
-      <a href="/references/">References</a>
+      <a href="/victory/">Victory</a><a href="/references/">References</a>
       <a href="/seeds/">Seeds</a>
       <a href="/archive/">Archive</a>
       <a href="https://tunes.plnt.earth" target="_blank">Tunes ↗</a>
@@ -81,6 +81,7 @@
                 <a id="moonNote" class="btn" href="#">Write Moon Note</a>
                 <a id="dayNote" class="btn" href="#">Write Day Note</a>
                 <a id="pantheon" class="btn" href="/pantheon/">Pantheon</a>
+                <a id="victory" class="btn" href="#">Declare Victory Song</a>
               </div>
             </div>
           </div>
@@ -166,6 +167,9 @@
       const n = +entry.Day;
       document.getElementById("moonNote").href = `/notes/moon/?n=${n}`;
       document.getElementById("dayNote").href  = `/notes/day/?n=${n}`;
+
+            // Victory link
+      document.getElementById("victory").href = `/victory/?n=${n}`;
 
       // Prev/Next
       const prev = document.getElementById("prev");
