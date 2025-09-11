@@ -1,123 +1,111 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pantheon — Illumina Interludes</title>
-<meta name="description" content="Illumina Pantheon hub: Sabrina, Janet Planet, Eminem, Emma Stone, Doechii, Hot To Go. Interludes that puncture rhythm and inject archetypal energy.">
-<style>
-:root{--bg:#fff;--ink:#111;--soft:#e9e9e9;--gold:#caa100;--orange:#ff8a00;--grey:#7a7a7a}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif}
-.wrap{max-width:1100px;margin:0 auto;padding:24px}
-.header{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-h1{font-size:28px;margin:0 0 4px;font-weight:800}
-.sub{opacity:.7;font-size:13px;margin-bottom:10px}
-.nav{display:flex;gap:10px;flex-wrap:wrap}
-.btn{border:2px solid var(--gold);background:var(--gold);color:#fff;font-weight:700;font-size:14px;padding:8px 14px;border-radius:12px;cursor:pointer;text-decoration:none;display:inline-block}
-.btn:hover{background:#fff;color:var(--gold)}
-.crumbs{font-size:12px;opacity:.7;margin-bottom:6px}
-.crumbs a{color:var(--gold);text-decoration:none}
-.crumbs a:hover{text-decoration:underline}
-.hr{border:0;border-top:1px solid var(--soft);margin:18px 0}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.tile{border:1px solid var(--soft);border-radius:14px;padding:14px;background:#fff;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;box-shadow:0 6px 26px rgba(0,0,0,.04)}
-.tile:hover{outline:2px solid var(--gold);outline-offset:-2px}
-.tile h3{margin:0;font-size:16px}
-.badges{display:flex;gap:8px;flex-wrap:wrap}
-.badge{display:inline-block;border:1px solid var(--soft);border-radius:999px;padding:2px 10px;font-size:12px}
-.tile p{margin:0;font-size:13px;opacity:.85}
-.svgWrap{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:center;margin-top:12px}
-svg{width:100%;height:auto;display:block}
-.footer{margin-top:22px;font-size:12px;opacity:.65;text-align:center}
-@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:620px){.grid{grid-template-columns:1fr}.svgWrap{grid-template-columns:1fr}}
-@media print{.nav,.crumbs{display:none}.tile{box-shadow:none;border:0}}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pantheon • jar.plnt.earth</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='black'/><circle cx='40' cy='50' r='38' fill='white'/></svg>">
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --card: #141417;
+      --text: #e9e9ef;
+      --muted: #9a9aab;
+      --accent: #b2f5ea;
+      --ring: #2a2a33;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
+    header{background:var(--card);border-bottom:1px solid var(--ring);position:sticky;top:0;z-index:10}
+    nav{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;flex-wrap:wrap;gap:16px}
+    nav a{text-decoration:none;color:var(--text);font-size:14px}
+    nav a:hover{color:var(--accent)}
+    main{max-width:1100px;margin:0 auto;padding:24px 16px}
+    h1{margin:8px 0}
+    .meta{color:var(--muted);margin-bottom:16px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+    @media (max-width:620px){.grid{grid-template-columns:1fr}}
+    .card{background:var(--card);border:1px solid var(--ring);border-radius:16px;padding:18px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+    .title{font-size:18px;margin:0 0 6px 0}
+    .muted{color:var(--muted)}
+    .btn{display:inline-block;border:1px solid var(--ring);border-radius:10px;padding:8px 14px;color:var(--text);text-decoration:none;background:none;cursor:pointer}
+    .btn:hover{border-color:var(--accent);color:var(--accent)}
+    .pill{display:inline-block;padding:4px 8px;border:1px solid var(--ring);border-radius:999px;color:var(--muted);font-size:12px;margin-right:6px}
+  </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="header">
-      <div>
-        <nav class="crumbs">
-          <a href="../index.html">Jar Home</a> → <span>Pantheon Hub</span>
-        </nav>
-        <h1>Illumina Pantheon — Interludes</h1>
-        <div class="sub">Six archetypal interruptions that puncture rhythm and feed the swarm.</div>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/calendar/illumina1/">Calendar</a>
+      <a href="/day/">Day</a>
+      <a href="/notes/moon/">Moon Notes</a>
+      <a href="/notes/day/">Day Notes</a>
+      <a href="/pantheon/">Pantheon</a>
+      <a href="/pantheon/constellation/">Constellation</a>
+      <a href="/references/">References</a>
+      <a href="/seeds/">Seeds</a>
+      <a href="/archive/">Archive</a>
+      <a href="https://tunes.plnt.earth" target="_blank">Tunes ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>✨ Pantheon</h1>
+    <div class="meta">Six interludes anchoring Illumina 1. Click any card to explore related days via the Constellation map.</div>
+
+    <div class="grid">
+      <div class="card">
+        <h2 class="title">🍯 Sabrina — Honey / Taste Spark</h2>
+        <div class="muted">Sensual magnet archetype. Taste ignition, playful pull.</div>
+        <div style="margin-top:10px">
+          <a class="btn" href="/pantheon/constellation/?figure=Sabrina">Open in Constellation</a>
+        </div>
       </div>
-      <div class="nav">
-        <a class="btn" href="../day/index.html">Start Day 1 →</a>
+      <div class="card">
+        <h2 class="title">🌙 Janet Planet — Cosmic Teacher</h2>
+        <div class="muted">STEAM curiosity anchor. Telescope motif, learning arcs.</div>
+        <div style="margin-top:10px">
+          <a class="btn" href="/pantheon/constellation/?figure=Janet">Open in Constellation</a>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="title">⚡ Eminem — Victory Song / Confrontation</h2>
+        <div class="muted">Manifesto moments, lightning aesthetic, identity flare.</div>
+        <div style="margin-top:10px">
+          <a class="btn" href="/pantheon/constellation/?figure=Eminem">Open in Constellation</a>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="title">☀️ Emma Stone — Identity Flare</h2>
+        <div class="muted">Spotlight, masks/roles, cinematic presence.</div>
+        <div style="margin-top:10px">
+          <a class="btn" href="/pantheon/constellation/?figure=Emma">Open in Constellation</a>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="title">🔥 Doechii — Trickster / Chaos</h2>
+        <div class="muted">Graffiti, neon splashes, playful disruption.</div>
+        <div style="margin-top:10px">
+          <a class="btn" href="/pantheon/constellation/?figure=Doechii">Open in Constellation</a>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="title">🐝 Hot To Go! — Collective Joy / Swarm</h2>
+        <div class="muted">Neon dancefloor, glitter pollen, swarm resonance.</div>
+        <div style="margin-top:10px">
+          <a class="btn" href="/pantheon/constellation/?figure=Hot%20To%20Go">Open in Constellation</a>
+        </div>
       </div>
     </div>
 
-    <div class="svgWrap">
-      <!-- Compact orbit glyph -->
-      <svg viewBox="0 0 640 320" role="img" aria-label="Pantheon Orbit">
-        <circle cx="160" cy="160" r="55" fill="none" stroke="var(--gold)" stroke-width="3" stroke-dasharray="6 8"/>
-        <circle cx="160" cy="160" r="100" fill="none" stroke="var(--orange)" stroke-width="3" stroke-dasharray="6 8"/>
-        <circle cx="160" cy="160" r="135" fill="none" stroke="var(--grey)" stroke-width="3" stroke-dasharray="6 8"/>
-        <g fill="var(--gold)" stroke="var(--gold)" stroke-width="2">
-          <circle cx="160" cy="120" r="5"/><circle cx="130" cy="185" r="5"/><circle cx="190" cy="185" r="5"/>
-        </g>
-        <path d="M160 120 L130 185 L190 185 Z" fill="none" stroke="var(--gold)" stroke-width="3"/>
-        <g fill="var(--orange)" stroke="var(--orange)" stroke-width="2">
-          <circle cx="260" cy="160" r="5"/><circle cx="215" cy="245" r="5"/><circle cx="105" cy="245" r="5"/>
-          <circle cx="60"  cy="160" r="5"/><circle cx="105" cy="75"  r="5"/><circle cx="215" cy="75"  r="5"/>
-        </g>
-        <path d="M260 160 L215 245 L105 245 L60 160 L105 75 L215 75 Z" fill="none" stroke="var(--orange)" stroke-width="3"/>
-        <text x="160" y="108" font-size="10" text-anchor="middle">☀️</text>
-        <text x="126" y="198" font-size="10" text-anchor="middle">🐝</text>
-        <text x="194" y="198" font-size="10" text-anchor="middle">🌙</text>
-      </svg>
-
-      <div>
-        <p style="margin:0 0 10px"><strong>How to use:</strong> drop an interlude when the cycle needs a mood switch. Each page gives a visual cue, a brief, and focused prompts—then flows back into the daily Jar.</p>
-        <p style="margin:0"><span class="badge">Tip</span> Interludes aren’t homework. Think <strong>2–10 minutes</strong>: ignite a feeling, capture a note, return to Bee work.</p>
+    <div class="card" style="margin-top:20px">
+      <div class="muted">Looking for a specific person, anchor, or watchman? Use the Constellation to filter by Figure and click directly into each Day.</div>
+      <div style="margin-top:10px">
+        <a class="btn" href="/pantheon/constellation/">Open Constellation</a>
       </div>
     </div>
-
-    <div class="hr"></div>
-
-    <section class="grid" aria-label="Interlude list">
-      <a class="tile" href="sabrina.html">
-        <h3>🍯 Sabrina</h3>
-        <div class="badges"><span class="badge">Honey</span><span class="badge">Taste Spark</span></div>
-        <p>Magnet archetype. Savor, sweeten, and draw the swarm toward connection.</p>
-      </a>
-
-      <a class="tile" href="janet-planet.html">
-        <h3>🌙 Janet Planet</h3>
-        <div class="badges"><span class="badge">Cosmic Teacher</span><span class="badge">STEAM</span></div>
-        <p>Points the telescope; turns awe into experiments and feeds the archive.</p>
-      </a>
-
-      <a class="tile" href="eminem.html">
-        <h3>⚡ Eminem</h3>
-        <div class="badges"><span class="badge">Confrontation</span><span class="badge">Victory Song</span></div>
-        <p>Lightning clarity. Draw the boundary, say it with heat, then log the scorch.</p>
-      </a>
-
-      <a class="tile" href="emma-stone.html">
-        <h3>☀️ Emma Stone</h3>
-        <div class="badges"><span class="badge">Identity</span><span class="badge">Masks</span></div>
-        <p>Choose the role, keep the core. Step into the spotlight with integrity.</p>
-      </a>
-
-      <a class="tile" href="doechii.html">
-        <h3>🔥 Doechii</h3>
-        <div class="badges"><span class="badge">Trickster</span><span class="badge">Chaos</span></div>
-        <p>Playful disruption. Break pattern safely to reveal hidden moves.</p>
-      </a>
-
-      <a class="tile" href="hot-to-go.html">
-        <h3>🐝 Hot To Go</h3>
-        <div class="badges"><span class="badge">Collective Joy</span><span class="badge">Swarm</span></div>
-        <p>Simple moves on a shared beat. Turn solos into a swarm lift.</p>
-      </a>
-    </section>
-
-    <div class="footer">Pantheon Hub · Part of Jar — Illumina 1</div>
-  </div>
+  </main>
 </body>
 </html>
