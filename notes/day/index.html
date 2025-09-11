@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Day Notes • jar.plnt.earth</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='black'/><circle cx='40' cy='50' r='38' fill='white'/></svg>">
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --card: #141417;
+      --text: #e9e9ef;
+      --muted: #9a9aab;
+      --accent: #b2f5ea;
+      --ring: #2a2a33;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
+    header{background:var(--card);border-bottom:1px solid var(--ring);position:sticky;top:0;z-index:10}
+    nav{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;flex-wrap:wrap;gap:16px}
+    nav a{text-decoration:none;color:var(--text);font-size:14px}
+    nav a:hover{color:var(--accent)}
+    main{max-width:920px;margin:0 auto;padding:24px 16px}
+    h1{margin:8px 0}
+    .meta{color:var(--muted);margin-bottom:16px}
+    .card{background:var(--card);border:1px solid var(--ring);border-radius:16px;padding:20px;margin-bottom:24px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type="text"], textarea{
+      width:100%;background:#0e0e11;color:var(--text);border:1px solid var(--ring);border-radius:12px;
+      padding:10px 12px;font-size:14px;outline:none;
+    }
+    textarea{min-height:200px;resize:vertical}
+    .btn{display:inline-block;border:1px solid var(--ring);border-radius:10px;padding:8px 14px;color:var(--text);text-decoration:none;background:none;cursor:pointer}
+    .btn:hover{border-color:var(--accent);color:var(--accent)}
+    .pill{display:inline-block;padding:4px 8px;border:1px solid var(--ring);border-radius:999px;color:var(--muted);font-size:12px;margin-right:6px}
+    footer{color:var(--muted);text-align:center;padding:24px 0;font-size:13px}
+    .flex{display:flex;gap:10px;flex-wrap:wrap}
+    .small{font-size:12px;color:var(--muted)}
+    .danger{border-color:#9a3b3b;color:#ffb3b3}
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/calendar/illumina1/">Calendar</a>
+      <a href="/day/">Day</a>
+      <a href="/notes/moon/">Moon Notes</a>
+      <a href="/notes/day/">Day Notes</a>
+      <a href="/pantheon/">Pantheon</a>
+      <a href="/references/">References</a>
+      <a href="/seeds/">Seeds</a>
+      <a href="/archive/">Archive</a>
+      <a href="https://tunes.plnt.earth" target="_blank">Tunes ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>🐝 Day Notes</h1>
+    <div class="meta">Weekcard entries and sprint logs. Saved locally (private) in your browser.</div>
+
+    <div class="card" id="context">
+      <div id="ctxTitle" class="muted">Loading context…</div>
+      <div id="ctxPills" style="margin-top:8px"></div>
+      <div class="flex" style="margin-top:12px">
+        <a id="openDay" class="btn" href="#">Open Day</a>
+        <a id="openCalendar" class="btn" href="/calendar/illumina1/">Back to Calendar</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <label for="intention">🌑 Weekly Intention</label>
+      <textarea id="intention" placeholder="Raw intention in your words…"></textarea>
+
+      <label for="expansion" style="margin-top:12px">ChatGPT Expansion (optional)</label>
+      <textarea id="expansion" placeholder="Refined roadmap, stretch goals, creative themes…"></textarea>
+
+      <label for="offline" style="margin-top:12px">🌗 Midweek Sprint (Offline Win)</label>
+      <textarea id="offline" placeholder="What you did independently…"></textarea>
+
+      <label for="amplification" style="margin-top:12px">ChatGPT Amplification</label>
+      <textarea id="amplification" placeholder="Refinement, expansion, or integration into Illumina log…"></textarea>
+
+      <label for="reflection" style="margin-top:12px">🌕 Weekly Close</label>
+      <textarea id="reflection" placeholder="One win in your voice…"></textarea>
+
+      <label for="archive" style="margin-top:12px">Illumina Archive (ChatGPT)</label>
+      <textarea id="archive" placeholder="Logged summary for continuity…"></textarea>
+
+      <div class="flex" style="margin-top:16px">
+        <button class="btn" id="save">Save</button>
+        <button class="btn" id="copyMd">Copy Markdown</button>
+        <button class="btn" id="downloadJson">Download JSON</button>
+        <button class="btn danger" id="clear">Delete Note</button>
+      </div>
+      <div class="small" id="saveStatus" style="margin-top:8px"></div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Previous Day Notes (local)</h3>
+      <div class="small">Click a day to load/edit.</div>
+      <div id="history" class="flex" style="margin-top:10px"></div>
+    </div>
+  </main>
+
+  <footer>
+    Day Notes • Local-only storage • Weekcard structure
+  </footer>
+
+  <script>
+    const DATA_URL = "/data/illumina1.json";
+    const LS_PREFIX = "day:"; // day:NN
+    const el = (id)=>document.getElementById(id);
+
+    function qs(name){
+      return new URLSearchParams(window.location.search).get(name);
+    }
+    function listHistory(){
+      const keys = Object.keys(localStorage).filter(k=>k.startsWith(LS_PREFIX)).sort((a,b)=>{
+        return parseInt(a.slice(LS_PREFIX.length)) - parseInt(b.slice(LS_PREFIX.length));
+      });
+      const box = el("history");
+      box.innerHTML = "";
+      keys.forEach(k=>{
+        const d = k.slice(LS_PREFIX.length);
+        const a = document.createElement("a");
+        a.className = "btn";
+        a.href = `?n=${d}`;
+        a.textContent = `Day ${d}`;
+        box.appendChild(a);
+      });
+    }
+    function copyToClipboard(text){
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try{ document.execCommand("copy"); }catch(e){}
+      document.body.removeChild(ta);
+    }
+    function toMarkdown(ctx, note){
+      return `# Day Note — Day ${ctx.Day} (${ctx.Date})
+${ctx.MoonPhase} • ${ctx.Track} (${ctx.Figure})
+Seed: ${ctx.SeedRitual}
+
+## 🌑 Weekly Intention
+${note.intention || ""}
+
+## Expansion
+${note.expansion || ""}
+
+## 🌗 Midweek Sprint (Offline Win)
+${note.offline || ""}
+
+## Amplification
+${note.amplification || ""}
+
+## 🌕 Weekly Close
+${note.reflection || ""}
+
+## Archive
+${note.archive || ""}
+`;
+    }
+    function getEntry(data){
+      const n = qs("n");
+      if(n){ return data.find(d => +d.Day === +n); }
+      const today = new Date();
+      const y = today.getFullYear();
+      const m = String(today.getMonth()+1).padStart(2,"0");
+      const dd = String(today.getDate()).padStart(2,"0");
+      const iso = `${y}-${m}-${dd}`;
+      return data.find(d => (d.Date||"").startsWith(iso));
+    }
+    async function boot(){
+      const ctxTitle = el("ctxTitle");
+      const ctxPills = el("ctxPills");
+      const openDay = el("openDay");
+
+      try{
+        const res = await fetch(DATA_URL);
+        const data = await res.json();
+        const ctx = getEntry(data);
+        if(!ctx){
+          ctxTitle.textContent = "No matching day in Illumina 1.";
+          return;
+        }
+        ctxTitle.innerHTML = `<strong>${ctx.Date}</strong> — Day ${ctx.Day} • ${ctx.Track}`;
+        ctxPills.innerHTML = `<span class="pill">${ctx.MoonPhase}</span><span class="pill">${ctx.Figure}</span>`;
+        openDay.href = `/day/?n=${ctx.Day}`;
+
+        const key = LS_PREFIX + ctx.Day;
+        const raw = localStorage.getItem(key);
+        if(raw){
+          try{
+            const saved = JSON.parse(raw);
+            el("intention").value = saved.intention || "";
+            el("expansion").value = saved.expansion || "";
+            el("offline").value = saved.offline || "";
+            el("amplification").value = saved.amplification || "";
+            el("reflection").value = saved.reflection || "";
+            el("archive").value = saved.archive || "";
+          }catch(e){}
+        }
+
+        el("save").addEventListener("click", ()=>{
+          const note = {
+            intention: el("intention").value,
+            expansion: el("expansion").value,
+            offline: el("offline").value,
+            amplification: el("amplification").value,
+            reflection: el("reflection").value,
+            archive: el("archive").value
+          };
+          localStorage.setItem(key, JSON.stringify(note));
+          el("saveStatus").textContent = "Saved locally ✓";
+          setTimeout(()=> el("saveStatus").textContent = "", 2000);
+          listHistory();
+        });
+
+        el("copyMd").addEventListener("click", ()=>{
+          const note = {
+            intention: el("intention").value,
+            expansion: el("expansion").value,
+            offline: el("offline").value,
+            amplification: el("amplification").value,
+            reflection: el("reflection").value,
+            archive: el("archive").value
+          };
+          copyToClipboard(toMarkdown(ctx, note));
+          el("saveStatus").textContent = "Copied Markdown ✓";
+          setTimeout(()=> el("saveStatus").textContent = "", 2000);
+        });
+
+        el("downloadJson").addEventListener("click", ()=>{
+          const note = {
+            day: ctx.Day,
+            intention: el("intention").value,
+            expansion: el("expansion").value,
+            offline: el("offline").value,
+            amplification: el("amplification").value,
+            reflection: el("reflection").value,
+            archive: el("archive").value
+          };
+          const blob = new Blob([JSON.stringify(note,null,2)], {type:"application/json"});
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(blob);
+          a.download = `day-${ctx.Day}.json`;
+          a.click();
+        });
+
+        el("clear").addEventListener("click", ()=>{
+          if(confirm("Delete this note from this browser?")){
+            localStorage.removeItem(key);
+            ["intention","expansion","offline","amplification","reflection","archive"].forEach(id=>el(id).value="");
+            el("saveStatus").textContent = "Deleted. (Local only)";
+            setTimeout(()=> el("saveStatus").textContent = "", 2000);
+            listHistory();
+          }
+        });
+
+        listHistory();
+      }catch(e){
+        ctxTitle.textContent = "Error loading data.";
+      }
+    }
+    boot();
+  </script>
+</body>
+</html>
