@@ -3,270 +3,220 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jar Constellation — Illumina 1</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='28' fill='black'/><path d='M32 6 a26 26 0 1 0 0 52 a18 18 0 1 1 0 -52' fill='white'/></svg>">
+  <title>Constellation • jar.plnt.earth</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='black'/><circle cx='40' cy='50' r='38' fill='white'/></svg>">
   <style>
-    :root{
-      --bg:#0a0a0a;          /* pepper black */
-      --grid:#1a1a1a;        /* faint grid */
-      --ink:#e5e7eb;         /* soft white */
-      --honey:#ffd166;       /* honey */
-      --anchor:#a78bfa;      /* lunar violet */
-      --watch:#60a5fa;       /* watchmen blue */
-      --emma:#fca5a5;        /* rose */
-      --doechii:#34d399;     /* neon green */
-      --hot:#f59e0b;         /* hot to go */
-      --janet:#93c5fd;       /* cosmic teacher */
-      --grid-w: 72px;        /* grid sizing */
+    :root {
+      --bg: #0b0b0c;
+      --card: #141417;
+      --text: #e9e9ef;
+      --muted: #9a9aab;
+      --accent: #b2f5ea;
+      --ring: #2a2a33;
+      --dot: rgba(255,255,255,.9);
     }
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; background:radial-gradient(1200px 800px at 70% 10%, #111 0%, var(--bg) 60%) fixed; color:var(--ink); font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial,Apple Color Emoji,Segoe UI Emoji; overflow:hidden;
-    }
-    .wrap{display:grid; grid-template-rows:auto 1fr auto; height:100%}
-    header,footer{display:flex; align-items:center; gap:16px; padding:12px 16px; background:#0b0b0b; border-bottom:1px solid #111}
-    footer{border-top:1px solid #111; border-bottom:none}
-    header h1{font-size:18px; margin:0; letter-spacing:.4px}
-    header nav{margin-left:auto; display:flex; gap:10px; flex-wrap:wrap}
-    a.link{color:#9ae6b4; text-decoration:none; border:1px solid #1f2937; padding:6px 10px; border-radius:999px; font-size:12px}
-    a.link:hover{border-color:#374151}
-
-    /* Toolbar */
-    .toolbar{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
-    .chip{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border:1px solid #1f2937; border-radius:999px; font-size:12px; background:#0c0c0c; cursor:pointer; user-select:none}
-    .chip input{accent-color:currentColor}
-    .chip[data-color="honey"]{color:var(--honey); border-color:#3a2d12}
-    .chip[data-color="anchor"]{color:var(--anchor); border-color:#2f1e44}
-    .chip[data-color="watch"]{color:var(--watch); border-color:#0f2746}
-    .chip[data-color="emma"]{color:var(--emma); border-color:#3b0d0d}
-    .chip[data-color="doechii"]{color:var(--doechii); border-color:#0d2e23}
-    .chip[data-color="hot"]{color:var(--hot); border-color:#3a2405}
-    .chip[data-color="janet"]{color:var(--janet); border-color:#142a45}
-
-    /* Canvas */
-    .stage{position:relative; height:100%;}
-    .grid{position:absolute; inset:0; background-image:linear-gradient(to right, var(--grid) 1px, transparent 1px), linear-gradient(to bottom, var(--grid) 1px, transparent 1px); background-size:var(--grid-w) var(--grid-w); mask:linear-gradient(#000, transparent 80%)}
-    svg{position:absolute; inset:0; width:100%; height:100%}
-
-    /* Nodes */
-    .node{cursor:pointer; transition:transform .18s ease, filter .18s ease}
-    .node:hover{transform:translateY(-2px); filter:brightness(1.1)}
-    .label{font-size:12px; letter-spacing:.2px; paint-order:stroke; stroke:#0007; stroke-width:.9}
-
-    /* Legend */
-    .legend{position:absolute; right:12px; top:12px; padding:10px 12px; background:#0c0c0c; border:1px solid #1f2937; border-radius:12px; font-size:12px; line-height:1.3}
-    .leg-row{display:flex; align-items:center; gap:8px; margin:3px 0}
-    .dot{width:10px; height:10px; border-radius:50%}
-
-    /* Mini help */
-    .help{position:absolute; left:12px; bottom:12px; font-size:12px; opacity:.7}
-
-    /* Hidden on filter */
-    .hidden{opacity:0; pointer-events:none}
-
-    /* Links panel */
-    .links{display:flex; gap:8px; flex-wrap:wrap}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
+    header{background:var(--card);border-bottom:1px solid var(--ring);position:sticky;top:0;z-index:10}
+    nav{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;flex-wrap:wrap;gap:16px}
+    nav a{text-decoration:none;color:var(--text);font-size:14px}
+    nav a:hover{color:var(--accent)}
+    main{max-width:1100px;margin:0 auto;padding:24px 16px}
+    h1{margin:8px 0}
+    .meta{color:var(--muted);margin-bottom:12px}
+    .panel{background:var(--card);border:1px solid var(--ring);border-radius:16px;padding:16px;margin-bottom:16px}
+    .controls{display:flex;gap:10px;flex-wrap:wrap}
+    select,input[type="search"]{background:#0e0e11;color:var(--text);border:1px solid var(--ring);border-radius:10px;padding:8px 10px}
+    svg{width:100%;height:560px;border:1px solid var(--ring);border-radius:12px;background:radial-gradient(1200px 600px at 30% 10%, rgba(178,245,234,.06), transparent)}
+    .legend{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--ring);border-radius:999px;padding:4px 8px;color:var(--muted);font-size:12px}
+    .swatch{width:10px;height:10px;border-radius:50%}
+    .btn{display:inline-block;border:1px solid var(--ring);border-radius:10px;padding:8px 14px;color:var(--text);text-decoration:none;background:none;cursor:pointer}
+    .btn:hover{border-color:var(--accent);color:var(--accent)}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <h1>Jar Constellation · Illumina 1</h1>
-      <div class="toolbar" id="toolbar">
-        <span class="chip" data-color="honey"><input type="checkbox" data-filter="honey" checked aria-label="toggle honey"/> 🍯 Interludes</span>
-        <span class="chip" data-color="anchor"><input type="checkbox" data-filter="anchor" checked aria-label="toggle anchors"/> ☀️/🌕 Anchors</span>
-        <span class="chip" data-color="watch"><input type="checkbox" data-filter="watch" checked aria-label="toggle watchmen"/> 🛰 Watchmen</span>
-        <span class="chip" data-color="janet"><input type="checkbox" data-filter="janet" checked aria-label="toggle janet"/> 🌙 L. Moon</span>
-        <span class="chip" data-color="emma"><input type="checkbox" data-filter="emma" checked aria-label="toggle emma"/> 🎭 Emma</span>
-        <span class="chip" data-color="doechii"><input type="checkbox" data-filter="doechii" checked aria-label="toggle doechii"/> 🔥 Doechii</span>
-        <span class="chip" data-color="hot"><input type="checkbox" data-filter="hot" checked aria-label="toggle hot to go"/> 💃 Hot‑To‑Go</span>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/calendar/illumina1/">Calendar</a>
+      <a href="/day/">Day</a>
+      <a href="/notes/moon/">Moon Notes</a>
+      <a href="/notes/day/">Day Notes</a>
+      <a href="/pantheon/">Pantheon</a>
+      <a href="/pantheon/constellation/">Constellation</a>
+      <a href="/references/">References</a>
+      <a href="/seeds/">Seeds</a>
+      <a href="/archive/">Archive</a>
+      <a href="https://tunes.plnt.earth" target="_blank">Tunes ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>🌌 Constellation</h1>
+    <div class="meta">Interactive map of Illumina 1. Filter by figure, phase, or search; click a star to open the Day.</div>
+
+    <div class="panel">
+      <div class="controls">
+        <input id="q" type="search" placeholder="Search track / figure…" />
+        <select id="fig">
+          <option value="">All figures</option>
+          <option>Sabrina</option>
+          <option>Janet</option>
+          <option>Eminem</option>
+          <option>Emma</option>
+          <option>Doechii</option>
+          <option>Hot To Go</option>
+          <option>Anonymous</option>
+          <option>Greta</option>
+          <option>Ariana</option>
+          <option>Mac Miller</option>
+          <option>Pink Floyd</option>
+          <!-- Add more as they appear in CSV -->
+        </select>
+        <select id="phase">
+          <option value="">All phases</option>
+          <option>🌕 Full Moon</option>
+          <option>🌖 Waning Gibbous</option>
+          <option>🌗 Last Quarter</option>
+          <option>🌘 Waning Crescent</option>
+          <option>🌑 New Moon</option>
+          <option>🌒 Waxing Crescent</option>
+          <option>🌓 First Quarter</option>
+          <option>🌔 Waxing Gibbous</option>
+        </select>
+        <button class="btn" id="toggleSpiral">Spiral 1/7</button>
       </div>
-      <nav>
-        <a class="link" href="https://jar.plnt.earth/" target="_blank" rel="noopener">Jar</a>
-        <a class="link" href="https://tunes.plnt.earth/" target="_blank" rel="noopener">Tunes</a>
-        <a class="link" href="https://jar.plnt.earth/calendar/illumina1/" target="_blank" rel="noopener">Calendar</a>
-        <a class="link" href="https://jar.plnt.earth/references/" target="_blank" rel="noopener">References</a>
-        <a class="link" href="https://jar.plnt.earth/archive/" target="_blank" rel="noopener">Archive</a>
-        <a class="link" href="https://jar.plnt.earth/seeds/" target="_blank" rel="noopener">Seeds</a>
-      </nav>
-    </header>
-
-    <main class="stage">
-      <div class="grid" aria-hidden="true"></div>
-
-      <!-- Legend -->
-      <div class="legend" id="legend" aria-label="legend">
-        <div class="leg-row"><span class="dot" style="background:var(--honey)"></span> 🍯 Interlude (Honey / Taste)</div>
-        <div class="leg-row"><span class="dot" style="background:var(--anchor)"></span> ☀️/🌕 Anchor (Solar/Lunar)</div>
-        <div class="leg-row"><span class="dot" style="background:var(--watch)"></span> 🛰 Watchmen</div>
-        <div class="leg-row"><span class="dot" style="background:var(--janet)"></span> 🌙 L. Moon / Archivist</div>
-      </div>
-
-      <!-- SVG Constellation Layer -->
-      <svg viewBox="0 0 1600 900" role="img" aria-label="Jar constellation map of NYC + celestial layer">
-        <defs>
-          <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-          <linearGradient id="bee" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".0"/><stop offset="1" stop-color="var(--honey)" stop-opacity=".9"/></linearGradient>
-        </defs>
-
-        <!-- NYC silhouette (abstract honeycomb Manhattan) -->
-        <g opacity=".35">
-          <path d="M200,820 220,600 260,520 320,460 400,420 500,390 600,360 720,330 820,320 900,330 980,360 1020,420 1015,500 980,560 930,620 860,680 780,740 700,780 580,810 460,830 320,840z" fill="url(#bee)" stroke="#312e2b" stroke-width="1"/>
-        </g>
-
-        <!-- Edges (connections) -->
-        <g id="edges" stroke="#233" stroke-opacity=".6">
-          <!-- Ariana ↔ Sabrina (anchor to honey) -->
-          <line x1="1200" y1="160" x2="860" y2="720" stroke="var(--anchor)" stroke-dasharray="4 6"/>
-          <!-- Anchor to other interludes -->
-          <line x1="1200" y1="160" x2="980" y2="620" stroke="var(--anchor)" stroke-dasharray="4 6"/>
-          <line x1="1200" y1="160" x2="740" y2="660" stroke="var(--anchor)" stroke-dasharray="4 6"/>
-          <line x1="1200" y1="160" x2="640" y2="600" stroke="var(--anchor)" stroke-dasharray="4 6"/>
-          <line x1="1200" y1="160" x2="560" y2="520" stroke="var(--anchor)" stroke-dasharray="4 6"/>
-          <line x1="1200" y1="160" x2="900" y2="540" stroke="var(--anchor)" stroke-dasharray="4 6"/>
-          <!-- Sabrina lattice links -->
-          <line x1="860" y1="720" x2="980" y2="620" stroke="var(--honey)"/>
-          <line x1="860" y1="720" x2="740" y2="660" stroke="var(--honey)"/>
-          <line x1="860" y1="720" x2="640" y2="600" stroke="var(--honey)"/>
-          <line x1="860" y1="720" x2="560" y2="520" stroke="var(--honey)"/>
-          <line x1="980" y1="620" x2="900" y2="540" stroke="var(--honey)"/>
-          <!-- Watchmen web -->
-          <line x1="300" y1="300" x2="560" y2="520" stroke="var(--watch)"/>
-          <line x1="300" y1="300" x2="420" y2="240" stroke="var(--watch)"/>
-          <line x1="420" y1="240" x2="640" y2="600" stroke="var(--watch)"/>
-          <line x1="420" y1="240" x2="740" y2="660" stroke="var(--watch)"/>
-          <line x1="420" y1="240" x2="980" y2="620" stroke="var(--watch)"/>
-        </g>
-
-        <!-- Nodes -->
-        <g id="nodes" filter="url(#glow)">
-          <!-- Ariana Grande (Anchor) -->
-          <g class="node anchor" data-group="anchor" data-name="Ariana Grande" data-url="https://tunes.plnt.earth/" transform="translate(1200,160)">
-            <circle r="14" fill="var(--anchor)"/>
-            <text class="label" x="18" y="4">Ariana (Anchor)</text>
-          </g>
-
-          <!-- Mac Miller (ghost node, no link) -->
-          <g class="node anchor" data-group="anchor" transform="translate(1120,220)">
-            <circle r="8" fill="#c4b5fd" opacity=".45"/>
-            <text class="label" x="14" y="4" opacity=".7">Mac (memory)</text>
-          </g>
-
-          <!-- Sabrina Carpenter (Honey / Interlude) FiDi -->
-          <g class="node honey" data-group="honey" data-name="Sabrina Carpenter" data-url="https://jar.plnt.earth/interludes/sabrina/" transform="translate(860,720)">
-            <rect x="-12" y="-12" width="24" height="24" rx="6" fill="var(--honey)"/>
-            <text class="label" x="18" y="4">Sabrina · FiDi</text>
-          </g>
-
-          <!-- Interludes Pantheon -->
-          <g class="node honey emma" data-group="honey emma" data-name="Emma Stone" data-url="https://jar.plnt.earth/interludes/emma-stone/" transform="translate(980,620)">
-            <rect x="-11" y="-11" width="22" height="22" rx="6" fill="var(--emma)"/>
-            <text class="label" x="16" y="4">Emma</text>
-          </g>
-          <g class="node honey doechii" data-group="honey doechii" data-name="Doechii" data-url="https://jar.plnt.earth/interludes/doechii/" transform="translate(740,660)">
-            <rect x="-11" y="-11" width="22" height="22" rx="6" fill="var(--doechii)"/>
-            <text class="label" x="16" y="4">Doechii</text>
-          </g>
-          <g class="node honey hot" data-group="honey hot" data-name="Hot To Go" data-url="https://jar.plnt.earth/interludes/hot-to-go/" transform="translate(640,600)">
-            <rect x="-11" y="-11" width="22" height="22" rx="6" fill="var(--hot)"/>
-            <text class="label" x="16" y="4">Hot‑To‑Go</text>
-          </g>
-          <g class="node honey janet" data-group="honey janet" data-name="Janet Planet" data-url="https://jar.plnt.earth/interludes/janet-planet/" transform="translate(560,520)">
-            <rect x="-11" y="-11" width="22" height="22" rx="6" fill="var(--janet)"/>
-            <text class="label" x="16" y="4">Janet Planet</text>
-          </g>
-
-          <!-- L. Moon (Archivist / Scientist) hub -->
-          <g class="node janet" data-group="janet" data-name="L. Moon" data-url="https://jar.plnt.earth/references/illumina/" transform="translate(900,540)">
-            <circle r="10" fill="var(--janet)"/>
-            <text class="label" x="16" y="4">L. Moon · Archive</text>
-          </g>
-
-          <!-- NYC Honey Cells (contextual) -->
-          <g class="node honey" data-group="honey" data-name="SoHo" data-url="https://jar.plnt.earth/honey/soho/" transform="translate(820,660)">
-            <rect x="-7" y="-7" width="14" height="14" rx="4" fill="var(--honey)" opacity=".7"/>
-            <text class="label" x="12" y="4" opacity=".8">SoHo</text>
-          </g>
-          <g class="node honey" data-group="honey" data-name="Lower East Side" data-url="https://jar.plnt.earth/honey/les/" transform="translate(760,700)">
-            <rect x="-7" y="-7" width="14" height="14" rx="4" fill="var(--honey)" opacity=".7"/>
-            <text class="label" x="12" y="4" opacity=".8">LES</text>
-          </g>
-          <g class="node honey" data-group="honey" data-name="Williamsburg" data-url="https://jar.plnt.earth/honey/williamsburg/" transform="translate(700,740)">
-            <rect x="-7" y="-7" width="14" height="14" rx="4" fill="var(--honey)" opacity=".7"/>
-            <text class="label" x="12" y="4" opacity=".8">Wburg</text>
-          </g>
-          <g class="node honey" data-group="honey" data-name="LIC" data-url="https://jar.plnt.earth/honey/lic/" transform="translate(660,780)">
-            <rect x="-7" y="-7" width="14" height="14" rx="4" fill="var(--honey)" opacity=".7"/>
-            <text class="label" x="12" y="4" opacity=".8">LIC</text>
-          </g>
-
-          <!-- Watchmen candidates (sample) -->
-          <g class="node watch" data-group="watch" data-name="Roaring Kitty" data-url="https://jar.plnt.earth/watchmen/roaring-kitty/" transform="translate(300,300)">
-            <circle r="10" fill="var(--watch)"/>
-            <text class="label" x="16" y="4">Roaring Kitty</text>
-          </g>
-          <g class="node watch" data-group="watch" data-name="Anonymous" data-url="https://jar.plnt.earth/watchmen/anonymous/" transform="translate(420,240)">
-            <circle r="9" fill="var(--watch)"/>
-            <text class="label" x="14" y="4">Anonymous</text>
-          </g>
-
-          <!-- Solar You (Victory Song) -->
-          <g class="node anchor" data-group="anchor" data-name="☀️ Victory Song" data-url="https://jar.plnt.earth/victory-song/" transform="translate(1400,120)">
-            <circle r="12" fill="var(--anchor)"/>
-            <text class="label" x="16" y="4">☀️ Victory Song</text>
-          </g>
-        </g>
-      </svg>
-
-      <div class="help">Tip: toggle groups above; click any node to open its page in a new tab.</div>
-    </main>
-
-    <footer>
-      <div class="links">
-        <a class="link" href="https://jar.plnt.earth/day/" target="_blank" rel="noopener">Day</a>
-        <a class="link" href="https://jar.plnt.earth/constellation/" target="_blank" rel="noopener">Constellation</a>
-        <a class="link" href="https://jar.plnt.earth/pairs/" target="_blank" rel="noopener">Pairs</a>
-        <a class="link" href="https://jar.plnt.earth/interludes/" target="_blank" rel="noopener">Interludes</a>
-        <a class="link" href="https://jar.plnt.earth/science/" target="_blank" rel="noopener">Science</a>
-      </div>
-      <div style="margin-left:auto; font-size:12px; opacity:.7">Illumina 1 · Nov 5 – Dec 17, 2025</div>
-    </footer>
-  </div>
+      <svg id="sky" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet"></svg>
+      <div class="legend" id="legend"></div>
+    </div>
+  </main>
 
   <script>
-    (function(){
-      var nodes = document.querySelectorAll('#nodes .node');
-      for (var i=0;i<nodes.length;i++){
-        (function(n){
-          var url = n.getAttribute('data-url');
-          if(url){
-            n.addEventListener('click', function(){ window.open(url, '_blank'); });
-          }
-        })(nodes[i]);
-      }
-      var toolbar = document.getElementById('toolbar');
-      toolbar.addEventListener('change', function(e){
-        var t = e.target;
-        if(t && t.matches('input[type="checkbox"][data-filter]')){
-          var group = t.getAttribute('data-filter');
-          var on = t.checked;
-          var list = document.querySelectorAll('.'+group+':not(svg)');
-          for (var j=0;j<list.length;j++){
-            if(on){ list[j].classList.remove('hidden'); }
-            else{ list[j].classList.add('hidden'); }
-          }
-          // Special handling: category chips for sub-flavors under honey
-          if(['emma','doechii','hot','janet'].indexOf(group) > -1){
-            var sub = document.querySelectorAll('.'+group);
-            for (var k=0;k<sub.length;k++){
-              if(on){ sub[k].classList.remove('hidden'); }
-              else{ sub[k].classList.add('hidden'); }
-            }
-          }
-        }
+    const DATA_URL = "/data/illumina1.json";
+    const colors = [
+      "#E3B505","#4CC9F0","#F72585","#B5179E","#4895EF","#3A0CA3","#2A9D8F",
+      "#F4A261","#E76F51","#90BE6D","#577590","#FFD166","#06D6A0"
+    ];
+    function colorFor(key){
+      const i = Math.abs(hashCode(key)) % colors.length;
+      return colors[i];
+    }
+    function hashCode(s){
+      let h=0; for(let i=0;i<s.length;i++){ h=((h<<5)-h)+s.charCodeAt(i); h|=0; }
+      return h;
+    }
+    function buildLegend(figures){
+      const box = document.getElementById("legend");
+      box.innerHTML = "";
+      figures.forEach(f=>{
+        const pill = document.createElement("div");
+        pill.className = "pill";
+        const sw = document.createElement("span");
+        sw.className = "swatch";
+        sw.style.background = colorFor(f);
+        const label = document.createElement("span");
+        label.textContent = f;
+        pill.appendChild(sw); pill.appendChild(label);
+        box.appendChild(pill);
       });
-    })();
+    }
+    function layoutGrid(index){
+      const cols = 14; // 3 rows of 14 = 42
+      const col = index % cols;
+      const row = Math.floor(index / cols);
+      const marginX = 40, marginY = 40;
+      const cellW = (1000 - marginX*2) / cols;
+      const cellH = (560 - marginY*2) / 3;
+      const x = marginX + cellW*col + cellW/2;
+      const y = marginY + cellH*row + cellH/2;
+      return {x,y};
+    }
+    function layoutSpiral(n){
+      // simple spiral; n is 0..41
+      const cx=500, cy=280;
+      const a = 8; // spacing
+      const b = 12; // spiral growth
+      const angle = n * (Math.PI/6.5);
+      const r = a + b * Math.sqrt(n+1);
+      const x = cx + r * Math.cos(angle);
+      const y = cy + r * Math.sin(angle);
+      return {x,y};
+    }
+    function render(data, useSpiral){
+      const svg = document.getElementById("sky");
+      const q = document.getElementById("q").value.toLowerCase();
+      const figFilter = document.getElementById("fig").value;
+      const phaseFilter = document.getElementById("phase").value;
+      svg.innerHTML = "";
+      const g = document.createElementNS("http://www.w3.org/2000/svg","g");
+      svg.appendChild(g);
+
+      const filtered = data.filter((d)=>{
+        const hay = `${d.Track} ${d.Figure}`.toLowerCase();
+        const okQ = !q || hay.includes(q);
+        const okFig = !figFilter || d.Figure === figFilter;
+        const okPhase = !phaseFilter || d.MoonPhase === phaseFilter;
+        return okQ && okFig && okPhase;
+      });
+
+      filtered.forEach((d, i)=>{
+        const idx = d.Day - 1;
+        const pos = useSpiral ? layoutSpiral(idx) : layoutGrid(idx);
+        const group = document.createElementNS("http://www.w3.org/2000/svg","g");
+        group.setAttribute("transform", `translate(${pos.x},${pos.y})`);
+
+        const star = document.createElementNS("http://www.w3.org/2000/svg","circle");
+        star.setAttribute("r","9");
+        star.setAttribute("fill", colorFor(d.Figure || d.Track || "x"));
+        star.setAttribute("opacity","0.9");
+        star.style.cursor = "pointer";
+        star.addEventListener("click", ()=>{
+          window.location.href = `/day/?n=${d.Day}`;
+        });
+        const label = document.createElementNS("http://www.w3.org/2000/svg","text");
+        label.setAttribute("x","12");
+        label.setAttribute("y","5");
+        label.setAttribute("fill","#cfd3ff");
+        label.setAttribute("font-size","12");
+        label.textContent = d.Day;
+
+        const tip = document.createElementNS("http://www.w3.org/2000/svg","title");
+        tip.textContent = `Day ${d.Day} • ${d.MoonPhase}\n${d.Track} (${d.Figure})`;
+        star.appendChild(tip);
+
+        group.appendChild(star);
+        group.appendChild(label);
+        g.appendChild(group);
+      });
+    }
+
+    async function boot(){
+      const res = await fetch("/data/illumina1.json");
+      const data = await res.json();
+      // Legend from observed figures
+      const figures = Array.from(new Set(data.map(d=>d.Figure))).filter(Boolean);
+      buildLegend(figures);
+
+      let spiral = false;
+      render(data, spiral);
+      document.getElementById("q").addEventListener("input", ()=>render(data, spiral));
+      document.getElementById("fig").addEventListener("change", ()=>render(data, spiral));
+      document.getElementById("phase").addEventListener("change", ()=>render(data, spiral));
+      document.getElementById("toggleSpiral").addEventListener("click", ()=>{
+        spiral = !spiral;
+        render(data, spiral);
+      });
+
+      // Preselect from query param ?figure=Name
+      const qp = new URLSearchParams(location.search);
+      const figure = qp.get("figure");
+      if(figure){
+        const opt = Array.from(document.getElementById("fig").options).find(o=>o.value.toLowerCase()===figure.toLowerCase());
+        if(opt){ document.getElementById("fig").value = opt.value; render(data, spiral); }
+      }
+    }
+    boot();
   </script>
 </body>
 </html>
