@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Victory • jar.plnt.earth</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='black'/><circle cx='40' cy='50' r='38' fill='white'/></svg>">
+  <style>
+    :root { --bg:#0b0b0c; --card:#141417; --text:#e9e9ef; --muted:#9a9aab; --accent:#b2f5ea; --ring:#2a2a33; --flare: radial-gradient(300px 220px at 20% 0%, rgba(255,190,120,.18), transparent); }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
+    header{background:var(--card);border-bottom:1px solid var(--ring);position:sticky;top:0;z-index:10}
+    nav{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;flex-wrap:wrap;gap:16px}
+    nav a{text-decoration:none;color:var(--text);font-size:14px}
+    nav a:hover{color:var(--accent)}
+    main{max-width:1000px;margin:0 auto;padding:24px 16px;background-image:var(--flare)}
+    h1{margin:8px 0}
+    .meta{color:var(--muted);margin-bottom:16px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:900px){.row{grid-template-columns:1fr}}
+    .card{background:var(--card);border:1px solid var(--ring);border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type="text"], input[type="date"], input[type="number"], textarea{width:100%;background:#0e0e11;color:var(--text);border:1px solid var(--ring);border-radius:12px;padding:10px 12px;font-size:14px;outline:none}
+    textarea{min-height:160px;resize:vertical}
+    .btn{display:inline-block;border:1px solid var(--ring);border-radius:10px;padding:8px 14px;color:var(--text);text-decoration:none;background:none;cursor:pointer}
+    .btn:hover{border-color:var(--accent);color:var(--accent)}
+    .pill{display:inline-block;padding:4px 8px;border:1px solid var(--ring);border-radius:999px;color:var(--muted);font-size:12px;margin-right:6px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/calendar/illumina1/">Calendar</a>
+      <a href="/day/">Day</a>
+      <a href="/notes/moon/">Moon Notes</a>
+      <a href="/notes/day/">Day Notes</a>
+      <a href="/pantheon/">Pantheon</a>
+      <a href="/victory/">Victory</a>
+      <a href="/references/">References</a>
+      <a href="/seeds/">Seeds</a>
+      <a href="/science/">Science</a>
+      <a href="/archive/">Archive</a>
+      <a href="https://tunes.plnt.earth" target="_blank">Tunes ↗</a>
+      <a href="https://youtube.com/playlist?list=PL2H7n7qLAdf7VTOrmFlY9G-PaE94VrHAY&si=vblXKmAvTj-Ve5iV" target="_blank">Playlist ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>☀️ Victory Songs</h1>
+    <div class="meta">Rare, solar‑flare declarations. Saved locally by default; you control what to publish.</div>
+
+    <div class="card">
+      <div class="row">
+        <div>
+          <label for="title">Title</label>
+          <input id="title" type="text" placeholder="e.g., White America (2025 Reprise)" />
+        </div>
+        <div>
+          <label for="date">Date</label>
+          <input id="date" type="date" />
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px">
+        <div>
+          <label for="dayRef">Day # (1–42, optional)</label>
+          <input id="dayRef" type="number" min="1" max="42" placeholder="e.g., 28" />
+        </div>
+        <div>
+          <label for="trackUrl">Track URL (YouTube or other)</label>
+          <input id="trackUrl" type="text" placeholder="https://..." />
+        </div>
+      </div>
+      <div style="margin-top:12px">
+        <label for="body">Your Victory Song (text / manifesto)</label>
+        <textarea id="body" placeholder="Write the declaration here…"></textarea>
+      </div>
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" id="save">Save</button>
+        <button class="btn" id="copyMd">Copy Markdown</button>
+        <button class="btn" id="downloadJson">Download JSON</button>
+        <button class="btn" id="clear">Delete</button>
+      </div>
+      <div id="status" class="muted" style="margin-top:8px"></div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Your Victory Songs (local)</h3>
+      <div id="list" class="grid"></div>
+    </div>
+  </main>
+
+  <script>
+    const KEY_PREFIX = "victory:";
+    const qs = new URLSearchParams(location.search);
+    const seededDay = qs.get("n");
+
+    function pad2(n){ return String(n).padStart(2,"0"); }
+    function todayIso(){
+      const t=new Date(); return `${t.getFullYear()}-${pad2(t.getMonth()+1)}-${pad2(t.getDate())}`;
+    }
+    function keyFor(title, date){
+      const slug = (title||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-+|-+$/g,"") || "untitled";
+      return KEY_PREFIX + (date || todayIso()) + ":" + slug;
+    }
+    function loadList(){
+      const box = document.getElementById("list");
+      box.innerHTML = "";
+      const keys = Object.keys(localStorage).filter(k=>k.startsWith(KEY_PREFIX)).sort();
+      keys.forEach(k=>{
+        try{
+          const v = JSON.parse(localStorage.getItem(k)||"{}");
+          const card = document.createElement("div");
+          card.className = "card";
+          card.innerHTML = `<div class="pill">☀️ Victory</div>
+            <h4 style="margin:6px 0">${v.title||"(untitled)"} <span class="muted">— ${v.date||""}${v.dayRef?(" • Day "+v.dayRef):""}</span></h4>
+            <div class="muted" style="margin:6px 0">${(v.trackUrl||"").replace(/&/g,"&amp;")}</div>
+            <p style="white-space:pre-wrap">${(v.body||"").replace(/&/g,"&amp;")}</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px">
+              <a class="btn" href="/pantheon/constellation/">Open Constellation</a>
+              ${v.dayRef?`<a class="btn" href="/day/?n=${v.dayRef}">Open Day ${v.dayRef}</a>`:""}
+            </div>`;
+          box.appendChild(card);
+        }catch(e){}
+      });
+    }
+    function toMarkdown(v){
+      return `# ☀️ Victory Song
+Title: ${v.title||"(untitled)"}  
+Date: ${v.date||""}  ${v.dayRef?("Day "+v.dayRef):""}
+Track: ${v.trackUrl||""}
+
+${v.body||""}
+`;
+    }
+
+    // Prefill
+    document.getElementById("date").value = todayIso();
+    if(seededDay){ document.getElementById("dayRef").value = +seededDay; }
+
+    document.getElementById("save").addEventListener("click", ()=>{
+      const v = {
+        title: document.getElementById("title").value.trim(),
+        date: document.getElementById("date").value,
+        dayRef: document.getElementById("dayRef").value ? +document.getElementById("dayRef").value : null,
+        trackUrl: document.getElementById("trackUrl").value.trim(),
+        body: document.getElementById("body").value
+      };
+      localStorage.setItem(keyFor(v.title, v.date), JSON.stringify(v));
+      document.getElementById("status").textContent = "Saved locally ✓";
+      setTimeout(()=>document.getElementById("status").textContent="", 2000);
+      loadList();
+    });
+
+    document.getElementById("copyMd").addEventListener("click", ()=>{
+      const v = {
+        title: document.getElementById("title").value.trim(),
+        date: document.getElementById("date").value,
+        dayRef: document.getElementById("dayRef").value ? +document.getElementById("dayRef").value : null,
+        trackUrl: document.getElementById("trackUrl").value.trim(),
+        body: document.getElementById("body").value
+      };
+      const ta = document.createElement("textarea");
+      ta.value = toMarkdown(v);
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      document.getElementById("status").textContent = "Copied Markdown ✓";
+      setTimeout(()=>document.getElementById("status").textContent="", 2000);
+    });
+
+    document.getElementById("downloadJson").addEventListener("click", ()=>{
+      const v = {
+        title: document.getElementById("title").value.trim(),
+        date: document.getElementById("date").value,
+        dayRef: document.getElementById("dayRef").value ? +document.getElementById("dayRef").value : null,
+        trackUrl: document.getElementById("trackUrl").value.trim(),
+        body: document.getElementById("body").value
+      };
+      const blob = new Blob([JSON.stringify(v, null, 2)], {type:"application/json"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `victory-${v.date||"today"}.json`;
+      a.click();
+    });
+
+    document.getElementById("clear").addEventListener("click", ()=>{
+      if(confirm("Delete all local Victory Songs?")) {
+        Object.keys(localStorage).filter(k=>k.startsWith(KEY_PREFIX)).forEach(k=>localStorage.removeItem(k));
+        loadList();
+      }
+    });
+
+    loadList();
+  </script>
+</body>
+</html>
