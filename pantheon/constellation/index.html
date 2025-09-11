@@ -45,7 +45,7 @@
       <a href="/notes/day/">Day Notes</a>
       <a href="/pantheon/">Pantheon</a>
       <a href="/pantheon/constellation/">Constellation</a>
-      <a href="/references/">References</a>
+      <a href="/victory/">Victory</a><a href="/references/">References</a>
       <a href="/seeds/">Seeds</a>
       <a href="/archive/">Archive</a>
       <a href="https://tunes.plnt.earth" target="_blank">Tunes ↗</a>
@@ -60,7 +60,8 @@
     <div class="panel">
       <div class="controls">
         <input id="q" type="search" placeholder="Search track / figure…" />
-        <select id="fig">
+        <select id="fig"></select>
+        <select id="artist" title="Artist (from Track)"><option value="">All artists</option></select>
           <option value="">All figures</option>
           <option>Sabrina</option>
           <option>Janet</option>
@@ -90,6 +91,7 @@
       </div>
       <svg id="sky" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet"></svg>
       <div class="legend" id="legend"></div>
+      <div id="nores" class="meta" style="display:none;margin-top:6px">No matches for this filter.</div>
     </div>
   </main>
 
@@ -99,6 +101,41 @@
       "#E3B505","#4CC9F0","#F72585","#B5179E","#4895EF","#3A0CA3","#2A9D8F",
       "#F4A261","#E76F51","#90BE6D","#577590","#FFD166","#06D6A0"
     ];
+    function artistFromTrack(track){
+      if(!track) return "";
+      const seps = [" – ", " — ", " - "];
+      for(const sep of seps){
+        if(track.includes(sep)) return track.split(sep)[0].trim();
+      }
+      return track.split("–")[0].split("-")[0].trim();
+    }
+    function populateSelect(sel, items, placeholder){
+      sel.innerHTML = "";
+      const opt0 = document.createElement("option");
+      opt0.value = "";
+      opt0.textContent = placeholder;
+      sel.appendChild(opt0);
+      items.forEach(v=>{
+        const o = document.createElement("option");
+        o.value = v; o.textContent = v;
+        sel.appendChild(o);
+      });
+    }
+    function buildFigureAndArtistSelects(data){
+      const figSel = document.getElementById("fig");
+      const artistSel = document.getElementById("artist");
+      const figures = Array.from(new Set(data.map(d=>d.Figure).filter(Boolean))).sort();
+      const artists = Array.from(new Set(data.map(d=>artistFromTrack(d.Track)).filter(Boolean))).sort();
+      populateSelect(figSel, figures, "All figures");
+      populateSelect(artistSel, artists, "All artists");
+      // Prefill from ?figure=
+      const qp = new URLSearchParams(location.search);
+      const figure = qp.get("figure");
+      if(figure){
+        const match = figures.find(f => f.toLowerCase() === figure.toLowerCase());
+        if(match) figSel.value = match;
+      }
+    }
     function colorFor(key){
       const i = Math.abs(hashCode(key)) % colors.length;
       return colors[i];
@@ -148,6 +185,7 @@
       const svg = document.getElementById("sky");
       const q = document.getElementById("q").value.toLowerCase();
       const figFilter = document.getElementById("fig").value;
+      const artistFilter = (document.getElementById("artist")||{}).value || "";
       const phaseFilter = document.getElementById("phase").value;
       svg.innerHTML = "";
       const g = document.createElementNS("http://www.w3.org/2000/svg","g");
@@ -157,10 +195,13 @@
         const hay = `${d.Track} ${d.Figure}`.toLowerCase();
         const okQ = !q || hay.includes(q);
         const okFig = !figFilter || d.Figure === figFilter;
+        const artist = artistFromTrack(d.Track);
+        const okArtist = !artistFilter || artist === artistFilter;
         const okPhase = !phaseFilter || d.MoonPhase === phaseFilter;
-        return okQ && okFig && okPhase;
+        return okQ && okFig && okPhase && okArtist;
       });
 
+      document.getElementById('nores').style.display = filtered.length ? 'none' : '';
       filtered.forEach((d, i)=>{
         const idx = d.Day - 1;
         const pos = useSpiral ? layoutSpiral(idx) : layoutGrid(idx);
@@ -198,12 +239,14 @@
       // Legend from observed figures
       const figures = Array.from(new Set(data.map(d=>d.Figure))).filter(Boolean);
       buildLegend(figures);
+      buildFigureAndArtistSelects(data);
 
       let spiral = false;
       render(data, spiral);
       document.getElementById("q").addEventListener("input", ()=>render(data, spiral));
       document.getElementById("fig").addEventListener("change", ()=>render(data, spiral));
       document.getElementById("phase").addEventListener("change", ()=>render(data, spiral));
+      document.getElementById("artist").addEventListener("change", ()=>render(data, spiral));
       document.getElementById("toggleSpiral").addEventListener("click", ()=>{
         spiral = !spiral;
         render(data, spiral);
