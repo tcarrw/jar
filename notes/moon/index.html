@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Moon Notes • jar.plnt.earth</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='black'/><circle cx='40' cy='50' r='38' fill='white'/></svg>">
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --card: #141417;
+      --text: #e9e9ef;
+      --muted: #9a9aab;
+      --accent: #b2f5ea;
+      --ring: #2a2a33;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
+    header{background:var(--card);border-bottom:1px solid var(--ring);position:sticky;top:0;z-index:10}
+    nav{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;flex-wrap:wrap;gap:16px}
+    nav a{text-decoration:none;color:var(--text);font-size:14px}
+    nav a:hover{color:var(--accent)}
+    main{max-width:920px;margin:0 auto;padding:24px 16px}
+    h1{margin:8px 0}
+    .meta{color:var(--muted);margin-bottom:16px}
+    .card{background:var(--card);border:1px solid var(--ring);border-radius:16px;padding:20px;margin-bottom:24px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type="text"], textarea, select, input[type="number"]{
+      width:100%;background:#0e0e11;color:var(--text);border:1px solid var(--ring);border-radius:12px;
+      padding:10px 12px;font-size:14px;outline:none;
+    }
+    textarea{min-height:160px;resize:vertical}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:760px){.row{grid-template-columns:1fr}}
+    .btn{display:inline-block;border:1px solid var(--ring);border-radius:10px;padding:8px 14px;color:var(--text);text-decoration:none;background:none;cursor:pointer}
+    .btn:hover{border-color:var(--accent);color:var(--accent)}
+    .pill{display:inline-block;padding:4px 8px;border:1px solid var(--ring);border-radius:999px;color:var(--muted);font-size:12px;margin-right:6px}
+    footer{color:var(--muted);text-align:center;padding:24px 0;font-size:13px}
+    .flex{display:flex;gap:10px;flex-wrap:wrap}
+    .muted{color:var(--muted)}
+    .small{font-size:12px}
+    .danger{border-color:#9a3b3b;color:#ffb3b3}
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/calendar/illumina1/">Calendar</a>
+      <a href="/day/">Day</a>
+      <a href="/notes/moon/">Moon Notes</a>
+      <a href="/notes/day/">Day Notes</a>
+      <a href="/pantheon/">Pantheon</a>
+      <a href="/references/">References</a>
+      <a href="/seeds/">Seeds</a>
+      <a href="/archive/">Archive</a>
+      <a href="https://tunes.plnt.earth" target="_blank">Tunes ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>🌙 Moon Notes</h1>
+    <div class="meta">Daily lunar reflections tied to Illumina 1. Saved locally (private) using your browser’s storage.</div>
+
+    <div class="card" id="context">
+      <div id="ctxTitle" class="muted">Loading context…</div>
+      <div id="ctxPills" style="margin-top:8px"></div>
+      <div class="flex" style="margin-top:12px">
+        <a id="openDay" class="btn" href="#">Open Day</a>
+        <a id="openCalendar" class="btn" href="/calendar/illumina1/">Back to Calendar</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row">
+        <div>
+          <label for="noteTitle">Title (optional)</label>
+          <input id="noteTitle" type="text" placeholder="e.g., Waning clarity, sweet calm" />
+        </div>
+        <div>
+          <label for="comfort">Comfort (0–10)</label>
+          <input id="comfort" type="number" min="0" max="10" step="1" placeholder="0–10" />
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:12px">
+        <div>
+          <label for="seedUsed">Seed Used</label>
+          <select id="seedUsed">
+            <option value="">—</option>
+            <option>Cosmic Apple — swallow</option>
+            <option>Pumpkin — chew + honey</option>
+            <option>Mustard — swallow</option>
+            <option>Cumin — chew + honey (smoke optional)</option>
+            <option>Gala Apple — chew</option>
+            <option>Pumpkin — swallow</option>
+            <option>Royal Orange — swallow + honey</option>
+          </select>
+          <div class="small muted" id="seedHint" style="margin-top:6px"></div>
+        </div>
+        <div>
+          <label for="timeOfDay">Timing</label>
+          <select id="timeOfDay">
+            <option value="">—</option>
+            <option>Waking</option>
+            <option>Midday</option>
+            <option>Evening</option>
+            <option>Before Bed</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top:12px">
+        <label for="text">Your Moon Note</label>
+        <textarea id="text" placeholder="Write your reflection here…"></textarea>
+      </div>
+
+      <div class="flex" style="margin-top:16px">
+        <button class="btn" id="save">Save</button>
+        <button class="btn" id="copyMd">Copy Markdown</button>
+        <button class="btn" id="downloadJson">Download JSON</button>
+        <button class="btn danger" id="clear">Delete Note</button>
+      </div>
+      <div class="small muted" id="saveStatus" style="margin-top:8px"></div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Previous Moon Notes (local)</h3>
+      <div class="small muted">Click a date to load/edit.</div>
+      <div id="history" class="flex" style="margin-top:10px"></div>
+    </div>
+  </main>
+
+  <footer>
+    Moon Notes • Local-only storage • Absolute paths only
+  </footer>
+
+  <script>
+    const DATA_URL = "/data/illumina1.json";
+    const LS_PREFIX = "moon:"; // moon:YYYY-MM-DD
+    const el = (id)=>document.getElementById(id);
+
+    function qs(name){
+      const m = new URLSearchParams(window.location.search).get(name);
+      return m;
+    }
+    function normDate(dstr){
+      // Expect "YYYY-MM-DD (Dow)" in data.Date; store key as YYYY-MM-DD
+      return (dstr||"").split(" ")[0];
+    }
+    function pad2(n){ return String(n).padStart(2,"0"); }
+    function todayIso(){
+      const t=new Date();
+      return `${t.getFullYear()}-${pad2(t.getMonth()+1)}-${pad2(t.getDate())}`;
+    }
+    function seedHintFor(s){
+      if(!s) return "";
+      if(s.includes("chew")) return "Tip: chew slowly; honey pairs well with gentle smoke if desired.";
+      if(s.includes("swallow")) return "Tip: take with water or honey; avoid harsh smoke immediately after.";
+      return "";
+    }
+    function listHistory(){
+      const keys = Object.keys(localStorage).filter(k=>k.startsWith(LS_PREFIX)).sort();
+      const box = el("history");
+      box.innerHTML = "";
+      keys.forEach(k=>{
+        const d = k.slice(LS_PREFIX.length);
+        const a = document.createElement("a");
+        a.className = "btn";
+        a.href = `?date=${d}`;
+        a.textContent = d;
+        box.appendChild(a);
+      });
+    }
+    function copyToClipboard(text){
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try{ document.execCommand("copy"); }catch(e){}
+      document.body.removeChild(ta);
+    }
+    function toMarkdown(ctx, note){
+      return `# Moon Note — ${ctx.Date} (${ctx.MoonPhase})
+Track: ${ctx.Track} (${ctx.Figure})
+Seed: ${note.seedUsed || ctx.SeedRitual || "—"}
+Comfort: ${note.comfort ?? "—"}
+Timing: ${note.timeOfDay || "—"}
+
+## ${note.title || "Untitled"}
+${note.text || ""}
+`;
+    }
+    function loadEntryByParams(data){
+      const n = qs("n");
+      const dateParam = qs("date");
+      if(n){
+        return data.find(d => +d.Day === +n);
+      }
+      if(dateParam){
+        return data.find(d => (d.Date||"").startsWith(dateParam));
+      }
+      // default to today
+      return data.find(d => (d.Date||"").startsWith(todayIso()));
+    }
+
+    async function boot(){
+      const ctxTitle = el("ctxTitle");
+      const ctxPills = el("ctxPills");
+      const seedHint = el("seedHint");
+      const openDay = el("openDay");
+
+      try{
+        const res = await fetch(DATA_URL);
+        const data = await res.json();
+        const ctx = loadEntryByParams(data);
+        if(!ctx){
+          ctxTitle.textContent = "No matching day in Illumina 1. Choose a date from the calendar.";
+          return;
+        }
+        // Context header
+        ctxTitle.innerHTML = `<strong>${ctx.Date}</strong> — Day ${ctx.Day} • ${ctx.Track}`;
+        ctxPills.innerHTML = `<span class="pill">${ctx.MoonPhase}</span><span class="pill">${ctx.Figure}</span>`;
+        openDay.href = `/day/?n=${ctx.Day}`;
+
+        // Prefill selectors
+        el("seedUsed").value = "";
+        seedHint.textContent = seedHintFor(ctx.SeedRitual);
+
+        // Load from localStorage
+        const key = LS_PREFIX + normDate(ctx.Date);
+        const raw = localStorage.getItem(key);
+        if(raw){
+          try{
+            const saved = JSON.parse(raw);
+            el("noteTitle").value = saved.title || "";
+            el("comfort").value = saved.comfort ?? "";
+            el("seedUsed").value = saved.seedUsed || "";
+            el("timeOfDay").value = saved.timeOfDay || "";
+            el("text").value = saved.text || "";
+          }catch(e){ /* ignore */ }
+        }
+
+        // Save
+        el("save").addEventListener("click", ()=>{
+          const note = {
+            title: el("noteTitle").value.trim(),
+            comfort: el("comfort").value !== "" ? +el("comfort").value : null,
+            seedUsed: el("seedUsed").value,
+            timeOfDay: el("timeOfDay").value,
+            text: el("text").value
+          };
+          localStorage.setItem(key, JSON.stringify(note));
+          el("saveStatus").textContent = "Saved locally ✓";
+          setTimeout(()=> el("saveStatus").textContent = "", 2000);
+          listHistory();
+        });
+
+        // Copy Markdown
+        el("copyMd").addEventListener("click", ()=>{
+          const note = {
+            title: el("noteTitle").value.trim(),
+            comfort: el("comfort").value !== "" ? +el("comfort").value : null,
+            seedUsed: el("seedUsed").value,
+            timeOfDay: el("timeOfDay").value,
+            text: el("text").value
+          };
+          copyToClipboard(toMarkdown(ctx, note));
+          el("saveStatus").textContent = "Copied Markdown ✓";
+          setTimeout(()=> el("saveStatus").textContent = "", 2000);
+        });
+
+        // Download JSON
+        el("downloadJson").addEventListener("click", ()=>{
+          const note = {
+            title: el("noteTitle").value.trim(),
+            comfort: el("comfort").value !== "" ? +el("comfort").value : null,
+            seedUsed: el("seedUsed").value,
+            timeOfDay: el("timeOfDay").value,
+            text: el("text").value
+          };
+          const blob = new Blob([JSON.stringify({ date: normDate(ctx.Date), day: ctx.Day, ...note }, null, 2)], {type:"application/json"});
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(blob);
+          a.download = `moon-${normDate(ctx.Date)}.json`;
+          a.click();
+        });
+
+        // Clear
+        el("clear").addEventListener("click", ()=>{
+          if(confirm("Delete this note from this browser?")){
+            localStorage.removeItem(key);
+            el("noteTitle").value = "";
+            el("comfort").value = "";
+            el("seedUsed").value = "";
+            el("timeOfDay").value = "";
+            el("text").value = "";
+            el("saveStatus").textContent = "Deleted. (Local only)";
+            setTimeout(()=> el("saveStatus").textContent = "", 2000);
+            listHistory();
+          }
+        });
+
+        // Seed hint on change
+        el("seedUsed").addEventListener("change", (e)=>{
+          seedHint.textContent = seedHintFor(e.target.value);
+        });
+
+        listHistory();
+      }catch(e){
+        el("ctxTitle").textContent = "Error loading data.";
+      }
+    }
+
+    boot();
+  </script>
+</body>
+</html>
