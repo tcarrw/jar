@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>jar.plnt.earth — Illumina 1</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='black'/><circle cx='40' cy='50' r='38' fill='white'/></svg>">
+  <style>
+    :root {
+      --bg: #0b0b0c;
+      --card: #141417;
+      --text: #e9e9ef;
+      --muted: #9a9aab;
+      --accent: #b2f5ea;
+      --ring: #2a2a33;
+    }
+    body {
+      margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: var(--bg); color: var(--text);
+    }
+    header {
+      background: var(--card); border-bottom: 1px solid var(--ring);
+      position: sticky; top: 0; z-index: 10;
+    }
+    nav { max-width: 1100px; margin: 0 auto; padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 16px; }
+    nav a { text-decoration: none; color: var(--text); font-size: 14px; }
+    nav a:hover { color: var(--accent); }
+    main { max-width: 800px; margin: 0 auto; padding: 32px 16px; }
+    h1 { font-size: 28px; margin: 0 0 12px; }
+    .meta { color: var(--muted); margin-bottom: 24px; }
+    .card {
+      background: var(--card); border: 1px solid var(--ring); border-radius: 16px;
+      padding: 20px; margin-bottom: 32px; box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+    }
+    .card h2 { margin-top: 0; }
+    button, .btn {
+      background: none; border: 1px solid var(--ring); border-radius: 10px;
+      padding: 8px 14px; color: var(--text); font-size: 14px; cursor: pointer; text-decoration: none;
+    }
+    button:hover, .btn:hover { border-color: var(--accent); color: var(--accent); }
+    footer { color: var(--muted); text-align: center; padding: 24px 0; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/calendar/illumina1/">Calendar</a>
+      <a href="/day/">Day</a>
+      <a href="/notes/moon/">Moon Notes</a>
+      <a href="/notes/day/">Day Notes</a>
+      <a href="/pantheon/">Pantheon</a>
+      <a href="/references/">References</a>
+      <a href="/seeds/">Seeds</a>
+      <a href="/archive/">Archive</a>
+      <a href="https://tunes.plnt.earth" target="_blank">Tunes ↗</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Illumina 1 — jar.plnt.earth</h1>
+    <div class="meta">Nov 5 – Dec 17, 2025 • 42 days • Theme: Mantra + Honey + Taste ignition</div>
+
+    <div class="card" id="today">
+      <h2>🌕 Today</h2>
+      <p id="today-data">Loading cycle info…</p>
+      <div id="today-links" style="margin-top:16px; display:flex; flex-wrap:wrap; gap:12px;"></div>
+    </div>
+
+    <div class="card">
+      <h2>Explore</h2>
+      <p>Jump into the Illumina structure:</p>
+      <div style="display:flex; flex-wrap:wrap; gap:12px;">
+        <a class="btn" href="/calendar/illumina1/">Calendar</a>
+        <a class="btn" href="/pantheon/">Pantheon</a>
+        <a class="btn" href="/notes/moon/">Moon Notes</a>
+        <a class="btn" href="/notes/day/">Day Notes</a>
+        <a class="btn" href="/references/">References</a>
+        <a class="btn" href="https://tunes.plnt.earth" target="_blank">Tunes ↗</a>
+      </div>
+    </div>
+  </main>
+  <footer>
+    jar.plnt.earth • Illumina 1 • No nested /jar paths
+  </footer>
+
+  <script>
+    const config = {
+      start: new Date("2025-11-05T00:00:00Z"),
+      end: new Date("2025-12-17T23:59:59Z"),
+      dataUrl: "/data/illumina1.json" // mirror of your CSV
+    };
+
+    function getDayNumber(today) {
+      const diff = today - config.start;
+      return Math.floor(diff / (1000*60*60*24)) + 1;
+    }
+
+    async function loadToday() {
+      const today = new Date();
+      const n = getDayNumber(today);
+      const todayEl = document.getElementById("today-data");
+      const linksEl = document.getElementById("today-links");
+
+      if (n < 1 || n > 42) {
+        todayEl.textContent = "Outside Illumina 1 cycle.";
+        return;
+      }
+
+      try {
+        const res = await fetch(config.dataUrl);
+        const data = await res.json();
+        const entry = data.find(d => +d.Day === n);
+        if (entry) {
+          todayEl.innerHTML = 
+            `<strong>Day ${entry.Day}</strong> (${entry.Date})<br/>
+             ${entry.MoonPhase} • ${entry.Track} (${entry.Figure})<br/>
+             Seed: ${entry.SeedRitual}`;
+          linksEl.innerHTML = `
+            <a class="btn" href="/day/?n=${entry.Day}">Open Day</a>
+            <a class="btn" href="/notes/moon/?n=${entry.Day}">Write Moon Note</a>
+            <a class="btn" href="/notes/day/?n=${entry.Day}">Write Day Note</a>
+          `;
+        }
+      } catch (e) {
+        todayEl.textContent = "Error loading cycle data.";
+      }
+    }
+    loadToday();
+  </script>
+</body>
+</html>
