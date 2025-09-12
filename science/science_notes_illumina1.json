@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Derivation: 1/7 Spiral Checkpoints",
+    "body": "Goal: justify 7-day checkpoints inside a 42-day cycle.\n\nSetup:\n- Cycle length L=42 (6×7). Let weeks be w∈{1..6}.\n- Checkpoints at days D={7,14,21,28,35,42}.\n\nArgument:\n1) Nyquist cadence for weekly review: sampling period s=7 prevents drift by constraining error accumulation.\n2) Mid-cycle invariants: days divisible by 7 maximize continuity between lunar quarters and human weeks.\n3) Practical: batching scope changes to 6 slots yields predictable escalation windows.\n\nResult: escalate/consolidate only at D. Between checkpoints: stabilize or explore; avoid strategic pivots."
+  },
+  {
+    "title": "Modes Experimental Protocol (Classic/Honey/Neon)",
+    "body": "Hypothesis: visual/aesthetic mode nudges behavior and memory encoding.\n\nDesign:\n- N=14 days: counterbalanced A/B/C across Classic/Honey/Neon.\n- Measures: task completion (binary), self-reported affect (1–7), dream recall (tags/day), social initiation count.\n\nProcedure:\n- Day t: fix mode at 00:00. Avoid mid-day flips.\n- Record: end-of-day affect; AM dream tags.\n\nExpected:\n- Honey → ↑ consolidation, ↑ calm; Neon → ↑ initiation, ↑ novelty; Classic → neutral baseline.\n\nAnalysis: 2×3 mixed ANOVA day×mode; report η² and CIs. Archive in Science with plots (future)."
+  },
+  {
+    "title": "Seed Timing & Form Factor",
+    "body": "Question: chew+honey vs swallow; day vs evening.\n\nProtocol:\n- For each seed: run 4 cells (chew-evening, chew-morning, swallow-evening, swallow-morning), 3 repeats each.\nMeasures: onset minutes, duration (self-report), dream intensity tag count, focus blocks completed.\n\nHeuristic baseline:\n- Chew+honey → faster/stronger, evening bias for dreamwork.\n- Swallow → slower/smoother, day bias for focus."
+  },
+  {
+    "title": "Compatibility Lattice Method",
+    "body": "Define f(seed, context)→{✓,~,✗} where context∈{honey, smoke, neon, dreams, sex}.\nDecision rule:\n- ✓ if ≥2 positive markers and no safety notes.\n- ✗ if any hard safety note or repeated negative outcomes.\n- ~ otherwise.\n\nEvidence-first: user can override defaults with 3+ consistent logs."
+  },
+  {
+    "title": "Pollen Mapping Spec",
+    "body": "Purpose: encode continuity from Day i (cycle a) to Day j (cycle b).\nSchema: {{fc:int, fd:int, tc:int, td:int, note:str}}\nGuideline: include a brief hypothesis in note; review on Day 7 of next cycle."
+  },
+  {
+    "title": "Calendar SSOT Schema",
+    "body": "File: /jar/calendar/<slug>/data.json\ndays[] entries should accept both snake/camel legacy fields.\n\nSchema:\n- day:int (1..42)\n- date:YYYY-MM-DD\n- title|Track:str\n- song_url|URL:str (optional)\n- seed|SeedRitual:str (optional)\n- interlude|Figure:str (optional)\n- mode:str in {classic,honey,neon} (optional)\n\nConsumers: calendar, tunes, pantheon, interludes, day."
+  },
+  {
+    "title": "Dream Map Construction",
+    "body": "Data: daily tags[] + moods.\nGraph: nodes=top tags (≤14), edge weight = co-occurrence frequency.\nLayout: simple deterministic placement for static rendering; later replace with force layout.\nReview: compare week-to-week shifts; annotate top 3 motifs."
+  },
+  {
+    "title": "Storage & Silica Handling",
+    "body": "Silica slider → humidity proxy. Safe-until horizon extends ≈ (1 + 0.5×packets)×days.\nAlways declare intent (why) and tags; cross-link to References."
+  },
+  {
+    "title": "Neon Safety Window",
+    "body": "Rule: Neon only with explicit goal and end time.\nTerminate with Honey or Classic cool-down; journal effects and any boundary crossings."
+  },
+  {
+    "title": "Day Deep-Link Contract",
+    "body": "Standard: /day/?date=YYYY-MM-DD\nProducers: calendar JSON; Consumers: calendar cells, pantheon pages, interludes.\nRationale: stable anchor for daily reflection."
+  }
+]
