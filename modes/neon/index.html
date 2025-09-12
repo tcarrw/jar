@@ -32,7 +32,7 @@ h1{font-size:24px;margin:8px 0 4px}.sub{color:var(--muted)}
   <header>
     <div class="brand"><div class="dot"></div><div><h1>Modes</h1><div class="sub">Classic · Honey · Neon</div></div></div>
     <nav>
-      <a href="/jar/">Jar</a><a href="/jar/calendar/illumina1/">Calendar</a><a href="/jar/day/">Day</a>
+      <a href="/jar/">Jar</a><a href="/calendar/illumina1/">Calendar</a><a href="/jar/day/">Day</a>
       <a href="/tunes/">Tunes</a><a href="/interludes/">Interludes</a><a href="/seeds/">Seeds</a>
       <a href="/references/">References</a><a href="/references/archive/">Archive</a><a href="/references/science/">Science</a>
       <a href="/compatibility/">Compatibility</a><a href="/dreams/">Dreams</a><a href="/storage/">Storage</a><a href="/pollen/">Pollen</a>
@@ -51,8 +51,8 @@ h1{font-size:24px;margin:8px 0 4px}.sub{color:var(--muted)}
       <div style="margin-top:8px" class="card">
         <div style="display:grid;gap:6px">
           <div><span class="badge">Classic</span> → neutral archive tone, Moon-forward.</div>
-          <div><span class="badge">Honey</span> → warm, organic, gentle brightness, Bee-forward.</div>
-          <div><span class="badge">Neon</span> → high-energy, nightlife, Sun-flare aesthetics.</div>
+          <div><span class="badge">Honey</span> → warm, organic, Bee-forward.</div>
+          <div><span class="badge">Neon</span> → nightlife, Sun-flare aesthetics.</div>
         </div>
       </div>
     </div>
@@ -79,13 +79,13 @@ document.documentElement.dataset.mode = mode;
 
   <div class="footer">
     <div>Global key: <span class="badge">jar_mode</span></div>
-    <div>Tip: Pages can apply subtle palettes or feature toggles by mode.</div>
+    <div>Tip: Pages can apply palettes or feature toggles by mode.</div>
   </div>
 </div>
 
 <script>
 const cur=document.getElementById("cur"); const pv=document.getElementById("pv");
-function setMode(m){localStorage.setItem("jar_mode",m); cur.textContent=m; pv.className="preview "+m}
+function setMode(m){localStorage.setItem("jar_mode",m);cur.textContent=m;pv.className="preview "+m}
 document.querySelectorAll("button[data-mode]").forEach(b=>b.addEventListener("click",()=>setMode(b.dataset.mode)));
 (function init(){setMode(localStorage.getItem("jar_mode")||"classic")})();
 </script>
