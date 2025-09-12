@@ -34,7 +34,7 @@ svg{width:100%;height:320px;background:#0f1119;border:1px solid #1f2030;border-r
       <a href="/jar/">Jar</a><a href="/jar/calendar/illumina1/">Calendar</a><a href="/jar/day/">Day</a>
       <a href="/tunes/">Tunes</a><a href="/interludes/">Interludes</a><a href="/seeds/">Seeds</a>
       <a href="/references/">References</a><a href="/references/archive/">Archive</a><a href="/references/science/">Science</a>
-      <a href="/jar/compatibility/">Compatibility</a><a href="/jar/dreams/">Dreams</a><a href="/jar/modes/neon/">Neon</a><a href="/jar/storage/">Storage</a>
+      <a href="/compatibility/">Compatibility</a><a href="/dreams/">Dreams</a><a href="/modes/neon/">Neon</a><a href="/storage/">Storage</a>
     </nav>
   </header>
 
@@ -59,9 +59,7 @@ svg{width:100%;height:320px;background:#0f1119;border:1px solid #1f2030;border-r
 
     <div class="panel">
       <h3 style="margin:0 0 8px">Map</h3>
-      <svg id="map" viewBox="0 0 1000 320" preserveAspectRatio="none" aria-label="Pollen map">
-        <!-- rows for 7 cycles -->
-      </svg>
+      <svg id="map" viewBox="0 0 1000 320" preserveAspectRatio="none" aria-label="Pollen map"></svg>
       <div class="sub" style="margin-top:6px">Each row = an Illumina (1..7). Columns are days (1..42). Lines show trails.</div>
     </div>
 
@@ -92,71 +90,18 @@ const svg=document.getElementById("map");
 const tBody=document.querySelector("#list tbody");
 const fromCycle=document.getElementById("fromCycle"), fromDay=document.getElementById("fromDay");
 const toCycle=document.getElementById("toCycle"), toDay=document.getElementById("toDay"), pNote=document.getElementById("pNote");
-
 function load(){try{const raw=localStorage.getItem(KEY);return raw?JSON.parse(raw):[]}catch(_){return []}}
 function save(rows){localStorage.setItem(KEY,JSON.stringify(rows))}
 function add(){const rows=load(); rows.push({fc:+fromCycle.value, fd:+fromDay.value, tc:+toCycle.value, td:+toDay.value, note:pNote.value.trim()}); save(rows); render()}
 function del(i){const rows=load(); rows.splice(i,1); save(rows); render()}
-
-function pxFor(cycle, day){
-  const w=980, h=300, left=10, top=10, rowH=h/7;
-  const x=left + (day-1)*(w/42);
-  const y=top + (cycle-0.5)*rowH;
-  return {x,y};
-}
-function drawBase(){
-  while(svg.firstChild) svg.removeChild(svg.firstChild);
-  const ns="http://www.w3.org/2000/svg";
-  for(let c=1;c<=7;c++){
-    const y=pxFor(c,1).y;
-    const line=document.createElementNS(ns,"line");
-    line.setAttribute("x1","10"); line.setAttribute("x2","990");
-    line.setAttribute("y1",String(y)); line.setAttribute("y2",String(y));
-    line.setAttribute("stroke","#24283a"); line.setAttribute("stroke-width","1");
-    svg.appendChild(line);
-    for(let d=1; d<=42; d+=7){
-      const m=document.createElementNS(ns,"circle");
-      const p=pxFor(c,d); m.setAttribute("cx",String(p.x)); m.setAttribute("cy",String(p.y));
-      m.setAttribute("r","3"); m.setAttribute("class","node"); svg.appendChild(m);
-    }
-  }
-}
-
-function drawLinks(rows){
-  const ns="http://www.w3.org/2000/svg";
-  rows.forEach(r=>{
-    const a=pxFor(r.fc,r.fd), b=pxFor(r.tc,r.td);
-    const path=document.createElementNS(ns,"path");
-    const midX=(a.x+b.x)/2, dy=(b.y-a.y);
-    const d=`M ${a.x} ${a.y} C ${midX} ${a.y-dy*0.2}, ${midX} ${b.y+dy*0.2}, ${b.x} ${b.y}`;
-    path.setAttribute("d",d); path.setAttribute("class","link");
-    path.setAttribute("pathLength","1");
-    path.style.strokeDasharray="1"; path.style.strokeDashoffset="1";
-    svg.appendChild(path);
-    setTimeout(()=>{path.style.transition="stroke-dashoffset 900ms ease"; path.style.strokeDashoffset="0";},0);
-  });
-}
-
-function renderList(rows){
-  tBody.innerHTML="";
-  rows.forEach((r,i)=>{
-    const tr=document.createElement("tr");
-    tr.innerHTML=`<td>${r.fc}/${r.fd}</td><td>${r.tc}/${r.td}</td><td>${(r.note||"").replace(/</g,"&lt;")}</td><td><button class="btn" data-del="${i}">✕</button></td>`;
-    tBody.appendChild(tr);
-  });
-  tBody.querySelectorAll("button[data-del]").forEach(b=>b.addEventListener("click",()=>del(parseInt(b.dataset.del,10))));
-}
-
+function pxFor(cycle,day){const w=980,h=300,left=10,top=10,rowH=h/7; const x=left+(day-1)*(w/42); const y=top+(cycle-0.5)*rowH; return {x,y}}
+function drawBase(){while(svg.firstChild) svg.removeChild(svg.firstChild); const ns="http://www.w3.org/2000/svg"; for(let c=1;c<=7;c++){const y=pxFor(c,1).y; const line=document.createElementNS(ns,"line"); line.setAttribute("x1","10"); line.setAttribute("x2","990"); line.setAttribute("y1",String(y)); line.setAttribute("y2",String(y)); line.setAttribute("stroke","#24283a"); line.setAttribute("stroke-width","1"); svg.appendChild(line); for(let d=1; d<=42; d+=7){const m=document.createElementNS(ns,"circle"); const p=pxFor(c,d); m.setAttribute("cx",String(p.x)); m.setAttribute("cy",String(p.y)); m.setAttribute("r","3"); m.setAttribute("class","node"); svg.appendChild(m)}}}
+function drawLinks(rows){const ns="http://www.w3.org/2000/svg"; rows.forEach(r=>{const a=pxFor(r.fc,r.fd), b=pxFor(r.tc,r.td); const path=document.createElementNS(ns,"path"); const midX=(a.x+b.x)/2, dy=(b.y-a.y); const d=`M ${a.x} ${a.y} C ${midX} ${a.y-dy*0.2}, ${midX} ${b.y+dy*0.2}, ${b.x} ${b.y}`; path.setAttribute("d",d); path.setAttribute("class","link"); path.setAttribute("pathLength","1"); path.style.strokeDasharray="1"; path.style.strokeDashoffset="1"; svg.appendChild(path); setTimeout(()=>{path.style.transition="stroke-dashoffset 900ms ease"; path.style.strokeDashoffset="0"},0)})}
+function renderList(rows){tBody.innerHTML=""; rows.forEach((r,i)=>{const tr=document.createElement("tr"); tr.innerHTML=`<td>${r.fc}/${r.fd}</td><td>${r.tc}/${r.td}</td><td>${(r.note||"").replace(/</g,"&lt;")}</td><td><button class="btn" data-del="${i}">✕</button></td>`; tBody.appendChild(tr)}); tBody.querySelectorAll("button[data-del]").forEach(b=>b.addEventListener("click",()=>del(parseInt(b.dataset.del,10))))}
 function render(){const rows=load(); drawBase(); drawLinks(rows); renderList(rows)}
 document.getElementById("addBtn").addEventListener("click",add);
-document.getElementById("exportBtn").addEventListener("click",()=>{
-  const blob=new Blob([localStorage.getItem(KEY)||"[]"],{type:"application/json"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="jar_pollen.json"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),500);
-});
-document.getElementById("importFile").addEventListener("change",e=>{
-  const f=e.target.files&&e.target.files[0]; if(!f) return; const fr=new FileReader();
-  fr.onload=()=>{try{const data=JSON.parse(fr.result); if(Array.isArray(data)){localStorage.setItem(KEY,JSON.stringify(data)); render();}}catch(_){ } e.target.value="";};
-  fr.readAsText(f);
-});
+document.getElementById("exportBtn").addEventListener("click",()=>{const blob=new Blob([localStorage.getItem(KEY)||"[]"],{type:"application/json"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="jar_pollen.json"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),500)});
+document.getElementById("importFile").addEventListener("change",e=>{const f=e.target.files&&e.target.files[0]; if(!f)return; const fr=new FileReader(); fr.onload=()=>{try{const data=JSON.parse(fr.result); if(Array.isArray(data)){localStorage.setItem(KEY,JSON.stringify(data)); render();}}catch(_){ } e.target.value=""}; fr.readAsText(f)});
 document.getElementById("resetBtn").addEventListener("click",()=>{localStorage.removeItem(KEY); render()});
 (function init(){render()})();
 </script>
