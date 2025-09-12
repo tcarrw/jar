@@ -1,87 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>jar.plnt.earth — Illumina 1</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='black'/><circle cx='40' cy='50' r='38' fill='white'/></svg>">
-  <style>
-    :root { --bg:#0b0b0c; --card:#141417; --text:#e9e9ef; --muted:#9a9aab; --accent:#b2f5ea; --ring:#2a2a33; }
-    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; background: var(--bg); color: var(--text); }
-    header { background: var(--card); border-bottom: 1px solid var(--ring); position: sticky; top: 0; z-index: 10; }
-    nav { max-width: 1100px; margin: 0 auto; padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 16px; }
-    nav a { text-decoration: none; color: var(--text); font-size: 14px; }
-    nav a:hover { color: var(--accent); }
-    main { max-width: 800px; margin: 0 auto; padding: 32px 16px; }
-    h1 { font-size: 28px; margin: 0 0 12px; }
-    .meta { color: var(--muted); margin-bottom: 24px; }
-    .card { background: var(--card); border: 1px solid var(--ring); border-radius: 16px; padding: 20px; margin-bottom: 32px; box-shadow: 0 8px 20px rgba(0,0,0,0.35); }
-    .card h2 { margin-top: 0; }
-    .btn { display:inline-block; background: none; border: 1px solid var(--ring); border-radius: 10px; padding: 8px 14px; color: var(--text); font-size: 14px; cursor: pointer; text-decoration: none; }
-    .btn:hover { border-color: var(--accent); color: var(--accent); }
-    footer { color: var(--muted); text-align: center; padding: 24px 0; font-size: 13px; }
-  </style>
+<meta charset="utf-8" />
+<title>PLNT Earth · Illumina</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🌕%3C/text%3E%3C/svg%3E">
+<style>
+:root{--bg:#0b0b0d;--panel:#121216;--ink:#eaeaf2;--muted:#a9adc2;--accent:#9dfcff;--accent2:#ffd36b}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+a{color:var(--accent);text-decoration:none}
+a:hover{opacity:.85}
+.wrap{max-width:1100px;margin:auto;padding:20px}
+header{text-align:center;padding:40px 20px}
+h1{font-size:42px;margin:0}
+.sub{color:var(--muted);margin-top:6px}
+.cta{display:inline-block;margin-top:20px;padding:14px 20px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#10111a;font-weight:600;border-radius:12px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:40px}
+.card{background:var(--panel);padding:16px;border-radius:14px;border:1px solid #1f2030}
+.card h3{margin:0 0 6px}
+footer{text-align:center;color:var(--muted);margin:40px 0 20px}
+</style>
 </head>
 <body>
+<div class="wrap">
   <header>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/calendar/illumina1/">Calendar</a>
-      <a href="/day/">Day</a>
-      <a href="/notes/moon/">Moon Notes</a>
-      <a href="/notes/day/">Day Notes</a>
-      <a href="/pantheon/">Pantheon</a>
-      <a href="/references/">References</a>
-      <a href="/seeds/">Seeds</a>
-      <a href="/archive/">Archive</a>
-      <a href="https://tunes.plnt.earth" target="_blank">Tunes ↗</a>
-          <a href="https://youtube.com/playlist?list=PL2H7n7qLAdf7VTOrmFlY9G-PaE94VrHAY&si=vblXKmAvTj-Ve5iV" target="_blank">Playlist ↗</a>
-</nav>
+    <h1>🌕 PLNT Earth · Illumina</h1>
+    <div class="sub">Cycle 1 · Nov 5 – Dec 17, 2025<br>Theme: Mantra + Honey + Taste ignition</div>
+    <a href="/jar/" class="cta">Enter the Jar</a>
   </header>
-  <main>
-    <h1>Illumina 1 — jar.plnt.earth</h1>
-    <div class="meta">Nov 5 – Dec 17, 2025 • 42 days</div>
 
-    <div class="card" id="today">
-      <h2>🌕 Today</h2>
-      <p id="today-data">Loading cycle info…</p>
-      <div id="today-links" style="margin-top:16px; display:flex; flex-wrap:wrap; gap:12px;"></div>
-    </div>
-
+  <div class="grid">
     <div class="card">
-      <h2>Explore</h2>
-      <div style="display:flex; flex-wrap:wrap; gap:12px;">
-        <a class="btn" href="/calendar/illumina1/">Calendar</a>
-        <a class="btn" href="/pantheon/">Pantheon</a>
-        <a class="btn" href="/notes/moon/">Moon Notes</a>
-        <a class="btn" href="/notes/day/">Day Notes</a>
-        <a class="btn" href="/references/">References</a>
-        <a class="btn" href="https://tunes.plnt.earth" target="_blank">Tunes ↗</a>
-      </div>
+      <h3>Jar</h3>
+      <div class="sub">Calendar · Day · Constellation</div>
+      <a href="/jar/">Open Jar</a>
     </div>
-  </main>
-  <footer>© jar.plnt.earth</footer>
+    <div class="card">
+      <h3>Tunes</h3>
+      <div class="sub">Illumina 1 playlist & daily tracks</div>
+      <a href="/tunes/">Open Tunes</a>
+    </div>
+    <div class="card">
+      <h3>Interludes</h3>
+      <div class="sub">Pantheon archetypes & spreads</div>
+      <a href="/interludes/">See Interludes</a>
+    </div>
+    <div class="card">
+      <h3>Seeds</h3>
+      <div class="sub">Methods, timing, rituals</div>
+      <a href="/seeds/">Explore Seeds</a>
+    </div>
+    <div class="card">
+      <h3>References</h3>
+      <div class="sub">Archive & Science notes</div>
+      <a href="/references/">Browse References</a>
+    </div>
+    <div class="card">
+      <h3>Tools</h3>
+      <div class="sub">Dreams · Compatibility · Storage · Pollen · Modes</div>
+      <a href="/dreams/">Dreams</a> · <a href="/compatibility/">Compatibility</a><br>
+      <a href="/storage/">Storage</a> · <a href="/pollen/">Pollen</a><br>
+      <a href="/modes/neon/">Modes</a>
+    </div>
+  </div>
 
-  <script>
-    const config = { start: new Date("2025-11-05T00:00:00Z"), end: new Date("2025-12-17T23:59:59Z"), dataUrl: "/data/illumina1.json" };
-    function getDayNumber(today) { const diff = today - config.start; return Math.floor(diff / (1000*60*60*24)) + 1; }
-    async function loadToday() {
-      const today = new Date();
-      const n = getDayNumber(today);
-      const todayEl = document.getElementById("today-data");
-      const linksEl = document.getElementById("today-links");
-      if (n < 1 || n > 42) { todayEl.textContent = "Outside Illumina 1 cycle."; return; }
-      try {
-        const res = await fetch(config.dataUrl);
-        const data = await res.json();
-        const entry = data.find(d => +d.Day === n);
-        if (entry) {
-          todayEl.innerHTML = `<strong>Day ${entry.Day}</strong> (${entry.Date})<br/>${entry.MoonPhase} • ${entry.Track} (${entry.Figure})<br/>Seed: ${entry.SeedRitual}`;
-          linksEl.innerHTML = `<a class="btn" href="/day/?n=${entry.Day}">Open Day</a><a class="btn" href="/notes/moon/?n=${entry.Day}">Write Moon Note</a><a class="btn" href="/notes/day/?n=${entry.Day}">Write Day Note</a>`;
-        }
-      } catch (e) { todayEl.textContent = "Error loading cycle data."; }
-    }
-    loadToday();
-  </script>
+  <footer>
+    mantra: <em>“what’s mine is yours but if you fuck me I’ll fuck you”</em>
+  </footer>
+</div>
+
+<script>
+// apply saved mode
+(function(){var m=localStorage.getItem("jar_mode")||"classic";document.documentElement.dataset.mode=m})();
+</script>
 </body>
 </html>
