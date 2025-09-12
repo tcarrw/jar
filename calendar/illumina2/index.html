@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Illumina 2 – New Year Illumina · Calendar</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Ctext y='0.9em' font-size='90'%3E📅%3C/text%3E%3C/svg%3E">
+<style>
+:root{--bg:#0b0b0d;--panel:#121216;--ink:#eaeaf2;--muted:#a9adc2;--accent:#9dfcff;--accent2:#ffd36b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+.wrap{max-width:1100px;margin:auto;padding:20px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+h1{margin:6px 0;font-size:26px}.sub{color:var(--muted)}
+nav a{display:inline-block;margin-right:8px;margin-top:6px;padding:8px 10px;border-radius:10px;border:1px solid #23263a;background:#151726;color:#e9ecff;text-decoration:none}
+.panel{background:#121216;border:1px solid #1e2030;border-radius:16px;padding:14px}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #2a2d40;background:#141623;color:#cfd3ea;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:10px}
+.cell{border:1px solid #23263a;border-radius:10px;padding:10px;background:#0f1119;min-height:64px}
+footer{color:var(--muted);margin-top:12px}
+:root[data-mode="honey"] body{background:linear-gradient(180deg,rgba(255,211,107,.10),transparent),var(--bg)}
+:root[data-mode="neon"] body{background:linear-gradient(180deg,rgba(157,252,255,.10),transparent),var(--bg)}
+</style></head><body><div class="wrap">
+<header>
+  <div><h1>Illumina 2 – New Year Illumina</h1>
+  <div class="sub">Jan 3 – Feb 14, 2026 · Theme: New year, new moon, connection</div></div>
+  <div><span class="badge">mode: <span id="mode">classic</span></span></div>
+</header>
+<nav aria-label="Primary">
+  <a href="/jar/">Jar</a><a href="/jar/day/">Day</a><a href="/tunes/">Tunes</a>
+  <a href="/interludes/">Interludes</a><a href="/seeds/">Seeds</a>
+  <a href="/references/">References</a><a href="/references/archive/">Archive</a><a href="/references/science/">Science</a>
+  <a href="/dreams/">Dreams</a><a href="/compatibility/">Compatibility</a><a href="/storage/">Storage</a><a href="/pollen/">Pollen</a>
+</nav>
+
+<section class="panel" style="margin-top:12px">
+  <div><span class="badge">Calendar</span> <span class="badge">42 days</span></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<footer>Placeholder calendar grid — replace with your live layout when ready.</footer>
+</div>
+<script>
+(function(){var m=localStorage.getItem("jar_mode")||"classic";document.documentElement.dataset.mode=m;document.getElementById("mode").textContent=m})();
+(function(){var g=document.getElementById("grid");for(var d=1;d<=42;d++){var c=document.createElement("div");c.className="cell";c.innerHTML="<b>Day "+d+"</b>";g.appendChild(c)}})();
+</script></body></html>
