@@ -6,63 +6,107 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🌕%3C/text%3E%3C/svg%3E">
 <style>
-:root{--bg:#0b0b0d;--panel:#121216;--ink:#eaeaf2;--muted:#a9adc2;--accent:#9dfcff;--accent2:#ffd36b}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
-a{color:var(--accent);text-decoration:none}
-a:hover{opacity:.85}
-.wrap{max-width:1100px;margin:auto;padding:20px}
-header{text-align:center;padding:40px 20px}
-h1{font-size:42px;margin:0}
+:root{--bg:#0b0b0d;--panel:#121216;--ink:#eaeaf2;--muted:#a9adc2;--accent:#9dfcff;--accent2:#ffd36b;--ring:rgba(157,252,255,.35)}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 800px at 15% -10%,rgba(157,252,255,.06),transparent 60%),radial-gradient(900px 600px at 110% 10%,rgba(255,211,107,.06),transparent 60%),var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+a{color:var(--accent);text-decoration:none} a:hover{opacity:.88}
+.wrap{max-width:1140px;margin:auto;padding:20px}
+header{padding:36px 0 10px;text-align:center}
+.title{font-size:40px;margin:0}
 .sub{color:var(--muted);margin-top:6px}
-.cta{display:inline-block;margin-top:20px;padding:14px 20px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#10111a;font-weight:600;border-radius:12px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:40px}
-.card{background:var(--panel);padding:16px;border-radius:14px;border:1px solid #1f2030}
-.card h3{margin:0 0 6px}
-footer{text-align:center;color:var(--muted);margin:40px 0 20px}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #2a2d40;background:#141623;color:#cfd3ea;font-size:12px}
+.hero{margin:24px auto 10px;display:grid;gap:10px;justify-items:center}
+.cta{display:inline-block;padding:14px 18px;border-radius:12px;border:1px solid #23263a;background:#151726;color:#e9ecff}
+.cta.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#10111a;font-weight:700;border:0}
+.panel{background:var(--panel);border:1px solid #1e2030;border-radius:16px;padding:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:18px}
+.card{background:var(--panel);border:1px solid #1e2030;border-radius:14px;padding:14px;display:grid;gap:8px}
+.card h3{margin:0 0 4px}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.kv{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.kv .key{color:#cfd3ea}
+.kv .val{color:#ffd36b}
+.progress{height:10px;border-radius:999px;background:#141623;border:1px solid #2a2d40;overflow:hidden}
+.progress>span{display:block;height:100%;background:linear-gradient(90deg,#ffd36b,#9dfcff)}
+footer{text-align:center;color:var(--muted);margin:26px 0 10px}
+
+/* subtle tints by mode */
+:root[data-mode="honey"] body{background:linear-gradient(180deg,rgba(255,211,107,.10),transparent),var(--bg)}
+:root[data-mode="neon"]  body{background:linear-gradient(180deg,rgba(157,252,255,.10),transparent),var(--bg)}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>🌕 PLNT Earth · Illumina</h1>
-    <div class="sub">Cycle 1 · Nov 5 – Dec 17, 2025<br>Theme: Mantra + Honey + Taste ignition</div>
-    <a href="/jar/" class="cta">Enter the Jar</a>
+    <h1 class="title">🌕 PLNT Earth · Illumina</h1>
+    <div class="sub">Lunar-anchored 42-day cycles · Classic / Honey / Neon</div>
+    <div class="row" style="justify-content:center;margin-top:8px">
+      <span class="badge">mode: <span id="modeBadge">classic</span></span>
+      <a class="cta" href="/modes/neon/">Change mode</a>
+    </div>
   </header>
 
-  <div class="grid">
+  <section class="hero panel" id="hero">
+    <!-- Filled by JS: status, cycle name, dates, countdown / progress -->
+  </section>
+
+  <section class="grid">
     <div class="card">
       <h3>Jar</h3>
       <div class="sub">Calendar · Day · Constellation</div>
-      <a href="/jar/">Open Jar</a>
+      <div class="row">
+        <a class="cta" href="/jar/">Open Jar</a>
+        <a class="cta" href="/jar/day/">Day</a>
+        <a class="cta" href="/jar/calendar/illumina1/">Calendar</a>
+        <a class="cta" href="/jar/constellation/">Constellation</a>
+      </div>
     </div>
+
     <div class="card">
       <h3>Tunes</h3>
-      <div class="sub">Illumina 1 playlist & daily tracks</div>
-      <a href="/tunes/">Open Tunes</a>
+      <div class="sub">Daily tracks & playlist</div>
+      <a class="cta" href="/tunes/">Open Tunes</a>
     </div>
+
     <div class="card">
       <h3>Interludes</h3>
       <div class="sub">Pantheon archetypes & spreads</div>
-      <a href="/interludes/">See Interludes</a>
+      <a class="cta" href="/interludes/">See Interludes</a>
     </div>
+
     <div class="card">
       <h3>Seeds</h3>
-      <div class="sub">Methods, timing, rituals</div>
-      <a href="/seeds/">Explore Seeds</a>
+      <div class="sub">Methods · timing · rituals</div>
+      <a class="cta" href="/seeds/">Explore Seeds</a>
     </div>
+
     <div class="card">
       <h3>References</h3>
-      <div class="sub">Archive & Science notes</div>
-      <a href="/references/">Browse References</a>
+      <div class="sub">Axioms · Archive · Science</div>
+      <div class="row">
+        <a class="cta" href="/references/">References</a>
+        <a class="cta" href="/references/archive/">Archive</a>
+        <a class="cta" href="/references/science/">Science</a>
+      </div>
     </div>
+
     <div class="card">
       <h3>Tools</h3>
       <div class="sub">Dreams · Compatibility · Storage · Pollen · Modes</div>
-      <a href="/dreams/">Dreams</a> · <a href="/compatibility/">Compatibility</a><br>
-      <a href="/storage/">Storage</a> · <a href="/pollen/">Pollen</a><br>
-      <a href="/modes/neon/">Modes</a>
+      <div class="row">
+        <a class="cta" href="/dreams/">Dreams</a>
+        <a class="cta" href="/compatibility/">Compatibility</a>
+        <a class="cta" href="/storage/">Storage</a>
+        <a class="cta" href="/pollen/">Pollen</a>
+        <a class="cta" href="/modes/neon/">Modes</a>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <section class="panel" style="margin-top:18px">
+    <h3 style="margin:0 0 6px">Cycles</h3>
+    <div id="cycleList" class="grid" aria-live="polite"></div>
+  </section>
 
   <footer>
     mantra: <em>“what’s mine is yours but if you fuck me I’ll fuck you”</em>
@@ -70,8 +114,103 @@ footer{text-align:center;color:var(--muted);margin:40px 0 20px}
 </div>
 
 <script>
-// apply saved mode
-(function(){var m=localStorage.getItem("jar_mode")||"classic";document.documentElement.dataset.mode=m})();
+/* ===== Mode awareness ===== */
+(function(){
+  var mode = localStorage.getItem("jar_mode") || "classic";
+  document.documentElement.setAttribute("data-mode", mode);
+  var mb = document.getElementById("modeBadge"); if(mb) mb.textContent = mode;
+})();
+
+/* ===== Illumina cycles (public) =====
+   Dates from your plan:
+   - Illumina 1: Nov 5 – Dec 17, 2025
+   - 2026: seven cycles
+*/
+var CYCLES = [
+  { id: 1,  slug: "illumina1",  name: "Illumina 1 – Launch Cycle",        start: "2025-11-05", end: "2025-12-17", theme: "Mantra + Honey + Taste ignition" },
+  { id: 2,  slug: "illumina2",  name: "Illumina 2 – New Year Illumina",    start: "2026-01-03", end: "2026-02-14", theme: "New year, new moon, connection" },
+  { id: 3,  slug: "illumina3",  name: "Illumina 3 – Early Spring",         start: "2026-03-03", end: "2026-04-14", theme: "Growth, planting, renewal" },
+  { id: 4,  slug: "illumina4",  name: "Illumina 4 – Summer Solstice Build",start: "2026-05-01", end: "2026-06-12", theme: "Community builds, pre-solstice" },
+  { id: 5,  slug: "illumina5",  name: "Illumina 5 – High Summer",          start: "2026-06-30", end: "2026-08-11", theme: "Festivals, collaborations" },
+  { id: 6,  slug: "illumina6",  name: "Illumina 6 – Autumn Shift",         start: "2026-08-29", end: "2026-10-10", theme: "Reflection + harvest" },
+  { id: 7,  slug: "illumina7",  name: "Illumina 7 – Year-End Reflection",  start: "2026-10-28", end: "2026-12-09", theme: "Review, close loops, set 2027" }
+];
+
+/* ===== Helpers ===== */
+function toNY(dateStr){ // ensure America/New_York wall date
+  var d = new Date(dateStr + "T00:00:00");
+  return new Date(d.getTime()); // naive ok for daily ranges
+}
+function fmt(d){
+  var o = new Intl.DateTimeFormat(undefined,{year:"numeric",month:"short",day:"2-digit"});
+  return o.format(d);
+}
+function daysBetween(a,b){ return Math.ceil((b - a) / 86400000); }
+function clamp(n,min,max){ return Math.max(min, Math.min(max, n)); }
+
+/* ===== Determine current / next cycle ===== */
+(function(){
+  var now = new Date(); // user local (NY in your case)
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+  var withRanges = CYCLES.map(c=>{
+    var s = toNY(c.start), e = toNY(c.end);
+    return Object.assign({}, c, { s, e });
+  });
+
+  var current = withRanges.find(c => today >= c.s && today <= c.e);
+  var next = withRanges.find(c => today < c.s);
+
+  var hero = document.getElementById("hero");
+  var cycleList = document.getElementById("cycleList");
+
+  function heroRow(html){ var div=document.createElement("div"); div.innerHTML=html; return div; }
+
+  if(current){
+    var total = daysBetween(current.s, current.e);
+    var done  = daysBetween(current.s, today);
+    var pct   = clamp(Math.round((done/total)*100), 0, 100);
+    hero.appendChild(heroRow('<div class="badge">Now Live</div>'));
+    hero.appendChild(heroRow('<div class="kv"><span class="key">Cycle:</span><span class="val">'+current.name+'</span></div>'));
+    hero.appendChild(heroRow('<div class="sub">'+fmt(current.s)+' – '+fmt(current.e)+' · '+current.theme+'</div>'));
+    var p = document.createElement("div"); p.className="progress"; p.innerHTML='<span style="width:'+pct+'%"></span>'; hero.appendChild(p);
+    hero.appendChild(heroRow('<div class="sub">'+pct+'% through · Day '+done+' of '+total+'</div>'));
+    hero.appendChild(heroRow('<div class="row"><a class="cta primary" href="/jar/">Enter Jar</a><a class="cta" href="/jar/calendar/'+current.slug+'/">Calendar</a><a class="cta" href="/tunes/">Tunes</a></div>'));
+  } else if (next){
+    var daysTo = daysBetween(today, next.s);
+    var dd = daysTo===1 ? "1 day" : daysTo+" days";
+    hero.appendChild(heroRow('<div class="badge">Next</div>'));
+    hero.appendChild(heroRow('<div class="kv"><span class="key">Upcoming Cycle:</span><span class="val">'+next.name+'</span></div>'));
+    hero.appendChild(heroRow('<div class="sub">'+fmt(next.s)+' – '+fmt(next.e)+' · '+next.theme+'</div>'));
+    hero.appendChild(heroRow('<div class="sub">Starts in <b>'+dd+'</b></div>'));
+    hero.appendChild(heroRow('<div class="row"><a class="cta primary" href="/jar/">Prepare in Jar</a><a class="cta" href="/jar/calendar/'+next.slug+'/">View Calendar</a><a class="cta" href="/seeds/">Plan Seeds</a></div>'));
+  } else {
+    // After last known cycle
+    var last = withRanges[withRanges.length-1];
+    hero.appendChild(heroRow('<div class="badge">Schedule complete</div>'));
+    hero.appendChild(heroRow('<div class="sub">Last cycle: '+last.name+' · '+fmt(last.s)+' – '+fmt(last.e)+'</div>'));
+    hero.appendChild(heroRow('<div class="row"><a class="cta primary" href="/jar/">Open Jar</a><a class="cta" href="/references/archive/">Archive</a></div>'));
+  }
+
+  // Build cycle cards list
+  withRanges.forEach(c=>{
+    var card = document.createElement("div");
+    card.className = "card";
+    var state = (today < c.s) ? "upcoming" : (today > c.e ? "past" : "live");
+    var tag = state==="live" ? "Now Live" : (state==="upcoming" ? "Upcoming" : "Past");
+    card.innerHTML =
+      '<div class="row"><span class="badge">'+tag+'</span><span class="badge">Illumina '+c.id+'</span></div>'+
+      '<h3 style="margin:2px 0 2px">'+c.name+'</h3>'+
+      '<div class="sub">'+fmt(c.s)+' – '+fmt(c.e)+'</div>'+
+      '<div class="sub" style="margin-top:4px">'+c.theme+'</div>'+
+      '<div class="row" style="margin-top:8px">'+
+        '<a class="cta" href="/jar/calendar/'+c.slug+'/">Calendar</a>'+
+        '<a class="cta" href="/jar/">Jar</a>'+
+        '<a class="cta" href="/tunes/">Tunes</a>'+
+      '</div>';
+    cycleList.appendChild(card);
+  });
+})();
 </script>
 </body>
 </html>
