@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Compatibility Grid · jar.plnt.earth</title>
+<title>Compatibility Grid 路 jar.plnt.earth</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Ctext y='0.9em' font-size='90'%3E🔗%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Ctext y='0.9em' font-size='90'%3E馃敆%3C/text%3E%3C/svg%3E">
 <style>
 :root{--bg:#0b0b0d;--panel:#121216;--ink:#eaeaf2;--muted:#a9adc2;--accent:#9dfcff;--accent2:#ffd36b;--grid:#1b1b22;--chip:#191922;--ring:rgba(157,252,255,.35)}
 *{box-sizing:border-box}html,body{height:100%}
@@ -15,7 +15,7 @@ header{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-cont
 .brand{display:flex;align-items:center;gap:10px}.dot{width:12px;height:12px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent2))}
 nav a{padding:8px 10px;background:#191922;border:1px solid #22232c;border-radius:10px;color:#e9ecff;text-decoration:none}
 h1{font-size:24px;margin:8px 0 4px}.sub{color:var(--muted)}
-.panel{background:var(--panel);border:1px solid #1e2030;border-radius:16px;padding:14px;box-shadow:0 0 0 1px rgba(157,252,255,.03) inset}
+.panel{background:#121216;border:1px solid #1e2030;border-radius:16px;padding:14px;box-shadow:0 0 0 1px rgba(157,252,255,.03) inset}
 .gridwrap{overflow:auto;border-radius:14px;border:1px solid #1f2030}
 table{border-collapse:separate;border-spacing:0;width:100%;min-width:720px;background:linear-gradient(0deg,rgba(255,255,255,.02),rgba(255,255,255,.02))}
 th,td{padding:10px 12px;border-right:1px solid var(--grid);border-bottom:1px solid var(--grid);vertical-align:middle}
@@ -29,72 +29,212 @@ tbody tr:nth-child(odd) td{background:rgba(255,255,255,.01)}
 .choice.bad{border-color:#6b2636;background:rgba(255,107,138,.08)}
 .footer{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;color:var(--muted)}
 .rowtools{display:flex;gap:6px}
-.iconbtn{width:28px;height:28px;border-radius:8px;border:1px solid #2a2d40;background:#151726;display:grid;place-items:center}
-.footer{margin-top:16px;margin-bottom:16px}
+.iconbtn{width:28px;height:28px;border-radius:8px;border:1px solid #2a2d40;background:#151726;display:grid;place-items:center;color:#e9ecff}
+.btn{padding:10px 12px;border-radius:10px;border:1px solid #23263a;background:#151726;color:#e9ecff}
 .hidden{display:none}
 </style>
+</head>
 <body>
 <div class="wrap">
   <header>
-    <div class="brand"><div class="dot"></div><div><h1>Compatibility Grid</h1><div class="sub">Seeds × Honey · Smoke · Neon · Dreams · Sex</div></div></div>
+    <div class="brand"><div class="dot"></div><div><h1>Compatibility Grid</h1><div class="sub">Seeds 脳 Honey 路 Smoke 路 Neon 路 Dreams 路 Sex</div></div></div>
     <nav>
-      <a href="/jar/">Jar</a><a href="/calendar/illumina1/">Calendar</a><a href="/day/">Day</a>
-      <a href="/tunes/">Tunes</a><a href="/interludes/">Interludes</a><a href="/seeds/">Seeds</a>
-      <a href="/references/">References</a><a href="/archive/">Archive</a><a href="/science/">Science</a>
-      <a href="/compatibility/">Compatibility</a><a href="/dreams/">Dreams</a><a href="/storage/">Storage</a><a href="/pollen/">Pollen</a><a href="/modes/neon/">Modes</a>
-    </nav>
+  <a href="/jar/">Jar</a>
+  <a href="/calendar/illumina1/">Calendar</a>
+  <a href="/day/">Day</a>
+  <a href="/tunes/">Tunes</a>
+  <a href="/interludes/">Interludes</a>
+  <a href="/seeds/">Seeds</a>
+  <a href="/references/">References</a>
+  <a href="/archive/">Archive</a>
+  <a href="/science/">Science</a>
+  <a href="/compatibility/">Compatibility</a>
+  <a href="/dreams/">Dreams</a>
+  <a href="/storage/">Storage</a>
+  <a href="/pollen/">Pollen</a>
+  <a href="/modes/neon/">Modes</a>
+</nav>
+  </header>
 
-    <div class="panel" style="margin-bottom:12px">
-      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
-        <div class="legend">
-          <span class="key"><span class="badge good">✓</span> Harmonic</span>
-          <span class="key"><span class="badge ok">~</span> Neutral</span>
-          <span class="key"><span class="badge bad">✗</span> Clash</span>
-        </div>
-        <div class="controls">
-          <button class="btn" id="exportBtn">Export JSON</button>
-          <label class="btn" for="importFile" style="cursor:pointer">Import JSON</label>
-          <input id="importFile" type="file" accept="application/json" class="hidden" />
-          <button class="btn" id="resetBtn">Reset Grid</button>
-          <button class="btn" id="addSeedBtn">Add Seed</button>
-        </div>
+  <div class="panel" style="margin-bottom:12px">
+    <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
+      <div class="legend">
+        <span class="key"><span class="choice good" style="width:26px;height:22px;display:inline-grid">鉁?/span> Harmonic</span>
+        <span class="key" style="margin-left:10px"><span class="choice ok" style="width:26px;height:22px;display:inline-grid">~</span> Neutral</span>
+        <span class="key" style="margin-left:10px"><span class="choice bad" style="width:26px;height:22px;display:inline-grid">鉁?/span> Clash</span>
+      </div>
+      <div class="controls">
+        <button class="btn" id="exportBtn">Export JSON</button>
+        <label class="btn" for="importFile" style="cursor:pointer">Import JSON</label>
+        <input id="importFile" type="file" accept="application/json" class="hidden" />
+        <button class="btn" id="resetBtn">Reset Grid</button>
+        <button class="btn" id="addSeedBtn">Add Seed</button>
       </div>
     </div>
-
-    <div class="gridwrap">
-      <table id="grid" aria-label="Compatibility grid">
-        <thead>
-          <tr>
-            <th style="min-width:220px">Seed</th>
-            <th>Honey</th><th>Smoke</th><th>Neon</th><th>Dreams</th><th>Sex</th>
-            <th style="min-width:220px">Notes</th><th>Tools</th>
-          </tr>
-        </thead>
-        <tbody id="gridBody"></tbody>
-      </table>
-    </div>
-
-    <div class="footer"><div>Data is saved locally in your browser.</div><div>jar.plnt.earth · Bee trails (pollen) persist across cycles.</div></div>
   </div>
 
-  <template id="rowTemplate">
-    <tr>
-      <td>
-        <div><input class="seedname" type="text" placeholder="Seed name" /></div>
-      </td>
-      <td class="choice ok" data-key="honey">~</td>
-      <td class="choice ok" data-key="smoke">~</td>
-      <td class="choice ok" data-key="neon">~</td>
-      <td class="choice ok" data-key="dreams">~</td>
-      <td class="choice ok" data-key="sex">~</td>
-      <td><textarea class="note rationale" rows="2" placeholder="Why this pairing?"></textarea></td>
-      <td class="rowtools"><button class="iconbtn moveUp">▲</button><button class="iconbtn moveDown">▼</button><button class="iconbtn delRow">✕</button></td>
-    </template>
+  <div class="gridwrap">
+    <table id="grid" aria-label="Compatibility grid">
+      <thead>
+        <tr>
+          <th style="min-width:220px">Seed</th>
+          <th>Honey</th><th>Smoke</th><th>Neon</th><th>Dreams</th><th>Sex</th>
+          <th style="min-width:220px">Notes</th><th>Tools</th>
+        </tr>
+      </thead>
+      <tbody id="gridBody"></tbody>
+    </table>
+  </div>
+
+  <div class="footer"><div>Data is saved locally in your browser (key: <span class="choice ok" style="width:auto;height:auto;padding:0 6px">jar_compat_v1</span>).</div><div>jar.plnt.earth 路 Bee trails (pollen) persist across cycles.</div></div>
+</div>
+
+<template id="rowTemplate">
+  <tr>
+    <td>
+      <div><input class="seedname" type="text" placeholder="Seed name" style="width:100%;padding:8px 10px;border-radius:10px;border:1px solid #2a2d40;background:#10121a;color:#eaeaf2" /></div>
+    </td>
+    <td class="choice ok" data-key="honey">~</td>
+    <td class="choice ok" data-key="smoke">~</td>
+    <td class="choice ok" data-key="neon">~</td>
+    <td class="choice ok" data-key="dreams">~</td>
+    <td class="choice ok" data-key="sex">~</td>
+    <td><textarea class="note rationale" rows="2" placeholder="Why this pairing?" style="width:100%;padding:8px 10px;border-radius:10px;border:1px solid #2a2d40;background:#10121a;color:#eaeaf2"></textarea></td>
+    <td class="rowtools"><button class="iconbtn moveUp">鈻?/button><button class="iconbtn moveDown">鈻?/button><button class="iconbtn delRow">鉁?/button></td>
+  </tr>
+</template>
 
 <script>
-// (Same script logic as before for compatibility grid)
-// omitted for brevity — you can copy your existing logic here,
-// ensure data-key mapping etc.
+const KEY="jar_compat_v1";
+const gridBody=document.getElementById("gridBody");
+const rowTemplate=document.getElementById("rowTemplate").content;
+
+const CYCLE_STATES = [
+  { cls:"ok",   label:"~"  },
+  { cls:"good", label:"鉁?  },
+  { cls:"bad",  label:"鉁?  }
+];
+
+function defaultRow(name="", ratings) {
+  return {
+    name,
+    honey: ratings && ratings.honey || "ok",
+    smoke: ratings && ratings.smoke || "ok",
+    neon:  ratings && ratings.neon  || "ok",
+    dreams:ratings && ratings.dreams|| "ok",
+    sex:   ratings && ratings.sex   || "ok",
+    notes: ratings && ratings.notes || ""
+  };
+}
+
+const DEFAULT_ROWS = [
+  defaultRow("Cosmic Apple", {honey:"good", smoke:"ok", neon:"ok", dreams:"good", sex:"ok", notes:"Pairs with dreams; gentle."}),
+  defaultRow("Pumpkin",      {honey:"ok",   smoke:"ok", neon:"good", dreams:"ok",  sex:"ok", notes:"Comfort / softness reset."}),
+  defaultRow("Mustard",      {honey:"good", smoke:"bad",neon:"ok",   dreams:"ok",  sex:"ok", notes:"Use honey buffer; avoid smoke."}),
+  defaultRow("Cumin",        {honey:"good", smoke:"ok", neon:"ok",   dreams:"ok",  sex:"ok", notes:"Gentle smoke allowed; reflection."}),
+  defaultRow("Gala Apple",   {honey:"ok",   smoke:"ok", neon:"good", dreams:"ok",  sex:"ok", notes:"Light, bright; after heavy dreams."}),
+  defaultRow("Royal Orange", {honey:"good", smoke:"ok", neon:"ok",   dreams:"good",sex:"ok", notes:"Checkpoint seed (7/14/21/28/35/42)."}),
+  defaultRow("Chili Flake",  {honey:"ok",   smoke:"bad",neon:"good", dreams:"ok",  sex:"ok", notes:"Neon nights only; micro-dose."})
+];
+
+function load() {
+  try { const raw = localStorage.getItem(KEY); return raw ? JSON.parse(raw) : DEFAULT_ROWS.slice(); }
+  catch(_) { return DEFAULT_ROWS.slice(); }
+}
+function save(rows) { localStorage.setItem(KEY, JSON.stringify(rows)); }
+
+function cycleState(cell) {
+  const cur = cell.dataset.state || "ok";
+  const idx = CYCLE_STATES.findIndex(s => s.cls === cur);
+  const next = CYCLE_STATES[(idx+1)%CYCLE_STATES.length];
+  cell.dataset.state = next.cls;
+  cell.classList.remove("ok","good","bad");
+  cell.classList.add(next.cls);
+  cell.textContent = next.label;
+}
+
+function toModelRow(tr) {
+  const name = tr.querySelector(".seedname").value.trim();
+  const notes = tr.querySelector(".note").value.trim();
+  const cells = tr.querySelectorAll(".choice");
+  const obj = { name, notes };
+  cells.forEach(c => obj[c.dataset.key] = c.dataset.state || "ok");
+  return obj;
+}
+
+function fromModelRow(row) {
+  const tr = document.importNode(rowTemplate, true).firstElementChild;
+  tr.querySelector(".seedname").value = row.name || "";
+  tr.querySelector(".note").value = row.notes || "";
+  ["honey","smoke","neon","dreams","sex"].forEach(k => {
+    const cell = tr.querySelector(`.choice[data-key="${k}"]`);
+    const st = row[k] || "ok";
+    cell.dataset.state = st;
+    cell.classList.remove("ok","good","bad");
+    cell.classList.add(st);
+    cell.textContent = (st==="good"?"鉁?:st==="bad"?"鉁?:"~");
+    cell.addEventListener("click", () => { cycleState(cell); persist(); });
+  });
+  tr.querySelector(".seedname").addEventListener("input", persist);
+  tr.querySelector(".note").addEventListener("input", persist);
+  tr.querySelector(".moveUp").addEventListener("click", () => moveRow(tr, -1));
+  tr.querySelector(".moveDown").addEventListener("click", () => moveRow(tr, +1));
+  tr.querySelector(".delRow").addEventListener("click", () => { tr.remove(); persist(); });
+  return tr;
+}
+
+function moveRow(tr, delta) {
+  const tbody = gridBody;
+  const rows = Array.from(tbody.children);
+  const idx = rows.indexOf(tr);
+  const target = idx + delta;
+  if (target < 0 || target >= rows.length) return;
+  tbody.insertBefore(tr, rows[delta>0 ? target.nextSibling : target]);
+  persist();
+}
+
+function persist() {
+  const rows = Array.from(gridBody.children).map(tr => toModelRow(tr));
+  save(rows);
+}
+
+function render() {
+  gridBody.innerHTML = "";
+  const data = load();
+  data.forEach(row => gridBody.appendChild(fromModelRow(row)));
+}
+
+document.getElementById("addSeedBtn").addEventListener("click", () => {
+  gridBody.appendChild(fromModelRow(defaultRow("")));
+  persist();
+});
+
+document.getElementById("exportBtn").addEventListener("click", () => {
+  const blob = new Blob([localStorage.getItem(KEY) || "[]"], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a"); a.href = url; a.download = "jar_compat.json";
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url), 500);
+});
+
+document.getElementById("importFile").addEventListener("change", e => {
+  const f = e.target.files && e.target.files[0]; if(!f) return;
+  const fr = new FileReader();
+  fr.onload = () => {
+    try {
+      const data = JSON.parse(fr.result);
+      if (Array.isArray(data)) { localStorage.setItem(KEY, JSON.stringify(data)); render(); }
+    } catch (_) { }
+    e.target.value = "";
+  };
+  fr.readAsText(f);
+});
+
+document.getElementById("resetBtn").addEventListener("click", () => {
+  localStorage.removeItem(KEY);
+  render();
+});
+
+(function init(){ render(); })();
 </script>
 </body>
 </html>
