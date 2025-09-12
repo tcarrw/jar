@@ -1,140 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Illumina 1 — Moon × Songs × Seeds</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='black'/><circle cx='40' cy='50' r='38' fill='white'/></svg>">
-  <style>
-    :root {
-      --bg: #0b0b0c; --card: #141417; --text: #e9e9ef; --muted: #9a9aab; --accent: #b2f5ea; --ring: #2a2a33; --grid: rgba(255,255,255,0.06);
-    }
-    * { box-sizing: border-box; }
-    html, body { margin:0; padding:0; background:var(--bg); color:var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, 'Noto Sans'; }
-    header { position: sticky; top: 0; z-index: 10; backdrop-filter: saturate(1.1) blur(6px); background: linear-gradient(180deg, rgba(11,11,12,0.9), rgba(11,11,12,0.6)); border-bottom: 1px solid var(--ring); }
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 16px; }
-    h1 { margin: 0; font-size: clamp(20px, 2.6vw, 30px); letter-spacing: .2px; }
-    .meta { color: var(--muted); font-size: 14px; margin-top: 4px; }
-    .controls { display:flex; gap:12px; margin-top:12px; flex-wrap:wrap; }
-    input[type="search"], select {
-      background: var(--card); color: var(--text); border: 1px solid var(--ring); border-radius: 12px; padding: 10px 12px; outline: none; font-size: 14px; width: min(320px, 100%);
-    }
-    main .wrap { padding: 20px 16px 48px; }
-    .legend-card { background: var(--card); border: 1px solid var(--ring); border-radius: 12px; padding: 12px; margin: 12px 0 16px; }
-    .legend-grid { display:flex; flex-wrap:wrap; gap: 8px 10px; align-items:center; }
-    .legend-title { font-size:12px; color: var(--muted); text-transform: uppercase; letter-spacing:.4px; margin-right: 8px; }
-    .pill { display:inline-block; padding:4px 8px; border:1px solid var(--ring); border-radius:999px; color: var(--muted); font-size:12px; }
-    .table-card { background: var(--card); border: 1px solid var(--ring); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
-    table { width: 100%; border-collapse: collapse; }
-    thead th { text-align: left; font-weight: 600; font-size: 12px; letter-spacing:.4px; text-transform: uppercase; color: var(--muted); padding: 14px 12px; background: linear-gradient(180deg, rgba(255,255,255,.04), transparent); border-bottom: 1px solid var(--ring); }
-    tbody td { padding: 14px 12px; border-bottom: 1px dashed var(--grid); vertical-align: top; }
-    tbody tr:hover { background: rgba(255,255,255,0.03); }
-    .c-day { width:60px; font-weight:700; }
-    .c-date { width:170px; color: var(--muted); }
-    .c-phase { width:170px; }
-    .c-track { min-width:240px; }
-    .c-figure { width:140px; color: var(--muted); }
-    .c-seed { min-width:220px; }
-    .c-url a { display:inline-block; padding:6px 10px; border:1px solid var(--ring); border-radius:10px; text-decoration:none; color:var(--text); }
-    footer { color: var(--muted); font-size: 12px; text-align:center; padding: 28px 0; }
-    @media (max-width: 820px) {
-      thead { display: none; }
-      tbody tr { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; padding: 10px 10px; }
-      tbody td { border-bottom: none; padding: 8px 6px; }
-      tbody tr + tr { border-top: 1px solid var(--ring); }
-      tbody td::before { content: attr(data-label); display:block; font-size: 11px; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
-      .c-day { grid-column: 1 / span 1; } .c-date { grid-column: 2 / span 1; } .c-phase { grid-column: 1 / span 2; } .c-track { grid-column: 1 / span 2; } .c-figure { grid-column: 1 / span 1; } .c-seed { grid-column: 2 / span 1; } .c-url { grid-column: 1 / span 2; }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="wrap">
-      <h1>Illumina 1 — Moon × Songs × Seeds</h1>
-      <div class="meta">Dates: 2025-11-05 → 2025-12-17 • 42-day cycle</div>
-      <div class="controls">
-        <input id="q" type="search" placeholder="Filter by track, figure, seed, or phase…" aria-label="Filter" />
-        <select id="phase">
-          <option value="">All moon phases</option>
-          <option>🌕 Full Moon</option><option>🌖 Waning Gibbous</option><option>🌗 Last Quarter</option><option>🌘 Waning Crescent</option>
-          <option>🌑 New Moon</option><option>🌒 Waxing Crescent</option><option>🌓 First Quarter</option><option>🌔 Waxing Gibbous</option>
-        </select>
-      </div>
-          <div class="meta"><a href="https://youtube.com/playlist?list=PL2H7n7qLAdf7VTOrmFlY9G-PaE94VrHAY&si=vblXKmAvTj-Ve5iV" target="_blank">Playlist ↗</a></div>
-    </div>
-  </header>
-  <main>
-    <div class="wrap">
-      <div class="legend-card" aria-label="Seed cadence legend">
-        <div class="legend-grid">
-          <span class="legend-title">Seed cadence:</span>
-          <span class="pill">1 Cosmic Apple — swallow</span>
-          <span class="pill">2 Pumpkin — chew + honey</span>
-          <span class="pill">3 Mustard — swallow</span>
-          <span class="pill">4 Cumin — chew + honey (smoke optional)</span>
-          <span class="pill">5 Gala Apple — chew</span>
-          <span class="pill">6 Pumpkin — swallow</span>
-          <span class="pill">7 Royal Orange — swallow + honey</span>
-        </div>
-      </div>
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Illumina 1 – Launch Cycle · Calendar</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Ctext y='0.9em' font-size='90'%3E📅%3C/text%3E%3C/svg%3E">
+<style>
+:root{--bg:#0b0b0d;--panel:#121216;--ink:#eaeaf2;--muted:#a9adc2;--accent:#9dfcff;--accent2:#ffd36b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+.wrap{max-width:1100px;margin:auto;padding:20px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+h1{margin:6px 0;font-size:26px}.sub{color:var(--muted)}
+nav a{display:inline-block;margin-right:8px;margin-top:6px;padding:8px 10px;border-radius:10px;border:1px solid #23263a;background:#151726;color:#e9ecff;text-decoration:none}
+.panel{background:#121216;border:1px solid #1e2030;border-radius:16px;padding:14px}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #2a2d40;background:#141623;color:#cfd3ea;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:10px}
+.cell{border:1px solid #23263a;border-radius:10px;padding:10px;background:#0f1119;min-height:88px;display:grid;gap:6px}
+.cell b{display:block}
+.meta{font-size:12px;color:#cfd3ea}
+.links{display:flex;gap:6px;flex-wrap:wrap}
+.btn{display:inline-block;padding:6px 8px;border-radius:8px;border:1px solid #23263a;background:#151726;color:#e9ecff;text-decoration:none;font-size:12px}
+footer{color:var(--muted);margin-top:12px}
+:root[data-mode="honey"] body{background:linear-gradient(180deg,rgba(255,211,107,.10),transparent),var(--bg)}
+:root[data-mode="neon"]  body{background:linear-gradient(180deg,rgba(157,252,255,.10),transparent),var(--bg)}
+</style></head><body><div class="wrap">
+<header>
+  <div>
+    <h1>Illumina 1 – Launch Cycle</h1>
+    <div class="sub">Nov 5 – Dec 17, 2025 · Theme: Mantra + Honey + Taste ignition</div>
+  </div>
+  <div><span class="badge">mode: <span id="mode">classic</span></span></div>
+</header>
 
-      <div class="table-card">
-        <table id="tbl">
-          <thead>
-            <tr>
-              <th>Day</th><th>Date</th><th>Moon</th><th>Track</th><th>Figure</th><th>Seed Ritual</th><th>Link</th>
-            </tr>
-          </thead>
-          <tbody id="rows"></tbody>
-        </table>
-      </div>
-    </div>
-  </main>
-  <footer>© jar.plnt.earth</footer>
+<nav aria-label="Primary">
+  <a href="/jar/">Jar</a><a href="/jar/day/">Day</a><a href="/tunes/">Tunes</a>
+  <a href="/interludes/">Interludes</a><a href="/seeds/">Seeds</a>
+  <a href="/references/">References</a><a href="/references/archive/">Archive</a><a href="/references/science/">Science</a>
+  <a href="/dreams/">Dreams</a><a href="/compatibility/">Compatibility</a><a href="/storage/">Storage</a><a href="/pollen/">Pollen</a>
+</nav>
 
-  <script>
-    const DATA_URL = "/data/illumina1.json";
-    function norm(s){ return (s||'').toLowerCase(); }
-    function buildRow(d){
-      const a = d.URL ? `<a href="${d.URL}" target="_blank" rel="noopener">Open</a>` : '<span class="muted">—</span>';
-      return `<tr data-phase="${d.MoonPhase}">
-        <td class="c-day" data-label="Day">${d.Day}</td>
-        <td class="c-date" data-label="Date">${d.Date}</td>
-        <td class="c-phase" data-label="Moon">${d.MoonPhase}</td>
-        <td class="c-track" data-label="Track">${d.Track}</td>
-        <td class="c-figure" data-label="Figure">${d.Figure || ""}</td>
-        <td class="c-seed" data-label="Seed Ritual">${d.SeedRitual || ""}</td>
-        <td class="c-url" data-label="Link">${a}</td>
-      </tr>`;
-    }
-    function matches(row, text, phase){
-      const hay = norm(row.textContent);
-      const okText = !text || hay.indexOf(norm(text)) !== -1;
-      const okPhase = !phase || row.getAttribute('data-phase') === phase;
-      return okText && okPhase;
-    }
-    async function boot(){
-      try{
-        const res = await fetch(DATA_URL);
-        const data = await res.json();
-        const rows = data.sort((a,b)=>a.Day-b.Day).map(buildRow).join("");
-        const tbody = document.getElementById("rows");
-        tbody.innerHTML = rows;
+<section class="panel" style="margin-top:12px">
+  <div>
+    <span class="badge">Calendar</span>
+    <span class="badge">42 days</span>
+    <span id="loadStatus" class="badge" style="margin-left:6px">loading…</span>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
 
-        const q = document.getElementById('q');
-        const phaseSel = document.getElementById('phase');
-        function apply(){
-          const text = q.value; const phase = phaseSel.value;
-          const all = tbody.querySelectorAll('tr');
-          all.forEach(tr => { tr.style.display = matches(tr, text, phase) ? '' : 'none'; });
+<footer>This calendar autoloads <code>data.json</code> from this folder when present.</footer>
+</div>
+
+<script>
+/* mode */
+(function(){var m=localStorage.getItem("jar_mode")||"classic";document.documentElement.dataset.mode=m;document.getElementById("mode").textContent=m})();
+
+/* build blank grid */
+const grid=document.getElementById("grid");
+for(let d=1; d<=42; d++){
+  const cell=document.createElement("div"); cell.className="cell"; cell.dataset.day=d;
+  cell.innerHTML = `<b>Day ${d}</b><div class="meta">—</div><div class="links"></div>`;
+  grid.appendChild(cell);
+}
+
+/* JSON loader
+   Looks for ./data.json with schema:
+{
+  "slug": "illumina1",
+  "start_date": "2025-11-05",
+  "days": [
+    {
+      "day": 1,
+      "date": "2025-11-05",
+      "title": "Song / Focus title",
+      "song_url": "https://youtube.com/…",
+      "seed": "Pumpkin (swallowed)",
+      "notes": "Honey → seed → sleep",
+      "mode": "honey",             // optional, overrides jar_mode tint for this card
+      "interlude": "Sabrina",      // optional
+      "watchmen": ["Roaring Kitty"]// optional
+    },
+    …
+  ]
+}
+*/
+const statusEl = document.getElementById("loadStatus");
+(async function loadData(){
+  try{
+    const res = await fetch("./data.json?v=1", {cache:"no-store"});
+    if(!res.ok) throw new Error("no data.json");
+    const data = await res.json();
+    statusEl.textContent = "data.json loaded";
+
+    // fill cells
+    (data.days||[]).forEach(item=>{
+      const d = Number(item.day); if(!d || d<1 || d>42) return;
+      const cell = grid.querySelector(`.cell[data-day="${d}"]`); if(!cell) return;
+
+      // Title line: link to song if provided
+      const b = cell.querySelector("b");
+      if(item.title){
+        if(item.song_url){
+          b.innerHTML = `Day ${d} · <a href="${item.song_url}" target="_blank" rel="noopener">${item.title}</a>`;
+        }else{
+          b.textContent = `Day ${d} · ${item.title}`;
         }
-        q.addEventListener('input', apply);
-        phaseSel.addEventListener('change', apply);
-      }catch(e){
-        document.getElementById("rows").innerHTML = "<tr><td colspan='7'>Error loading data.</td></tr>";
       }
-    }
-    boot();
-  </script>
-</body>
-</html>
+
+      // Meta: date + seed + interlude/watchmen
+      const meta = [];
+      if(item.date) meta.push(item.date);
+      if(item.seed) meta.push(item.seed);
+      if(item.interlude) meta.push(`Interlude: ${item.interlude}`);
+      if(item.watchmen && item.watchmen.length) meta.push(`Watchmen: ${item.watchmen.join(", ")}`);
+      cell.querySelector(".meta").textContent = meta.join(" · ") || "—";
+
+      // Links row
+      const links = cell.querySelector(".links"); links.innerHTML = "";
+      if(item.song_url){ links.appendChild(linkBtn("Play", item.song_url)); }
+      // Day deep link (keeps your existing pattern)
+      const dayUrl = `/jar/day/?date=${encodeURIComponent(item.date || "")}`;
+      links.appendChild(linkBtn("Day", dayUrl));
+      // Optional: seed anchor (to your seed index or a specific page if you map names)
+      links.appendChild(linkBtn("Seed", "/seeds/"));
+
+      // Per-card tint override
+      if(item.mode){
+        if(item.mode==="honey") cell.style.background = "linear-gradient(180deg,rgba(255,211,107,.14),rgba(255,211,107,.05)),#0f1119";
+        if(item.mode==="neon")  cell.style.background = "linear-gradient(180deg,rgba(157,252,255,.14),rgba(157,252,255,.05)),#0f1119";
+      }
+      // Notes (small)
+      if(item.notes){
+        const note = document.createElement("div");
+        note.className="meta"; note.style.opacity=".9";
+        note.textContent = item.notes;
+        links.after(note);
+      }
+    });
+  }catch(e){
+    statusEl.textContent = "no data.json (using placeholders)";
+  }
+})();
+
+function linkBtn(label, href){
+  const a=document.createElement("a");
+  a.className="btn"; a.href=href; a.target = href.startsWith("http") ? "_blank" : "_self"; a.rel="noopener";
+  a.textContent=label; return a;
+}
+</script>
+</body></html>
