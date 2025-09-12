@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Compatibility Grid · jar.plnt.earth</title>
+  <title>Compatibility Grid · plnt.earth</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🍯%3C/text%3E%3C/svg%3E">
   <style>
@@ -10,19 +10,16 @@
       --bg:#0b0b0d;--panel:#121216;--ink:#eaeaf2;--muted:#a9adc2;--accent:#9dfcff;--accent2:#ffd36b;--bad:#ff6b8a;--ok:#ffd36b;--good:#76ff9d;
       --grid:#1b1b22;--chip:#191922;--chipOn:#202433;--ring:rgba(157,252,255,.35);
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    *{box-sizing:border-box}html,body{height:100%}
     body{margin:0;background:radial-gradient(1200px 800px at 10% -10%,rgba(157,252,255,.06),transparent 60%),radial-gradient(900px 600px at 110% 10%,rgba(255,211,107,.06),transparent 60%),var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
-    a{color:var(--accent);text-decoration:none}
-    a:hover{opacity:.9}
+    a{color:var(--accent);text-decoration:none}a:hover{opacity:.9}
     .wrap{max-width:1100px;margin:auto;padding:20px}
     header{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:16px}
     .brand{display:flex;align-items:center;gap:10px}
     .dot{width:12px;height:12px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent2))}
     nav{display:flex;flex-wrap:wrap;gap:8px}
     nav a{padding:8px 10px;background:var(--chip);border:1px solid #22232c;border-radius:10px}
-    h1{font-size:24px;margin:8px 0 4px}
-    .sub{color:var(--muted)}
+    h1{font-size:24px;margin:8px 0 4px}.sub{color:var(--muted)}
     .panel{background:var(--panel);border:1px solid #1e2030;border-radius:16px;padding:14px;box-shadow:0 0 0 1px rgba(157,252,255,.03) inset}
     .gridwrap{overflow:auto;border-radius:14px;border:1px solid #1f2030}
     table{border-collapse:separate;border-spacing:0;width:100%;min-width:720px;background:linear-gradient(0deg,rgba(255,255,255,.02),rgba(255,255,255,.02))}
@@ -32,12 +29,10 @@
     tr td:first-child{left:0;position:sticky;z-index:1;background:#0f1017}
     thead th{font-weight:600;color:#d6daec;text-align:left}
     tbody tr:nth-child(odd) td{background:rgba(255,255,255,.01)}
-    .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:999px;background:var(--chip);border:1px solid #232536}
     .pill{display:inline-flex;align-items:center;gap:6px;padding:3px 8px;border-radius:999px;border:1px solid #2a2d40;background:#141522;color:#c9cde0;font-size:12px}
     .controls{display:flex;flex-wrap:wrap;gap:8px}
     .controls .btn{padding:10px 12px;border-radius:10px;border:1px solid #23263a;background:#151726;color:#e9ecff}
     .controls .btn:focus{outline:2px solid var(--ring);outline-offset:2px}
-    .rowflex{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
     .legend{display:flex;flex-wrap:wrap;gap:8px}
     .key{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border:1px dashed #2a2d40;border-radius:10px;background:#141623;color:#cfd3ea}
     .state{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:10px;border:1px solid #26293a;background:#121423;font-weight:700}
@@ -51,7 +46,6 @@
     .choice.bad{border-color:#6b2636;background:rgba(255,107,138,.08)}
     .note{width:100%;padding:8px 10px;border-radius:10px;border:1px solid #2a2d40;background:#10121a;color:#eaeaf2}
     .seedname{font-weight:600}
-    .subtle{color:var(--muted);font-size:12px}
     .modeflip{display:inline-flex;gap:8px;align-items:center}
     .switch{appearance:none;width:42px;height:24px;border-radius:999px;background:#2a2d40;position:relative;outline:none;border:1px solid #353a55}
     .switch:checked{background:#22404a;border-color:#285864;box-shadow:0 0 0 3px rgba(157,252,255,.15) inset}
@@ -59,14 +53,8 @@
     .switch:checked:before{transform:translateX(18px)}
     .rowtools{display:flex;gap:6px}
     .iconbtn{width:28px;height:28px;border-radius:8px;border:1px solid #2a2d40;background:#151726;display:grid;place-items:center}
-    .iconbtn:hover{filter:brightness(1.05)}
     .footer{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;color:var(--muted)}
     .hidden{display:none}
-    @media (max-width:720px){
-      nav{gap:6px}
-      nav a{padding:6px 8px}
-      .sub{font-size:13px}
-    }
   </style>
 </head>
 <body>
@@ -74,30 +62,27 @@
     <header>
       <div class="brand">
         <div class="dot"></div>
-        <div>
-          <h1>Compatibility Grid</h1>
-          <div class="sub">Seeds × Honey · Smoke · Neon · Dreams · Sex</div>
-        </div>
+        <div><h1>Compatibility Grid</h1><div class="sub">Seeds × Honey · Smoke · Neon · Dreams · Sex</div></div>
       </div>
       <nav aria-label="Primary">
-        <a href="/jar/">Jar</a>
-        <a href="/jar/calendar/illumina1/">Calendar</a>
-        <a href="/jar/day/">Day</a>
+        <a href="/">Jar</a>
+        <a href="/calendar/illumina1/">Calendar</a>
+        <a href="/day/">Day</a>
         <a href="/tunes/">Tunes</a>
         <a href="/interludes/">Interludes</a>
         <a href="/seeds/">Seeds</a>
         <a href="/references/">References</a>
         <a href="/references/archive/">Archive</a>
         <a href="/references/science/">Science</a>
-        <a href="/jar/dreams/">Dreams</a>
-        <a href="/jar/modes/neon/">Neon</a>
-        <a href="/jar/storage/">Storage</a>
-        <a href="/jar/pollen/">Pollen</a>
+        <a href="/dreams/">Dreams</a>
+        <a href="/modes/neon/">Neon</a>
+        <a href="/storage/">Storage</a>
+        <a href="/pollen/">Pollen</a>
       </nav>
     </header>
 
     <div class="panel" style="margin-bottom:12px">
-      <div class="rowflex">
+      <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center">
         <div class="legend">
           <span class="key"><span class="state good">✓</span> Harmonic</span>
           <span class="key"><span class="state ok">~</span> Neutral</span>
@@ -118,11 +103,7 @@
         <thead>
           <tr>
             <th style="min-width:220px">Seed</th>
-            <th>Honey</th>
-            <th>Smoke</th>
-            <th>Neon</th>
-            <th>Dreams</th>
-            <th>Sex</th>
+            <th>Honey</th><th>Smoke</th><th>Neon</th><th>Dreams</th><th>Sex</th>
             <th style="min-width:220px">Notes</th>
             <th>Tools</th>
           </tr>
@@ -133,7 +114,7 @@
 
     <div class="footer">
       <div>Data is saved locally in your browser.</div>
-      <div>jar.plnt.earth · Bee trails (pollen) persist across cycles.</div>
+      <div>plnt.earth · Bee trails (pollen) persist across cycles.</div>
     </div>
   </div>
 
@@ -165,7 +146,6 @@
 
   <script>
     const STORAGE_KEY = "jar_compatibility_v1";
-
     const SEED_PRESETS = [
       { name:"Cosmic Apple", swallowed:false, honey:"✓", smoke:"~", neon:"~", dreams:"✓", sex:"~", note:"Evening; honey→seed→sleep" },
       { name:"Pumpkin",      swallowed:true,  honey:"~", smoke:"~", neon:"✓", dreams:"~", sex:"~", note:"Comfort / bedtime softness" },
@@ -174,9 +154,7 @@
       { name:"Chili Flake",  swallowed:true,  honey:"~", smoke:"✗", neon:"✓", dreams:"~", sex:"~", note:"Neon nights; skip smoke" },
       { name:"Royal Orange", swallowed:true,  honey:"✓", smoke:"~", neon:"~", dreams:"✓", sex:"~", note:"Citrus + honey + dreams" }
     ];
-
     const STATE_ORDER = ["~","✓","✗"];
-
     const gridBody = document.getElementById("gridBody");
     const rowTpl = document.getElementById("rowTemplate");
     const exportBtn = document.getElementById("exportBtn");
@@ -184,139 +162,51 @@
     const resetBtn  = document.getElementById("resetBtn");
     const addSeedBtn= document.getElementById("addSeedBtn");
 
-    function load() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return null;
-        const data = JSON.parse(raw);
-        if (!Array.isArray(data)) return null;
-        return data;
-      } catch (_) { return null; }
-    }
-
-    function save() {
-      const rows = [...gridBody.querySelectorAll("tr")].map(tr => {
-        return {
-          name: tr.querySelector(".seedname").value.trim(),
-          swallowed: tr.querySelector(".formMode").checked,
-          honey: tr.querySelector('[data-key="honey"]').textContent.trim(),
-          smoke: tr.querySelector('[data-key="smoke"]').textContent.trim(),
-          neon:  tr.querySelector('[data-key="neon"]').textContent.trim(),
-          dreams:tr.querySelector('[data-key="dreams"]').textContent.trim(),
-          sex:   tr.querySelector('[data-key="sex"]').textContent.trim(),
-          note:  tr.querySelector(".rationale").value
-        };
-      });
+    function load(){try{const raw=localStorage.getItem(STORAGE_KEY);return raw?JSON.parse(raw):null}catch(_){return null}}
+    function save(){
+      const rows=[...gridBody.querySelectorAll("tr")].map(tr=>({
+        name: tr.querySelector(".seedname").value.trim(),
+        swallowed: tr.querySelector(".formMode").checked,
+        honey: tr.querySelector('[data-key="honey"]').textContent.trim(),
+        smoke: tr.querySelector('[data-key="smoke"]').textContent.trim(),
+        neon:  tr.querySelector('[data-key="neon"]').textContent.trim(),
+        dreams:tr.querySelector('[data-key="dreams"]').textContent.trim(),
+        sex:   tr.querySelector('[data-key="sex"]').textContent.trim(),
+        note:  tr.querySelector(".rationale").value
+      }));
       localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
     }
-
-    function stateClass(v){
-      if (v==="✓") return "good";
-      if (v==="✗") return "bad";
-      return "ok";
-    }
-
+    function stateClass(v){if(v==="✓")return"good"; if(v==="✗")return"bad"; return"ok"}
     function cycleState(el){
-      const cur = el.textContent.trim();
-      const idx = STATE_ORDER.indexOf(cur);
-      const next = STATE_ORDER[(idx+1)%STATE_ORDER.length];
-      el.textContent = next;
-      el.classList.remove("good","ok","bad");
-      el.classList.add(stateClass(next));
+      const cur=el.textContent.trim();
+      const idx=STATE_ORDER.indexOf(cur);
+      const next=STATE_ORDER[(idx+1)%STATE_ORDER.length];
+      el.textContent=next; el.classList.remove("good","ok","bad"); el.classList.add(stateClass(next)); save();
     }
-
     function makeRow(seed){
-      const node = rowTpl.content.firstElementChild.cloneNode(true);
-      const name = node.querySelector(".seedname");
-      const form = node.querySelector(".formMode");
-      const note = node.querySelector(".rationale");
-      const cells = node.querySelectorAll(".choice");
-
-      name.value = seed.name || "New Seed";
-      form.checked = !!seed.swallowed;
-      note.value = seed.note || "";
-
-      const map = { honey:"~", smoke:"~", neon:"~", dreams:"~", sex:"~" };
-      Object.assign(map, {
-        honey: seed.honey, smoke: seed.smoke, neon: seed.neon, dreams: seed.dreams, sex: seed.sex
-      });
-
-      cells.forEach(c=>{
-        const k = c.dataset.key;
-        const val = (map[k]||"~").trim();
-        c.textContent = val;
-        c.classList.add(stateClass(val));
-        c.addEventListener("click", ()=>{ cycleState(c); save(); });
-      });
-
-      name.addEventListener("input", save);
-      form.addEventListener("change", save);
-      note.addEventListener("input", save);
-
-      node.querySelector(".delRow").addEventListener("click", ()=>{
-        node.remove(); save();
-      });
-      node.querySelector(".moveUp").addEventListener("click", ()=>{
-        const prev = node.previousElementSibling;
-        if(prev){ gridBody.insertBefore(node, prev); save(); }
-      });
-      node.querySelector(".moveDown").addEventListener("click", ()=>{
-        const next = node.nextElementSibling;
-        if(next){ gridBody.insertBefore(next, node); save(); }
-      });
-
+      const node=rowTpl.content.firstElementChild.cloneNode(true);
+      const name=node.querySelector(".seedname"); const form=node.querySelector(".formMode"); const note=node.querySelector(".rationale");
+      name.value=seed.name||"New Seed"; form.checked=!!seed.swallowed; note.value=seed.note||"";
+      const map={honey:seed.honey||"~",smoke:seed.smoke||"~",neon:seed.neon||"~",dreams:seed.dreams||"~",sex:seed.sex||"~"};
+      node.querySelectorAll(".choice").forEach(c=>{const v=(map[c.dataset.key]||"~").trim(); c.textContent=v; c.classList.add(stateClass(v)); c.addEventListener("click",()=>cycleState(c));});
+      name.addEventListener("input",save); form.addEventListener("change",save); note.addEventListener("input",save);
+      node.querySelector(".delRow").addEventListener("click",()=>{node.remove(); save();});
+      node.querySelector(".moveUp").addEventListener("click",()=>{const p=node.previousElementSibling; if(p){gridBody.insertBefore(node,p); save();}});
+      node.querySelector(".moveDown").addEventListener("click",()=>{const n=node.nextElementSibling; if(n){gridBody.insertBefore(n,node); save();}});
       return node;
     }
-
-    function render(data){
-      gridBody.innerHTML = "";
-      (data||SEED_PRESETS).forEach(seed=>{
-        gridBody.appendChild(makeRow(seed));
-      });
-      save();
-    }
-
-    exportBtn.addEventListener("click", ()=>{
-      const blob = new Blob([localStorage.getItem(STORAGE_KEY) || "[]"], {type:"application/json"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url; a.download = "jar_compatibility.json";
-      document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(()=>URL.revokeObjectURL(url), 500);
+    function render(data){gridBody.innerHTML=""; (data||SEED_PRESETS).forEach(s=>gridBody.appendChild(makeRow(s))); save();}
+    exportBtn.addEventListener("click",()=>{
+      const blob=new Blob([localStorage.getItem(STORAGE_KEY)||"[]"],{type:"application/json"});
+      const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="jar_compatibility.json"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),500);
     });
-
-    importFile.addEventListener("change", (e)=>{
-      const file = e.target.files && e.target.files[0];
-      if(!file) return;
-      const fr = new FileReader();
-      fr.onload = ()=>{
-        try{
-          const data = JSON.parse(fr.result);
-          if(Array.isArray(data)){
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-            render(data);
-          }
-        }catch(_){}
-        importFile.value = "";
-      };
-      fr.readAsText(file);
+    importFile.addEventListener("change",e=>{
+      const f=e.target.files&&e.target.files[0]; if(!f)return;
+      const fr=new FileReader(); fr.onload=()=>{try{const d=JSON.parse(fr.result); if(Array.isArray(d)){localStorage.setItem(STORAGE_KEY,JSON.stringify(d)); render(d);}}catch(_){ } importFile.value="";}; fr.readAsText(f);
     });
-
-    resetBtn.addEventListener("click", ()=>{
-      localStorage.removeItem(STORAGE_KEY);
-      render(null);
-    });
-
-    addSeedBtn.addEventListener("click", ()=>{
-      const node = makeRow({name:"New Seed", swallowed:false});
-      gridBody.appendChild(node);
-      save();
-    });
-
-    (function init(){
-      const data = load();
-      render(data);
-    })();
+    resetBtn.addEventListener("click",()=>{localStorage.removeItem(STORAGE_KEY); render(null)});
+    addSeedBtn.addEventListener("click",()=>{gridBody.appendChild(makeRow({name:"New Seed",swallowed:false})); save();});
+    (function init(){render(load())})();
   </script>
 </body>
 </html>
