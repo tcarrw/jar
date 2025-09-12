@@ -1,127 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pantheon • jar.plnt.earth</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='black'/><circle cx='40' cy='50' r='38' fill='white'/></svg>">
-  <style>
-    :root {
-      --bg: #0b0b0c;
-      --card: #141417;
-      --text: #e9e9ef;
-      --muted: #9a9aab;
-      --accent: #b2f5ea;
-      --ring: #2a2a33;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--text)}
-    header{background:var(--card);border-bottom:1px solid var(--ring);position:sticky;top:0;z-index:10}
-    nav{max-width:1100px;margin:0 auto;padding:12px 16px;display:flex;flex-wrap:wrap;gap:16px}
-    nav a{text-decoration:none;color:var(--text);font-size:14px}
-    nav a:hover{color:var(--accent)}
-    main{max-width:1100px;margin:0 auto;padding:24px 16px}
-    h1{margin:8px 0}
-    .meta{color:var(--muted);margin-bottom:16px}
-    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-    @media (max-width:900px){.grid{grid-template-columns:1fr 1fr}}
-    @media (max-width:620px){.grid{grid-template-columns:1fr}}
-    .card{background:var(--card);border:1px solid var(--ring);border-radius:16px;padding:18px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
-    .title{font-size:18px;margin:0 0 6px 0}
-    .muted{color:var(--muted)}
-    .btn{display:inline-block;border:1px solid var(--ring);border-radius:10px;padding:8px 14px;color:var(--text);text-decoration:none;background:none;cursor:pointer}
-    .btn:hover{border-color:var(--accent);color:var(--accent)}
-    .section-title{margin:22px 0 10px;font-size:18px;color:var(--muted)}
-    .top-actions{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0 18px}
-  </style>
+<meta charset="utf-8" />
+<title>Pantheon · jar.plnt.earth</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E✨%3C/text%3E%3C/svg%3E">
+<style>
+:root{--bg:#0b0b0d;--panel:#121216;--ink:#eaeaf2;--muted:#a9adc2;--accent:#9dfcff;--accent2:#ffd36b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(1200px 800px at 15% -10%,rgba(157,252,255,.06),transparent 60%),radial-gradient(900px 600px at 110% 10%,rgba(255,211,107,.06),transparent 60%),var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+a{color:var(--accent);text-decoration:none}a:hover{opacity:.9}
+.wrap{max-width:1100px;margin:auto;padding:20px}
+header{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:16px}
+.brand{display:flex;align-items:center;gap:10px}.dot{width:12px;height:12px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+h1{font-size:26px;margin:8px 0 4px}.sub{color:var(--muted)}
+nav{display:flex;flex-wrap:wrap;gap:8px}nav a{padding:8px 10px;background:#191922;border:1px solid #22232c;border-radius:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.card{background:#0f1119;border:1px solid #1e2030;border-radius:14px;padding:12px;display:grid;gap:8px}
+.card h3{margin:0}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #2a2d40;background:#141623;color:#cfd3ea;font-size:12px}
+.days{font-size:12px;color:#cfd3ea}
+.footer{margin-top:12px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+:root[data-mode="honey"] body{background:linear-gradient(180deg,rgba(255,211,107,.10),transparent),var(--bg)}
+:root[data-mode="neon"]  body{background:linear-gradient(180deg,rgba(157,252,255,.10),transparent),var(--bg)}
+</style>
 </head>
 <body>
+<div class="wrap">
   <header>
+    <div class="brand"><div class="dot"></div><div><h1>Pantheon</h1><div class="sub">Interlude archetypes active this cycle</div></div></div>
     <nav>
-      <a href="/">Home</a>
-      <a href="/calendar/illumina1/">Calendar</a>
-      <a href="/day/">Day</a>
-      <a href="/notes/moon/">Moon Notes</a>
-      <a href="/notes/day/">Day Notes</a>
-      <a href="/pantheon/">Pantheon</a>
-      <a href="/pantheon/constellation/">Constellation</a>
-      <a href="/references/">References</a>
-      <a href="/seeds/">Seeds</a>
-      <a href="/archive/">Archive</a>
-      <a href="https://tunes.plnt.earth" target="_blank">Tunes ↗</a>
-      <a href="https://youtube.com/playlist?list=PL2H7n7qLAdf7VTOrmFlY9G-PaE94VrHAY&si=vblXKmAvTj-Ve5iV" target="_blank">Playlist ↗</a>
-    </nav>
+  <a href="/jar/">Jar</a>
+  <a href="/calendar/illumina1/">Calendar</a>
+  <a href="/day/">Day</a>
+  <a href="/tunes/">Tunes</a>
+  <a href="/interludes/">Interludes</a>
+  <a href="/seeds/">Seeds</a>
+  <a href="/references/">References</a>
+  <a href="/archive/">Archive</a>
+  <a href="/science/">Science</a>
+  <a href="/compatibility/">Compatibility</a>
+  <a href="/dreams/">Dreams</a>
+  <a href="/storage/">Storage</a>
+  <a href="/pollen/">Pollen</a>
+  <a href="/modes/neon/">Modes</a>
+</nav>
   </header>
 
-  <main>
-    <h1>✨ Pantheon</h1>
-    <div class="meta">Core interludes + Watchmen from your playlist. Click a card to open the Constellation filtered to that figure.</div>
-    <div class="top-actions">
-      <a class="btn" href="/pantheon/constellation/">Open Constellation</a>
-      <a class="btn" href="https://youtube.com/playlist?list=PL2H7n7qLAdf7VTOrmFlY9G-PaE94VrHAY&si=vblXKmAvTj-Ve5iV" target="_blank" rel="noopener">Open YouTube Playlist ↗</a>
+  <div id="grid" class="grid" aria-live="polite"></div>
+
+  <div class="footer">
+    <div>Tip: Click “See spread” to open the interlude page; days update automatically from calendar data.</div>
+    <div>Mode: <span class="badge" id="modeBadge">classic</span></div>
+  </div>
+</div>
+
+<script>
+(function(){var m=localStorage.getItem("jar_mode")||"classic";document.documentElement.setAttribute("data-mode",m);document.getElementById("modeBadge").textContent=m})();
+
+const PANTHEON = [
+  { name:"Sabrina",       slug:"sabrina",       blurb:"🍯 Taste / magnet archetype." },
+  { name:"Janet Planet",  slug:"janet-planet",  blurb:"🌙 Cosmic teacher / telescope motif." },
+  { name:"Eminem",        slug:"eminem",        blurb:"⚡ Confrontation / Victory Song energy." },
+  { name:"Emma Stone",    slug:"emma-stone",    blurb:"☀️ Identity flare / roles & masks." },
+  { name:"Doechii",       slug:"doechii",       blurb:"🔥 Trickster / neon splash disruption." },
+  { name:"Hot To Go",     slug:"hot-to-go",     blurb:"🐝 Collective joy / swarm resonance." }
+];
+
+const grid = document.getElementById("grid");
+const cards = {};
+PANTHEON.forEach(p=>{
+  const el=document.createElement("div");
+  el.className="card";
+  el.innerHTML=`
+    <h3>${p.name}</h3>
+    <div class="sub" style="opacity:.9">${p.blurb}</div>
+    <div class="days" id="days-${p.slug}">Days: —</div>
+    <div class="days" id="count-${p.slug}" style="opacity:.9">Appearances: 0</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+      <a class="badge" href="/interludes/">See spread</a>
+      <a class="badge" href="/calendar/illumina1/">Calendar</a>
     </div>
+  `;
+  grid.appendChild(el);
+  cards[p.slug]=el;
+});
 
-    <h2 class="section-title">Core Interludes</h2>
-    <div class="grid">
-      <div class="card">
-        <h2 class="title">🍯 Sabrina — Honey / Taste Spark</h2>
-        <div class="muted">Sensual magnet archetype. Taste ignition, playful pull.</div>
-        <div style="margin-top:10px"><a class="btn" href="/pantheon/constellation/?figure=Sabrina">Open in Constellation</a></div>
-      </div>
-      <div class="card">
-        <h2 class="title">🌙 Janet Planet — Cosmic Teacher</h2>
-        <div class="muted">STEAM curiosity anchor. Telescope motif, learning arcs.</div>
-        <div style="margin-top:10px"><a class="btn" href="/pantheon/constellation/?figure=Janet">Open in Constellation</a></div>
-      </div>
-      <div class="card">
-        <h2 class="title">⚡ Eminem — Victory Song / Confrontation</h2>
-        <div class="muted">Manifesto moments, lightning aesthetic, identity flare.</div>
-        <div style="margin-top:10px"><a class="btn" href="/pantheon/constellation/?figure=Eminem">Open in Constellation</a></div>
-      </div>
-      <div class="card">
-        <h2 class="title">☀️ Emma Stone — Identity Flare</h2>
-        <div class="muted">Spotlight, masks/roles, cinematic presence.</div>
-        <div style="margin-top:10px"><a class="btn" href="/pantheon/constellation/?figure=Emma">Open in Constellation</a></div>
-      </div>
-      <div class="card">
-        <h2 class="title">🔥 Doechii — Trickster / Chaos</h2>
-        <div class="muted">Graffiti, neon splashes, playful disruption.</div>
-        <div style="margin-top:10px"><a class="btn" href="/pantheon/constellation/?figure=Doechii">Open in Constellation</a></div>
-      </div>
-      <div class="card">
-        <h2 class="title">🐝 Hot To Go! — Collective Joy / Swarm</h2>
-        <div class="muted">Neon dancefloor, glitter pollen, swarm resonance.</div>
-        <div style="margin-top:10px"><a class="btn" href="/pantheon/constellation/?figure=Hot%20To%20Go">Open in Constellation</a></div>
-      </div>
-    </div>
-
-    <h2 class="section-title">Watchmen (from playlist)</h2>
-    <div id="watchmen" class="grid"></div>
-  </main>
-
-  <script>
-    const DATA_URL = "/data/illumina1.json";
-    const CORE = new Set(["Sabrina","Janet","Eminem","Emma","Doechii","Hot To Go"]);
-    function cardHtml(name){
-      const safe = encodeURIComponent(name);
-      return `<div class="card">
-        <h2 class="title">${name}</h2>
-        <div class="muted">Appears in Illumina 1 playlist.</div>
-        <div style="margin-top:10px"><a class="btn" href="/pantheon/constellation/?figure=${safe}">Open in Constellation</a></div>
-      </div>`;
-    }
-    async function boot(){
-      try{
-        const res = await fetch(DATA_URL);
-        const data = await res.json();
-        const figs = Array.from(new Set(data.map(d=>d.Figure))).filter(Boolean);
-        const watch = figs.filter(f => !CORE.has(f));
-        document.getElementById("watchmen").innerHTML = watch.map(cardHtml).join("");
-      }catch(e){
-        document.getElementById("watchmen").innerHTML = "<div class='muted'>Could not load figures.</div>";
-      }
-    }
-    boot();
-  </script>
+(async function hydrate(){
+  try{
+    const r = await fetch("/jar/calendar/illumina1/data.json?v=1", {cache:"no-store"});
+    if(!r.ok) return;
+    const data = await r.json();
+    const map = {};
+    (data || data.days ? data.days : data).forEach(d=>{
+      const fig = (d.Figure || d.figure || d.figure_name || d.FIGURE || "").trim();
+      const day = d.Day || d.day;
+      if(!fig || !day) return;
+      map[fig] = map[fig] || [];
+      map[fig].push(day);
+    });
+    PANTHEON.forEach(p=>{
+      const keys = [p.name];
+      const days = (keys.flatMap(k=>map[k]||[])).sort((a,b)=>a-b);
+      const list = days.length? days.join(", ") : "—";
+      const slug = p.slug;
+      const daysEl = document.getElementById(`days-${slug}`);
+      const countEl= document.getElementById(`count-${slug}`);
+      if(daysEl) daysEl.textContent = "Days: " + list;
+      if(countEl) countEl.textContent = "Appearances: " + (days.length||0);
+    });
+  }catch(_){ }
+})();
+</script>
 </body>
 </html>
