@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Storage · jar.plnt.earth</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🏺%3C/text%3E%3C/svg%3E">
+<style>
+:root{--bg:#0b0b0d;--panel:#121216;--ink:#eaeaf2;--muted:#a9adc2;--accent:#9dfcff;--accent2:#ffd36b;--ring:rgba(157,252,255,.35)}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(1200px 800px at 10% -10%,rgba(157,252,255,.06),transparent 60%),radial-gradient(900px 600px at 110% 10%,rgba(255,211,107,.06),transparent 60%),var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+.wrap{max-width:1100px;margin:auto;padding:20px}
+header{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:16px}
+.brand{display:flex;align-items:center;gap:10px}.dot{width:12px;height:12px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent2))}
+nav{display:flex;flex-wrap:wrap;gap:8px}nav a{padding:8px 10px;background:#191922;border:1px solid #22232c;border-radius:10px;color:var(--accent)}
+h1{font-size:24px;margin:8px 0 4px}.sub{color:var(--muted)}
+.panel{background:var(--panel);border:1px solid #1e2030;border-radius:16px;padding:14px;box-shadow:0 0 0 1px rgba(157,252,255,.03) inset}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.input,textarea{width:100%;padding:8px 10px;border-radius:10px;border:1px solid #2a2d40;background:#10121a;color:#eaeaf2}
+.btn{padding:10px 12px;border-radius:10px;border:1px solid #23263a;background:#151726;color:#e9ecff}
+.meter{height:10px;border-radius:999px;background:#141623;border:1px solid #2a2d40;overflow:hidden}
+.meter>span{display:block;height:100%;background:linear-gradient(90deg,#ffd36b,#9dfcff)}
+.jar{height:200px;border:2px solid #2a2d40;border-radius:20px 20px 12px 12px;background:linear-gradient(180deg,rgba(255,211,107,.15),rgba(157,252,255,.08));position:relative;overflow:hidden}
+.honey{position:absolute;left:0;right:0;bottom:0;height:40%;background:linear-gradient(180deg,rgba(255,211,107,.45),rgba(255,211,107,.25))}
+.silica{position:absolute;left:10px;bottom:44%;width:42px;height:22px;border-radius:4px;background:#e6e6f0;color:#10111a;display:grid;place-items:center;font-size:11px;border:1px solid #c9cde0}
+.list{max-height:360px;overflow:auto;border:1px solid #1f2030;border-radius:12px}
+th,td{padding:10px 12px;border-bottom:1px solid #1f2030;vertical-align:top}
+.badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #2a2d40;background:#141623;color:#cfd3ea;font-size:12px}
+.footer{margin-top:12px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand"><div class="dot"></div><div><h1>Storage</h1><div class="sub">Honey + Silica preservation vignette</div></div></div>
+    <nav>
+      <a href="/jar/">Jar</a><a href="/jar/calendar/illumina1/">Calendar</a><a href="/jar/day/">Day</a>
+      <a href="/tunes/">Tunes</a><a href="/interludes/">Interludes</a><a href="/seeds/">Seeds</a>
+      <a href="/references/">References</a><a href="/references/archive/">Archive</a><a href="/references/science/">Science</a>
+      <a href="/jar/compatibility/">Compatibility</a><a href="/jar/dreams/">Dreams</a><a href="/jar/modes/neon/">Neon</a><a href="/jar/pollen/">Pollen</a>
+    </nav>
+  </header>
+
+  <div class="grid">
+    <div class="panel">
+      <h3 style="margin:0 0 8px">Jar Vignette</h3>
+      <div class="jar">
+        <div class="honey" id="honey"></div>
+        <div class="silica" id="silica">silica</div>
+      </div>
+      <div style="margin-top:10px">Silica packets: <input type="range" id="silicaCount" min="0" max="6" value="2" /> <span id="silicaLabel" class="badge">2</span></div>
+      <div class="meter" style="margin-top:8px"><span id="humidity" style="width:60%"></span></div>
+      <div class="sub" style="margin-top:6px">More silica → lower humidity → longer safe-until horizon.</div>
+    </div>
+
+    <div class="panel">
+      <h3 style="margin:0 0 8px">Add to Storage</h3>
+      <div class="field"><label>What</label><input id="sWhat" class="input" placeholder="e.g., Seed batch, Note bundle, Audio take"></div>
+      <div class="field"><label>Why (intent)</label><input id="sWhy" class="input" placeholder="Why are we preserving this?"></div>
+      <div class="field"><label>Tags (comma)</label><input id="sTags" class="input" placeholder="honey, science, neon"></div>
+      <div class="field"><label>Days to keep sealed</label><input id="sDays" class="input" type="number" min="1" value="14"></div>
+      <div class="field"><label>Notes</label><textarea id="sNotes" rows="4" class="input" placeholder="Any handling instructions or cross-links"></textarea></div>
+      <button class="btn" id="saveBtn">Add</button>
+    </div>
+
+    <div class="panel">
+      <h3 style="margin:0 0 8px">Preserved Items</h3>
+      <div class="list">
+        <table id="storeTable"><thead><tr><th>What</th><th>Tags</th><th>Why</th><th>Sealed</th><th>Safe until</th><th>Notes</th><th></th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-top:12px">
+    <button class="btn" id="exportBtn">Export JSON</button>
+    <label class="btn" for="importFile" style="cursor:pointer">Import JSON</label>
+    <input id="importFile" type="file" accept="application/json" class="hidden">
+    <button class="btn" id="resetBtn">Reset</button>
+  </div>
+
+  <div class="footer">
+    <div>Local key: <span class="badge">jar_storage_v1</span></div>
+    <div>Tip: link Storage items from References → Archive for Moon continuity.</div>
+  </div>
+</div>
+
+<script>
+const KEY="jar_storage_v1";
+const tBody=document.querySelector("#storeTable tbody");
+const sWhat=document.getElementById("sWhat"), sWhy=document.getElementById("sWhy"), sTags=document.getElementById("sTags"), sNotes=document.getElementById("sNotes"), sDays=document.getElementById("sDays");
+const silicaCount=document.getElementById("silicaCount"), silicaLabel=document.getElementById("silicaLabel"), humidity=document.getElementById("humidity");
+
+function load(){try{const raw=localStorage.getItem(KEY);return raw?JSON.parse(raw):[]}catch(_){return []}}
+function save(rows){localStorage.setItem(KEY,JSON.stringify(rows))}
+function horizon(days, silica){const mod=Math.max(0, (silica*0.5)); return Math.round(days*(1+mod))}
+function saveItem(){
+  const rows=load(); const now=new Date(); const days=parseInt(sDays.value||"14",10);
+  const ext=horizon(days, parseInt(silicaCount.value,10));
+  const until=new Date(now.getTime()+ext*86400000).toISOString().slice(0,10);
+  rows.push({what:sWhat.value.trim(),why:sWhy.value.trim(),tags:(sTags.value||"").split(",").map(s=>s.trim()).filter(Boolean),sealed:new Date().toISOString().slice(0,10),until,notes:sNotes.value.trim()});
+  save(rows); render();
+  sWhat.value=""; sWhy.value=""; sTags.value=""; sNotes.value="";
+}
+function del(i){const rows=load(); rows.splice(i,1); save(rows); render()}
+function render(){
+  tBody.innerHTML=""; const rows=load();
+  rows.forEach((r,i)=>{
+    const tr=document.createElement("tr");
+    tr.innerHTML=`<td>${r.what||"—"}</td><td>${(r.tags||[]).map(t=>`<span class="badge">${t}</span>`).join(" ")}</td><td>${r.why||"—"}</td><td>${r.sealed}</td><td>${r.until}</td><td>${(r.notes||"").replace(/</g,"&lt;")}</td><td><button class="btn" data-del="${i}">✕</button></td>`;
+    tBody.appendChild(tr);
+  });
+  tBody.querySelectorAll("button[data-del]").forEach(b=>b.addEventListener("click",()=>del(parseInt(b.dataset.del,10))));
+}
+function setHumidity(){
+  const n=parseInt(silicaCount.value,10); silicaLabel.textContent=String(n);
+  const pct=Math.max(5, 80 - n*12); humidity.style.width=pct+"%";
+  document.getElementById("honey").style.height=(35+Math.min(45,n*3))+"%";
+  document.getElementById("silica").style.left=(10+n*10)+"px";
+}
+document.getElementById("saveBtn").addEventListener("click",saveItem);
+document.getElementById("exportBtn").addEventListener("click",()=>{
+  const blob=new Blob([localStorage.getItem(KEY)||"[]"],{type:"application/json"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="jar_storage.json"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),500);
+});
+document.getElementById("importFile").addEventListener("change",e=>{
+  const f=e.target.files&&e.target.files[0]; if(!f) return; const fr=new FileReader();
+  fr.onload=()=>{try{const data=JSON.parse(fr.result); if(Array.isArray(data)){localStorage.setItem(KEY,JSON.stringify(data)); render();}}catch(_){ } e.target.value="";};
+  fr.readAsText(f);
+});
+document.getElementById("resetBtn").addEventListener("click",()=>{localStorage.removeItem(KEY); render()});
+silicaCount.addEventListener("input",setHumidity);
+(function init(){setHumidity(); render()})();
+</script>
+</body>
+</html>
