@@ -13,13 +13,12 @@ nav a{display:inline-block;margin-right:8px;margin-top:6px;padding:8px 10px;bord
 .badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #2a2d40;background:#141623;color:#cfd3ea;font-size:12px}
 .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-top:10px}
 .cell{border:1px solid #23263a;border-radius:10px;padding:10px;background:#0f1119;min-height:88px;display:grid;gap:6px}
-.cell b{display:block}
-.meta{font-size:12px;color:#cfd3ea}
-.links{display:flex;gap:6px;flex-wrap:wrap}
+.cell b{display:block} .meta{font-size:12px;color:#cfd3ea} .links{display:flex;gap:6px;flex-wrap:wrap}
 .btn{display:inline-block;padding:6px 8px;border-radius:8px;border:1px solid #23263a;background:#151726;color:#e9ecff;text-decoration:none;font-size:12px}
 footer{color:var(--muted);margin-top:12px}
 :root[data-mode="honey"] body{background:linear-gradient(180deg,rgba(255,211,107,.10),transparent),var(--bg)}
-:root[data-mode="neon"]  body{background:linear-gradient(180deg,rgba(157,252,255,.10),transparent),var(--bg)}
+:root[data-mode="neon"] body{background:linear-gradient(180deg,rgba(157,252,255,.10),transparent),var(--bg)}
+.today{outline:2px solid #9dfcff; outline-offset:2px}
 </style></head><body><div class="wrap">
 <header>
   <div>
@@ -29,11 +28,20 @@ footer{color:var(--muted);margin-top:12px}
   <div><span class="badge">mode: <span id="mode">classic</span></span></div>
 </header>
 
-<nav aria-label="Primary">
-  <a href="/jar/">Jar</a><a href="/jar/day/">Day</a><a href="/tunes/">Tunes</a>
-  <a href="/interludes/">Interludes</a><a href="/seeds/">Seeds</a>
-  <a href="/references/">References</a><a href="/references/archive/">Archive</a><a href="/references/science/">Science</a>
-  <a href="/dreams/">Dreams</a><a href="/compatibility/">Compatibility</a><a href="/storage/">Storage</a><a href="/pollen/">Pollen</a>
+<nav>
+  <a href="/jar/">Jar</a>
+  <a href="/calendar/illumina1/">Calendar</a>
+  <a href="/day/">Day</a>
+  <a href="/tunes/">Tunes</a>
+  <a href="/interludes/">Interludes</a>
+  <a href="/seeds/">Seeds</a>
+  <a href="/references/">References</a>
+  <a href="/science/">Science</a>
+  <a href="/compatibility/">Compatibility</a>
+  <a href="/dreams/">Dreams</a>
+  <a href="/storage/">Storage</a>
+  <a href="/pollen/">Pollen</a>
+  <a href="/modes/neon/">Modes</a>
 </nav>
 
 <section class="panel" style="margin-top:12px">
@@ -47,102 +55,41 @@ footer{color:var(--muted);margin-top:12px}
 
 <footer>This calendar autoloads <code>data.json</code> from this folder when present.</footer>
 </div>
-
 <script>
-/* mode */
 (function(){var m=localStorage.getItem("jar_mode")||"classic";document.documentElement.dataset.mode=m;document.getElementById("mode").textContent=m})();
 
-/* build blank grid */
 const grid=document.getElementById("grid");
-for(let d=1; d<=42; d++){
-  const cell=document.createElement("div"); cell.className="cell"; cell.dataset.day=d;
-  cell.innerHTML = `<b>Day ${d}</b><div class="meta">—</div><div class="links"></div>`;
-  grid.appendChild(cell);
-}
+for(let d=1; d<=42; d++){const cell=document.createElement("div");cell.className="cell";cell.dataset.day=d;
+cell.innerHTML = `<b>Day ${d}</b><div class="meta">—</div><div class="links"></div>`; grid.appendChild(cell);}
 
-/* JSON loader
-   Looks for ./data.json with schema:
-{
-  "slug": "illumina1",
-  "start_date": "2025-11-05",
-  "days": [
-    {
-      "day": 1,
-      "date": "2025-11-05",
-      "title": "Song / Focus title",
-      "song_url": "https://youtube.com/…",
-      "seed": "Pumpkin (swallowed)",
-      "notes": "Honey → seed → sleep",
-      "mode": "honey",             // optional, overrides jar_mode tint for this card
-      "interlude": "Sabrina",      // optional
-      "watchmen": ["Roaring Kitty"]// optional
-    },
-    …
-  ]
-}
-*/
 const statusEl = document.getElementById("loadStatus");
 (async function loadData(){
   try{
-    const res = await fetch("./data.json?v=1", {cache:"no-store"});
+    const res = await fetch("./data.json?v=2", {cache:"no-store"});
     if(!res.ok) throw new Error("no data.json");
-    const data = await res.json();
-    statusEl.textContent = "data.json loaded";
-
-    // fill cells
+    const data = await res.json(); statusEl.textContent = "data.json loaded";
     (data.days||[]).forEach(item=>{
-      const d = Number(item.day); if(!d || d<1 || d>42) return;
+      const d=Number(item.day||item.Day); if(!d||d<1||d>42) return;
       const cell = grid.querySelector(`.cell[data-day="${d}"]`); if(!cell) return;
-
-      // Title line: link to song if provided
       const b = cell.querySelector("b");
-      if(item.title){
-        if(item.song_url){
-          b.innerHTML = `Day ${d} · <a href="${item.song_url}" target="_blank" rel="noopener">${item.title}</a>`;
-        }else{
-          b.textContent = `Day ${d} · ${item.title}`;
-        }
+      if(item.title||item.Track){
+        const t=item.title||item.Track; const u=item.song_url||item.URL;
+        b.innerHTML = u ? `Day ${d} · <a href="${u}" target="_blank" rel="noopener">${t}</a>` : `Day ${d} · ${t}`;
       }
-
-      // Meta: date + seed + interlude/watchmen
-      const meta = [];
-      if(item.date) meta.push(item.date);
-      if(item.seed) meta.push(item.seed);
-      if(item.interlude) meta.push(`Interlude: ${item.interlude}`);
-      if(item.watchmen && item.watchmen.length) meta.push(`Watchmen: ${item.watchmen.join(", ")}`);
+      const meta=[]; if(item.date||item.Date) meta.push(item.date||item.Date);
+      if(item.seed||item.SeedRitual) meta.push(item.seed||item.SeedRitual);
+      if(item.interlude||item.Figure) meta.push(`Figure: ${item.interlude||item.Figure}`);
       cell.querySelector(".meta").textContent = meta.join(" · ") || "—";
-
-      // Links row
-      const links = cell.querySelector(".links"); links.innerHTML = "";
-      if(item.song_url){ links.appendChild(linkBtn("Play", item.song_url)); }
-      // Day deep link (keeps your existing pattern)
-      const dayUrl = `/jar/day/?date=${encodeURIComponent(item.date || "")}`;
-      links.appendChild(linkBtn("Day", dayUrl));
-      // Optional: seed anchor (to your seed index or a specific page if you map names)
-      links.appendChild(linkBtn("Seed", "/seeds/"));
-
-      // Per-card tint override
-      if(item.mode){
-        if(item.mode==="honey") cell.style.background = "linear-gradient(180deg,rgba(255,211,107,.14),rgba(255,211,107,.05)),#0f1119";
-        if(item.mode==="neon")  cell.style.background = "linear-gradient(180deg,rgba(157,252,255,.14),rgba(157,252,255,.05)),#0f1119";
-      }
-      // Notes (small)
-      if(item.notes){
-        const note = document.createElement("div");
-        note.className="meta"; note.style.opacity=".9";
-        note.textContent = item.notes;
-        links.after(note);
-      }
+      const links = cell.querySelector(".links"); links.innerHTML="";
+      const dayUrl = `/day/?date=${encodeURIComponent(item.date||item.Date||"")}`; links.appendChild(linkBtn("Day", dayUrl));
+      if(item.song_url||item.URL) links.appendChild(linkBtn("Play", item.song_url||item.URL));
+      if(item.mode==="honey") cell.style.background = "linear-gradient(180deg,rgba(255,211,107,.14),rgba(255,211,107,.05)),#0f1119";
+      if(item.mode==="neon")  cell.style.background = "linear-gradient(180deg,rgba(157,252,255,.14),rgba(157,252,255,.05)),#0f1119";
     });
-  }catch(e){
-    statusEl.textContent = "no data.json (using placeholders)";
-  }
+    const today = new Date().toISOString().slice(0,10);
+    const match = (data.days||[]).find(x=> (x.date||x.Date)===today );
+    if(match){const c=grid.querySelector(`.cell[data-day="${match.day||match.Day}"]`); if(c) c.classList.add("today");}
+  }catch(e){statusEl.textContent="no data.json (using placeholders)";}
 })();
-
-function linkBtn(label, href){
-  const a=document.createElement("a");
-  a.className="btn"; a.href=href; a.target = href.startsWith("http") ? "_blank" : "_self"; a.rel="noopener";
-  a.textContent=label; return a;
-}
-</script>
-</body></html>
+function linkBtn(label, href){const a=document.createElement("a");a.className="btn";a.href=href;a.target=href.startsWith("http")?"_blank":"_self";a.rel="noopener";a.textContent=label;return a;}
+</script></body></html>
