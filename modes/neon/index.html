@@ -24,21 +24,32 @@ h1{font-size:24px;margin:8px 0 4px}.sub{color:var(--muted)}
 .footer{margin-top:12px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
 @media (max-width:900px){.grid{grid-template-columns:1fr}}
 </style>
+</head>
 <body>
 <div class="wrap">
   <header>
     <div class="brand"><div class="dot"></div><div><h1>Modes</h1><div class="sub">Classic · Honey · Neon</div></div></div>
     <nav>
-      <a href="/jar/">Jar</a><a href="/calendar/illumina1/">Calendar</a><a href="/day/">Day</a>
-      <a href="/tunes/">Tunes</a><a href="/interludes/">Interludes</a><a href="/seeds/">Seeds</a>
-      <a href="/references/">References</a><a href="/archive/">Archive</a><a href="/science/">Science</a>
-      <a href="/compatibility/">Compatibility</a><a href="/dreams/">Dreams</a><a href="/storage/">Storage</a><a href="/pollen/">Pollen</a><a href="/modes/neon/">Modes</a>
-    </nav>
+  <a href="/jar/">Jar</a>
+  <a href="/calendar/illumina1/">Calendar</a>
+  <a href="/day/">Day</a>
+  <a href="/tunes/">Tunes</a>
+  <a href="/interludes/">Interludes</a>
+  <a href="/seeds/">Seeds</a>
+  <a href="/references/">References</a>
+  <a href="/archive/">Archive</a>
+  <a href="/science/">Science</a>
+  <a href="/compatibility/">Compatibility</a>
+  <a href="/dreams/">Dreams</a>
+  <a href="/storage/">Storage</a>
+  <a href="/pollen/">Pollen</a>
+  <a href="/modes/neon/">Modes</a>
+</nav>
   </header>
 
   <div class="grid">
     <div class="panel">
-      <h3>Choose Mode</h3>
+      <h3 style="margin:0 0 8px">Choose Mode</h3>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="badge" data-mode="classic">Classic</button>
         <button class="badge" data-mode="honey">Honey</button>
@@ -55,7 +66,7 @@ h1{font-size:24px;margin:8px 0 4px}.sub{color:var(--muted)}
     </div>
 
     <div class="panel">
-      <h3>Preview</h3>
+      <h3 style="margin:0 0 8px">Preview</h3>
       <div id="pv" class="preview classic">
         <div style="text-align:center">
           <div style="font-size:22px">Live Preview</div>
@@ -65,9 +76,8 @@ h1{font-size:24px;margin:8px 0 4px}.sub{color:var(--muted)}
     </div>
 
     <div class="panel">
-      <h3>Developers</h3>
-      <pre style="white-space:pre-wrap;background:#0f1119;border:1px solid #1f2030;border-radius:10px;padding:10px;color:#cfd3ea">
-<code>// Read mode on other pages:
+      <h3 style="margin:0 0 8px">Developers</h3>
+      <pre style="white-space:pre-wrap;background:#0f1119;border:1px solid #1f2030;border-radius:10px;padding:10px;color:#cfd3ea;margin:0"><code>// Read mode on other pages:
 const mode = localStorage.getItem("jar_mode") || "classic";
 document.documentElement.dataset.mode = mode;
 // Then branch styles / behaviors by [data-mode="neon" | "honey" | "classic"]</code></pre>
