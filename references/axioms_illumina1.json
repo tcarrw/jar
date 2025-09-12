@@ -1,0 +1,137 @@
+[
+  {
+    "title": "42‑Day Illumina",
+    "body": "Each Illumina is a 42‑day public cycle anchored to a full moon; planning and reflection bookend the cycle.",
+    "tags": [
+      "cycle",
+      "time",
+      "public"
+    ]
+  },
+  {
+    "title": "1/7 Spiral Rule",
+    "body": "Days divisible by 7 (7, 14, 21, 28, 35, 42) are structural checkpoints; escalate or consolidate but do not drift.",
+    "tags": [
+      "time",
+      "rhythm",
+      "checkpoints"
+    ]
+  },
+  {
+    "title": "Triad Balance (Sun‑Bee‑Moon)",
+    "body": "☀️ Sun declares (Victory Song), 🐝 Bee works (daily pollination), 🌙 Moon archives (detached record). A cycle is healthy only when all three appear.",
+    "tags": [
+      "triad",
+      "roles",
+      "balance"
+    ]
+  },
+  {
+    "title": "Single Source of Truth (SSOT) for Calendar",
+    "body": "All day metadata flows from /jar/calendar/<slug>/data.json; other pages (calendar, tunes, pantheon) should read, not redefine.",
+    "tags": [
+      "data",
+      "integrity",
+      "calendar"
+    ]
+  },
+  {
+    "title": "Mode Tints Are Hints",
+    "body": "Classic = neutral archive; Honey = warmth for consolidation and care; Neon = deliberate overdrive. Mode is a lens, not a destination.",
+    "tags": [
+      "modes",
+      "ux",
+      "states"
+    ]
+  },
+  {
+    "title": "Seed Ritual Timing",
+    "body": "Chew + honey → faster/stronger onset; swallow → slower/smoother. Evening bias for dreamwork; day bias for focus.",
+    "tags": [
+      "seeds",
+      "timing",
+      "honey"
+    ]
+  },
+  {
+    "title": "Compatibility Lattice",
+    "body": "Pairings resolve to ✓ / ~ / ✗ across Honey, Smoke, Neon, Dreams, Sex. Defaults exist, but user notes override with evidence.",
+    "tags": [
+      "compatibility",
+      "safety",
+      "practice"
+    ]
+  },
+  {
+    "title": "Pollen Continuity",
+    "body": "A cycle carries forward via ‘pollen trails’: explicit links between source day and target day across cycles.",
+    "tags": [
+      "continuity",
+      "pollen",
+      "links"
+    ]
+  },
+  {
+    "title": "Dream Trace Protocol",
+    "body": "Capture minimal notes on waking (date, mood, tags). Review patterns weekly. Build an end‑of‑cycle map of recurring tags.",
+    "tags": [
+      "dreams",
+      "protocol",
+      "map"
+    ]
+  },
+  {
+    "title": "Storage & Silica Preservation",
+    "body": "When in doubt, preserve: store materials with silica (lower humidity) and a declared safe‑until horizon.",
+    "tags": [
+      "storage",
+      "silica",
+      "archive"
+    ]
+  },
+  {
+    "title": "Neon Escalation Guardrail",
+    "body": "Use Neon only with a defined objective window; return to Classic or Honey for integration.",
+    "tags": [
+      "neon",
+      "guardrail",
+      "integration"
+    ]
+  },
+  {
+    "title": "Day Deep‑Link Standard",
+    "body": "Day URLs accept a date query string (/day/?date=YYYY‑MM‑DD) to keep navigation consistent across tools.",
+    "tags": [
+      "routing",
+      "links",
+      "day"
+    ]
+  },
+  {
+    "title": "Figure Accountability",
+    "body": "Pantheon appearance is counted from calendar data; figures do not exist as decoration—each appearance must tie to a day’s intention.",
+    "tags": [
+      "pantheon",
+      "accountability",
+      "data"
+    ]
+  },
+  {
+    "title": "Checkpoint Seed (Royal Orange)",
+    "body": "Royal Orange is reserved for structural checkpoints (7/14/21/28/35/42) unless a stronger ritual need is documented.",
+    "tags": [
+      "seeds",
+      "royal-orange",
+      "checkpoints"
+    ]
+  },
+  {
+    "title": "Public Before Perfect",
+    "body": "Publish the working scaffold first, then iterate in public; cycle velocity matters more than polish.",
+    "tags": [
+      "shipping",
+      "velocity",
+      "public"
+    ]
+  }
+]
