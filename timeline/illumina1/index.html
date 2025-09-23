@@ -3,81 +3,145 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Illumina 1 — 6-Week Timeline</title>
+<title>Illumina 1 — 6‑Week Timeline</title>
 <meta name="theme-color" content="#0B0F19">
+<meta name="description" content="Six-week view of Illumina 1 with tabs for Explainer, Anchor · Public, and Anchor · Built. Fully client-side, reads the master 3‑in‑1 JSON.">
 <style>
-  :root{--bg:#0B0F19;--ink:#E6EAF2;--muted:#94A3B8;--line:rgba(255,255,255,.12);
-        --card:#0F1524;--hi:#A4E8FF}
+  :root{--bg:#0B0F19;--ink:#E6EAF2;--muted:#94A3B8;--line:rgba(255,255,255,.12);--card:#0F1524;--hi:#A4E8FF;--ok:#34D399;--gold:#F7C948}
+  *{box-sizing:border-box}
+  html,body{height:100%}
   body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Inter,Roboto,Arial}
-  .wrap{max-width:1100px;margin:0 auto;padding:20px 16px 80px}
-  h1{margin:0 0 6px;font-size:24px}
+  a{color:#BBD7FF;text-decoration:none}
+  .wrap{max-width:1100px;margin:0 auto;padding:22px 16px 80px}
+  header{display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+  h1{margin:0;font-size:26px}
   .sub{color:var(--muted)}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;border:1px solid var(--line);
+       background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);font-weight:700}
+  .btn:hover{border-color:rgba(164,232,255,.35)}
   .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
-  .tab{border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), #0F1524;cursor:pointer}
+  .tab{border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);cursor:pointer}
   .tab.active{outline:2px solid var(--hi)}
+  .meta{margin:6px 0 2px;color:var(--muted);font-size:13px}
   .grid{display:grid;gap:12px;grid-template-columns:repeat(3,minmax(0,1fr))}
   @media (max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
   @media (max-width:640px){.grid{grid-template-columns:1fr}}
-  .card{background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;min-height:160px}
   h3{margin:0 0 8px}
   .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:var(--muted)}
-  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
   .chip{border:1px solid var(--line);border-radius:999px;padding:4px 8px;font-size:12px;color:var(--muted)}
-  a{color:#BBD7FF;text-decoration:none}
+  .line{display:flex;gap:8px;align-items:center;margin:.25rem 0;flex-wrap:wrap}
+  .title{font-weight:700}
+  .empty{color:var(--muted)}
+  .footer{margin-top:16px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>Illumina 1 — 6-Week Timeline</h1>
-  <div class="sub">View the cycle by weeks (1–6). Switch tracks to see how Core, Time, and Zeta unfold.</div>
+  <header>
+    <h1>Illumina 1 — 6‑Week Timeline</h1>
+    <span class="sub">Switch playlists to view the cycle by weeks (1–6). Data loads from <span class="mono">Illumina1_Playlist_MASTER_3in1.json</span>.</span>
+  </header>
+
+  <div class="row" style="margin-top:8px">
+    <a class="btn" href="/day/?playlist=explainer">Open Day View</a>
+    <a class="btn" href="/map/">✨ Constellation Map</a>
+  </div>
 
   <div class="tabs" id="tabs"></div>
+  <div id="meta" class="meta">—</div>
   <div class="grid" id="weeks"></div>
 
-  <div style="margin-top:16px" class="row">
-    <a href="/day/?track=core" class="chip">Open Day View</a>
-    <a href="/map/" class="chip">Constellation Map</a>
+  <div class="footer">
+    <div>© <span id="yy"></span> PLNT.earth — Timeline</div>
+    <div class="row">
+      <a class="btn" href="/day/?playlist=explainer">Explainer</a>
+      <a class="btn" href="/day/?playlist=anchorPublic">Anchor · Public</a>
+      <a class="btn" href="/day/?playlist=anchorBuilt">Anchor · Built</a>
+    </div>
   </div>
 </div>
 
 <script>
-const DATA_URL = "/Illumina1_Playlist_MASTER_3in1.json";
-const nameFix = s => s; // keep simple here (optional: paste your fixName)
+const DATA_URL = "/Illumina1_Playlist_MASTER_3in1.json"; // same directory as jar root
+const PLAYLISTS = [
+  {key:"explainer", label:"Explainer"},
+  {key:"anchorPublic", label:"Anchor · Public"},
+  {key:"anchorBuilt", label:"Anchor · Built"}
+];
+
+// Name normalization (UTF/diacritics)
+const NAME_FIX = new Map([
+  ["beyonce","Beyoncé"],["beyoncé","Beyoncé"],
+  ["maneskin","Måneskin"],["måneskin","Måneskin"],
+  ["chloe","Chlöe"],["chloë","Chloë"]
+]);
+function fixUTF(s){ if(!s) return s; const n=(s.normalize?s.normalize("NFC"):s).trim(); const key=n.toLowerCase(); return NAME_FIX.get(key)||n; }
+function fixMojibake(s){
+  if(typeof s!=="string") return s;
+  return s.normalize("NFC").replace(/Beyonc\u00c3\u00a9/gi,"Beyoncé").replace(/M\u00c3\u00a5neskin/gi,"Måneskin").replace(/\u2019/g,"’");
+}
+function deepFix(o){ if(Array.isArray(o)) return o.map(deepFix); if(o&&typeof o==="object"){const x={}; for(const k in o) x[k]=deepFix(o[k]); return x;} return fixMojibake(o); }
 
 const weekOf = d => Math.ceil((d.Day||1)/7); // 1..6
+const dateFmt = s => s||"—";
 
-async function main(){
-  const r = await fetch(DATA_URL, {cache:"no-store"});
-  const master = await r.json();
-  const tracks = Object.keys(master.tracks||{});
+function renderTabs(active){
   const tabs = document.getElementById('tabs');
-  const weeks = document.getElementById('weeks');
-
-  function render(trackKey){
-    tabs.innerHTML = tracks.map(t=>`<button class="tab ${t===trackKey?'active':''}" data-t="${t}">${t}</button>`).join('');
-    const Days = (master.tracks[trackKey]?.Days)||[];
-    const buckets = [1,2,3,4,5,6].map(w => Days.filter(d => weekOf(d)===w));
-    weeks.innerHTML = buckets.map((days, i)=>`
-      <section class="card">
-        <h3>Week ${i+1}</h3>
-        ${days.length? days.map(d=>{
-          const [artist, song] = String(d.Track||"").split("–").map(s=> (s||"").trim());
-          return `<div class="row" style="margin:.25rem 0">
-            <span class="chip">${String(d.Day).padStart(2,"0")}</span>
-            <span>${nameFix(artist||"—")} — ${song||"—"}</span>
-            <span class="chip">${d.MoonPhase||""}</span>
-            <span class="chip">${d.SeedRitual||""}</span>
-          </div>`;
-        }).join("") : `<div class="mono">No items filed for this week (track “${trackKey}”).</div>`}
-      </section>
-    `).join('');
-    Array.from(document.querySelectorAll('.tab')).forEach(b => b.onclick=()=>render(b.dataset.t));
-  }
-
-  // default to core if present
-  render(tracks.includes('core')?'core':tracks[0]);
+  tabs.innerHTML = PLAYLISTS.map(p=>`<button class="tab ${p.key===active?'active':''}" data-k="${p.key}">${p.label}</button>`).join('');
+  Array.from(tabs.querySelectorAll('.tab')).forEach(btn=>btn.onclick=()=>render(btn.dataset.k));
 }
-main();
+
+let MASTER=null; // loaded JSON
+
+async function load(){
+  const r = await fetch(DATA_URL,{cache:"no-store"});
+  MASTER = deepFix(await r.json());
+}
+
+function getItem(day, key){ // key = explainer|anchorPublic|anchorBuilt
+  const k = key === 'explainer' ? 'Explainer' : key === 'anchorPublic' ? 'AnchorPublic' : 'AnchorBuilt';
+  return day[k] || null;
+}
+
+function lineFor(day, key){
+  const item = getItem(day, key);
+  if(!item) return `<div class="line empty"><span class="chip">${String(day.Day).padStart(2,'0')}</span> —</div>`;
+  const artist = fixUTF(item.artist||"");
+  const title = item.title || "—";
+  const yt = item.Platforms && item.Platforms.YouTube && item.Platforms.YouTube.url ? item.Platforms.YouTube.url : "";
+  const date = dateFmt(day.Date);
+  return `<div class="line">
+    <span class="chip">${String(day.Day).padStart(2,'0')}</span>
+    <span class="title">${artist? artist+" — ":""}${title}</span>
+    <span class="chip">${date}</span>
+    ${yt? `<a class="chip" href="${yt}" target="_blank" rel="noopener">YouTube</a>`: ''}
+    <a class="chip" href="/day/?playlist=${key}&date=${encodeURIComponent(day.Date||'')}">Open Day</a>
+  </div>`;
+}
+
+function render(activeKey){
+  const metaEl = document.getElementById('meta');
+  const weeks = document.getElementById('weeks');
+  const days = MASTER.days || MASTER.PerDay || [];
+  const m = MASTER.meta || { title:"Illumina", cycle:{start:"",end:"",days:days.length} };
+  metaEl.textContent = `${m.title||'Illumina'} • ${m.cycle?.start||''} — ${m.cycle?.end||''} • ${m.cycle?.days||days.length} days`;
+
+  renderTabs(activeKey);
+
+  const buckets = [1,2,3,4,5,6].map(w => days.filter(d => weekOf(d)===w));
+  weeks.innerHTML = buckets.map((arr,i)=>{
+    const body = arr.length ? arr.map(d=>lineFor(d, activeKey)).join('') : `<div class="mono">No items filed for this week.</div>`;
+    return `<section class="card"><h3>Week ${i+1}</h3>${body}</section>`;
+  }).join('');
+}
+
+(async function(){
+  document.getElementById('yy').textContent = new Date().getFullYear();
+  await load();
+  render('explainer');
+})();
 </script>
 </body>
 </html>
