@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PLNT Constellation Map</title>
+<meta name="description" content="A living constellation of PLNT.earth tracks orbiting Jar.">
+<style>
+  /* ===== Theme (Jar/Honey dark) ===== */
+  :root{
+    --bg:#0B0F19;           /* pepper-black */
+    --ink:#E6EAF2;          /* soft off-white */
+    --muted:#94A3B8;        /* slate */
+    --line:rgba(255,255,255,.12);
+    --card:#0F1524;         /* deep ink */
+    --accent:#A4E8FF;       /* ice blue */
+    --ok:#34D399;           /* green */
+    --tbd:#FBBF24;          /* amber */
+    --shadow:0 16px 40px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial;
+  }
+  a{color:inherit;text-decoration:none}
+
+  /* ===== Layout ===== */
+  .wrap{max-width:1200px;margin:0 auto;padding:28px}
+  header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+  h1{font-size:28px;margin:0;letter-spacing:.2px}
+  .sub{color:var(--muted)}
+  .legend{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 4px}
+  .legend .badge{border:1px solid var(--line)}
+
+  .group{margin:22px 0 10px;color:#BBD7FF;font-weight:700;font-size:12px;
+         letter-spacing:.08em;text-transform:uppercase}
+  .grid{
+    display:grid;gap:14px;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+  @media (max-width:1024px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
+  @media (max-width:768px){  .grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  @media (max-width:520px){  .grid{grid-template-columns:repeat(1,minmax(0,1fr));} }
+
+  /* ===== Cards ===== */
+  .card{
+    background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%) , var(--card);
+    border:1px solid var(--line);border-radius:16px;padding:14px 14px 48px;position:relative;
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    overflow:hidden; isolation:isolate;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:rgba(164,232,255,.35)}
+  .card.disabled{opacity:.58;pointer-events:none}
+  .row{display:flex;align-items:center;gap:10px}
+  .emoji{font-size:22px;line-height:1}
+  .title{font-weight:750;letter-spacing:.2px}
+  .tag{margin-top:4px;font-size:11px;padding:4px 8px;border-radius:999px;
+       border:1px solid var(--line);color:var(--muted);display:inline-block}
+  .url{margin-top:10px;font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--muted);
+       font-size:12px;word-break:break-all;opacity:.85}
+  .badges{position:absolute;top:10px;right:10px;display:flex;gap:6px}
+  .badge{font-size:10px;padding:3px 7px;border-radius:999px}
+  .live{background:rgba(52,211,153,.15);color:var(--ok);border:1px solid rgba(52,211,153,.35)}
+  .tbd{background:rgba(251,191,36,.12);color:var(--tbd);border:1px solid rgba(251,191,36,.35)}
+  .desc{
+    position:absolute;left:0;right:0;bottom:0;padding:10px 14px 12px;
+    background:linear-gradient(0deg, rgba(10,14,24,.9), rgba(10,14,24,.0));
+    color:#D7E6FF;font-size:12.5px;line-height:1.4;opacity:.0;transform:translateY(8px);
+    transition:opacity .18s ease, transform .18s ease;border-top:1px solid rgba(255,255,255,.06)
+  }
+  .card:hover .desc{opacity:1;transform:translateY(0)}
+  .note{color:var(--muted);font-size:13px;margin-top:18px}
+  hr{border:none;border-top:1px solid var(--line);margin:24px 0}
+
+  /* subtle glow on important */
+  .important::after{
+    content:"";position:absolute;inset:-10%;z-index:-1;
+    background:radial-gradient(600px 160px at 80% -20%, rgba(164,232,255,.10), transparent 60%);
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>PLNT Constellation Map</h1>
+    <span class="sub">Jar is the hub — explore the tracks that orbit it.</span>
+  </header>
+
+  <div class="legend">
+    <span class="badge live">Live</span>
+    <span class="badge tbd">TBD (placeholder)</span>
+  </div>
+
+  <!-- CORE -->
+  <div class="group">Core Hub</div>
+  <div class="grid" id="core"></div>
+
+  <!-- PRIMARY TRACKS -->
+  <div class="group">Primary Tracks</div>
+  <div class="grid" id="primary"></div>
+
+  <!-- SECONDARY / NARRATIVE -->
+  <div class="group">Secondary / Narrative</div>
+  <div class="grid" id="secondary"></div>
+
+  <!-- FUTURE (TBD) -->
+  <div class="group">Future / TBD</div>
+  <div class="grid" id="future"></div>
+
+  <hr>
+  <p class="note">
+    Pages marked <b>TBD</b> are planned but not linked yet. Hover cards for short descriptions.
+    Edit the lists in the script to add/remove sites. This page is standalone and responsive across desktop, iPad, and iPhone.
+  </p>
+</div>
+
+<script>
+/* ========= Data =========
+   Only include what you want surfaced. Everything here is Live unless exists:false.
+   Removed per your note: beta, blue, cats, comet, float, groweggs, hack, red, shop, yt
+*/
+const CORE = [
+  {name:"PLNT Earth", emoji:"🌍", url:"https://plnt.earth", exists:true, tag:"root",
+   desc:"Home star. Entry point to the PLNT system and links out to projects."},
+  {name:"Jar (hub)", emoji:"🍯", url:"https://jar.plnt.earth", exists:true, tag:"ritual • archive",
+   desc:"The honeycomb. Days, seeds, interludes, and cycle archives — everything flows back here."},
+  {name:"Honey", emoji:"🐝", url:"https://honey.plnt.earth", exists:true, tag:"taste • notes",
+   desc:"Taste log + explainer — the Bee in the Illumina triad."},
+  {name:"Tunes", emoji:"🎶", url:"https://tunes.plnt.earth", exists:true, tag:"playlist",
+   desc:"Music engine for cycles — anchors, interludes, and overlays."}
+];
+
+const PRIMARY = [
+  {name:"Time", emoji:"⏳", url:"https://time.plnt.earth", exists:true, tag:"physics",
+   desc:"Equations & constants. Public fits, visuals, and forecasts tied to Illumina." , important:true},
+  {name:"Zeta", emoji:"🌀", url:"https://zeta.plnt.earth", exists:true, tag:"math • infinity",
+   desc:"Counting games → formal proofs. Experimental math & visuals on infinity.", important:true},
+  {name:"DNA", emoji:"🧬", url:"https://dna.plnt.earth", exists:true, tag:"biology",
+   desc:"Replication, growth, and living systems as Illumina mirrors."},
+  {name:"Intelligence", emoji:"🧠", url:"https://intelligence.plnt.earth", exists:true, tag:"ai • cognition",
+   desc:"Thinking about thinking. Human/AI co-creation, cognition experiments."},
+  {name:"42", emoji:"❖", url:"https://42.plnt.earth", exists:true, tag:"meta",
+   desc:"Meaning of 42. Meta-layer tying cycles, science, and culture."},
+  {name:"Lighthouse", emoji:"🗼", url:"https://lighthouse.plnt.earth", exists:true, tag:"guidance",
+   desc:"Signal vs noise. Navigation notes, heuristics, and gentle beacons."},
+  {name:"Boiled Peanuts", emoji:"🥜", url:"https://boiledpeanuts.plnt.earth", exists:true, tag:"culture • play",
+   desc:"Playful ritual & taste anchor — southern snack as cultural spark."}
+];
+
+const SECONDARY = [
+  {name:"Big Bang", emoji:"💥", url:"https://bigbang.plnt.earth", exists:true, tag:"origin",
+   desc:"Genesis page. First sparks, origin notes, and cosmology metaphors."},
+  {name:"Brain", emoji:"🧩", url:"https://brain.plnt.earth", exists:true, tag:"mind map",
+   desc:"Scratchpad of ideas — nodes that later become full tracks."},
+  {name:"Constellation", emoji:"✨", url:"https://constellation.plnt.earth", exists:true, tag:"map",
+   desc:"Alternate star map / experiments in layout."},
+  {name:"Dimensions", emoji:"📐", url:"https://dimensions.plnt.earth", exists:true, tag:"space • scale",
+   desc:"How size, scale, and perspective change meaning."},
+  {name:"Hash", emoji:"#️⃣", url:"https://hash.plnt.earth", exists:true, tag:"ids • signatures",
+   desc:"Hashes, signatures, and provenance for public artifacts."},
+  {name:"Heat Death", emoji:"🧊", url:"https://heatdeath.plnt.earth", exists:true, tag:"limits",
+   desc:"Far-future metaphors. What happens when the lights go out."},
+  {name:"Hello World", emoji:"👋", url:"https://helloworld.plnt.earth", exists:true, tag:"onboarding",
+   desc:"Start here. A soft hello for new explorers."},
+  {name:"Illumina", emoji:"🌕", url:"https://illumina.plnt.earth", exists:true, tag:"cycles",
+   desc:"The 42-day lunar rhythm. Anchors, interludes, and archives."},
+  {name:"iMoon", emoji:"🌙", url:"https://imoon.plnt.earth", exists:true, tag:"moon labs",
+   desc:"Small lunar experiments and personal moon notes."},
+  {name:"Life", emoji:"🌱", url:"https://life.plnt.earth", exists:true, tag:"vital",
+   desc:"Notes on vitality, practice, and living systems."},
+  {name:"Manifold Dynamics", emoji:"🧭", url:"https://manifolddynamics.plnt.earth", exists:true, tag:"flows",
+   desc:"Flows on curved spaces. Gentle dynamical systems playground."},
+  {name:"Mollid", emoji:"🫧", url:"https://mollid.plnt.earth", exists:true, tag:"artifact",
+   desc:"An odd little artifact; playful pocket site."},
+  {name:"My", emoji:"🙋", url:"https://my.plnt.earth", exists:true, tag:"profile",
+   desc:"Personal portal — your links and active work."},
+  {name:"Predictions", emoji:"📈", url:"https://predictions.plnt.earth", exists:true, tag:"forecasts",
+   desc:"Timestamped forecasts and scoring (log-loss, calibration)."},
+  {name:"Prime", emoji:"🔢", url:"https://prime.plnt.earth", exists:true, tag:"numbers",
+   desc:"Prime curiosities and counting experiments."},
+  {name:"Return", emoji:"↩️", url:"https://return.plnt.earth", exists:true, tag:"recurrence",
+   desc:"Coming back around — closures, loops, and homecoming."},
+  {name:"Rock", emoji:"🪨", url:"https://rock.plnt.earth", exists:true, tag:"ground",
+   desc:"Grounding pages — materiality, weight, and presence."},
+  {name:"Room", emoji:"🚪", url:"https://room.plnt.earth", exists:true, tag:"spaces",
+   desc:"Rooms as stages — how context frames the ritual."},
+  {name:"Save Cooper", emoji:"🚀", url:"https://savecooper.plnt.earth", exists:true, tag:"myth • story",
+   desc:"Narrative arc: rescue the explorer. A mythic thread."},
+  {name:"Storage", emoji:"🗄️", url:"https://storage.plnt.earth", exists:true, tag:"assets",
+   desc:"Public files and artifact hosting for PLNT."},
+  {name:"Time", emoji:"⏱️", url:"https://time.plnt.earth", exists:true, tag:"physics (alt)",
+   desc:"Mirror link in case visitors discover it here first."},
+  {name:"Travel", emoji:"✈️", url:"https://travel.plnt.earth", exists:true, tag:"journey",
+   desc:"Movement through space/time — literal and symbolic travel."},
+  {name:"Tunes", emoji:"🎧", url:"https://tunes.plnt.earth", exists:true, tag:"music (alt)",
+   desc:"Mirror link — quick jump back to the player."},
+  {name:"Virus", emoji:"🧬", url:"https://virus.plnt.earth", exists:true, tag:"memes",
+   desc:"How ideas spread; memetics and culture drift."},
+  {name:"Weight Loss", emoji:"⚖️", url:"https://weightloss.plnt.earth", exists:true, tag:"health",
+   desc:"Protocols and experiments around body metrics."},
+  {name:"Boop", emoji:"🫧", url:"https://boop.plnt.earth", exists:true, tag:"playground",
+   desc:"Interactive doodads and joyful tests."}
+];
+
+const FUTURE = [
+  {name:"Fire", emoji:"🔥", url:"https://fire.plnt.earth", exists:false, tag:"tbd",
+   desc:"Transformation, energy, risk — a second-orbit anchor in waiting."},
+  {name:"Mycelium", emoji:"🍄", url:"https://mycelium.plnt.earth", exists:false, tag:"tbd",
+   desc:"Hidden networks, collaboration, and underground exchange."},
+  {name:"Aether", emoji:"💨", url:"https://aether.plnt.earth", exists:false, tag:"tbd",
+   desc:"Unseen fields. Breath, space between, subtle mediums."},
+  {name:"Ocean", emoji:"🌊", url:"https://ocean.plnt.earth", exists:false, tag:"tbd",
+   desc:"Depth, flow, tides, and planetary time."},
+  {name:"Echo", emoji:"📼", url:"https://echo.plnt.earth", exists:false, tag:"tbd",
+   desc:"Memory & resonance — how signals persist across cycles."}
+];
+
+/* ========= Render ========= */
+function el(tag, cls, text){ const n=document.createElement(tag); if(cls)n.className=cls; if(text)n.textContent=text; return n; }
+
+function card(item){
+  const clickable = item.exists;
+  const root = document.createElement(clickable ? 'a' : 'div');
+  if(clickable){ root.href=item.url; root.target="_blank"; root.rel="noopener"; }
+  root.className = 'card' + (item.exists ? (item.important ? ' important' : '') : ' disabled');
+
+  const badges = el('div','badges');
+  const b = el('span','badge '+(item.exists?'live':'tbd'), item.exists?'Live':'TBD');
+  badges.appendChild(b);
+
+  const row = el('div','row');
+  row.appendChild(el('div','emoji',item.emoji));
+  row.appendChild(el('div','title',item.name));
+
+  const tag = el('div','tag', item.tag);
+  const url = el('div','url', item.url);
+  const desc = el('div','desc', item.desc || '');
+
+  root.appendChild(badges);
+  root.appendChild(row);
+  root.appendChild(tag);
+  root.appendChild(url);
+  if(item.desc) root.appendChild(desc);
+  return root;
+}
+function mount(list, id){
+  const root = document.getElementById(id);
+  list.forEach(x => root.appendChild(card(x)));
+}
+mount(CORE,'core');
+mount(PRIMARY,'primary');
+mount(SECONDARY,'secondary');
+mount(FUTURE,'future');
+</script>
+</body>
+</html>
