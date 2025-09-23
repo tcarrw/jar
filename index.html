@@ -1,212 +1,249 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>JAR · Illumina 1</title>
-<meta name="theme-color" content="#0B0F19">
-<meta name="description" content="Illumina 1 calendar with fixed player, day links, moon phases, and quick navigation.">
-<style>
-  :root{--bg:#0B0F19;--ink:#E5E7EB;--muted:#9CA3AF;--line:rgba(229,231,235,.14);
-        --gold:#F5D142;--amber:#F59E0B;--ok:#34D399;--warn:#FBBF24;--err:#F87171;
-        --r:14px;--pad:18px;--maxw:1200px}
-  *{box-sizing:border-box}html,body{height:100%}
-  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;padding-top:260px}
-  a{color:var(--gold);text-decoration:none}a:hover{text-decoration:underline}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:clamp(14px,3.5vw,28px)}
-  h1{margin:.2em 0 .2em;font-size:clamp(22px,4.6vw,34px);line-height:1.2}
-  h2{margin:.6em 0 .2em;font-size:clamp(18px,3.4vw,22px)}
-  .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-  .btn{border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:rgba(255,255,255,.02);color:var(--ink);cursor:pointer}
-  .btn.primary{border-color:var(--amber);background:linear-gradient(180deg,rgba(245,209,66,.15),rgba(245,158,11,.12))}
-  .pill{border:1px solid var(--line);border-radius:999px;padding:6px 10px;color:var(--muted);font-size:13px}
-  input[type="text"], select{padding:10px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.02);color:var(--ink);font:inherit}
-  .grid{display:grid;gap:14px}.cards{grid-template-columns:1fr}
-  @media (min-width:980px){.cards{grid-template-columns:1.1fr .9fr}}
-  .card{border:1px solid var(--line);border-radius:var(--r);padding:var(--pad);background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0))}
-  .muted{color:var(--muted)}.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
-  .tag{font-size:12px;color:#cfd3db;border:1px dashed var(--line);border-radius:8px;padding:2px 8px;white-space:nowrap}
+  <!-- Ensure extended characters render correctly -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Jar — Illumina Hub</title>
+  <meta name="description" content="Jar is the Illumina hub: days, seeds, anchors, interludes, and archives.">
+  <meta name="theme-color" content="#0B0F19">
+  <style>
+    :root{
+      --bg:#0B0F19;           /* pepper black */
+      --ink:#E6EAF2;          /* soft off-white */
+      --muted:#94A3B8;        /* slate */
+      --line:rgba(255,255,255,.12);
+      --card:#0F1524;         /* deep ink */
+      --accent:#A4E8FF;       /* ice blue */
+      --honey:#F7C948;        /* honey gold */
+      --good:#34D399;
+      --danger:#F87171;
+      --shadow:0 16px 40px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;background:var(--bg);color:var(--ink);
+      font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,"Apple Color Emoji","Segoe UI Emoji";
+    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1200px;margin:0 auto;padding:24px}
+    header{
+      display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;
+      border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:18px
+    }
+    .brand{display:flex;align-items:center;gap:10px}
+    .logo{font-size:22px}
+    h1{margin:0;font-size:26px;letter-spacing:.2px}
+    nav{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 12px;border:1px solid var(--line);border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);
+      transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
+      font-weight:600;color:var(--ink)
+    }
+    .btn:hover{transform:translateY(-2px);border-color:rgba(164,232,255,.35);box-shadow:var(--shadow)}
+    .btn.gold{border-color:rgba(247,201,72,.35)}
+    .pill{
+      display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;
+      background:rgba(164,232,255,.12); border:1px solid rgba(164,232,255,.35);
+      color:#c8f1ff; font-size:12px
+    }
+    .grid{
+      display:grid;gap:14px;margin-top:18px;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+    @media (max-width:1024px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
+    @media (max-width:640px){  .grid{grid-template-columns:repeat(1,minmax(0,1fr));} }
 
-  /* Calendar */
-  .cal{display:grid;gap:10px}
-  .calHead{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-  .calHead span{font-size:12px;color:#cfd3db;text-align:center}
-  .calGrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
-  .day{border:1px solid var(--line);border-radius:12px;padding:10px;background:rgba(255,255,255,.02);display:grid;gap:6px;min-height:92px}
-  .day:hover{outline:1px solid rgba(245,209,66,.35)}
-  .dtop{display:flex;gap:6px;align-items:center;justify-content:space-between}
-  .dnum{font-weight:700}.dmeta{display:flex;gap:6px;align-items:center}
-  .dtitle{font-size:14px;line-height:1.3}.dartist{font-size:13px;color:#cfd3db}
-  .badge{font-size:12px;color:var(--muted);border:1px dashed var(--line);border-radius:999px;padding:2px 8px;width:max-content}
-
-  /* Fixed player header */
-  .playerbar{position:fixed;left:0;right:0;top:0;z-index:9999;background:rgba(11,15,25,.96);
-             backdrop-filter:saturate(120%) blur(10px);border-bottom:1px solid var(--line)}
-  .playerwrap{max-width:var(--maxw);margin:0 auto;padding:8px 0 8px}
-  .player-row{display:grid;gap:10px;grid-template-columns:1fr;align-items:center;padding:0 clamp(14px,3.5vw,28px)}
-  @media (min-width:980px){.player-row{grid-template-columns:360px 1fr 220px}}
-  .now{font-size:13px;color:var(--muted)} .now strong{color:#e9ecf3}
-  .frame{position:relative;aspect-ratio:16/9;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:rgba(255,255,255,.03)}
-  .frame #yt{position:absolute;inset:0}
-  .controls{display:flex;gap:8px;justify-content:flex-end;align-items:center}
-</style>
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%) , var(--card);
+      border:1px solid var(--line);border-radius:16px;padding:14px;position:relative;overflow:hidden;
+      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+      min-height:140px
+    }
+    .card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:rgba(164,232,255,.35)}
+    .card h3{margin:2px 0 6px 0;font-size:18px}
+    .muted{color:var(--muted)}
+    .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:var(--muted)}
+    .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .emoji{font-size:20px}
+    .footer{margin-top:28px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+    .link{color:#BBD7FF;text-decoration:underline dotted 1px}
+    .kbd{font:12px/1 ui-monospace,Menlo,Consolas,monospace;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:6px;padding:2px 6px}
+    .ok{color:var(--good)} .bad{color:var(--danger)}
+    /* small helper for sections */
+    .section-title{margin-top:10px;font-weight:800;color:#BBD7FF;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+    .list{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+    .chip{font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.02)}
+    /* name preview */
+    .namefix{display:flex;gap:8px;align-items:center;margin-top:8px}
+    input[type="text"]{
+      width:100%;max-width:520px;background:var(--card);border:1px solid var(--line);color:var(--ink);
+      padding:10px 12px;border-radius:12px;outline:none
+    }
+    .mini{font-size:12px;color:var(--muted)}
+  </style>
 </head>
 <body>
-<!-- Fixed Player -->
-<div class="playerbar" aria-label="Player">
-  <div class="playerwrap">
-    <div class="player-row">
-      <div>
-        <div class="now">Now Playing — Explainer Lane</div>
-        <div id="nowTitle" class="mono" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">—</div>
-        <div id="nowMeta" class="muted" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">—</div>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">🍯</div>
+        <div>
+          <h1>Jar</h1>
+          <div class="mini">Illumina hub — days, seeds, anchors, archives</div>
+        </div>
       </div>
-      <div class="frame"><div id="yt"></div></div>
-      <div class="controls">
-        <button class="btn" id="prevBtn" type="button">⟨ Prev</button>
-        <button class="btn" id="nextBtn" type="button">Next ⟩</button>
-        <button class="btn primary" id="shareBtn" type="button">Share</button>
+      <nav>
+        <a class="btn" href="/map/" title="See the PLNT constellation">✨ Constellation Map</a>
+        <a class="btn" href="https://tunes.plnt.earth" target="_blank" rel="noopener">🎶 Tunes</a>
+        <a class="btn" href="https://time.plnt.earth" target="_blank" rel="noopener">⏳ Time</a>
+        <a class="btn" href="https://zeta.plnt.earth" target="_blank" rel="noopener">🌀 Zeta</a>
+        <span class="pill" title="plnt.earth currently serves Jar">Apex <strong>plnt.earth</strong> → Jar</span>
+      </nav>
+    </header>
+
+    <section class="grid">
+      <!-- Calendar / Days -->
+      <a class="card" href="/calendar/illumina1/">
+        <div class="row"><div class="emoji">🌕</div><h3>Illumina 1 Calendar</h3></div>
+        <p class="muted">42-day rhythm of seeds, phases, and anchors. View days and notes.</p>
+        <div class="section-title">Quick links</div>
+        <div class="list">
+          <span class="chip"><span class="emoji">🗓️</span> Today view</span>
+          <span class="chip"><span class="emoji">🍯</span> Seeds</span>
+          <span class="chip"><span class="emoji">🎧</span> Daily track</span>
+        </div>
+      </a>
+
+      <!-- Science / Axioms -->
+      <a class="card" href="/science/">
+        <div class="row"><div class="emoji">🔭</div><h3>Science & Axioms</h3></div>
+        <p class="muted">Time scaling visuals, axioms, and links out to Time + Zeta.</p>
+        <div class="section-title">Includes</div>
+        <div class="list">
+          <span class="chip">t = Gm/c³ ladder</span>
+          <span class="chip">α, β live constants</span>
+          <span class="chip">Infinity games</span>
+        </div>
+      </a>
+
+      <!-- Map -->
+      <a class="card" href="/map/">
+        <div class="row"><div class="emoji">✨</div><h3>PLNT Constellation</h3></div>
+        <p class="muted">See all tracks orbiting Jar — Time, Zeta, DNA, Lighthouse, and more.</p>
+        <div class="section-title">Why it’s here</div>
+        <div class="list">
+          <span class="chip">Jar as hub</span>
+          <span class="chip">Track timelines</span>
+          <span class="chip">Live vs TBD</span>
+        </div>
+      </a>
+
+      <!-- Honey explainer -->
+      <a class="card" href="https://honey.plnt.earth" target="_blank" rel="noopener">
+        <div class="row"><div class="emoji">🐝</div><h3>Honey</h3></div>
+        <p class="muted">Taste notes and rituals — the Bee track that keeps the rhythm sticky.</p>
+        <div class="section-title">You’ll find</div>
+        <div class="list">
+          <span class="chip">Seed FAQ</span>
+          <span class="chip">Ritual tips</span>
+          <span class="chip">Dream trace</span>
+        </div>
+      </a>
+
+      <!-- Tunes -->
+      <a class="card" href="https://tunes.plnt.earth" target="_blank" rel="noopener">
+        <div class="row"><div class="emoji">🎶</div><h3>Tunes</h3></div>
+        <p class="muted">Daily player with anchors/interludes — stays in view while you scroll.</p>
+        <div class="section-title">Status</div>
+        <div class="list">
+          <span class="chip">Autoplay next</span>
+          <span class="chip">Sticky header</span>
+          <span class="chip">YouTube & local</span>
+        </div>
+      </a>
+
+      <!-- Time -->
+      <a class="card" href="https://time.plnt.earth" target="_blank" rel="noopener">
+        <div class="row"><div class="emoji">⏳</div><h3>Time Track</h3></div>
+        <p class="muted">Public 42-day proof sprint: fit α, β; publish predictions; score outcomes.</p>
+        <div class="section-title">Artifacts</div>
+        <div class="list">
+          <span class="chip">SVG ladder</span>
+          <span class="chip">Forecast ledger</span>
+          <span class="chip">DOI snapshots</span>
+        </div>
+      </a>
+    </section>
+
+    <!-- UTF/diacritics fixer + live preview -->
+    <section class="card" style="margin-top:18px;">
+      <div class="row"><div class="emoji">🛠️</div><h3>Text Helper — fix artist names</h3></div>
+      <p class="muted">Jar renders UTF-8 (see <span class="mono">&lt;meta charset="utf-8"&gt;</span>). If your data feed has ASCII fallbacks (“Beyonce”, “Maneskin”, “Chloe”), this helper normalizes to the correct names for display.</p>
+      <div class="namefix">
+        <input id="nameIn" type="text" placeholder="Type a name (e.g., Beyonce, Maneskin, Chloe, A$AP Rocky)">
+        <span id="nameOut" class="pill">→ </span>
+      </div>
+      <div class="mini" style="margin-top:6px">This runs on render; your stored data can remain unchanged if you prefer.</div>
+    </section>
+
+    <div class="footer">
+      <div>© <span id="yy"></span> PLNT.earth — Jar</div>
+      <div>
+        <a class="link" href="/map/">Constellation</a> •
+        <a class="link" href="https://time.plnt.earth" target="_blank" rel="noopener">Time</a> •
+        <a class="link" href="https://zeta.plnt.earth" target="_blank" rel="noopener">Zeta</a>
       </div>
     </div>
   </div>
-</div>
 
-<div class="wrap">
-  <header class="card">
-    <h1>Illumina 1 — Calendar</h1>
-    <div class="row" style="gap:8px;margin-top:6px">
-      <span id="cycle" class="pill">Loading…</span>
-      <label class="pill" for="search">Search</label>
-      <input id="search" type="text" placeholder="Title, artist, figure, seed…">
-      <select id="dayJump" aria-label="Jump to day"><option value="">Jump to day…</option></select>
-      <button id="reload" class="btn" type="button">Reload</button>
-      <!-- FIXED: absolute links -->
-      <a class="btn" href="https://tunes.plnt.earth/" target="_blank" rel="noopener">Open Tunes</a>
-      <a class="btn" href="/day/" rel="noopener">Open Day Viewer</a>
-      <a class="btn" href="/calendar/illumina1/" rel="noopener">View Calendar</a>
-    </div>
-    <p class="muted">Click any day to open the Day page. YouTube is canonical; Apple Music/Spotify appear on Tunes.</p>
-  </header>
+  <script>
+    // Year
+    document.getElementById('yy').textContent = new Date().getFullYear();
 
-  <section class="card">
-    <div class="cal">
-      <div class="calHead">
-        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
-      </div>
-      <div id="calGrid" class="calGrid" aria-live="polite"></div>
-    </div>
-  </section>
+    // Minimal name normalizer for common cases.
+    // 1) Unicode NFC normalization (handles accent composition).
+    // 2) Dictionary-based replacements for common ASCII fallbacks/variants.
+    const NAME_FIX = new Map([
+      // Core examples you mentioned
+      ["beyonce", "Beyoncé"],
+      ["beyoncé", "Beyoncé"],
+      ["maneskin", "Måneskin"],
+      ["måneskin", "Måneskin"],
+      ["chloe", "Chlöe"],      // the artist "Chlöe" (Bailey)
+      ["chloë", "Chloë"],      // keep option for diaeresis variant
+      // A few other frequent offenders (optional)
+      ["rosalia", "Rosalía"],
+      ["jose gonzalez", "José González"],
+      ["asap rocky", "A$AP Rocky"], // stylistic name
+      ["dua lipa", "Dua Lipa"],     // casing
+      ["bts", "BTS"]
+    ]);
 
-  <section class="grid cards" style="margin-top:12px">
-    <div class="card">
-      <h2>Links</h2>
-      <div class="row" style="gap:10px">
-        <!-- FIXED: absolute site-root links -->
-        <a class="btn" href="/interludes/" target="_blank" rel="noopener">Interludes</a>
-        <a class="btn" href="/references/" target="_blank" rel="noopener">References</a>
-        <a class="btn" href="/science/" target="_blank" rel="noopener">Science</a>
-        <a class="btn" href="/archive/" target="_blank" rel="noopener">Archive</a>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>About this cycle</h2>
-      <p class="muted">The calendar pulls from a master JSON. Each day links to a Day page with an inline player and your Figure/Seed notes.</p>
-    </div>
-  </section>
-
-  <footer class="muted" style="margin:24px 0 8px;text-align:center">PLNT Earth · Illumina</footer>
-</div>
-
-<!-- YouTube Iframe API -->
-<script>
-  (function(){ if(window.YT && YT.Player) return; var s=document.createElement('script'); s.src="https://www.youtube.com/iframe_api"; s.async=true; document.head.appendChild(s);} )();
-</script>
-
-<script>
-(function(){
-  /* Config */
-  var MASTER_JSON = '/Illumina1_Playlist_MASTER_3in1.json';
-  var LANE = 'Explainer';
-
-  /* State */
-  var data=null, filteredTerm='', playOrder=[], currentIndex=-1;
-  var player, playerReady=false, queuedId=null;
-
-  /* Els */
-  var calGrid = document.getElementById('calGrid');
-  var cycle = document.getElementById('cycle');
-  var search = document.getElementById('search');
-  var dayJump = document.getElementById('dayJump');
-  var reloadBtn = document.getElementById('reload');
-  var shareBtn = document.getElementById('shareBtn');
-  var nowTitle = document.getElementById('nowTitle');
-  var nowMeta = document.getElementById('nowMeta');
-  var prevBtn = document.getElementById('prevBtn');
-  var nextBtn = document.getElementById('nextBtn');
-
-  function syncHeader(){ var h=document.querySelector('.playerbar').getBoundingClientRect().height; document.body.style.paddingTop=(Math.ceil(h)+8)+'px'; }
-  window.addEventListener('resize', syncHeader, {passive:true}); window.addEventListener('orientationchange', syncHeader, {passive:true}); setTimeout(syncHeader,60);
-
-  function safe(v){return v==null?'':String(v);}
-  function moon(dateStr){ if(!dateStr) return ''; var d=new Date(dateStr+'T00:00:00Z'), syn=29.53058867, base=Date.UTC(2025,0,29); var days=(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate())-base)/86400000; var p=((days%syn)+syn)%syn; return ['🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘'][Math.floor((p/syn)*8+0.5)%8]; }
-  function extractID(u){ if(!u) return ''; var m=String(u).match(/[?&]v=([^&]+)/)||String(u).match(/youtu\.be\/([^?&]+)/)||String(u).match(/embed\/([^?&]+)/); return m?m[1]:''; }
-  function hasYT(row){ return !!(row && row.Platforms && row.Platforms.YouTube && row.Platforms.YouTube.url); }
-  function match(row,fig,seed){ if(!filteredTerm) return true; var t=filteredTerm.toLowerCase(); return (safe(row.title).toLowerCase().includes(t)||safe(row.artist).toLowerCase().includes(t)||safe(fig).toLowerCase().includes(t)||safe(seed).toLowerCase().includes(t)); }
-
-  function build(){
-    if(!data||!data.PerDay){ calGrid.innerHTML=''; return; }
-    var list=data.PerDay, start=list[0]&&list[0].Date?new Date(list[0].Date+'T00:00:00'):null, offset=start?new Date(start).getDay():0;
-    playOrder=[];
-    var cells=[];
-    for(var i=0;i<offset;i++) cells.push('<div class="day" aria-hidden="true" style="opacity:.25"></div>');
-    for(var k=0;k<list.length;k++){
-      var base=list[k], d=base.Day, date=base.Date, row=base[LANE]||{}, fig=base.Figure, seed=base.SeedRitual;
-      if(!match(row,fig,seed)) continue;
-      var url = hasYT(row) ? row.Platforms.YouTube.url : '';
-      if(url) playOrder.push(d);
-      var href='/day/?date='+encodeURIComponent(date||'');
-      cells.push(
-        '<a class="day" href="'+href+'" id="d-'+d+'">'+
-          '<div class="dtop"><span class="dnum">Day '+d+'</span><div class="dmeta"><span class="badge mono">'+safe(date)+'</span><span class="badge">'+moon(date)+'</span></div></div>'+
-          '<div class="dtitle">'+safe(row.title)+'</div>'+
-          '<div class="dartist">'+safe(row.artist)+'</div>'+
-          (url?'<div class="badge">YouTube</div>':'<div class="badge" style="color:#f3c6c6">Missing</div>')+
-        '</a>'
-      );
+    function fixName(raw){
+      if(!raw) return "";
+      // Unicode normalize (NFC) then lowercase for lookup
+      const nfc = raw.normalize ? raw.normalize('NFC') : raw;
+      const key = nfc.trim().toLowerCase();
+      return NAME_FIX.get(key) || nfc; // default to original if unknown
     }
-    calGrid.innerHTML=cells.join('');
-    var opts=['<option value="">Jump to day…</option>']; for(var j=0;j<list.length;j++) opts.push('<option value="'+(j+1)+'">Day '+(j+1)+'</option>'); dayJump.innerHTML=opts.join('');
-  }
 
-  function setNow(day){ var base=data.PerDay[day-1]||{}, row=base[LANE]||{}; nowTitle.textContent=safe(row.title||'—'); nowMeta.textContent=safe(row.artist||'—')+' · Day '+day+' · '+safe(base.Date||''); }
-  function playByDay(day){ var row=(data.PerDay[day-1]||{})[LANE]||{}, url=row.Platforms&&row.Platforms.YouTube&&row.Platforms.YouTube.url, id=extractID(url); if(!id) return; setNow(day); currentIndex=playOrder.indexOf(day); if(player&&playerReady){player.loadVideoById(id);}else{queuedId=id;} var el=document.getElementById('d-'+day); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
-  function next(){ if(playOrder.length===0) return; currentIndex = currentIndex<0?0:Math.min(currentIndex+1, playOrder.length-1); playByDay(playOrder[currentIndex]); }
-  function prev(){ if(playOrder.length===0) return; currentIndex = currentIndex<=0?0:currentIndex-1; playByDay(playOrder[currentIndex]); }
+    // Live preview for the helper
+    const $in = document.getElementById('nameIn');
+    const $out = document.getElementById('nameOut');
+    function render(){
+      const val = $in.value || "";
+      const fixed = fixName(val);
+      $out.textContent = "→ " + fixed;
+    }
+    $in.addEventListener('input', render);
+    render();
 
-  function render(){ if(!data||!data.PerDay){ cycle.textContent='No data'; return; } build(); var s=data.Cycle&&data.Cycle.Start?data.Cycle.Start:'—', e=data.Cycle&&data.Cycle.End?data.Cycle.End:'—'; cycle.textContent='Cycle: '+s+' → '+e+' · Days: '+data.PerDay.length; }
-
-  function load(){ fetch('/Illumina1_Playlist_MASTER_3in1.json',{cache:'no-store'}).then(r=>r.json()).then(json=>{data=json; render();}).catch(()=>{cycle.textContent='Load error'; calGrid.innerHTML='';}); }
-
-  // UI
-  search.addEventListener('input', function(){ filteredTerm=this.value.trim(); render(); });
-  dayJump.addEventListener('change', function(){ var v=parseInt(this.value||'',10); if(v) location.href='/day/?day='+v; });
-  reloadBtn.addEventListener('click', load);
-  shareBtn.addEventListener('click', function(){ if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(location.href); this.textContent='Copied!'; var s=this; setTimeout(function(){s.textContent='Share';},900);} });
-  prevBtn.addEventListener('click', prev); nextBtn.addEventListener('click', next);
-
-  // YouTube API callback
-  window.onYouTubeIframeAPIReady = function(){
-    player = new YT.Player('yt', {
-      width:'100%', height:'100%', playerVars:{rel:0,modestbranding:1,playsinline:1},
-      events:{ onReady:function(){ playerReady=true; if(queuedId){player.loadVideoById(queuedId); queuedId=null;} },
-               onStateChange:function(e){ if(e.data===YT.PlayerState.ENDED) next(); } }
-    });
-  };
-
-  // init
-  load();
-})();
-</script>
+    // Example usage in your app code:
+    // displayName = fixName(rawArtistNameFromJSON)
+  </script>
 </body>
 </html>
