@@ -1,319 +1,295 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>JAR · Day</title>
+<title>Jar — Day</title>
 <meta name="theme-color" content="#0B0F19">
-<meta name="description" content="Illumina Day view with player, figure, seed ritual, and notes.">
+<meta name="description" content="Illumina Day view: sticky player, seed, notes, and t-scale badge.">
 <style>
   :root{
-    --bg:#0B0F19;--ink:#E5E7EB;--muted:#9CA3AF;--line:rgba(229,231,235,.15);
-    --gold:#F5D142;--amber:#F59E0B;--ok:#34D399;--warn:#FBBF24;--err:#F87171;
-    --r:14px;--pad:18px;--maxw:1100px;
+    --bg:#0B0F19; --ink:#E6EAF2; --muted:#94A3B8; --line:rgba(255,255,255,.12);
+    --card:#0F1524; --hi:#A4E8FF; --gold:#F7C948; --ok:#34D399; --err:#F87171;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
-  body{
-    margin:0;background:var(--bg);color:var(--ink);
-    font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-    padding-top:260px; /* space for fixed header; JS nudges this */
-  }
-  a{color:var(--gold);text-decoration:none}
-  a:hover{text-decoration:underline}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:clamp(14px,3.5vw,28px)}
-  h1{margin:.2em 0 .2em;font-size:clamp(22px,4.6vw,34px);line-height:1.2}
-  h2{margin:.6em 0 .2em;font-size:clamp(18px,3.4vw,22px)}
-  p{margin:.4em 0 1em;color:#e6e9f1}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Inter,Roboto,Arial}
+  a{color:#BBD7FF;text-decoration:none}
+  .wrap{max-width:1100px;margin:0 auto;padding:16px 16px 72px}
+
+  header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#0B0F19 70%,rgba(11,15,25,.8));
+         border-bottom:1px solid var(--line);backdrop-filter:saturate(140%) blur(8px)}
+  .head{display:grid;grid-template-columns:1fr 520px;gap:14px;align-items:center;padding:10px 16px}
+  @media (max-width:980px){ .head{grid-template-columns:1fr} }
+  h1{margin:0;font-size:22px}
+  .sub{color:var(--muted);font-size:13px}
+  .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;border:1px solid var(--line);font-size:12px}
+  .ok{color:var(--ok);border-color:rgba(52,211,153,.35);background:rgba(52,211,153,.12)}
+  .warn{color:#FBBF24;border-color:rgba(251,191,36,.35);background:rgba(251,191,36,.12)}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+  .player{position:relative;aspect-ratio:16/9;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#000}
+  .player iframe{width:100%;height:100%;border:0}
+
+  .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:16px}
+  @media (max-width:980px){ .grid{grid-template-columns:1fr} }
+
+  .card{background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);
+        border:1px solid var(--line);border-radius:14px;padding:14px}
+  .card h3{margin:0 0 6px;font-size:18px}
+  .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:var(--muted)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px;background:rgba(255,255,255,.02)}
+  .big{font-size:28px;line-height:1.1;font-weight:800;letter-spacing:.2px}
   .muted{color:var(--muted)}
-  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
-
-  /* Cards & layout */
-  .grid{display:grid;gap:12px}
-  .cards{grid-template-columns:1fr}
-  @media (min-width:860px){.cards{grid-template-columns:1.15fr .85fr}}
-  .card{border:1px solid var(--line);border-radius:var(--r);padding:var(--pad);
-        background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0))}
-  .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-  .tag{font-size:12px;color:#cfd3db;border:1px dashed var(--line);border-radius:8px;padding:2px 8px}
-  .pill{border:1px solid var(--line);border-radius:999px;padding:6px 10px;color:var(--muted);font-size:13px}
-
-  /* Buttons & inputs */
-  .btn{border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:rgba(255,255,255,.02);color:var(--ink);cursor:pointer}
-  .btn.primary{border-color:var(--amber);background:linear-gradient(180deg,rgba(245,209,66,.15),rgba(245,158,11,.12))}
-  input[type="text"], textarea{
-    width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.02);color:var(--ink);font:inherit
-  }
-  textarea{min-height:120px}
-
-  /* Fixed player header */
-  .playerbar{position:fixed;left:0;right:0;top:0;z-index:9999;background:rgba(11,15,25,.96);backdrop-filter:saturate(120%) blur(10px);border-bottom:1px solid var(--line)}
-  .playerwrap{max-width:var(--maxw);margin:0 auto;padding:8px 0 8px}
-  .player-row{display:grid;gap:10px;grid-template-columns:1fr;align-items:center;padding:0 clamp(14px,3.5vw,28px)}
-  @media (min-width:860px){.player-row{grid-template-columns:360px 1fr 220px}}
-  .now{font-size:13px;color:var(--muted)} .now strong{color:#e9ecf3}
-  .frame{position:relative;aspect-ratio:16/9;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:rgba(255,255,255,.03)}
-  .frame #yt{position:absolute;inset:0}
-  .controls{display:flex;gap:8px;justify-content:flex-end;align-items:center}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;border:1px solid var(--line);
+       background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);
+       font-weight:700;cursor:pointer}
+  .btn:hover{border-color:rgba(164,232,255,.35)}
+  .footer{margin-top:18px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 </style>
 </head>
 <body>
-<!-- Fixed Player Header -->
-<div class="playerbar" aria-label="Player">
-  <div class="playerwrap">
-    <div class="player-row">
-      <div>
-        <div class="now">Now Playing</div>
-        <div id="nowTitle" class="mono" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">—</div>
-        <div id="nowMeta" class="muted" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">—</div>
+<header>
+  <div class="head wrap">
+    <div>
+      <h1 id="dayTitle">Day —</h1>
+      <div class="row">
+        <span id="dateOut" class="pill">—</span>
+        <span id="phaseOut" class="pill">—</span>
+        <span id="tscale" class="pill">t-scale —</span>
       </div>
-      <div class="frame"><div id="yt"></div></div>
-      <div class="controls">
-        <button class="btn" id="prevBtn" type="button">⟨ Prev</button>
-        <button class="btn" id="nextBtn" type="button">Next ⟩</button>
-        <button class="btn primary" id="shareBtn" type="button">Share Day</button>
-      </div>
+      <div class="sub">Sticky player stays while you scroll • Autoplay next enabled</div>
     </div>
+    <div class="player" id="playerBox">
+      <!-- YouTube embed injected here -->
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="grid">
+    <section class="card" id="nowCard">
+      <h3>Now Playing</h3>
+      <div id="trackTitle" class="big">—</div>
+      <div class="chips" style="margin-top:8px">
+        <span id="artistChip" class="chip">Artist —</span>
+        <span id="seedChip" class="chip">Seed —</span>
+        <span id="figureChip" class="chip">Figure —</span>
+        <span id="phaseChip" class="chip">Phase —</span>
+      </div>
+      <div class="mono" id="urlOut" style="margin-top:8px">—</div>
+      <div class="row" style="margin-top:10px">
+        <a class="btn" id="openInYT" target="_blank" rel="noopener">Open in YouTube</a>
+        <a class="btn" href="/map/">✨ Constellation Map</a>
+        <a class="btn" href="/calendar/illumina1/">🗓️ Calendar</a>
+      </div>
+    </section>
+
+    <aside class="card">
+      <h3>Ritual</h3>
+      <div id="ritualText" class="muted">—</div>
+      <div class="chips" style="margin-top:10px">
+        <span class="chip">🍯 Honey</span><span class="chip">🐝 Bee</span><span class="chip">🌙 Moon</span>
+      </div>
+      <hr style="border:none;border-top:1px solid var(--line);margin:12px 0">
+      <h3>Notes</h3>
+      <div id="notes" class="muted">—</div>
+    </aside>
+  </div>
+
+  <section class="card" style="margin-top:14px">
+    <h3>Queue</h3>
+    <div id="queue" class="mono">—</div>
+  </section>
+
+  <div class="footer">
+    <div>© <span id="yy"></span> PLNT.earth — Jar Day</div>
+    <div><a href="/map/">Constellation</a> • <a href="https://tunes.plnt.earth" target="_blank" rel="noopener">Tunes</a> • <a href="https://time.plnt.earth" target="_blank" rel="noopener">Time</a></div>
   </div>
 </div>
 
-<div class="wrap">
-  <header class="card">
-    <div class="row">
-      <span class="tag" id="dayTag">Day —</span>
-      <span class="tag mono" id="dateTag">—</span>
-      <span class="tag" id="phaseTag">—</span>
-    </div>
-    <h1 id="title">—</h1>
-    <div class="muted" id="artist">—</div>
-    <div class="row" style="gap:10px;margin-top:8px">
-      <a class="btn" id="openTunes" target="_blank" rel="noopener">Open in Tunes</a>
-      <button class="btn" id="copyTunes" type="button">Copy Tunes Link</button>
-    </div>
-  </header>
-
-  <section class="grid cards">
-    <div class="card">
-      <h2>Figure</h2>
-      <p id="figure">—</p>
-      <h2>Seed Ritual</h2>
-      <p id="seed">—</p>
-    </div>
-
-    <div class="card">
-      <h2>Links</h2>
-      <div class="row" style="gap:10px">
-        <a class="btn" href="https://jar.plnt.earth/interludes/" target="_blank" rel="noopener">Interludes</a>
-        <a class="btn" href="https://jar.plnt.earth/references/" target="_blank" rel="noopener">References</a>
-        <a class="btn" href="https://jar.plnt.earth/science/" target="_blank" rel="noopener">Science</a>
-        <a class="btn" href="https://jar.plnt.earth/archive/" target="_blank" rel="noopener">Archive</a>
-      </div>
-      <h2 style="margin-top:16px">Navigate</h2>
-      <div class="row" style="gap:10px">
-        <button class="btn" id="goPrev" type="button">⟨ Previous Day</button>
-        <button class="btn" id="goNext" type="button">Next Day ⟩</button>
-      </div>
-    </div>
-  </section>
-
-  <section class="card" style="margin-top:12px">
-    <h2>Moon Note (private)</h2>
-    <p class="muted">Saved on your device only.</p>
-    <textarea id="note" placeholder="Write your note…"></textarea>
-    <div class="row" style="gap:10px;margin-top:8px">
-      <button class="btn primary" id="saveNote" type="button">Save Note</button>
-      <button class="btn" id="clearNote" type="button">Clear</button>
-    </div>
-  </section>
-</div>
-
-<!-- YouTube Iframe API loader -->
 <script>
-  (function loadYT(){
-    if (window.YT && YT.Player) return;
-    var s = document.createElement('script'); s.src="https://www.youtube.com/iframe_api"; s.async=true;
-    document.head.appendChild(s);
-  })();
-</script>
+/* ============ Utilities ============ */
+const QS = new URLSearchParams(location.search);
+const DAY = parseInt(QS.get("day")||"0",10) || null;
+const DATE = QS.get("date") || null; // supports either ?day=N or ?date=YYYY-MM-DD
 
-<script>
-(function(){
-  /* ===== Config ===== */
-  var MASTER_JSON = '/Illumina1_Playlist_MASTER_3in1.json'; // update if needed
-  var DEFAULT_LANE = 'Explainer'; // we show Explainer content on JAR
+document.getElementById("yy").textContent = new Date().getFullYear();
 
-  /* ===== State ===== */
-  var data = null, dayNum = null, dayIdx = null, laneRow = null;
-  var player, playerReady=false, queuedId=null;
+/* Normalizer for artist names (handles ASCII fallbacks & NFC) */
+const NAME_FIX = new Map([
+  ["beyonce","Beyoncé"],["beyoncé","Beyoncé"],
+  ["maneskin","Måneskin"],["måneskin","Måneskin"],["maneskın","Måneskin"],
+  ["chloe","Chlöe"],["chloë","Chloë"],
+  ["rosalia","Rosalía"],["jose gonzalez","José González"],
+  ["asap rocky","A$AP Rocky"],["dua lipa","Dua Lipa"]
+]);
+function fixName(raw){
+  if(!raw) return "";
+  const nfc = raw.normalize ? raw.normalize("NFC") : raw;
+  const key = nfc.trim().toLowerCase();
+  return NAME_FIX.get(key) || nfc;
+}
 
-  /* ===== Elements ===== */
-  var dayTag = document.getElementById('dayTag');
-  var dateTag = document.getElementById('dateTag');
-  var phaseTag = document.getElementById('phaseTag');
-  var titleEl = document.getElementById('title');
-  var artistEl = document.getElementById('artist');
-  var figureEl = document.getElementById('figure');
-  var seedEl = document.getElementById('seed');
-  var openTunes = document.getElementById('openTunes');
-  var copyTunes = document.getElementById('copyTunes');
-  var prevBtn = document.getElementById('prevBtn');
-  var nextBtn = document.getElementById('nextBtn');
-  var goPrev = document.getElementById('goPrev');
-  var goNext = document.getElementById('goNext');
-  var shareBtn = document.getElementById('shareBtn');
-  var noteEl = document.getElementById('note');
-  var saveNote = document.getElementById('saveNote');
-  var clearNote = document.getElementById('clearNote');
-  var nowTitle = document.getElementById('nowTitle');
-  var nowMeta = document.getElementById('nowMeta');
+/* Safe join (prevents /jar/jar/ nesting mistakes) */
+function cleanHref(href){ try{ return new URL(href, location.origin).href; } catch(_){ return href; } }
 
-  function setBodyTop(){
-    var bar = document.querySelector('.playerbar'); if(!bar) return;
-    var h = bar.getBoundingClientRect().height;
-    document.body.style.paddingTop = Math.ceil(h+8) + 'px';
+/* ============ Data source ============ 
+   Priority:
+   1) /data/illumina1.json (authoritative)
+   2) Fallback= minimal object with YouTube playlist if JSON missing
+*/
+const DATA_URL = "/data/illumina1.json"; // your canonical 42-day list
+
+async function loadData(){
+  try{
+    const r = await fetch(DATA_URL,{cache:"no-store"});
+    if(!r.ok) throw new Error("not ok");
+    return await r.json();
+  }catch(e){
+    // Fallback skeleton (set your playlist id if needed)
+    return { playlistId:"PLXXXXXXXXXXXX", Days:[] };
   }
-  window.addEventListener('resize', setBodyTop, {passive:true});
-  window.addEventListener('orientationchange', setBodyTop, {passive:true});
-  setTimeout(setBodyTop, 60);
+}
 
-  function safe(v){ return v==null ? "" : String(v); }
-
-  function moonEmoji(dateStr){
-    if(!dateStr) return '—';
-    var d = new Date(dateStr+'T00:00:00Z'), syn=29.53058867, base=Date.UTC(2025,0,29);
-    var days=(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate())-base)/86400000;
-    var phase=((days%syn)+syn)%syn;
-    return ['🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘'][Math.floor((phase/syn)*8+0.5)%8];
+/* Find day by ?day or ?date */
+function selectDay(model){
+  if (DAY != null && model.Days && model.Days[DAY-1]) return model.Days[DAY-1];
+  if (DATE){
+    const d = (model.Days||[]).find(x => x.Date === DATE);
+    if (d) return d;
   }
+  // default to first defined day
+  return (model.Days||[])[0] || null;
+}
 
-  function extractYouTubeID(u){
-    if(!u) return "";
-    var s=String(u);
-    var m = s.match(/[?&]v=([^&]+)/) || s.match(/youtu\.be\/([^?&]+)/) || s.match(/embed\/([^?&]+)/);
-    return m ? m[1] : "";
-  }
-
-  function queryDay(){
-    var q = new URLSearchParams(location.search);
-    var d = q.get('day'), dt = q.get('date');
-    if(d){ return {by:'day', val:Math.max(1, Math.min(42, parseInt(d,10)||1))}; }
-    if(dt){ return {by:'date', val:dt}; }
-    return {by:'day', val:1};
-  }
-
-  function findDayIdx(meta){
-    if(!data || !data.PerDay) return 0;
-    if(meta.by==='day'){
-      var idx = (meta.val-1)|0;
-      return Math.max(0, Math.min(idx, data.PerDay.length-1));
-    } else {
-      var i = data.PerDay.findIndex(x=>safe(x.Date)===safe(meta.val));
-      return i<0?0:i;
+/* ============ Time constants badge (optional) ============ */
+async function loadTScale(dateStr){
+  try{
+    const r = await fetch("/data/time_constants.json",{cache:"no-store"});
+    if(!r.ok) throw new Error();
+    const d = await r.json();
+    document.getElementById("tscale").textContent = `t-scale α ${(+d.alpha).toFixed(2)} · β ${(+d.beta).toFixed(2)}`;
+    // if you also store per-day weights:
+    const s = (d.day_signals||[]).find(x=>x.date===dateStr);
+    if (s){
+      const w = 0.5*((+s.tm_weight||0)+(+s.te_weight||0));
+      document.getElementById("tscale").textContent += ` · w ${w.toFixed(2)}`;
+      document.getElementById("tscale").classList.add("ok");
     }
+  }catch(_){
+    document.getElementById("tscale").textContent = "t-scale —";
   }
+}
 
-  function setNow(day){
-    var base = data.PerDay[day-1] || {};
-    var row = base[DEFAULT_LANE] || {};
-    nowTitle.textContent = safe(row.title||'—');
-    nowMeta.textContent  = safe(row.artist||'—') + ' · Day '+day+' · '+safe(base.Date||'')+' · '+moonEmoji(base.Date||'');
-  }
+/* ============ Player & autoplay-next ============ */
+let ytReady = false, player = null, queue = [];
 
-  function renderDay(){
-    var base = data.PerDay[dayIdx] || {};
-    dayNum = base.Day || (dayIdx+1);
-    laneRow = base[DEFAULT_LANE] || {};
+function renderYouTube(videoId, listId){
+  const box = document.getElementById("playerBox");
+  const src = listId
+    ? `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&enablejsapi=1&modestbranding=1&playsinline=1&list=${encodeURIComponent(listId)}`
+    : `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&enablejsapi=1&modestbranding=1&playsinline=1`;
+  box.innerHTML = `<iframe id="yt" src="${src}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+  setupYTAPI();
+}
 
-    dayTag.textContent = 'Day '+dayNum;
-    dateTag.textContent = safe(base.Date||'—');
-    phaseTag.textContent = moonEmoji(base.Date||'');
-    titleEl.textContent = safe(laneRow.title||'—');
-    artistEl.textContent = safe(laneRow.artist||'—');
-    figureEl.textContent = safe(base.Figure||'—');
-    seedEl.textContent = safe(base.SeedRitual||'—');
+function setupYTAPI(){
+  if (window.YT && YT.Player) return initYT();
+  const s = document.createElement("script");
+  s.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(s);
+  window.onYouTubeIframeAPIReady = initYT;
+}
 
-    // Tunes link (deep link to this day in Explainer)
-    var tunes = new URL('https://tunes.plnt.earth/');
-    tunes.searchParams.set('lane', DEFAULT_LANE);
-    tunes.searchParams.set('day', dayNum);
-    openTunes.href = tunes.toString();
-
-    copyTunes.onclick = function(){
-      if(navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(tunes.toString());
-        copyTunes.textContent='Copied!'; setTimeout(()=>copyTunes.textContent='Copy Tunes Link',900);
+function initYT(){
+  if (ytReady) return;
+  ytReady = true;
+  player = new YT.Player("yt", {
+    events: {
+      'onStateChange': ev => {
+        // 0 = ended, 1 = playing, 2 = paused
+        if (ev.data === 0) playNext();
       }
-    };
-
-    // Share this JAR day
-    shareBtn.onclick = function(){
-      var u = new URL(location.href);
-      u.searchParams.set('day', dayNum);
-      if(navigator.clipboard && navigator.clipboard.writeText){
-        navigator.clipboard.writeText(u.toString());
-        shareBtn.textContent='Copied!'; setTimeout(()=>shareBtn.textContent='Share Day',900);
-      }
-    };
-
-    // Notes (local)
-    var key = 'jar_note_'+(base.Date||('day_'+dayNum));
-    noteEl.value = localStorage.getItem(key) || '';
-    saveNote.onclick = function(){ localStorage.setItem(key, noteEl.value||'');};
-    clearNote.onclick = function(){ noteEl.value=''; localStorage.removeItem(key);};
-
-    // Prev/Next navigation
-    goPrev.onclick = prevDay; prevBtn.onclick = prevDay;
-    goNext.onclick = nextDay; nextBtn.onclick = nextDay;
-
-    // Play the day's video if player ready or queue if not
-    var id = extractYouTubeID(safe((laneRow.Platforms&&laneRow.Platforms.YouTube&&laneRow.Platforms.YouTube.url)||''));
-    if(id){
-      if(playerReady){ player.loadVideoById(id); }
-      else { queuedId = id; }
-      setNow(dayNum);
     }
-    // scroll to top content area (under fixed bar)
-    window.scrollTo({top:0,behavior:'smooth'});
+  });
+}
+
+function playNext(){
+  // If we embedded with a playlist, YT will auto-advance.
+  // If not, we manually load the next video from our queue.
+  if (queue.length > 1){
+    queue.shift();
+    const nxt = queue[0];
+    if (player && player.loadVideoById) player.loadVideoById(nxt.videoId);
+    updateNow(nxt);
+    renderQueue();
+  }
+}
+
+/* ============ Render helpers ============ */
+function updateNow(day){
+  const title = (day.Track || "").trim();
+  const parts = title.split("–");
+  const left = parts[0] ? parts[0].trim() : "";
+  const right = parts[1] ? parts[1].trim() : "";
+  const artist = fixName(left);
+  const song = right || title;
+
+  document.getElementById("dayTitle").textContent = `Day ${day.Day || "—"}`;
+  document.getElementById("dateOut").textContent = day.Date || "—";
+  document.getElementById("phaseOut").textContent = day.MoonPhase || "—";
+  document.getElementById("phaseChip").textContent = day.MoonPhase || "—";
+  document.getElementById("trackTitle").textContent = song;
+  document.getElementById("artistChip").textContent = artist || "—";
+  document.getElementById("seedChip").textContent = day.SeedRitual || "—";
+  document.getElementById("figureChip").textContent = day.Figure || "—";
+  document.getElementById("urlOut").textContent = day.URL || "—";
+  document.getElementById("openInYT").href = cleanHref(day.URL || "https://youtube.com");
+  document.getElementById("ritualText").textContent = day.SeedRitual ? `Tonight: ${day.SeedRitual}` : "—";
+  document.getElementById("notes").textContent = day.Notes || "";
+}
+
+function renderQueue(){
+  const q = queue.map((d,i)=>{
+    const t=(d.Track||"").trim();
+    const parts=t.split("–");
+    const artist=fixName(parts[0]?parts[0].trim():"");
+    const song=parts[1]?parts[1].trim():t;
+    return `${i===0?"▶ ":"  "}${String(d.Day).padStart(2,"0")} · ${artist} — ${song}`;
+  }).join("\n");
+  document.getElementById("queue").textContent = q || "—";
+}
+
+/* ============ Boot ============ */
+(async ()=>{
+  const model = await loadData();
+  // If you use a YouTube playlist, put its ID in model.playlistId
+  const today = selectDay(model);
+  if (!today){
+    updateNow({}); renderQueue();
+    document.getElementById("tscale").classList.add("warn");
+    document.getElementById("tscale").textContent = "No day data";
+    return;
   }
 
-  function prevDay(){
-    dayIdx = Math.max(0, dayIdx-1);
-    renderDay();
-  }
-  function nextDay(){
-    dayIdx = Math.min((data.PerDay.length-1), dayIdx+1);
-    renderDay();
-  }
+  // Build queue = today + the rest (simple roll-forward)
+  const idx = (model.Days||[]).findIndex(d => d.Date===today.Date) || 0;
+  queue = (model.Days||[]).slice(idx).map(d => {
+    // naive videoId extraction from YouTube URL
+    const u = new URL(d.URL||"", "https://youtube.com");
+    const vid = u.searchParams.get("v") || u.pathname.split("/").pop();
+    return {...d, videoId: vid};
+  });
 
-  function load(){
-    fetch(MASTER_JSON, {cache:'no-store'})
-      .then(r=>r.json())
-      .then(json=>{
-        data = json;
-        dayIdx = findDayIdx(queryDay());
-        renderDay();
-      })
-      .catch(()=>{ titleEl.textContent='Load error'; });
-  }
+  updateNow(queue[0]);
+  renderQueue();
+  renderYouTube(queue[0].videoId, model.playlistId || "");
 
-  // YouTube API callback
-  window.onYouTubeIframeAPIReady = function(){
-    player = new YT.Player('yt', {
-      width:'100%', height:'100%', playerVars:{rel:0,modestbranding:1,playsinline:1},
-      events:{
-        onReady:function(){
-          playerReady=true;
-          if(queuedId){ player.loadVideoById(queuedId); queuedId=null; }
-        },
-        onStateChange:function(e){
-          // Auto-advance on end
-          if(e.data===YT.PlayerState.ENDED){ nextDay(); }
-        }
-      }
-    });
-  };
-
-  load();
+  // t-scale badge (optional JSON)
+  loadTScale(today.Date);
 })();
 </script>
 </body>
