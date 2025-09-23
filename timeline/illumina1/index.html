@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Illumina 1 — 6-Week Timeline</title>
+<meta name="theme-color" content="#0B0F19">
+<style>
+  :root{--bg:#0B0F19;--ink:#E6EAF2;--muted:#94A3B8;--line:rgba(255,255,255,.12);
+        --card:#0F1524;--hi:#A4E8FF}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Inter,Roboto,Arial}
+  .wrap{max-width:1100px;margin:0 auto;padding:20px 16px 80px}
+  h1{margin:0 0 6px;font-size:24px}
+  .sub{color:var(--muted)}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+  .tab{border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), #0F1524;cursor:pointer}
+  .tab.active{outline:2px solid var(--hi)}
+  .grid{display:grid;gap:12px;grid-template-columns:repeat(3,minmax(0,1fr))}
+  @media (max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:640px){.grid{grid-template-columns:1fr}}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+  h3{margin:0 0 8px}
+  .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:var(--muted)}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .chip{border:1px solid var(--line);border-radius:999px;padding:4px 8px;font-size:12px;color:var(--muted)}
+  a{color:#BBD7FF;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Illumina 1 — 6-Week Timeline</h1>
+  <div class="sub">View the cycle by weeks (1–6). Switch tracks to see how Core, Time, and Zeta unfold.</div>
+
+  <div class="tabs" id="tabs"></div>
+  <div class="grid" id="weeks"></div>
+
+  <div style="margin-top:16px" class="row">
+    <a href="/day/?track=core" class="chip">Open Day View</a>
+    <a href="/map/" class="chip">Constellation Map</a>
+  </div>
+</div>
+
+<script>
+const DATA_URL = "/Illumina1_Playlist_MASTER_3in1.json";
+const nameFix = s => s; // keep simple here (optional: paste your fixName)
+
+const weekOf = d => Math.ceil((d.Day||1)/7); // 1..6
+
+async function main(){
+  const r = await fetch(DATA_URL, {cache:"no-store"});
+  const master = await r.json();
+  const tracks = Object.keys(master.tracks||{});
+  const tabs = document.getElementById('tabs');
+  const weeks = document.getElementById('weeks');
+
+  function render(trackKey){
+    tabs.innerHTML = tracks.map(t=>`<button class="tab ${t===trackKey?'active':''}" data-t="${t}">${t}</button>`).join('');
+    const Days = (master.tracks[trackKey]?.Days)||[];
+    const buckets = [1,2,3,4,5,6].map(w => Days.filter(d => weekOf(d)===w));
+    weeks.innerHTML = buckets.map((days, i)=>`
+      <section class="card">
+        <h3>Week ${i+1}</h3>
+        ${days.length? days.map(d=>{
+          const [artist, song] = String(d.Track||"").split("–").map(s=> (s||"").trim());
+          return `<div class="row" style="margin:.25rem 0">
+            <span class="chip">${String(d.Day).padStart(2,"0")}</span>
+            <span>${nameFix(artist||"—")} — ${song||"—"}</span>
+            <span class="chip">${d.MoonPhase||""}</span>
+            <span class="chip">${d.SeedRitual||""}</span>
+          </div>`;
+        }).join("") : `<div class="mono">No items filed for this week (track “${trackKey}”).</div>`}
+      </section>
+    `).join('');
+    Array.from(document.querySelectorAll('.tab')).forEach(b => b.onclick=()=>render(b.dataset.t));
+  }
+
+  // default to core if present
+  render(tracks.includes('core')?'core':tracks[0]);
+}
+main();
+</script>
+</body>
+</html>
