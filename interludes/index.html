@@ -10,7 +10,7 @@
   :root{
     --bg:#0B0F19;--ink:#E5E7EB;--muted:#9CA3AF;--line:rgba(229,231,235,.15);
     --gold:#F5D142;--amber:#F59E0B;--maxw:1100px;--r:14px;
-    --honey:rgba(245,158,11,.35);--neon:rgba(58,199,255,.35);--jupiter:rgba(236,120,56,.35);
+    --honey:rgba(245,158,11,.38);--neon:rgba(58,199,255,.38);--jupiter:rgba(236,120,56,.38);
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
@@ -24,20 +24,53 @@
   .btn{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:rgba(255,255,255,.02);color:var(--ink);text-decoration:none}
   .grid{display:grid;gap:12px}
   .cards{grid-template-columns:1fr} @media(min-width:900px){.cards{grid-template-columns:1fr 1fr}}
-  .card{border:1px solid var(--line);border-radius:var(--r);padding:16px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0))}
+  .card{border:1px solid var(--line);border-radius:var(--r);padding:16px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0));position:relative;overflow:hidden}
   .card .title{font-size:18px;font-weight:700;margin:0 0 4px}
   .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 10px}
   .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
   .badge{font-size:12px;color:#cfd3db;border:1px dashed var(--line);border-radius:8px;padding:2px 8px}
-  .theme-honey{border-color:var(--honey)}
-  .theme-neon{border-color:var(--neon)}
-  .theme-jupiter{border-color:var(--jupiter)}
   .cols{display:grid;gap:12px;grid-template-columns:96px 1fr}
   .ring{width:96px;height:96px;border-radius:12px;border:1px dashed var(--line);display:flex;align-items:center;justify-content:center;background:#0f1118}
   footer{margin:18px 0 4px;color:var(--muted);font-size:12px;text-align:center}
   .weeks{display:grid;gap:10px;grid-template-columns:repeat(6,1fr)}
   .weeks .wk{border:1px solid var(--line);border-radius:10px;padding:8px;text-align:center}
   .search{padding:10px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.02);color:var(--ink);font:inherit;min-width:240px}
+
+  /* Themed motif overlays */
+  .card::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.22;pointer-events:none}
+  /* Honeycomb-esque lattice using angled repeating lines */
+  .theme-honey{border-color:var(--honey)}
+  .theme-honey::before{
+    background:
+      repeating-linear-gradient(60deg, rgba(245,158,11,.35) 0 1px, transparent 1px 18px),
+      repeating-linear-gradient(-60deg, rgba(245,158,11,.28) 0 1px, transparent 1px 18px),
+      repeating-linear-gradient(0deg, rgba(245,158,11,.15) 0 1px, transparent 1px 20px);
+    mix-blend-mode:normal;
+  }
+  /* Neon grid with soft inner glow */
+  .theme-neon{border-color:var(--neon)}
+  .theme-neon::before{
+    background:
+      radial-gradient(120px 80px at 120% -20%, rgba(255,0,234,.2), transparent 60%),
+      radial-gradient(160px 120px at -20% 120%, rgba(58,199,255,.18), transparent 60%),
+      repeating-linear-gradient(0deg, rgba(58,199,255,.35) 0 1px, transparent 1px 22px),
+      repeating-linear-gradient(90deg, rgba(58,199,255,.28) 0 1px, transparent 1px 22px);
+    box-shadow: inset 0 0 40px rgba(58,199,255,.25), inset 0 0 80px rgba(255,0,234,.18);
+  }
+  /* Jupiter banding */
+  .theme-jupiter{border-color:var(--jupiter)}
+  .theme-jupiter::before{
+    background:
+      linear-gradient(to bottom,
+        rgba(236,120,56,.22) 0%, rgba(236,120,56,.22) 9%,
+        rgba(0,0,0,0) 9%, rgba(0,0,0,0) 18%,
+        rgba(242,163,89,.22) 18%, rgba(242,163,89,.22) 30%,
+        rgba(0,0,0,0) 30%, rgba(0,0,0,0) 44%,
+        rgba(236,120,56,.18) 44%, rgba(236,120,56,.18) 56%,
+        rgba(0,0,0,0) 56%, rgba(0,0,0,0) 71%,
+        rgba(242,163,89,.20) 71%, rgba(242,163,89,.20) 85%,
+        rgba(0,0,0,0) 85%, rgba(0,0,0,0) 100%);
+  }
 </style>
 </head>
 <body>
@@ -84,7 +117,7 @@
   }
   function ringSVG(size){
     var seq=legendre31(), p=seq.length, cx=size/2, cy=size/2, rO=size*0.45, one= size*0.12, zero= size*0.07;
-    var svg=['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+size+' '+size+'" width="'+size+'" height="'+size+'">'];
+    var svg=['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+size+' '+size+'" width="'+size+'" height="'+size+'" role="img" aria-label="31‑tick beacon ring">'];
     svg.push('<rect x="0" y="0" width="'+size+'" height="'+size+'" fill="#0f1118"/>');
     svg.push('<circle cx="'+cx+'" cy="'+cy+'" r="'+(rO)+'" fill="none" stroke="#fff" stroke-opacity=".15" stroke-width="1"/>');
     for(var i=0;i<p;i++){
