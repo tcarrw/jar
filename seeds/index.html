@@ -1,170 +1,115 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<title>Seeds · jar.plnt.earth</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🌱%3C/text%3E%3C/svg%3E">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seeds & Rituals — Illumina 1</title>
+<meta name="theme-color" content="#0B0F19">
+<meta name="description" content="Six weekly seeds × 7 days. A tiny daily cue keeps the Illumina rhythm sticky.">
 <style>
-:root{--bg:#0b0b0d;--panel:#121216;--ink:#eaeaf2;--muted:#a9adc2;--accent:#9dfcff;--accent2:#ffd36b;--ring:rgba(157,252,255,.35)}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(1200px 800px at 15% -10%,rgba(157,252,255,.06),transparent 60%),radial-gradient(900px 600px at 110% 10%,rgba(255,211,107,.06),transparent 60%),var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
-a{color:var(--accent);text-decoration:none}a:hover{opacity:.9}
-.wrap{max-width:1100px;margin:auto;padding:20px}
-header{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:16px}
-.brand{display:flex;align-items:center;gap:10px}.dot{width:12px;height:12px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent2))}
-h1{font-size:26px;margin:8px 0 4px}.sub{color:var(--muted)}
-nav{display:flex;flex-wrap:wrap;gap:8px}nav a{padding:8px 10px;background:#191922;border:1px solid #22232c;border-radius:10px}
-.panel{background:var(--panel);border:1px solid #1e2030;border-radius:16px;padding:14px}
-.controls{display:flex;gap:8px;flex-wrap:wrap}
-.btn{padding:10px 12px;border-radius:10px;border:1px solid #23263a;background:#151726;color:#e9ecff}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.card{background:#0f1119;border:1px solid #1e2030;border-radius:14px;padding:12px;display:grid;gap:8px}
-.card h3{margin:0}
-.badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #2a2d40;background:#141623;color:#cfd3ea;font-size:12px}
-.kv{display:grid;gap:6px}
-.kv div{display:flex;justify-content:space-between;gap:8px}
-.k{color:#cfd3ea}.v{color:#ffd36b}
-.tags{display:flex;gap:6px;flex-wrap:wrap}
-hr{border:none;border-top:1px solid #1e2030;margin:6px 0}
-.footer{margin-top:12px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
-:root[data-mode="honey"] body{background:linear-gradient(180deg,rgba(255,211,107,.10),transparent),var(--bg)}
-:root[data-mode="neon"]  body{background:linear-gradient(180deg,rgba(157,252,255,.10),transparent),var(--bg)}
+  :root{--bg:#0B0F19;--ink:#E6EAF2;--muted:#94A3B8;--line:rgba(255,255,255,.12);--card:#0F1524;--hi:#A4E8FF}
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Inter,Roboto,Arial}
+  a{color:#BBD7FF;text-decoration:none}
+  .wrap{max-width:1100px;margin:0 auto;padding:20px 16px 40px}
+  header{display:flex;gap:14px;align-items:baseline;justify-content:space-between;flex-wrap:wrap}
+  h1{margin:0;font-size:26px}
+  .muted{color:var(--muted)}
+  .pill{border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px;color:#CFEAFF;background:rgba(164,232,255,.08)}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
+  @media (max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:640px){.grid{grid-template-columns:1fr}}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;min-height:120px}
+  .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .emoji{font-size:20px}
+  .title{font-weight:800;letter-spacing:.2px}
+  .cue{margin-top:8px;color:#D7E6FF;font-size:13px}
+  .days{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .chip{font-size:12px;border:1px solid var(--line);border-radius:999px;padding:4px 8px}
+  .byday{margin-top:22px}
+  table{width:100%;border-collapse:collapse}
+  th,td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left}
+  th{color:#BBD7FF;text-transform:uppercase;font-size:12px;letter-spacing:.08em}
+  .mono{font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--muted);font-size:12px}
+  footer{margin-top:18px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <div class="brand"><div class="dot"></div><div><h1>Seeds</h1><div class="sub">Rituals · timing · pairings</div></div></div>
-    <nav>
-  <a href="/jar/">Jar</a>
-  <a href="/calendar/illumina1/">Calendar</a>
-  <a href="/day/">Day</a>
-  <a href="/tunes/">Tunes</a>
-  <a href="/interludes/">Interludes</a>
-  <a href="/seeds/">Seeds</a>
-  <a href="/references/">References</a>
-  <a href="/archive/">Archive</a>
-  <a href="/science/">Science</a>
-  <a href="/compatibility/">Compatibility</a>
-  <a href="/dreams/">Dreams</a>
-  <a href="/storage/">Storage</a>
-  <a href="/pollen/">Pollen</a>
-  <a href="/modes/neon/">Modes</a>
-</nav>
+    <div>
+      <h1>Seeds & Rituals</h1>
+      <div class="muted">Illumina 1 · Six weekly seeds × 7 days. A tiny daily cue keeps the rhythm sticky.</div>
+    </div>
+    <div class="row">
+      <a class="pill" href="/day/">🍯 Jar · Day</a>
+      <a class="pill" href="/map/">✨ Constellation</a>
+      <a class="pill" href="https://tunes.plnt.earth" target="_blank" rel="noopener">🎶 Tunes</a>
+    </div>
   </header>
 
-  <div class="panel" style="margin-bottom:12px">
-    <div class="controls">
-      <a class="btn" href="/compatibility/">Open Compatibility Grid</a>
-      <button class="btn" data-filter="all">All</button>
-      <button class="btn" data-filter="calm">Calm</button>
-      <button class="btn" data-filter="focus">Focus</button>
-      <button class="btn" data-filter="neon">Neon</button>
-      <button class="btn" data-filter="dream">Dream</button>
-    </div>
-  </div>
+  <section id="weeks" class="grid" aria-live="polite"></section>
 
-  <div id="seedGrid" class="grid" aria-live="polite"></div>
+  <section class="byday">
+    <h3 style="margin:16px 0 8px">By Day</h3>
+    <div class="muted" style="margin-bottom:8px">Tap a date to jump to Jar · Day.</div>
+    <div id="byday"></div>
+  </section>
 
-  <div class="footer">
-    <div>Tip: “chew + honey” usually → faster onset; “swallow” → slower/smoother.</div>
-    <div>Mode: <span class="badge" id="modeBadge">classic</span></div>
-  </div>
+  <footer>
+    <div>© <span id="yy"></span> PLNT.earth — Seeds</div>
+    <div><a href="/map/">Constellation</a> • <a href="https://time.plnt.earth" target="_blank" rel="noopener">Time</a> • <a href="https://zeta.plnt.earth" target="_blank" rel="noopener">Zeta</a></div>
+  </footer>
 </div>
 
 <script>
-(function(){var m=localStorage.getItem("jar_mode")||"classic";document.documentElement.setAttribute("data-mode",m);document.getElementById("modeBadge").textContent=m})();
+  document.getElementById('yy').textContent = new Date().getFullYear();
+  const URL = '/data/illumina1_seeds.json';
+  const DAY_BASE = '/day/?date=';
 
-const SEEDS = [
-  {
-    name:"Cosmic Apple", slug:"cosmic-apple",
-    rituals:["swallow","chew + honey"],
-    timing:"evening / before bed",
-    notes:"Pairs well with dreams. Neutral to gentle with smoke.",
-    effects:["calm","dream"],
-    compatibility:{honey:"✓", smoke:"~", neon:"~", dreams:"✓", sex:"~"}
-  },
-  {
-    name:"Pumpkin", slug:"pumpkin",
-    rituals:["swallow","chew + honey"],
-    timing:"evening",
-    notes:"Comfort / softness. Good reset nights.",
-    effects:["calm"],
-    compatibility:{honey:"~", smoke:"~", neon:"✓", dreams:"~", sex:"~"}
-  },
-  {
-    name:"Mustard", slug:"mustard",
-    rituals:["swallow","chew + honey"],
-    timing:"day or early evening",
-    notes:"Use honey buffer; avoid smoke on this day.",
-    effects:["focus"],
-    compatibility:{honey:"✓", smoke:"✗", neon:"~", dreams:"~", sex:"~"}
-  },
-  {
-    name:"Cumin", slug:"cumin",
-    rituals:["chew + honey","swallow"],
-    timing:"early evening",
-    notes:"Pairs with gentle smoke. Good with reflection.",
-    effects:["calm","focus"],
-    compatibility:{honey:"✓", smoke:"~", neon:"~", dreams:"~", sex:"~"}
-  },
-  {
-    name:"Gala Apple", slug:"gala-apple",
-    rituals:["chew","chew + honey"],
-    timing:"morning or afternoon",
-    notes:"Light, bright; good after dream-heavy nights.",
-    effects:["focus","neon"],
-    compatibility:{honey:"~", smoke:"~", neon:"✓", dreams:"~", sex:"~"}
-  },
-  {
-    name:"Royal Orange", slug:"royal-orange",
-    rituals:["swallow + honey","swallow"],
-    timing:"ritual checkpoints (Days 7/14/21/28/35/42)",
-    notes:"Symbolic anchor seed. Sweet + citrus resonance.",
-    effects:["calm","dream"],
-    compatibility:{honey:"✓", smoke:"~", neon:"~", dreams:"✓", sex:"~"}
-  },
-  {
-    name:"Chili Flake", slug:"chili-flake",
-    rituals:["swallow (micro)"],
-    timing:"nightlife / performance",
-    notes:"Skip smoke. Neon nights only.",
-    effects:["neon"],
-    compatibility:{honey:"~", smoke:"✗", neon:"✓", dreams:"~", sex:"~"}
-  }
-];
+  function el(tag, cls, txt){ const n=document.createElement(tag); if(cls) n.className=cls; if(txt!=null) n.textContent=txt; return n; }
 
-const grid = document.getElementById("seedGrid");
-function render(filter="all"){
-  grid.innerHTML="";
-  SEEDS.filter(s=>filter==="all"||s.effects.includes(filter)).forEach(s=>{
-    const card=document.createElement("div");
-    card.className="card";
-    card.innerHTML=`
-      <h3>${s.name}</h3>
-      <div class="tags">
-        ${s.effects.map(e=>`<span class="badge">${e}</span>`).join(" ")}
-      </div>
-      <div class="kv">
-        <div><span class="k">Rituals</span><span class="v">${s.rituals.join(" · ")}</span></div>
-        <div><span class="k">Timing</span><span class="v">${s.timing}</span></div>
-        <div><span class="k">Honey</span><span class="v">${s.compatibility.honey}</span></div>
-        <div><span class="k">Smoke</span><span class="v">${s.compatibility.smoke}</span></div>
-        <div><span class="k">Neon</span><span class="v">${s.compatibility.neon}</span></div>
-        <div><span class="k">Dreams</span><span class="v">${s.compatibility.dreams}</span></div>
-        <div><span class="k">Sex</span><span class="v">${s.compatibility.sex}</span></div>
-      </div>
-      <hr/>
-      <div class="sub" style="opacity:.9">${s.notes}</div>
-      <div class="controls">
-        <a class="btn" href="/compatibility/">Open in Compatibility</a>
-      </div>
-    `;
-    grid.appendChild(card);
+  fetch(URL, {cache:'no-store'}).then(r=>r.json()).then(js=>{
+    // Weeks grid
+    const wrap = document.getElementById('weeks');
+    (js.weeks||[]).forEach(w=>{
+      const card = el('article','card');
+      const row = el('div','row'); row.append(el('div','emoji',w.emoji), el('div','title', `Week ${w.week} — ${w.seed}`));
+      card.append(row);
+      card.append(el('div','cue', w.cue));
+      const list = el('div','days');
+      const start = 1 + (w.week-1)*7;
+      for(let i=0;i<7;i++){ list.append(el('span','chip',`Day ${start+i}`)); }
+      card.append(list);
+      wrap.append(card);
+    });
+
+    // By day table
+    const dates = Object.keys(js.byDate||{}).sort();
+    const host = document.getElementById('byday');
+    const tbl = document.createElement('table');
+    const thead = document.createElement('thead');
+    thead.innerHTML = '<tr><th>Day</th><th>Date</th><th>Seed</th><th>Cue</th></tr>';
+    tbl.append(thead);
+    const tb = document.createElement('tbody');
+    dates.forEach(d=>{
+      const row = js.byDate[d];
+      const tr = document.createElement('tr');
+      const a = document.createElement('a'); a.href = DAY_BASE + encodeURIComponent(d); a.textContent = d;
+      a.style.color = '#BBD7FF'; a.style.textDecoration = 'underline dotted';
+      const tdDay = el('td','', row.day||'');
+      const tdDate = el('td'); tdDate.append(a);
+      const tdSeed = el('td','', (row.emoji||'')+' '+(row.seed||''));
+      const tdCue = el('td','mono', row.cue||'');
+      tr.append(tdDay, tdDate, tdSeed, tdCue);
+      tb.append(tr);
+    });
+    tbl.append(tb);
+    host.append(tbl);
+  }).catch(()=>{
+    document.getElementById('weeks').innerHTML = '<article class="card">Could not load seeds JSON.</article>';
   });
-}
-document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>render(b.dataset.filter)));
-render();
 </script>
 </body>
 </html>
