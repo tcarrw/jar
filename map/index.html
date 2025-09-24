@@ -66,7 +66,9 @@
   .badge{font-size:10px;padding:3px 7px;border-radius:999px;white-space:nowrap}
   .live{background:rgba(52,211,153,.15);color:var(--ok);border:1px solid rgba(52,211,153,.35)}
   .tbd{background:rgba(251,191,36,.12);color:var(--tbd);border:1px solid rgba(251,191,36,.35)}
-  .i-chip{background:rgba(164,232,255,.10);color:#C8F1FF;border:1px solid var(--hi)}
+  .i-chip{background:rgba(164,232,255,.10);color:#C8F1FF;border:1px solid var(--hi);display:none}
+  .legend .i-chip{display:inline-block}
+  body.filtering .i-chip{display:inline-block}
   .desc{
     position:absolute;left:0;right:0;bottom:0;padding:10px 14px 12px;
     background:linear-gradient(0deg, rgba(10,14,24,.9), rgba(10,14,24,.0));
@@ -113,6 +115,7 @@
     <span class="badge live">Live</span>
     <span class="badge tbd">TBD (placeholder)</span>
     <span class="badge i-chip">Appears in selected Illumina</span>
+    <span class="sub" style="font-size:12px">I‑chips (I1… I14) show only when you pick an Illumina in the dropdown.</span>
   </div>
 
   <!-- CORE -->
@@ -147,9 +150,6 @@
 */
 
 const CORE = [
-  {name:"PLNT Earth", emoji:"🌍", url:"https://plnt.earth", exists:true, tag:"root",
-   desc:"Home star. Entry point to the PLNT system and links out to projects.",
-   ills:[1,8,13]},
   {name:"Jar (hub)", emoji:"🍯", url:"https://jar.plnt.earth", exists:true, tag:"ritual • archive",
    desc:"The honeycomb. Days, seeds, interludes, and cycle archives — everything flows back here.",
    ills:[1,2,3,4,5,6,7,8,9,10,11,12,13,14]},
@@ -157,12 +157,11 @@ const CORE = [
    desc:"Taste log + explainer — the Bee in the Illumina triad.",
    ills:[1,5,11]},
   {name:"Tunes", emoji:"🎶", url:"https://tunes.plnt.earth", exists:true, tag:"playlist",
-   desc:"Music engine for cycles — anchors, interludes, overlays, and Beacon.",
+   desc:"Music engine for cycles — anchors, interludes, and overlays.",
    ills:[1,5,11]}
 ];
 
 const PRIMARY = [
-  {name:"Beacon", emoji:"📡", url:"https://tunes.plnt.earth/beacon/index.html", exists:true, tag:"spec · tools", desc:"Signal spec, headers, ECC, and the Decoder Lab.", ills:[1,7,13]},
   {name:"Time", emoji:"⏳", url:"https://time.plnt.earth", exists:true, tag:"physics",
    desc:"Equations & constants. Public fits, visuals, and forecasts tied to Illumina.",
    ills:[2,12]},
@@ -183,7 +182,10 @@ const PRIMARY = [
    ills:[7,10]},
   {name:"Boiled Peanuts", emoji:"🥜", url:"https://boiledpeanuts.plnt.earth", exists:true, tag:"culture • play",
    desc:"Playful ritual & taste anchor — southern snack as cultural spark.",
-   ills:[5,11]}
+   ills:[5,11]},
+  {name:"Beacon", emoji:"📡", url:"https://tunes.plnt.earth/beacon/index.html", exists:true, tag:"signal • ECC",
+   desc:"Signal spec, 31/47 headers, ECC, and the Decoder Lab.",
+   ills:[1,7,13]}
 ];
 
 const SECONDARY = [
@@ -194,7 +196,7 @@ const SECONDARY = [
    desc:"Scratchpad of ideas — nodes that later become full tracks.",
    ills:[2,10]},
   {name:"Constellation", emoji:"✨", url:"https://constellation.plnt.earth", exists:true, tag:"map",
-   desc:"Alternate star map / experiments in layout. (This page.)",
+   desc:"Alternate star map / experiments in layout.",
    ills:[1,7,13]},
   {name:"Dimensions", emoji:"📐", url:"https://dimensions.plnt.earth", exists:true, tag:"space • scale",
    desc:"How size, scale, and perspective change meaning.",
@@ -212,10 +214,10 @@ const SECONDARY = [
    desc:"Flows on curved spaces. Gentle dynamical systems playground.",
    ills:[10,12]},
   {name:"Predictions", emoji:"📈", url:"https://predictions.plnt.earth", exists:true, tag:"forecasts",
-   desc:"Timestamped forecasts and scoring (log-loss, calibration).",
+   desc:"Timestamped forecasts, calibration charts, and scoring (log‑loss, Brier).",
    ills:[2,10,12]},
   {name:"Return", emoji:"↩️", url:"https://return.plnt.earth", exists:true, tag:"recurrence",
-   desc:"Coming back around — closures, loops, and homecoming.",
+   desc:"Recurrence & closure — where cycles loop back and feed forward.",
    ills:[7,13]},
   {name:"Rock", emoji:"🪨", url:"https://rock.plnt.earth", exists:true, tag:"ground",
    desc:"Grounding pages — materiality, weight, and presence.",
@@ -224,13 +226,13 @@ const SECONDARY = [
    desc:"Narrative arc: rescue the explorer. A mythic thread.",
    ills:[9,13]},
   {name:"Storage", emoji:"🗄️", url:"https://storage.plnt.earth", exists:true, tag:"assets",
-   desc:"Public files and artifact hosting for PLNT.",
+   desc:"Public assets & datasets — the static file store for PLNT (read‑only).",
    ills:[1,8]},
   {name:"Time (alt)", emoji:"⏱️", url:"https://time.plnt.earth", exists:true, tag:"physics (mirror)",
    desc:"Mirror link in case visitors discover it here first.",
    ills:[2,12]},
   {name:"Travel", emoji:"✈️", url:"https://travel.plnt.earth", exists:true, tag:"journey",
-   desc:"Movement through space/time — literal and symbolic travel.",
+   desc:"Journeys literal and symbolic — field notes, routes, and time‑dilations.",
    ills:[9,11]},
   {name:"Tunes (alt)", emoji:"🎧", url:"https://tunes.plnt.earth", exists:true, tag:"music (mirror)",
    desc:"Mirror link — quick jump back to the player.",
@@ -309,7 +311,7 @@ mount(FUTURE,'future');
 
 /* ========= Filter by Illumina ========= */
 const sel = document.getElementById('ill');
-sel.addEventListener('change', () => {
+sel.addEventListener('change', () => { document.body.classList.toggle('filtering', sel.value!=='all');
   const v = sel.value;
   const allCards = Array.from(document.querySelectorAll('.card'));
   if(v === 'all'){
