@@ -1,198 +1,143 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<title>Interludes · jar.plnt.earth</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🎭%3C/text%3E%3C/svg%3E">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jar · Interludes — Illumina 1</title>
+<meta name="theme-color" content="#0B0F19">
+<meta name="description" content="Six Illumina-1 interludes with Beacon notes and links.">
 <style>
-:root{--bg:#0b0b0d;--panel:#121216;--ink:#eaeaf2;--muted:#a9adc2;--accent:#9dfcff;--accent2:#ffd36b}
-*{box-sizing:border-box}body{margin:0;background:
-  radial-gradient(1200px 800px at 10% -10%,rgba(157,252,255,.06),transparent 60%),
-  radial-gradient(900px 600px at 110% 10%,rgba(255,211,107,.06),transparent 60%),
-  var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
-a{color:var(--accent);text-decoration:none}a:hover{opacity:.9}
-.wrap{max-width:1100px;margin:auto;padding:20px}
-header{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:16px}
-.brand{display:flex;align-items:center;gap:10px}
-.dot{width:12px;height:12px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent2))}
-h1{font-size:24px;margin:8px 0 4px}
-.sub{color:var(--muted)}
-nav{display:flex;flex-wrap:wrap;gap:8px}
-nav a{padding:8px 10px;background:#191922;border:1px solid #22232c;border-radius:10px;color:#e9ecff;text-decoration:none}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.card{background:#0f1119;border:1px solid #1e2030;border-radius:14px;padding:12px;display:grid;gap:8px}
-.card h3{margin:0}
-.badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #2a2d40;background:#141623;color:#cfd3ea;font-size:12px}
-.pills{display:flex;gap:6px;flex-wrap:wrap}
-.footer{margin-top:12px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
-hr{border:none;border-top:1px solid #1e2030;margin:6px 0}
-.count{font-size:12px;color:#cfd3ea}
-:root[data-mode="honey"] body{background:linear-gradient(180deg,rgba(255,211,107,.10),transparent),var(--bg)}
-:root[data-mode="neon"]  body{background:linear-gradient(180deg,rgba(157,252,255,.10),transparent),var(--bg)}
+  :root{
+    --bg:#0B0F19;--ink:#E5E7EB;--muted:#9CA3AF;--line:rgba(229,231,235,.15);
+    --gold:#F5D142;--amber:#F59E0B;--maxw:1100px;--r:14px;
+    --honey:rgba(245,158,11,.35);--neon:rgba(58,199,255,.35);--jupiter:rgba(236,120,56,.35);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+  a{color:var(--gold);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:clamp(14px,3.5vw,28px)}
+  header{display:grid;gap:8px;margin:4px 0 18px}
+  h1{margin:0;font-size:clamp(22px,4.5vw,34px)}
+  .muted{color:var(--muted)}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .pill{border:1px solid var(--line);border-radius:999px;padding:6px 10px;color:#cfd3db;font-size:13px;text-decoration:none}
+  .btn{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:rgba(255,255,255,.02);color:var(--ink);text-decoration:none}
+  .grid{display:grid;gap:12px}
+  .cards{grid-template-columns:1fr} @media(min-width:900px){.cards{grid-template-columns:1fr 1fr}}
+  .card{border:1px solid var(--line);border-radius:var(--r);padding:16px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0))}
+  .card .title{font-size:18px;font-weight:700;margin:0 0 4px}
+  .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 10px}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
+  .badge{font-size:12px;color:#cfd3db;border:1px dashed var(--line);border-radius:8px;padding:2px 8px}
+  .theme-honey{border-color:var(--honey)}
+  .theme-neon{border-color:var(--neon)}
+  .theme-jupiter{border-color:var(--jupiter)}
+  .cols{display:grid;gap:12px;grid-template-columns:96px 1fr}
+  .ring{width:96px;height:96px;border-radius:12px;border:1px dashed var(--line);display:flex;align-items:center;justify-content:center;background:#0f1118}
+  footer{margin:18px 0 4px;color:var(--muted);font-size:12px;text-align:center}
+  .weeks{display:grid;gap:10px;grid-template-columns:repeat(6,1fr)}
+  .weeks .wk{border:1px solid var(--line);border-radius:10px;padding:8px;text-align:center}
+  .search{padding:10px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.02);color:var(--ink);font:inherit;min-width:240px}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <div class="brand">
-      <div class="dot"></div>
-      <div>
-        <h1>Interludes</h1>
-        <div class="sub">Archetype spreads & reflections</div>
-      </div>
+    <div class="row">
+      <a class="pill" href="https://jar.plnt.earth/">Jar</a>
+      <a class="pill" href="https://tunes.plnt.earth/">Tunes</a>
+      <a class="pill" href="https://tunes.plnt.earth/beacon/index.html">Beacon</a>
+      <input id="q" class="search" type="text" placeholder="Search interludes…">
     </div>
-    <nav>
-      <a href="/jar/">Jar</a>
-      <a href="/calendar/illumina1/">Calendar</a>
-      <a href="/day/">Day</a>
-      <a href="/tunes/">Tunes</a>
-      <a href="/interludes/">Interludes</a>
-      <a href="/seeds/">Seeds</a>
-      <a href="/references/">References</a>
-      <a href="/archive/">Archive</a>
-      <a href="/science/">Science</a>
-      <a href="/compatibility/">Compatibility</a>
-      <a href="/dreams/">Dreams</a>
-      <a href="/storage/">Storage</a>
-      <a href="/pollen/">Pollen</a>
-      <a href="/modes/neon/">Modes</a>
-    </nav>
+    <h1>Jar · Interludes — Illumina 1</h1>
+    <p class="muted">Six archetypes across six weeks. Each page includes Beacon notes (L31 @ 93 BPM) and a link back to the Beacon tool.</p>
+    <div class="weeks">
+      <div class="wk">W1 · Nov 5–11</div>
+      <div class="wk">W2 · Nov 12–18</div>
+      <div class="wk">W3 · Nov 19–25</div>
+      <div class="wk">W4 · Nov 26–Dec 2</div>
+      <div class="wk">W5 · Dec 3–9</div>
+      <div class="wk">W6 · Dec 10–16</div>
+    </div>
   </header>
 
-  <div id="cards" class="grid" aria-live="polite">
-    <!-- Sabrina -->
-    <div class="card">
-      <h3>Sabrina</h3>
-      <div class="sub" style="opacity:.9">🍯 Taste / magnet archetype.</div>
-      <div class="pills">
-        <a class="badge" href="/interludes/sabrina.html">Open spread</a>
-        <a class="badge" href="/calendar/illumina1/">Calendar</a>
-        <a class="badge" href="/tunes/">Tunes</a>
-      </div>
-      <hr>
-      <div class="count" id="count-sabrina">Appearances: —</div>
-      <div class="count" id="days-sabrina">Days: —</div>
-    </div>
+  <section id="cards" class="grid cards" aria-live="polite"></section>
 
-    <!-- Janet Planet -->
-    <div class="card">
-      <h3>Janet Planet</h3>
-      <div class="sub" style="opacity:.9">🌙 Cosmic teacher / telescope motif.</div>
-      <div class="pills">
-        <a class="badge" href="/interludes/janet-planet.html">Open spread</a>
-        <a class="badge" href="/calendar/illumina1/">Calendar</a>
-        <a class="badge" href="/tunes/">Tunes</a>
-      </div>
-      <hr>
-      <div class="count" id="count-janet-planet">Appearances: —</div>
-      <div class="count" id="days-janet-planet">Days: —</div>
-    </div>
-
-    <!-- Eminem -->
-    <div class="card">
-      <h3>Eminem</h3>
-      <div class="sub" style="opacity:.9">⚡ Confrontation / Victory Song energy.</div>
-      <div class="pills">
-        <a class="badge" href="/interludes/eminem.html">Open spread</a>
-        <a class="badge" href="/calendar/illumina1/">Calendar</a>
-        <a class="badge" href="/tunes/">Tunes</a>
-      </div>
-      <hr>
-      <div class="count" id="count-eminem">Appearances: —</div>
-      <div class="count" id="days-eminem">Days: —</div>
-    </div>
-
-    <!-- Emma Stone -->
-    <div class="card">
-      <h3>Emma Stone</h3>
-      <div class="sub" style="opacity:.9">☀️ Identity flare / roles & masks.</div>
-      <div class="pills">
-        <a class="badge" href="/interludes/emma-stone.html">Open spread</a>
-        <a class="badge" href="/calendar/illumina1/">Calendar</a>
-        <a class="badge" href="/tunes/">Tunes</a>
-      </div>
-      <hr>
-      <div class="count" id="count-emma-stone">Appearances: —</div>
-      <div class="count" id="days-emma-stone">Days: —</div>
-    </div>
-
-    <!-- Doechii -->
-    <div class="card">
-      <h3>Doechii</h3>
-      <div class="sub" style="opacity:.9">🔥 Trickster / neon splash disruption.</div>
-      <div class="pills">
-        <a class="badge" href="/interludes/doechii.html">Open spread</a>
-        <a class="badge" href="/calendar/illumina1/">Calendar</a>
-        <a class="badge" href="/tunes/">Tunes</a>
-      </div>
-      <hr>
-      <div class="count" id="count-doechii">Appearances: —</div>
-      <div class="count" id="days-doechii">Days: —</div>
-    </div>
-
-    <!-- Hot To Go -->
-    <div class="card">
-      <h3>Hot To Go</h3>
-      <div class="sub" style="opacity:.9">🐝 Collective joy / swarm resonance.</div>
-      <div class="pills">
-        <a class="badge" href="/interludes/hot-to-go.html">Open spread</a>
-        <a class="badge" href="/calendar/illumina1/">Calendar</a>
-        <a class="badge" href="/tunes/">Tunes</a>
-      </div>
-      <hr>
-      <div class="count" id="count-hot-to-go">Appearances: —</div>
-      <div class="count" id="days-hot-to-go">Days: —</div>
-    </div>
-  </div>
-
-  <div class="footer">
-    <div>Tip: Use Pantheon pages to journal prompts specific to each archetype.</div>
-    <div>Mode: <span class="badge" id="modeBadge">classic</span></div>
-  </div>
+  <footer>PLNT Earth · Jar · Interludes</footer>
 </div>
 
 <script>
-// Mode
-(function(){
-  var m = localStorage.getItem("jar_mode") || "classic";
-  document.documentElement.setAttribute("data-mode", m);
-  var mb = document.getElementById("modeBadge"); if(mb) mb.textContent = m;
-})();
+  var INTERLUDES = [
+    {slug:"janet-planet.html", title:"Janet Planet", emoji:"🌙", archetype:"Cosmic Teacher", theme:"jupiter", week:"Week 1 · T‑Equivalence", dates:"Nov 5–11, 2025", lede:"Opens the cycle with a telescope on T≡D≡E."},
+    {slug:"sabrina.html", title:"Sabrina", emoji:"🍯", archetype:"Honey / Taste Spark", theme:"honey", week:"Week 2 · τ‑Mass", dates:"Nov 12–18, 2025", lede:"Weight, drag, viscosity as feel."},
+    {slug:"htg.html", title:"Hot To Go!", emoji:"🐝", archetype:"Collective Joy / Swarm", theme:"neon", week:"Week 3 · τ‑Energy", dates:"Nov 19–25, 2025", lede:"Swarm energy—call/response on the floor."},
+    {slug:"emma-stone.html", title:"Emma Stone", emoji:"☀️", archetype:"Identity / Spotlight", theme:"jupiter", week:"Week 4 · τ‑Geometry", dates:"Nov 26–Dec 2, 2025", lede:"Masks, frames, spotlight geometry."},
+    {slug:"doechii.html", title:"Doechii", emoji:"🔥", archetype:"Trickster / Chaos", theme:"neon", week:"Week 5 · τ‑Quantum", dates:"Dec 3–9, 2025", lede:"Glitch, phase flips, playful uncertainty."},
+    {slug:"eminem.html", title:"Eminem", emoji:"⚡", archetype:"Confrontation", theme:"neon", week:"Week 6 · τ‑Dark", dates:"Dec 10–16, 2025", lede:"Edge and absence before the closing flare."}
+  ];
 
-// Optional: hydrate appearance counts from /jar/calendar/illumina1/data.json
-(async function(){
-  try{
-    const r = await fetch("/jar/calendar/illumina1/data.json?v=1", {cache:"no-store"});
-    if(!r.ok) return; // silently keep static
-    const data = await r.json();
-    const days = (data.days || data) || [];
-    // Map figure name -> [days...]
-    const map = {};
-    days.forEach(d=>{
-      const fig = (d.Figure || d.figure || "").trim();
-      const day = d.Day || d.day;
-      if(!fig || !day) return;
-      (map[fig] = map[fig] || []).push(day);
-    });
-
-    function set(figName, slug){
-      const arr = (map[figName] || []).slice().sort((a,b)=>a-b);
-      const countEl = document.getElementById("count-"+slug);
-      const daysEl  = document.getElementById("days-"+slug);
-      if(countEl) countEl.textContent = "Appearances: " + (arr.length || 0);
-      if(daysEl)  daysEl.textContent  = "Days: " + (arr.length ? arr.join(", ") : "—");
-    }
-    set("Sabrina", "sabrina");
-    set("Janet Planet", "janet-planet");
-    set("Eminem", "eminem");
-    set("Emma Stone", "emma-stone");
-    set("Doechii", "doechii");
-    set("Hot To Go", "hot-to-go");
-  }catch(e){
-    // no-op
+  function legendre31(){
+    var a=new Array(31).fill(0);
+    function mp(b,e,m){var r=1%m,x=b%m,n=e|0;while(n>0){if(n&1)r=(r*x)%m;x=(x*x)%m;n>>=1}return r}
+    for(var n=1;n<31;n++) a[n]=mp(n,15,31)===1?1:0;
+    return a;
   }
-})();
+  function ringSVG(size){
+    var seq=legendre31(), p=seq.length, cx=size/2, cy=size/2, rO=size*0.45, one= size*0.12, zero= size*0.07;
+    var svg=['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 '+size+' '+size+'" width="'+size+'" height="'+size+'">'];
+    svg.push('<rect x="0" y="0" width="'+size+'" height="'+size+'" fill="#0f1118"/>');
+    svg.push('<circle cx="'+cx+'" cy="'+cy+'" r="'+(rO)+'" fill="none" stroke="#fff" stroke-opacity=".15" stroke-width="1"/>');
+    for(var i=0;i<p;i++){
+      var a=(-90+360*i/p)*Math.PI/180, len=seq[i]===1?one:zero;
+      var x0=cx + rO*Math.cos(a), y0=cy + rO*Math.sin(a);
+      var x1=cx + (rO-len)*Math.cos(a), y1=cy + (rO-len)*Math.sin(a);
+      svg.push('<line x1="'+x0.toFixed(2)+'" y1="'+y0.toFixed(2)+'" x2="'+x1.toFixed(2)+'" y2="'+y1.toFixed(2)+'" stroke="#E5E7EB" stroke-opacity="0.9" stroke-width="2" stroke-linecap="butt"/>');
+    }
+    svg.push('</svg>');
+    return svg.join('');
+  }
+
+  function card(interlude){
+    var themeClass = interlude.theme==='honey'?'theme-honey':(interlude.theme==='neon'?'theme-neon':'theme-jupiter');
+    var ring = ringSVG(88);
+    return ''+
+      '<article class="card '+themeClass+'" data-k="'+(interlude.title+' '+interlude.archetype+' '+interlude.week+' '+interlude.dates).toLowerCase()+'">'+
+        '<div class="cols">'+
+          '<div class="ring" aria-hidden="true">'+ring+'</div>'+
+          '<div>'+
+            '<div class="title">'+interlude.emoji+' '+interlude.title+'</div>'+
+            '<div class="meta">'+
+              '<span class="badge">'+interlude.archetype+'</span>'+
+              '<span class="badge">'+interlude.week+'</span>'+
+              '<span class="badge">'+interlude.dates+'</span>'+
+              '<span class="badge">'+interlude.theme.charAt(0).toUpperCase()+interlude.theme.slice(1)+'</span>'+
+            '</div>'+
+            '<p class="muted">'+interlude.lede+'</p>'+
+            '<div class="row" style="margin-top:6px">'+
+              '<a class="btn" href="'+interlude.slug+'">Open interlude</a>'+
+              '<a class="btn" href="https://tunes.plnt.earth/beacon/index.html">Open Beacon</a>'+
+            '</div>'+
+          '</div>'+
+        '</div>'+
+      '</article>';
+  }
+
+  function render(){
+    var el=document.getElementById('cards'); var out=[];
+    for(var i=0;i<INTERLUDES.length;i++) out.push(card(INTERLUDES[i]));
+    el.innerHTML = out.join('');
+  }
+
+  document.getElementById('q').addEventListener('input', function(){
+    var t = this.value.trim().toLowerCase();
+    var nodes = document.querySelectorAll('#cards .card');
+    for(var i=0;i<nodes.length;i++){
+      var k = nodes[i].getAttribute('data-k')||'';
+      nodes[i].style.display = (!t || k.indexOf(t)>-1) ? '' : 'none';
+    }
+  });
+
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',render)} else { render(); }
 </script>
 </body>
 </html>
