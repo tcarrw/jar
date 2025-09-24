@@ -1,0 +1,301 @@
+{
+  "meta": {
+    "illumina": 1,
+    "title": "Illumina 1 — Seeds",
+    "version": "seed.1.0",
+    "generated_at": "2025-09-24T18:50:43Z",
+    "notes": "Weeks roll every 7 days (6 seeds × 7 = 42). Customize by day later as needed."
+  },
+  "weeks": [
+    {
+      "week": 1,
+      "seed": "Voice",
+      "emoji": "📣",
+      "cue": "Speak the thing — one brave, kind outbound note."
+    },
+    {
+      "week": 2,
+      "seed": "Honey",
+      "emoji": "🍯",
+      "cue": "Sweeten one interaction — add warmth, play, or thanks."
+    },
+    {
+      "week": 3,
+      "seed": "Stage",
+      "emoji": "🎭",
+      "cue": "Show your work — share one small draft with someone."
+    },
+    {
+      "week": 4,
+      "seed": "Cosmos",
+      "emoji": "🌌",
+      "cue": "Orient — step outside, look up; pick a star as your north."
+    },
+    {
+      "week": 5,
+      "seed": "Neon",
+      "emoji": "🕺",
+      "cue": "Move for one song — let the body lead the mind."
+    },
+    {
+      "week": 6,
+      "seed": "Edge",
+      "emoji": "🗡️",
+      "cue": "Draw a boundary — say no to one non‑essential thing."
+    }
+  ],
+  "byDate": {
+    "2025-11-05": {
+      "day": 1,
+      "seed": "Voice",
+      "emoji": "📣",
+      "cue": "Speak the thing — one brave, kind outbound note."
+    },
+    "2025-11-06": {
+      "day": 2,
+      "seed": "Voice",
+      "emoji": "📣",
+      "cue": "Speak the thing — one brave, kind outbound note."
+    },
+    "2025-11-07": {
+      "day": 3,
+      "seed": "Voice",
+      "emoji": "📣",
+      "cue": "Speak the thing — one brave, kind outbound note."
+    },
+    "2025-11-08": {
+      "day": 4,
+      "seed": "Voice",
+      "emoji": "📣",
+      "cue": "Speak the thing — one brave, kind outbound note."
+    },
+    "2025-11-09": {
+      "day": 5,
+      "seed": "Voice",
+      "emoji": "📣",
+      "cue": "Speak the thing — one brave, kind outbound note."
+    },
+    "2025-11-10": {
+      "day": 6,
+      "seed": "Voice",
+      "emoji": "📣",
+      "cue": "Speak the thing — one brave, kind outbound note."
+    },
+    "2025-11-11": {
+      "day": 7,
+      "seed": "Voice",
+      "emoji": "📣",
+      "cue": "Speak the thing — one brave, kind outbound note."
+    },
+    "2025-11-12": {
+      "day": 8,
+      "seed": "Honey",
+      "emoji": "🍯",
+      "cue": "Sweeten one interaction — add warmth, play, or thanks."
+    },
+    "2025-11-13": {
+      "day": 9,
+      "seed": "Honey",
+      "emoji": "🍯",
+      "cue": "Sweeten one interaction — add warmth, play, or thanks."
+    },
+    "2025-11-14": {
+      "day": 10,
+      "seed": "Honey",
+      "emoji": "🍯",
+      "cue": "Sweeten one interaction — add warmth, play, or thanks."
+    },
+    "2025-11-15": {
+      "day": 11,
+      "seed": "Honey",
+      "emoji": "🍯",
+      "cue": "Sweeten one interaction — add warmth, play, or thanks."
+    },
+    "2025-11-16": {
+      "day": 12,
+      "seed": "Honey",
+      "emoji": "🍯",
+      "cue": "Sweeten one interaction — add warmth, play, or thanks."
+    },
+    "2025-11-17": {
+      "day": 13,
+      "seed": "Honey",
+      "emoji": "🍯",
+      "cue": "Sweeten one interaction — add warmth, play, or thanks."
+    },
+    "2025-11-18": {
+      "day": 14,
+      "seed": "Honey",
+      "emoji": "🍯",
+      "cue": "Sweeten one interaction — add warmth, play, or thanks."
+    },
+    "2025-11-19": {
+      "day": 15,
+      "seed": "Stage",
+      "emoji": "🎭",
+      "cue": "Show your work — share one small draft with someone."
+    },
+    "2025-11-20": {
+      "day": 16,
+      "seed": "Stage",
+      "emoji": "🎭",
+      "cue": "Show your work — share one small draft with someone."
+    },
+    "2025-11-21": {
+      "day": 17,
+      "seed": "Stage",
+      "emoji": "🎭",
+      "cue": "Show your work — share one small draft with someone."
+    },
+    "2025-11-22": {
+      "day": 18,
+      "seed": "Stage",
+      "emoji": "🎭",
+      "cue": "Show your work — share one small draft with someone."
+    },
+    "2025-11-23": {
+      "day": 19,
+      "seed": "Stage",
+      "emoji": "🎭",
+      "cue": "Show your work — share one small draft with someone."
+    },
+    "2025-11-24": {
+      "day": 20,
+      "seed": "Stage",
+      "emoji": "🎭",
+      "cue": "Show your work — share one small draft with someone."
+    },
+    "2025-11-25": {
+      "day": 21,
+      "seed": "Stage",
+      "emoji": "🎭",
+      "cue": "Show your work — share one small draft with someone."
+    },
+    "2025-11-26": {
+      "day": 22,
+      "seed": "Cosmos",
+      "emoji": "🌌",
+      "cue": "Orient — step outside, look up; pick a star as your north."
+    },
+    "2025-11-27": {
+      "day": 23,
+      "seed": "Cosmos",
+      "emoji": "🌌",
+      "cue": "Orient — step outside, look up; pick a star as your north."
+    },
+    "2025-11-28": {
+      "day": 24,
+      "seed": "Cosmos",
+      "emoji": "🌌",
+      "cue": "Orient — step outside, look up; pick a star as your north."
+    },
+    "2025-11-29": {
+      "day": 25,
+      "seed": "Cosmos",
+      "emoji": "🌌",
+      "cue": "Orient — step outside, look up; pick a star as your north."
+    },
+    "2025-11-30": {
+      "day": 26,
+      "seed": "Cosmos",
+      "emoji": "🌌",
+      "cue": "Orient — step outside, look up; pick a star as your north."
+    },
+    "2025-12-01": {
+      "day": 27,
+      "seed": "Cosmos",
+      "emoji": "🌌",
+      "cue": "Orient — step outside, look up; pick a star as your north."
+    },
+    "2025-12-02": {
+      "day": 28,
+      "seed": "Cosmos",
+      "emoji": "🌌",
+      "cue": "Orient — step outside, look up; pick a star as your north."
+    },
+    "2025-12-03": {
+      "day": 29,
+      "seed": "Neon",
+      "emoji": "🕺",
+      "cue": "Move for one song — let the body lead the mind."
+    },
+    "2025-12-04": {
+      "day": 30,
+      "seed": "Neon",
+      "emoji": "🕺",
+      "cue": "Move for one song — let the body lead the mind."
+    },
+    "2025-12-05": {
+      "day": 31,
+      "seed": "Neon",
+      "emoji": "🕺",
+      "cue": "Move for one song — let the body lead the mind."
+    },
+    "2025-12-06": {
+      "day": 32,
+      "seed": "Neon",
+      "emoji": "🕺",
+      "cue": "Move for one song — let the body lead the mind."
+    },
+    "2025-12-07": {
+      "day": 33,
+      "seed": "Neon",
+      "emoji": "🕺",
+      "cue": "Move for one song — let the body lead the mind."
+    },
+    "2025-12-08": {
+      "day": 34,
+      "seed": "Neon",
+      "emoji": "🕺",
+      "cue": "Move for one song — let the body lead the mind."
+    },
+    "2025-12-09": {
+      "day": 35,
+      "seed": "Neon",
+      "emoji": "🕺",
+      "cue": "Move for one song — let the body lead the mind."
+    },
+    "2025-12-10": {
+      "day": 36,
+      "seed": "Edge",
+      "emoji": "🗡️",
+      "cue": "Draw a boundary — say no to one non‑essential thing."
+    },
+    "2025-12-11": {
+      "day": 37,
+      "seed": "Edge",
+      "emoji": "🗡️",
+      "cue": "Draw a boundary — say no to one non‑essential thing."
+    },
+    "2025-12-12": {
+      "day": 38,
+      "seed": "Edge",
+      "emoji": "🗡️",
+      "cue": "Draw a boundary — say no to one non‑essential thing."
+    },
+    "2025-12-13": {
+      "day": 39,
+      "seed": "Edge",
+      "emoji": "🗡️",
+      "cue": "Draw a boundary — say no to one non‑essential thing."
+    },
+    "2025-12-14": {
+      "day": 40,
+      "seed": "Edge",
+      "emoji": "🗡️",
+      "cue": "Draw a boundary — say no to one non‑essential thing."
+    },
+    "2025-12-15": {
+      "day": 41,
+      "seed": "Edge",
+      "emoji": "🗡️",
+      "cue": "Draw a boundary — say no to one non‑essential thing."
+    },
+    "2025-12-16": {
+      "day": 42,
+      "seed": "Edge",
+      "emoji": "🗡️",
+      "cue": "Draw a boundary — say no to one non‑essential thing."
+    }
+  }
+}
