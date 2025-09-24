@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fire — Energy • Spectrum • Beacon</title>
+<meta name="theme-color" content="#0B0F19">
+<meta name="description" content="Blackbody color and power, Planck curve sketch, signal energy budget, Arrhenius kinetics, tasks, and a live Beacon decoder.">
+<style>
+  :root{
+    --bg:#0B0F19;           /* dark ink */
+    --ink:#E6EAF2;          /* off-white */
+    --muted:#9AA6B2;        /* slate */
+    --line:rgba(230,234,242,.12);
+    --card:#0F1524;         /* panel */
+    --accent:#A4E8FF;       /* ice blue */
+    --amber:#F59E0B;
+    --ok:#34D399; --warn:#FBBF24; --err:#F87171;
+    --shadow:0 16px 40px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial}
+  a{color:#BBD7FF;text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1180px;margin:0 auto;padding:24px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+         border-bottom:1px solid var(--line);padding-bottom:12px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .logo{font-size:22px}
+  h1{margin:0;font-size:26px;letter-spacing:.2px}
+  .nav{display:flex;gap:10px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);
+       border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 40%),var(--card);font-weight:600}
+  .btn:hover{transform:translateY(-2px);border-color:rgba(164,232,255,.35);box-shadow:var(--shadow)}
+  .grid{display:grid;gap:14px;margin-top:16px;grid-template-columns:repeat(3,minmax(0,1fr))}
+  @media (max-width:1024px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  @media (max-width:720px){  .grid{grid-template-columns:1fr;} }
+  .card{background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 40%),var(--card);
+        border:1px solid var(--line);border-radius:16px;padding:14px;position:relative}
+  .card h3{margin:0 0 8px;font-size:18px}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .emoji{font-size:20px}
+  .muted{color:var(--muted)}
+  .field{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;margin:8px 0}
+  .field input[type="range"]{width:100%}
+  .field input[type="number"]{width:120px;background:var(--card);border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:8px 10px}
+  .out{padding:6px 10px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.02)}
+  .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;border:1px solid var(--line);font-size:12px}
+  .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+  .mini{color:var(--muted);font-size:12px;margin-top:6px}
+  .footer{margin:24px 0 6px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">🔥</div>
+      <div><h1>Fire</h1><div class="mini">Energy • Spectrum • Beacon</div></div>
+    </div>
+    <nav class="nav">
+      <a class="btn" href="https://jar.plnt.earth" target="_blank" rel="noopener">🍯 Jar</a>
+      <a class="btn" href="https://tunes.plnt.earth" target="_blank" rel="noopener">🎶 Tunes</a>
+      <a class="btn" href="https://tunes.plnt.earth/beacon/index.html" target="_blank" rel="noopener">🛰️ Beacon</a>
+      <a class="btn" href="https://constellation.plnt.earth" target="_blank" rel="noopener">✨ Constellation</a>
+    </nav>
+  </header>
+
+  <section class="grid">
+    <!-- Blackbody -->
+    <section class="card">
+      <div class="row"><div class="emoji">🌈</div><h3>Blackbody</h3></div>
+      <div class="field"><span>Temperature (K)</span><input id="bb_T" type="range" min="300" max="10000" step="10" value="3000"></div>
+      <div class="field"><span>Area A (m²)</span><input id="bb_A" type="number" step="0.01" value="1.00"></div>
+      <div class="field"><span>Emissivity ε</span><input id="bb_e" type="number" step="0.01" value="0.95"></div>
+      <div class="field"><span>σAεT⁴ (W)</span><div id="bb_power" class="out mono">—</div></div>
+      <div class="field"><span>Planck curve</span><canvas id="bb_planck" style="width:100%;height:160px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.02)"></canvas></div>
+      <div class="field"><span>Color (approx)</span><div id="bb_color" class="out mono">—</div></div>
+      <div class="mini">σ = 5.670374419×10⁻⁸ W·m⁻²·K⁻⁴. Planck sketch is normalized B<sub>λ</sub>(λ,T) for 0.2–3 μm.</div>
+    </section>
+
+    <!-- Signal energy -->
+    <section class="card">
+      <div class="row"><div class="emoji">📡</div><h3>Signal energy</h3></div>
+      <div class="field"><span>Header length (symbols)</span>
+        <input id="sig_HDR" type="number" step="1" value="31"></div>
+      <div class="field"><span>ECC overhead (×)</span>
+        <input id="sig_ECC" type="number" step="0.01" value="1.33"></div>
+      <div class="field"><span>Energy per symbol (J)</span>
+        <input id="sig_Eb" type="number" step="0.001" value="0.010"></div>
+      <div class="field"><span>Total header energy (J)</span>
+        <div id="sig_tot" class="out mono">—</div></div>
+      <div class="mini">Swap 31↔47 to compare. ECC multiplies symbol cost.</div>
+    </section>
+
+    <!-- Arrhenius -->
+    <section class="card">
+      <div class="row"><div class="emoji">⚗️</div><h3>Arrhenius</h3></div>
+      <div class="field"><span>A (s⁻¹)</span><input id="arr_A" type="number" step="0.1" value="1.0"></div>
+      <div class="field"><span>E<sub>a</sub> (kJ/mol)</span><input id="arr_Ea" type="number" step="0.1" value="50.0"></div>
+      <div class="field"><span>T (K)</span><input id="arr_T" type="number" step="1" value="300"></div>
+      <div class="field"><span>k(T) (s⁻¹)</span><div id="arr_k" class="out mono">—</div></div>
+      <div class="mini">k = A·exp(−E<sub>a</sub>/(R·T)), R = 8.314462618 J·mol⁻¹·K⁻¹.</div>
+    </section>
+  </section>
+
+  <!-- Tasks -->
+  <section class="card" style="margin-top:14px">
+    <div class="row"><div class="emoji">✅</div><h3>Fire tasks</h3></div>
+    <div id="tasks" class="muted">Loading…</div>
+  </section>
+
+  <!-- Beacon embed -->
+  <section class="card" style="margin-top:14px">
+    <div class="row"><div class="emoji">🛰️</div><h3>Beacon decoder</h3></div>
+    <div style="margin-top:8px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#000">
+      <iframe src="https://tunes.plnt.earth/beacon/index.html" title="Beacon" style="width:100%;height:520px;border:0" loading="lazy" referrerpolicy="no-referrer"></iframe>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <a class="btn" href="https://tunes.plnt.earth/beacon/index.html" target="_blank" rel="noopener">Open in Beacon</a>
+    </div>
+  </section>
+
+  <div class="footer">
+    <div>© <span id="yy"></span> PLNT.earth — Fire</div>
+    <div><a href="https://jar.plnt.earth/map/" target="_blank" rel="noopener">Constellation</a> • <a href="https://time.plnt.earth" target="_blank" rel="noopener">Time</a> • <a href="https://zeta.plnt.earth" target="_blank" rel="noopener">Zeta</a></div>
+  </div>
+</div>
+
+<script>
+  /* Year */
+  document.getElementById('yy').textContent = new Date().getFullYear();
+
+  /* UTF fixes for display names */
+  function fixMojibake(s){
+    if(!s) return s;
+    const map = {"BeyoncÃ©":"Beyoncé","MÃ¥neskin":"Måneskin","ChloÃ«":"Chloë","ZoÃ«":"Zoë",
+                 "â€“":"–","â€”":"—","â€˜":"‘","â€™":"’","â€œ":"“","â€":"”"};
+    let out = s; for(const k in map){ out = out.split(k).join(map[k]); } return out;
+  }
+
+  /* ===== Blackbody ===== */
+  const sigma = 5.670374419e-8;
+  const bb_T = document.getElementById('bb_T');
+  const bb_A = document.getElementById('bb_A');
+  const bb_e = document.getElementById('bb_e');
+  const bb_power = document.getElementById('bb_power');
+  const bb_color = document.getElementById('bb_color');
+  const planckCanvas = document.getElementById('bb_planck');
+
+  function cctToRGB(T){
+    // McCamy approx → xy → sRGB (rough, display only)
+    const n = (T/1000 - 4);
+    const x = 0.3366 + 0.1735*n + 0.027*n*n;
+    const y = -3*x*x + 2.87*x - 0.275;
+    const X = x/y, Y = 1, Z = (1-x-y)/y;
+    let r =  3.2406*X - 1.5372*Y - 0.4986*Z;
+    let g = -0.9689*X + 1.8758*Y + 0.0415*Z;
+    let b =  0.0557*X - 0.2040*Y + 1.0570*Z;
+    function gamma(u){ return u<=0.0031308 ? 12.92*u : 1.055*Math.pow(u,1/2.4)-0.055; }
+    r = gamma(Math.max(0,Math.min(1,r)));
+    g = gamma(Math.max(0,Math.min(1,g)));
+    b = gamma(Math.max(0,Math.min(1,b)));
+    return `rgb(${Math.round(r*255)}, ${Math.round(g*255)}, ${Math.round(b*255)})`;
+  }
+
+  function drawPlanck(T){
+    if(!planckCanvas) return;
+    const dpr = Math.max(1, window.devicePixelRatio||1);
+    const cssW = planckCanvas.clientWidth||600, cssH = planckCanvas.clientHeight||160;
+    const W = Math.floor(cssW*dpr), H = Math.floor(cssH*dpr);
+    if(planckCanvas.width!==W || planckCanvas.height!==H){ planckCanvas.width=W; planckCanvas.height=H; }
+    const ctx = planckCanvas.getContext('2d');
+    ctx.clearRect(0,0,W,H);
+
+    // Axis baseline
+    ctx.strokeStyle = 'rgba(164,232,255,.35)';
+    ctx.lineWidth = 1*dpr;
+    ctx.beginPath(); ctx.moveTo(8*dpr, H-18*dpr); ctx.lineTo(W-6*dpr, H-18*dpr); ctx.stroke();
+
+    const h = 6.62607015e-34;
+    const c = 299792458;
+    const k = 1.380649e-23;
+
+    const lam0 = 0.2e-6, lam1 = 3.0e-6; // 0.2–3 μm
+    const n = Math.max(300, Math.floor((W/dpr)));
+    const xs = new Float64Array(n), ys = new Float64Array(n);
+    let ymax = 0;
+    for(let i=0;i<n;i++){
+      const f = i/(n-1);
+      const lam = lam0*(1-f) + lam1*f;
+      const a = 2*h*c*c / Math.pow(lam,5);
+      const b = Math.exp((h*c)/(lam*k*T)) - 1;
+      const B = a / b; xs[i]=lam; ys[i]=B; if(B>ymax) ymax=B;
+    }
+    for(let i=0;i<n;i++){ ys[i]/=(ymax||1); }
+
+    // grid
+    ctx.strokeStyle = 'rgba(255,255,255,.08)';
+    for(let gy=0; gy<=1.0; gy+=0.25){
+      const y = (1-gy)*(H-26*dpr) + 6*dpr;
+      ctx.beginPath(); ctx.moveTo(8*dpr, y); ctx.lineTo(W-6*dpr, y); ctx.stroke();
+    }
+    // ticks
+    const ticks = [0.3e-6,0.5e-6,1e-6,2e-6];
+    ctx.fillStyle = 'rgba(200,240,255,.85)';
+    ctx.font = `${11*dpr}px ui-monospace,Menlo,Consolas,monospace`;
+    ctx.textAlign='center'; ctx.textBaseline='top';
+    ctx.strokeStyle = 'rgba(164,232,255,.35)';
+    ticks.forEach(l=>{
+      const f = (l - lam0)/(lam1 - lam0); if(f<0||f>1) return;
+      const x = 8*dpr + f*(W-14*dpr);
+      ctx.beginPath(); ctx.moveTo(x, H-18*dpr); ctx.lineTo(x, H-22*dpr); ctx.stroke();
+      const label = (l*1e6).toString().replace(/\.0$/,'') + ' μm';
+      ctx.fillText(label, x, H-16*dpr);
+    });
+
+    // curve
+    ctx.beginPath();
+    for(let i=0;i<n;i++){
+      const f = (xs[i]-lam0)/(lam1-lam0);
+      const x = 8*dpr + f*(W-14*dpr);
+      const y = (1-ys[i])*(H-26*dpr) + 6*dpr;
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle = 'rgba(164,232,255,.95)';
+    ctx.lineWidth = 2*dpr;
+    ctx.stroke();
+  }
+
+  function updateBB(){
+    const T = parseFloat(bb_T.value||0);
+    const A = Math.max(0, parseFloat(bb_A.value||0));
+    const e = Math.max(0, Math.min(1, parseFloat(bb_e.value||0)));
+    const P = sigma * A * e * Math.pow(T,4);
+    bb_power.textContent = (isFinite(P)?P:0).toFixed(3);
+    const color = cctToRGB(T);
+    bb_color.style.background = color; bb_color.textContent = String(T)+' K';
+    drawPlanck(isFinite(T)&&T>0 ? T : 3000);
+  }
+  bb_T.addEventListener('input', updateBB);
+  [bb_A,bb_e].forEach(x=>x.addEventListener('change', updateBB));
+  updateBB();
+
+  /* ===== Signal energy ===== */
+  const sig_HDR = document.getElementById('sig_HDR');
+  const sig_ECC = document.getElementById('sig_ECC');
+  const sig_Eb  = document.getElementById('sig_Eb');
+  const sig_tot = document.getElementById('sig_tot');
+  function updateSig(){
+    const H = Math.max(0,parseInt(sig_HDR.value||'0',10));
+    const F = Math.max(0,parseFloat(sig_ECC.value||'1'));
+    const Eb = Math.max(0,parseFloat(sig_Eb.value||'0'));
+    const E = H * F * Eb;
+    sig_tot.textContent = (isFinite(E)?E:0).toFixed(4);
+  }
+  [sig_HDR,sig_ECC,sig_Eb].forEach(x=>x.addEventListener('input', updateSig));
+  updateSig();
+
+  /* ===== Arrhenius ===== */
+  const arr_A = document.getElementById('arr_A');
+  const arr_Ea= document.getElementById('arr_Ea');
+  const arr_T = document.getElementById('arr_T');
+  const arr_k = document.getElementById('arr_k');
+  function updateArr(){
+    const A = parseFloat(arr_A.value||0);
+    const Ea_kJ = parseFloat(arr_Ea.value||0);
+    const T = parseFloat(arr_T.value||0);
+    const R = 8.314462618;
+    const k = A * Math.exp( -(Ea_kJ*1000)/(R*T) );
+    arr_k.textContent = (isFinite(k)?k:0).toExponential(3);
+  }
+  [arr_A,arr_Ea,arr_T].forEach(x=>x.addEventListener('input', updateArr));
+  updateArr();
+
+  /* ===== Fire tasks loader ===== */
+  const tasksBox = document.getElementById('tasks');
+  async function loadFireTasks(){
+    const urls = [
+      'https://jar.plnt.earth/data/fire_tasks.json',
+      '/data/fire_tasks.json'
+    ];
+    for(const u of urls){
+      try{
+        const r = await fetch(u, {cache:'no-store', mode:'cors'});
+        if(r.ok){
+          const j = await r.json();
+          renderTasks(j);
+          return;
+        }
+      }catch(e){}
+    }
+    tasksBox.textContent = 'No tasks found.';
+  }
+  function renderTasks(j){
+    const tasks = (j && (j.tasks||j.Items||[])) || [];
+    if(tasks.length===0){ tasksBox.textContent='—'; return; }
+    const rows = tasks.map(t => {
+      const title = (t.title||t.Name||'').toString();
+      const desc  = (t.desc||t.Description||'').toString();
+      const link1 = (t.link||''); const link2 = (t.href||'');
+      const links = [link1,link2].filter(Boolean).map(h=>`<a class="btn" href="${h}" target="_blank" rel="noopener">Open</a>`).join(' ');
+      return `<div class="row" style="margin:8px 0"><span class="pill">${(t.slug||t.id||'task')}</span><strong>${title}</strong></div>`+
+             (desc?`<div class="muted" style="margin:-4px 0 8px">${desc}</div>`:'')+
+             (links?`<div class="row">${links}</div>`:'');
+    });
+    tasksBox.innerHTML = rows.join('');
+  }
+  loadFireTasks();
+</script>
+</body>
+</html>
