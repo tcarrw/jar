@@ -8,31 +8,65 @@
 <style>
   :root{--bg:#0B0F19;--ink:#E5E7EB;--muted:#9CA3AF;--line:rgba(229,231,235,.15);--r:14px;--maxw:900px}
   body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:clamp(14px,3.5vw,28px)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:clamp(14px,3.5vw,28px);position:relative}
   header{display:grid;gap:6px;margin:4px 0 14px}
   h1{margin:0;font-size:clamp(22px,4.5vw,34px)}
-  .muted{color:#9CA3AF}
+  .muted{color:var(--muted)}
   .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
   .pill{border:1px solid var(--line);border-radius:999px;padding:6px 10px;color:#cfd3db;font-size:13px;text-decoration:none}
   .btn{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:rgba(255,255,255,.02);color:var(--ink);text-decoration:none}
-  .card{border:1px solid var(--line);border-radius:var(--r);padding:16px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0));margin-bottom:12px}
+  .card{border:1px solid var(--line);border-radius:var(--r);padding:16px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0));margin-bottom:12px;position:relative;overflow:hidden}
   .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px}
   .grid{display:grid;gap:12px}
   .cols2{display:grid;gap:12px;grid-template-columns:1fr 1fr}
   #ring{background:#0f1118;border:1px dashed var(--line);border-radius:12px;display:flex;align-items:center;justify-content:center;padding:8px}
+  /* Themes */
   body.theme-honey{--bg:#0C0A09;--ink:#F8FAFC;--muted:#D6D3D1;--line:rgba(245,158,11,.18)}
   body.theme-neon{--bg:#080A12;--ink:#EAF2FF;--muted:#9CA3AF;--line:rgba(58,199,255,.25)}
   body.theme-jupiter{--bg:#0B0F19;--ink:#EAECEF;--muted:#AAB2C0;--line:rgba(236,120,56,.22)}
+  /* Motif overlays on cards */
+  .card.motif::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.22;pointer-events:none}
+  .theme-honey .card.motif::before{
+    background:
+      repeating-linear-gradient(60deg, rgba(245,158,11,.35) 0 1px, transparent 1px 18px),
+      repeating-linear-gradient(-60deg, rgba(245,158,11,.28) 0 1px, transparent 1px 18px),
+      repeating-linear-gradient(0deg, rgba(245,158,11,.15) 0 1px, transparent 1px 20px);
+  }
+  .theme-neon .card.motif::before{
+    background:
+      radial-gradient(120px 80px at 120% -20%, rgba(255,0,234,.2), transparent 60%),
+      radial-gradient(160px 120px at -20% 120%, rgba(58,199,255,.18), transparent 60%),
+      repeating-linear-gradient(0deg, rgba(58,199,255,.35) 0 1px, transparent 1px 22px),
+      repeating-linear-gradient(90deg, rgba(58,199,255,.28) 0 1px, transparent 1px 22px);
+    box-shadow: inset 0 0 40px rgba(58,199,255,.25), inset 0 0 80px rgba(255,0,234,.18);
+  }
+  .theme-jupiter .card.motif::before{
+    background:
+      linear-gradient(to bottom,
+        rgba(236,120,56,.22) 0%, rgba(236,120,56,.22) 9%,
+        rgba(0,0,0,0) 9%, rgba(0,0,0,0) 18%,
+        rgba(242,163,89,.22) 18%, rgba(242,163,89,.22) 30%,
+        rgba(0,0,0,0) 30%, rgba(0,0,0,0) 44%,
+        rgba(236,120,56,.18) 44%, rgba(236,120,56,.18) 56%,
+        rgba(0,0,0,0) 56%, rgba(0,0,0,0) 71%,
+        rgba(242,163,89,.20) 71%, rgba(242,163,89,.20) 85%,
+        rgba(0,0,0,0) 85%, rgba(0,0,0,0) 100%);
+  }
+  /* Corner ornament */
+  .ornament{position:fixed;right:10px;bottom:10px;pointer-events:none;opacity:.5}
+  body.theme-jupiter .ornament{font-size:36px;color:rgba(236,120,56,.55)}
+  body.theme-neon .ornament{font-size:28px;color:rgba(58,199,255,.7);text-shadow:0 0 8px rgba(58,199,255,.6),0 0 14px rgba(255,0,234,.35)}
+  body.theme-honey .ornament{width:26px;height:34px;border-radius:50% 50% 50% 50%/55% 55% 45% 45%;background:radial-gradient(circle at 40% 35%, rgba(255,255,255,.35) 0 35%, rgba(255,255,255,0) 36%), linear-gradient(180deg, rgba(245,158,11,.9), rgba(245,158,11,.55));transform:rotate(-8deg);filter:blur(.15px)}
 </style>
 </head>
 <body class="theme-neon">
 <div class="wrap">
+  <div class="row">
+    <a class="pill" href="https://jar.plnt.earth/">Jar</a>
+    <a class="pill" href="https://tunes.plnt.earth/">Tunes</a>
+    <a class="pill" href="https://tunes.plnt.earth/beacon/index.html">Beacon</a>
+  </div>
   <header>
-    <div class="row">
-      <a class="pill" href="https://jar.plnt.earth/">Jar</a>
-      <a class="pill" href="https://tunes.plnt.earth/">Tunes</a>
-      <a class="pill" href="https://tunes.plnt.earth/beacon/index.html">Beacon</a>
-    </div>
     <h1>Interlude · Hot To Go!</h1>
     <div class="row">
       <span class="pill">Collective Joy / Swarm</span>
@@ -44,7 +78,7 @@
   </header>
 
   <section class="grid">
-    <article class="card">
+    <article class="card motif">
       <h2 style="margin:0 0 8px;font-size:18px">Beacon Notes</h2>
       <div class="cols2">
         <div>
@@ -58,12 +92,14 @@
       </div>
     </article>
 
-    <article class="card">
+    <article class="card motif">
       <h2 style="margin:0 0 8px;font-size:18px">Production Checklist</h2>
-      <ul style="margin:0 0 0 18px;padding:0"><li>Tempo 93; paste 1‑positions.</li><li>Layer claps + low‑level ‘hey!’ on selective 1s.</li><li>Middle break: one prime‑gap spaced beacon.</li></ul>
+      <ul style="margin:0 0 0 18px;padding:0"><li>Tempo 93.000 BPM.</li><li>Create 31‑step 16th‑note clip; paste 1‑positions.</li><li>Map 1=accent/gate‑open; keep musical, not Morse‑code.</li><li>Intro: one full 5.0s L31; outro: repeat once.</li></ul>
     </article>
   </section>
 </div>
+
+<div class="ornament" aria-hidden="true">✦</div>
 
 <script>
   function legendre31(){var a=new Array(31).fill(0);function mp(b,e,m){var r=1%m,x=b%m,n=e|0;while(n>0){if(n&1)r=(r*x)%m;x=(x*x)%m;n>>=1}return r}for(var n=1;n<31;n++)a[n]=mp(n,15,31)===1?1:0;return a}
@@ -79,8 +115,8 @@
       +'<circle cx="'+cx+'" cy="'+cy+'" r="'+rO+'" fill="none" stroke="#000" stroke-width="2"/>'
       +'<circle cx="'+cx+'" cy="'+cy+'" r="'+rI+'" fill="none" stroke="#000" stroke-width="1"/>'
       +ticks
-      +'<text x="'+cx+'" y="'+(cy-10)+'" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="40" fill="#000">Illumina 1/7</text>"
-      +'<text x="'+cx+'" y="'+(cy+35)+'" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#000">L31 header (31 ticks)</text>"
+      +'<text x="'+cx+'" y="'+(cy-10)+'" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="40" fill="#000">Illumina 1/7</text>'
+      +'<text x="'+cx+'" y="'+(cy+35)+'" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#000">L31 header (31 ticks)</text>'
       +'<text x="'+cx+'" y="'+(cy+200)+'" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#000">'+bt+'</text>'
       +'</svg>';
   }
