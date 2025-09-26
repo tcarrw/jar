@@ -1,0 +1,41 @@
+{
+  "Ritual": {
+    "Name": "Bee–Butterfly Conjunction",
+    "Alias": ["Honey Wings", "Continuity × Transformation"],
+    "CyclePlacement": "Waxing Crescent",
+    "Frequency": "Once per Illumina cycle",
+    "Figures": ["Bee", "Butterfly"],
+    "Steps": [
+      {
+        "Step": 1,
+        "Name": "Bee Offering",
+        "Action": "Place or imagine something sweet and continuous (honey, fruit, tea).",
+        "Meaning": "Symbolizes hive energy and continuity."
+      },
+      {
+        "Step": 2,
+        "Name": "Butterfly Reflection",
+        "Action": "Hold or visualize a mirror (or dark screen) to reflect light back.",
+        "Meaning": "Honey becomes wings — continuity refracts into metamorphosis."
+      },
+      {
+        "Step": 3,
+        "Name": "Conjunction Gesture",
+        "Action": "Draw or trace a glyph of a honeycomb cell opening into mirrored wings. Speak aloud: 'Continuity meets transformation. Honey becomes wings.'",
+        "Meaning": "Affirms the union of Bee and Butterfly."
+      },
+      {
+        "Step": 4,
+        "Name": "Closing Note",
+        "Action": "Log the ritual in Jar with a dual Bee × Butterfly glyph.",
+        "Meaning": "Records the seasonal conjunction in the archive."
+      }
+    ],
+    "Glyph": {
+      "Description": "A cracked honeycomb cell blossoming into violet butterfly wings.",
+      "Colors": ["Gold", "Iridescent Violet"],
+      "Placement": "Dual-page spread: Bee trails left, Butterfly wings right, glyph in the center fold."
+    },
+    "Notes": "This ritual repeats every cycle, not as anomaly but as rhythm — Bee produces continuity, Butterfly refracts it into transformation."
+  }
+}
