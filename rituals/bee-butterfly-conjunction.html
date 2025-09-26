@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" data-kind="ritual" data-name="Bee–Butterfly Conjunction">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Bee–Butterfly Conjunction · Ritual</title>
+  <meta name="theme-color" content="#0B0F19">
+  <style>
+    :root{--bg:#0B0F19;--ink:#E5E7EB;--muted:#9CA3AF;--card:rgba(255,255,255,.06);--line:rgba(255,255,255,.12);
+           --gold:#F5D142;--violet:#C084FC;--edge:#374151;}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 ui-sans-serif,-apple-system,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+    .wrap{max-width:920px;margin:0 auto;padding:20px}
+    .h1{font-size:28px;font-weight:700;margin:8px 0 12px}
+    .h2{font-size:16px;font-weight:700;margin:22px 0 10px;color:var(--muted)}
+    .card{border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,.35);overflow:hidden}
+    .grid{display:grid;grid-template-columns:1.1fr 1fr;gap:0}
+    .pane{padding:18px 18px 4px;border-right:1px solid var(--line)}
+    .pane:last-child{border-right:0}
+    .meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 18px 18px;border-top:1px solid var(--line);background:rgba(255,255,255,.02)}
+    .kv{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+    .k{display:block;font-size:12px;color:var(--muted)}
+    .v{display:block;font-size:14px;font-weight:600}
+    .steps{list-style:none;margin:0;padding:0 0 6px}
+    .steps li{border-top:1px dashed var(--line);padding:12px 0}
+    .steps li:first-child{border-top:0}
+    .step-title{font-weight:700}
+    .muted{color:var(--muted)}
+    .glyphbox{display:flex;align-items:center;justify-content:center;background:radial-gradient(120px 120px at 50% 45%, rgba(245,209,66,.12), transparent 60%);
+               border-left:1px solid var(--line)}
+    .svg{width:100%;height:100%;display:block}
+    .cap{padding:10px 16px 16px;color:#9CA3AF;font-size:14px;border-top:1px solid var(--line)}
+    .btns{display:flex;gap:10px;margin-top:14px}
+    .btn{display:inline-block;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);text-decoration:none;color:var(--ink)}
+    @media (max-width:820px){.grid{grid-template-columns:1fr}.glyphbox{min-height:280px}.pane{border-right:0;border-bottom:1px solid var(--line)}}    
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="h1">Bee–Butterfly Conjunction</div>
+    <div class="card">
+      <div class="grid">
+        <div class="pane">
+          <div class="h2">Overview</div>
+          <div class="muted">A recurring Illumina ritual where hive continuity (Bee) meets metamorphic reflection (Butterfly). Honey becomes wings.</div>
+          <div class="h2">Steps</div>
+          <ol class="steps">
+            <li>
+              <div class="step-title">Step 1 — Bee Offering</div>
+              <div>Place or imagine something sweet and continuous (honey, fruit, tea).</div>
+              <div class="muted">Symbolizes hive energy and continuity.</div>
+            </li>
+            <li>
+              <div class="step-title">Step 2 — Butterfly Reflection</div>
+              <div>Hold or visualize a mirror (or dark screen) to reflect light back.</div>
+              <div class="muted">Honey becomes wings — continuity refracts into metamorphosis.</div>
+            </li>
+            <li>
+              <div class="step-title">Step 3 — Conjunction Gesture</div>
+              <div>Draw a honeycomb cell opening into mirrored butterfly wings and say: “Continuity meets transformation. Honey becomes wings.”</div>
+              <div class="muted">Affirms the union of Bee and Butterfly.</div>
+            </li>
+            <li>
+              <div class="step-title">Step 4 — Closing Note</div>
+              <div>Log the ritual in Jar with a dual Bee × Butterfly glyph.</div>
+              <div class="muted">Records the seasonal conjunction in the archive.</div>
+            </li>
+          </ol>
+          <div class="btns">
+            <a class="btn" href="bee_butterfly_conjunction.json" download>Download JSON</a>
+          </div>
+        </div>
+        <div class="glyphbox">
+          <svg class="svg" viewBox="0 0 520 420" xmlns="http://www.w3.org/2000/svg" aria-label="Bee–Butterfly Glyph">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="#F5D142"/>
+                <stop offset="1" stop-color="#C084FC"/>
+              </linearGradient>
+              <radialGradient id="glow" cx="50%" cy="46%" r="46%">
+                <stop offset="0" stop-color="rgba(245,209,66,.55)"/>
+                <stop offset="1" stop-color="rgba(245,209,66,0)"/>
+              </radialGradient>
+              <style>
+                .cell{fill:none;stroke:#F5D142;stroke-width:2}
+                .wing{fill:none;stroke:#C084FC;stroke-width:2.2}
+                .mid{stroke:url(#g1);stroke-width:3.2}
+                .dots{fill:#F5D142;opacity:.9}
+                .gridl{stroke:#374151;stroke-dasharray:3 7;stroke-width:1;opacity:.9}
+              </style>
+            </defs>
+            <circle cx="260" cy="200" r="130" fill="url(#glow)" opacity=".25"/>
+            <path class="gridl" d="M80 200 H440 M260 60 V340"/>
+            <polygon class="cell" points="260,160 290,177 290,213 260,230 230,213 230,177"/>
+            <path class="mid" d="M230 177 L260 160 L290 177 M230 213 L260 230 L290 213"/>
+            <path class="wing" d="M230 176 C170 120, 120 110, 90 150 C120 210, 180 240, 230 214"/>
+            <path class="wing" d="M290 176 C350 120, 400 110, 430 150 C400 210, 340 240, 290 214"/>
+            <circle class="dots" cx="260" cy="160" r="3"/>
+            <circle class="dots" cx="260" cy="230" r="3"/>
+          </svg>
+        </div>
+      </div>
+      <div class="meta">
+        <div class="kv"><span class="k">Cycle Placement</span><span class="v">Waxing Crescent</span></div>
+        <div class="kv"><span class="k">Frequency</span><span class="v">Once per Illumina cycle</span></div>
+        <div class="kv"><span class="k">Figures</span><span class="v">Bee · Butterfly</span></div>
+        <div class="kv"><span class="k">Aliases</span><span class="v">Honey Wings · Continuity × Transformation</span></div>
+      </div>
+      <div class="cap">Log this page each cycle to mark the Bee × Butterfly meeting. Honey becomes wings.</div>
+    </div>
+  </div>
+</body>
+</html>
