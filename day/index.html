@@ -2,17 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Jar — Day</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jar — Day</title>
 <meta name="theme-color" content="#0B0F19">
-<meta name="description" content="Illumina Day player. Loads manifest and a single track JSON from /data/illumina/1.">
+<meta name="description" content="Illumina Day: sticky player with prev/next controls, playlist switcher, seed/task integration, and flexible player layout.">
 <style>
-  :root{--bg:#0B0F19;--ink:#E6EAF2;--muted:#94A3B8;--line:rgba(255,255,255,.12);--card:#0F1524;--hi:#A4E8FF;--ok:#34D399;--warn:#FBBF24;--player-col:560px}
+  :root{
+    --bg:#0B0F19;--ink:#E6EAF2;--muted:#94A3B8;--line:rgba(255,255,255,.12);--card:#0F1524;--hi:#A4E8FF;--ok:#34D399;--warn:#FBBF24;
+    --player-col:560px; /* default player column width */
+  }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Inter,Roboto,Arial}
   a{color:#BBD7FF;text-decoration:none}
   .wrap{max-width:1100px;margin:0 auto;padding:16px 16px 48px}
+
+  /* header layout: dock left/right/inline + player size */
   header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#0B0F19 70%,rgba(11,15,25,.85));border-bottom:1px solid var(--line);backdrop-filter:saturate(140%) blur(8px)}
   .head{display:grid;grid-template-columns:1fr var(--player-col);gap:14px;align-items:center;padding:10px 16px}
   body.dock-left .head{grid-template-columns:var(--player-col) 1fr}
@@ -22,29 +27,41 @@
   body.size-s{--player-col:420px}
   body.size-m{--player-col:560px}
   body.size-l{--player-col:720px}
+
   h1{margin:0;font-size:22px}
   .sub{color:var(--muted);font-size:13px}
   .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;border:1px solid var(--line);font-size:12px}
+  .ok{color:var(--ok);border-color:rgba(52,211,153,.35);background:rgba(52,211,153,.12)}
+  .warn{color:var(--warn);border-color:rgba(251,191,36,.35);background:rgba(251,191,36,.12)}
   .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
   .player{position:relative;aspect-ratio:16/9;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#000}
   .player iframe{width:100%;height:100%;border:0}
+
   .controls{display:flex;gap:8px;align-items:center;margin-top:8px}
-  .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 40%),var(--card);font-weight:700;cursor:pointer}
-  .select{appearance:none;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02)),var(--card);color:var(--ink);border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:6px 10px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);font-weight:700;cursor:pointer}
+  .btn:hover{border-color:rgba(164,232,255,.35)}
+  .select{appearance:none;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02)), var(--card);color:var(--ink);border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:6px 10px}
+  .select:focus{outline:2px solid var(--hi); outline-offset:2px; box-shadow:0 0 0 2px rgba(164,232,255,.18)}
+
   .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:16px}
   @media (max-width:980px){.grid{grid-template-columns:1fr}}
-  .card{background:linear-gradient(180deg,rgba(255,255,255,.02),transparent 40%),var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .card h3{margin:0 0 6px;font-size:18px}
   .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:var(--muted)}
   .chips{display:flex;flex-wrap:wrap;gap:8px}
   .chip{border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px;background:rgba(255,255,255,.02)}
   .big{font-size:28px;line-height:1.1;font-weight:800;letter-spacing:.2px}
   .muted{color:var(--muted)}
   .footer{margin-top:18px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .note{font-size:13px;color:#D7E6FF}
+
+  /* inline player host (only visible in dock-inline) */
   #playerInline{display:none;margin:12px 0 0 0}
+
 </style>
 </head>
 <body class="dock-right size-m">
-<script src="/api/config.js"></script>
 <header>
   <div class="head wrap">
     <div>
@@ -52,28 +69,55 @@
       <div class="row">
         <span id="dateOut" class="pill">—</span>
         <span id="phaseOut" class="pill">—</span>
-        <label class="pill">Playlist:
-          <select id="plist" class="select"></select>
+        <span id="tscale" class="pill">t‑scale —</span>
+
+        <label class="pill" title="Choose which playlist lane to view">
+          Playlist:
+          <select id="plist" class="select">
+            <option value="explainer">Explainer</option>
+            <option value="anchorpublic">Anchor · Public</option>
+            <option value="anchorbuilt">Anchor · Built</option>
+          </select>
         </label>
-        <label class="pill">Dock:
-          <select id="dockSel" class="select"><option value="right">Right</option><option value="left">Left</option><option value="inline">Inline</option></select>
+
+        <label class="pill" title="Player layout">
+          Dock:
+          <select id="dockSel" class="select">
+            <option value="right">Right</option>
+            <option value="left">Left</option>
+            <option value="inline">Inline</option>
+          </select>
         </label>
-        <label class="pill">Size:
-          <select id="sizeSel" class="select"><option value="s">S</option><option value="m" selected>M</option><option value="l">L</option></select>
+
+        <label class="pill" title="Player size">
+          Size:
+          <select id="sizeSel" class="select">
+            <option value="s">S</option>
+            <option value="m" selected>M</option>
+            <option value="l">L</option>
+          </select>
         </label>
-        <label class="pill"><input id="loop" type="checkbox" style="accent-color:#5eead4"> Loop</label>
+
+        <label class="pill" title="When on: repeat this track. When off: auto-next on end.">
+          <input id="loop" type="checkbox" style="accent-color:#5eead4"> Loop this track
+        </label>
       </div>
+      <div class="sub">Sticky player • repeat‑track or auto‑next • Dock & size controls • Reads 3‑in‑1 master, Seeds & Tasks from <span class="mono">/data</span></div>
       <div class="controls">
         <button id="prevBtn" class="btn" title="Previous (⌥←)">⟵ Prev</button>
         <button id="nextBtn" class="btn" title="Next (⌥→)">Next ⟶</button>
         <a class="btn" id="openInYT" target="_blank" rel="noopener">Open on YouTube</a>
+        <a class="btn" href="/map/">✨ Map</a>
         <a class="btn" href="https://tunes.plnt.earth" target="_blank" rel="noopener">🎶 Tunes</a>
       </div>
     </div>
+
+    <!-- Player (header dock) -->
     <div class="player" id="playerBox"></div>
   </div>
 </header>
 
+<!-- Player (inline dock) -->
 <div class="wrap"><div class="player" id="playerInline"></div></div>
 
 <div class="wrap">
@@ -82,125 +126,191 @@
       <h3>Now Playing</h3>
       <div id="trackTitle" class="big">—</div>
       <div class="chips" style="margin-top:8px">
+        <span id="artistChip" class="chip">Artist —</span>
         <span id="seedChip" class="chip">Seed —</span>
         <span id="figureChip" class="chip">Figure —</span>
         <span id="phaseChip" class="chip">Phase —</span>
       </div>
       <div class="mono" id="urlOut" style="margin-top:8px">—</div>
+      <p id="seedCue" class="note" style="margin-top:8px;display:none"></p>
     </section>
+
     <aside class="card">
+      <h3>Daily Task / Ritual</h3>
+      <div id="taskText" class="muted">—</div>
+      <hr style="border:none;border-top:1px solid var(--line);margin:12px 0">
       <h3>Beacon (this week)</h3>
       <div id="beacon" class="muted">—</div>
+      <div style="margin-top:8px"><a class="btn" href="https://tunes.plnt.earth/beacon/index.html" target="_blank" rel="noopener">Open Beacon</a></div>
     </aside>
   </div>
+
   <div class="footer">
     <div>© <span id="yy"></span> PLNT.earth — Jar Day</div>
-    <div><a href="/map/">Constellation</a></div>
+    <div><a href="/map/">Constellation</a> • <a href="https://time.plnt.earth" target="_blank" rel="noopener">Time</a> • <a href="https://zeta.plnt.earth" target="_blank" rel="noopener">Zeta</a></div>
   </div>
 </div>
 
 <script>
-(function(){
-  document.getElementById('yy').textContent = new Date().getFullYear();
-  var cfg = (window.ILLUMINA_CONFIG) || { baseUrl:"/data", activeIllumina:1, routes:{ manifest:function(n){return "/data/illumina/"+n+"/manifest.json";} } };
-  var qs = new URLSearchParams(location.search);
-  var DAYQ = parseInt(qs.get("day")||"0",10) || null;
-  var DATEQ = qs.get("date") || null;
-  var PLAYLISTQ = (qs.get("playlist")||'anchor-public').toLowerCase();
+/* ===== URL & state ===== */
+const QS = new URLSearchParams(location.search);
+const DAYQ = parseInt(QS.get("day")||"0",10) || null;
+const DATEQ = QS.get("date") || null;
+const PLAYLISTQ = (QS.get("playlist")||"explainer").toLowerCase();
 
-  var plistEl = document.getElementById('plist');
-  var loopEl  = document.getElementById('loop');
-  var prevBtn = document.getElementById('prevBtn');
-  var nextBtn = document.getElementById('nextBtn');
-  var dockSel = document.getElementById('dockSel');
-  var sizeSel = document.getElementById('sizeSel');
-  var openInYT = document.getElementById('openInYT');
+/* ===== Elements ===== */
+document.getElementById('yy').textContent = new Date().getFullYear();
+const plistEl = document.getElementById('plist'); plistEl.value = PLAYLISTQ;
+const loopEl  = document.getElementById('loop');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const dockSel = document.getElementById('dockSel');
+const sizeSel = document.getElementById('sizeSel');
+const openInYT = document.getElementById('openInYT');
 
-  var manifestUrl = cfg.routes.manifest(cfg.activeIllumina);
-  var manifest=null, lanes=[], laneId=PLAYLISTQ, items=[], queue=[], qIndex=0, currentId="", player=null, ytReady=false;
+plistEl.addEventListener('change', () => { const u=new URL(location.href); u.searchParams.set('playlist', plistEl.value); location.href=u.toString(); });
+dockSel.addEventListener('change', applyLayout);
+sizeSel.addEventListener('change', applyLayout);
 
-  function ujoin(base, rel){ try{ return new URL(rel, base).href; }catch(e){ return rel; } }
-  function extractYouTubeID(u){ if(!u) return ""; var s=String(u); var m=s.match(/[?&]v=([^&]+)/)||s.match(/youtu\.be\/([^?&]+)/)||s.match(/embed\/([^?&]+)/); return m?m[1]:""; }
-  function hostEl(){ return (document.body.classList.contains('dock-inline') ? document.getElementById('playerInline') : document.getElementById('playerBox')); }
-  function renderYouTube(id){ var box=hostEl(); var src="https://www.youtube.com/embed/"+id+"?autoplay=1&rel=0&enablejsapi=1&modestbranding=1&playsinline=1"; box.innerHTML='<iframe id="yt" src="'+src+'" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>'; currentId=id; setupYTAPI(); }
-  function setupYTAPI(){ if(window.YT&&YT.Player) return initYT(); var s=document.createElement('script'); s.src='https://www.youtube.com/iframe_api'; document.head.appendChild(s); window.onYouTubeIframeAPIReady=initYT; }
-  function initYT(){ ytReady=true; player=new YT.Player('yt',{events:{onStateChange:function(ev){ if(ev.data===0){ if(loopEl.checked){ if(player&&player.seekTo){ player.seekTo(0,true); player.playVideo(); } else { renderYouTube(currentId); } } else { next(); } } }}}); }
+/* ===== UTF fixes ===== */
+const NAME_FIX = new Map([["beyonce","Beyoncé"],["beyoncé","Beyoncé"],["maneskin","Måneskin"],["måneskin","Måneskin"],["chloe","Chlöe"],["chloë","Chloë"],["rosalia","Rosalía"],["jose gonzalez","José González"]]);
+function fixName(raw){ if(!raw) return ""; const n=raw.normalize?raw.normalize('NFC'):raw; const k=n.trim().toLowerCase(); return NAME_FIX.get(k)||n; }
+function fixMojibake(s){ if(typeof s!=="string") return s; return s.normalize('NFC').replace(/Beyonc\u00c3\u00a9/gi,'Beyoncé').replace(/M\u00c3\u00a5neskin/gi,'Måneskin').replace(/\u2019/g,'’'); }
+function deepFix(o){ if(Array.isArray(o)) return o.map(deepFix); if(o&&typeof o==='object'){const x={}; for(const k in o) x[k]=deepFix(o[k]); return x;} return fixMojibake(o); }
 
-  function applyLayout(){
-    var dock=dockSel.value, size=sizeSel.value;
-    document.body.classList.toggle('dock-left', dock==='left');
-    document.body.classList.toggle('dock-right', dock==='right');
-    document.body.classList.toggle('dock-inline', dock==='inline');
-    document.body.classList.toggle('size-s', size==='s');
-    document.body.classList.toggle('size-m', size==='m');
-    document.body.classList.toggle('size-l', size==='l');
-    if(currentId){ renderYouTube(currentId); }
-    try{ localStorage.setItem('jar.day.layout', dock); localStorage.setItem('jar.day.size', size); }catch(e){}
+/* ===== Data sources ===== */
+const MASTER_URL = "/Illumina1_Playlist_MASTER_3in1.json"; // 3‑in‑1 master in Jar root
+const LEGACY_URL = "/data/illumina1.json";                  // fallback
+const TASKS_URL  = "/data/illumina1_tasks.json";            // per‑day tasks (external)
+const SEEDS_URL  = "/data/illumina1_seeds.json";            // seeds + cues (external)
+
+async function fetchJSON(url){ const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw 0; return deepFix(await r.json()); }
+async function loadModel(){
+  try{ const m = await fetchJSON(MASTER_URL); if(m && Array.isArray(m.days)) return { type:'master', data:m }; }catch{}
+  const l = await fetchJSON(LEGACY_URL); return { type:'legacy', data:l };
+}
+let TASKS=null, SEEDS=null;
+(async()=>{ try{ TASKS = await fetchJSON(TASKS_URL); }catch{ TASKS=null; } })();
+(async()=>{ try{ SEEDS = await fetchJSON(SEEDS_URL); }catch{ SEEDS=null; } })();
+
+/* ===== Helpers ===== */
+function safeURL(h){ try{ return new URL(h,'https://youtube.com').href; }catch{ return ''; } }
+function vidFromURL(h){ try{ const u=new URL(h,'https://youtube.com'); return u.searchParams.get('v')||u.pathname.split('/').pop(); }catch{ return ''; } }
+function selectDay(days){ if(DAYQ!=null && days[DAYQ-1]) return days[DAYQ-1]; if(DATEQ){ const d=days.find(x=>x.Date===DATEQ); if(d) return d; } return days[0]||null; }
+function itemForPlaylist(day,key){ const k=(key||'explainer').toLowerCase(); const map={explainer:'Explainer', anchorpublic:'AnchorPublic', anchorbuilt:'AnchorBuilt'}; return day ? day[map[k]||'Explainer'] : null; }
+
+/* ===== Player & queue ===== */
+let ytReady=false, player=null, queue=[], qIndex=0, currentVideoId="";
+function hostEl(){ return (document.body.classList.contains('dock-inline') ? document.getElementById('playerInline') : document.getElementById('playerBox')); }
+function renderYouTube(videoId){
+  const box = hostEl();
+  const src=`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&enablejsapi=1&modestbranding=1&playsinline=1`;
+  box.innerHTML=`<iframe id="yt" src="${src}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+  currentVideoId = videoId;
+  setupYTAPI();
+}
+function setupYTAPI(){ if(window.YT&&YT.Player) return initYT(); const s=document.createElement('script'); s.src='https://www.youtube.com/iframe_api'; document.head.appendChild(s); window.onYouTubeIframeAPIReady=initYT; }
+function initYT(){ ytReady=true; player=new YT.Player('yt',{ events:{ onStateChange: ev=>{ if(ev.data===0){ if(loopEl.checked){ if(player && player.seekTo){ player.seekTo(0,true); player.playVideo(); } else { renderYouTube(currentVideoId); } } else { next(); } } } } }); }
+
+function prev(){ if(queue.length===0) return; qIndex = Math.max(qIndex-1, 0); playIndex(qIndex); }
+function next(){ if(queue.length===0) return; if(qIndex+1 < queue.length){ qIndex += 1; playIndex(qIndex); } }
+prevBtn.onclick=prev; nextBtn.onclick=next;
+window.addEventListener('keydown', e=>{ if(e.altKey && (e.key==='ArrowLeft')) prev(); if(e.altKey && (e.key==='ArrowRight')) next(); });
+
+function playIndex(i){
+  const d=queue[i]; if(!d) return;
+  const it=itemForPlaylist(d, plistEl.value);
+  const url=(it&&it.Platforms&&it.Platforms.YouTube&&it.Platforms.YouTube.url)||'';
+  const vid=vidFromURL(url);
+  if(player&&player.loadVideoById){ player.loadVideoById(vid); currentVideoId = vid; }
+  else { renderYouTube(vid); }
+  updateNow(d, it, url);
+}
+
+/* ===== Layout ===== */
+function applyLayout(){
+  const dock = dockSel.value; const size = sizeSel.value;
+  document.body.classList.toggle('dock-left', dock==='left');
+  document.body.classList.toggle('dock-right', dock==='right');
+  document.body.classList.toggle('dock-inline', dock==='inline');
+  document.body.classList.toggle('size-s', size==='s');
+  document.body.classList.toggle('size-m', size==='m');
+  document.body.classList.toggle('size-l', size==='l');
+  try{ localStorage.setItem('jar.day.layout', dock); localStorage.setItem('jar.day.size', size); }catch(e){}
+  // if player exists, re-render into new host
+  if(currentVideoId){ renderYouTube(currentVideoId); }
+}
+(function restoreLayout(){
+  try{
+    const d = localStorage.getItem('jar.day.layout')||'right';
+    const s = localStorage.getItem('jar.day.size')||'m';
+    dockSel.value = d; sizeSel.value = s;
+  }catch(e){}
+  applyLayout();
+})();
+
+/* ===== UI Update ===== */
+function beaconForDay(dayNum){
+  const idx = Math.floor((+dayNum-1)/7); // 0..5
+  const names = ['Voice','Honey','Stage','Cosmos','Neon','Edge'];
+  const icons = ['📣','🍯','🎭','🌌','🕺','🗡️'];
+  return (idx>=0 && idx<6) ? (icons[idx]+' '+names[idx]) : '—';
+}
+
+function updateNow(day, it, url){
+  let artist='—', title='—';
+  if(it){ artist=fixName(it.artist||''); title=(it.title||'—').trim(); }
+  document.getElementById('dayTitle').textContent=`Day ${day.Day||'—'}`;
+  document.getElementById('dateOut').textContent=day.Date||'—';
+  document.getElementById('phaseOut').textContent=day.MoonPhase||'—';
+  document.getElementById('phaseChip').textContent=day.MoonPhase||'—';
+  document.getElementById('trackTitle').textContent=`${artist?artist+' — ':''}${title}`;
+  document.getElementById('artistChip').textContent=artist||'—';
+  // Seed chip + cue
+  let seedLabel = day.SeedRitual || '';
+  let seedCue = '';
+  if(!seedLabel && SEEDS && SEEDS.byDate && SEEDS.byDate[day.Date]){
+    const s = SEEDS.byDate[day.Date];
+    seedLabel = `${s.emoji||''} ${s.seed||''}`.trim();
+    seedCue = s.cue || '';
   }
-  (function restore(){ try{ dockSel.value=localStorage.getItem('jar.day.layout')||'right'; sizeSel.value=localStorage.getItem('jar.day.size')||'m'; }catch(e){} applyLayout();})();
-  dockSel.addEventListener('change', applyLayout); sizeSel.addEventListener('change', applyLayout);
+  document.getElementById('seedChip').textContent = seedLabel || '—';
+  const cueEl = document.getElementById('seedCue');
+  if(seedCue){ cueEl.style.display='block'; cueEl.textContent = seedCue; } else { cueEl.style.display='none'; cueEl.textContent=''; }
+  document.getElementById('figureChip').textContent=day.Figure||'—';
+  document.getElementById('urlOut').textContent=url||'—';
+  openInYT.href = url? safeURL(url) : 'https://youtube.com';
+  // Daily task — prefer embedded per‑lane/task; else external TASKS; else seed cue
+  let task='';
+  const k=plistEl.value; // explainer/anchorpublic/anchorbuilt (lowercase)
+  if(day.Rituals && (day.Rituals[k]||day.Rituals.core)) task = day.Rituals[k]||day.Rituals.core;
+  else if(day.Tasks && (day.Tasks[k]||day.Tasks.core)) task = day.Tasks[k]||day.Tasks.core;
+  else if(day.Ritual) task = day.Ritual;
+  else if(day.SeedRitual) task = day.SeedRitual;
+  else if(TASKS && TASKS[day.Date] && (TASKS[day.Date][k]||TASKS[day.Date].core)) task = TASKS[day.Date][k]||TASKS[day.Date].core;
+  else if(seedCue) task = `Seed — ${seedLabel}: ${seedCue}`;
+  document.getElementById('taskText').textContent = task || '—';
 
-  function beaconForDay(n){ var idx=Math.floor((+n-1)/7); var names=['Voice','Honey','Stage','Cosmos','Neon','Edge']; var icons=['📣','🍯','🎭','🌌','🕺','🗡️']; return (idx>=0 && idx<6)?(icons[idx]+' '+names[idx]):'—'; }
+  // Beacon (this week) helper
+  document.getElementById('beacon').textContent = beaconForDay(day.Day||1);
+}
 
-  function updateNow(it){
-    document.getElementById('dayTitle').textContent = 'Day '+(it.day||'—');
-    document.getElementById('dateOut').textContent = it.date||'—';
-    document.getElementById('phaseOut').textContent = it.moonPhase||'—';
-    document.getElementById('phaseChip').textContent = it.moonPhase||'—';
-    document.getElementById('trackTitle').textContent = it.title||'—';
-    document.getElementById('seedChip').textContent = it.seedRitual||'—';
-    document.getElementById('figureChip').textContent = it.figure||'—';
-    var yt = it.urls && it.urls.youtube || '';
-    document.getElementById('urlOut').textContent = yt||'—';
-    openInYT.href = yt || 'https://youtube.com';
-    document.getElementById('beacon').textContent = beaconForDay(it.day||1);
-  }
+/* ===== Boot ===== */
+let days=[], today=null;
+(async ()=>{
+  const {type, data} = await loadModel();
+  days = type==='master' ? (data.days||[]) : (data.Days||[]);
+  today = selectDay(days);
+  if(!today){ updateNow({}, null, ''); const b=document.getElementById('tscale'); b.classList.add('warn'); b.textContent='No day data'; return; }
 
-  function play(i){
-    var it = queue[i]; if(!it) return;
-    var id = extractYouTubeID(it.urls && it.urls.youtube || '');
-    if(player && player.loadVideoById){ player.loadVideoById(id); currentId=id; } else { renderYouTube(id); }
-    qIndex = i; updateNow(it);
-  }
-  function prev(){ if(queue.length===0) return; qIndex = (qIndex-1+queue.length)%queue.length; play(qIndex); }
-  function next(){ if(queue.length===0) return; qIndex = (qIndex+1)%queue.length; play(qIndex); }
-  prevBtn.onclick=prev; nextBtn.onclick=next;
-  window.addEventListener('keydown', function(e){ if(e.altKey && e.key==='ArrowLeft') prev(); if(e.altKey && e.key==='ArrowRight') next(); });
-
-  function resolveLaneUrl(id){ var t=(manifest.tracks||[]).find(function(x){return x.id===id;}); return t? ujoin(manifestUrl, t.path) : null; }
-
-  function selectInitial(itemsList){
-    if(DAYQ && itemsList[DAYQ-1]) return itemsList[DAYQ-1];
-    if(DATEQ){ var d=itemsList.find(function(x){return x.date===DATEQ}); if(d) return d; }
-    return itemsList[0]||null;
-  }
-
-  function loadLane(){
-    var url = resolveLaneUrl(laneId);
-    if(!url){ items=[]; queue=[]; updateNow({}); return; }
-    fetch(url,{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){
-      items = Array.isArray(j.items)? j.items.slice(0): [];
-      var start = selectInitial(items);
-      var startIdx = start ? items.findIndex(function(x){return x.date===start.date}) : 0;
-      queue = items.slice(startIdx).concat(items.slice(0,startIdx));
-      qIndex = 0;
-      var id = (queue[0].urls && queue[0].urls.youtube)? extractYouTubeID(queue[0].urls.youtube) : '';
-      updateNow(queue[0]); if(id) renderYouTube(id);
-    });
-  }
-
-  fetch(manifestUrl,{cache:'no-store'}).then(function(r){return r.json()}).then(function(m){
-    manifest=m||{tracks:[],dates:{start:'',end:'',days:42}};
-    lanes=(manifest.tracks||[]).map(function(t){return {id:t.id,label:t.label||t.id};});
-    if(!lanes.length){ lanes=[{id:'anchor-public',label:'AnchorPublic'}]; }
-    if(!lanes.some(function(x){return x.id===laneId;})){ laneId=(lanes.find(function(x){return x.id==='anchor-public';})||lanes[0]).id; }
-    plistEl.innerHTML = lanes.map(function(t){return '<option value="'+t.id+'">'+t.label+'</option>';}).join('');
-    plistEl.value = laneId;
-    plistEl.addEventListener('change', function(){
-      var u=new URL(location.href); u.searchParams.set('playlist', this.value); location.href=u.toString();
-    });
-    loadLane();
-  });
+  // Build queue from today onward with valid YouTube for selected playlist
+  const startIdx = (days.findIndex(d=>d.Date===today.Date)>=0)? days.findIndex(d=>d.Date===today.Date):0;
+  queue = days.slice(startIdx).filter(d=>{ const it=itemForPlaylist(d, plistEl.value); const url=(it&&it.Platforms&&it.Platforms.YouTube&&it.Platforms.YouTube.url)||''; return !!url; });
+  qIndex = 0;
+  const it0 = itemForPlaylist(queue[qIndex], plistEl.value);
+  const url0 = (it0&&it0.Platforms&&it0.Platforms.YouTube&&it0.Platforms.YouTube.url)||'';
+  updateNow(queue[qIndex], it0, url0);
+  renderYouTube(vidFromURL(url0));
 })();
 </script>
 </body>
