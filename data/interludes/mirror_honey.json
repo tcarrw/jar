@@ -1,0 +1,62 @@
+{
+  "Meta": {
+    "Type": "Interlude",
+    "Id": "mirror_honey",
+    "Version": "1.0.0"
+  },
+  "Title": "Mirror Honey",
+  "Aliases": ["Marina × Sabrina"],
+  "Glyphs": ["🪞", "🐝"],
+  "Archetypes": {
+    "Left": "Honey Core (Sabrina)",
+    "Right": "Mirror Butterfly (Marina)"
+  },
+  "Placement": {
+    "Recommended": ["Jar.Specials", "Jar.Interludes"],
+    "Cycle": "Any",
+    "IlluminaTags": ["Bridge:Honey↔Mirror", "Resonance", "Dual-Archetype"]
+  },
+  "Mottos": {
+    "Left": "Sweet enough to sting.",
+    "Right": "I don't make honey, I make reflections."
+  },
+  "Prompts": {
+    "Left": [
+      "Write down 3 things you love unapologetically.",
+      "What's your “hook” line of the week?"
+    ],
+    "Right": [
+      "What cultural mask do you wear most often?",
+      "Where do you see your reflection distorted?"
+    ]
+  },
+  "Joint": {
+    "OverlayGlyph": "∞",
+    "Text": "The hive and the mirror meet — sweetness reflects, reflection sweetens."
+  },
+  "Colors": {
+    "Honey": ["#FFC0D1", "#F8D34A"],
+    "Mirror": ["#7E5BEF", "#C0C4D6"]
+  },
+  "Assets": {
+    "SpreadImage": "interludes/mirror_honey/mirror_honey_spread_v1.jpg",
+    "AltText": "Two-page spread: pink-gold honey page (Sabrina) and violet-silver mirror page (Marina) with prompts and ∞ glyph."
+  },
+  "Ritual": {
+    "Kind": "Resonance",
+    "Steps": [
+      "Left: complete the Honey prompts.",
+      "Right: complete the Mirror prompts.",
+      "Center: write one sentence that blends both answers into a single intention."
+    ]
+  },
+  "Index": {
+    "Label": "🪞🐝 Mirror Honey",
+    "Slug": "mirror-honey",
+    "Sort": 62
+  },
+  "SEO": {
+    "Description": "A dual-archetype interlude where Honey (Sabrina) meets Mirror (Marina).",
+    "Robots": "index, follow"
+  }
+}
