@@ -1,0 +1,60 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "layout": "HoneyCore+HexAnchors",
+    "notes": "Field, not inbox."
+  },
+  "core": {
+    "name": "Sabrina Carpenter",
+    "alias": "Sabrina",
+    "role": "Honey Core",
+    "glyph": "🍯",
+    "theme": "honey",
+    "slug": "sabrina"
+  },
+  "anchors": [
+    {
+      "name": "Marina",
+      "alias": "Marina and the Diamonds",
+      "role": "Mirror",
+      "glyph": "🪞",
+      "theme": "mirror",
+      "slug": "marina"
+    },
+    {
+      "name": "Doechii",
+      "role": "Fire / Bridge",
+      "glyph": "🔥",
+      "theme": "fire",
+      "slug": "doechii"
+    },
+    {
+      "name": "Eminem",
+      "role": "Bolt",
+      "glyph": "⚡",
+      "theme": "bolt",
+      "slug": "eminem"
+    },
+    {
+      "name": "Emma Stone",
+      "role": "Sun",
+      "glyph": "☀️",
+      "theme": "sun",
+      "slug": "emma-stone"
+    },
+    {
+      "name": "Janet Planet",
+      "role": "Moon",
+      "glyph": "🌙",
+      "theme": "moon",
+      "slug": "janet-planet"
+    },
+    {
+      "name": "Chapel Roan",
+      "role": "Camp",
+      "glyph": "🎭",
+      "theme": "camp",
+      "slug": "chapel-roan"
+    }
+  ]
+}
