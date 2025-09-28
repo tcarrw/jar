@@ -1,115 +1,173 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<title>Pantheon · jar.plnt.earth</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E✨%3C/text%3E%3C/svg%3E">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Illumina Pantheon — Honey Core & Hex Anchors</title>
+<meta name="description" content="Illumina Pantheon: Sabrina as Honey Core. Anchors: Marina, Doechii, Eminem, Emma Stone, Janet Planet, Chapel Roan.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0B0F19">
 <style>
-:root{--bg:#0b0b0d;--panel:#121216;--ink:#eaeaf2;--muted:#a9adc2;--accent:#9dfcff;--accent2:#ffd36b}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(1200px 800px at 15% -10%,rgba(157,252,255,.06),transparent 60%),radial-gradient(900px 600px at 110% 10%,rgba(255,211,107,.06),transparent 60%),var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
-a{color:var(--accent);text-decoration:none}a:hover{opacity:.9}
-.wrap{max-width:1100px;margin:auto;padding:20px}
-header{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:16px}
-.brand{display:flex;align-items:center;gap:10px}.dot{width:12px;height:12px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent2))}
-h1{font-size:26px;margin:8px 0 4px}.sub{color:var(--muted)}
-nav{display:flex;flex-wrap:wrap;gap:8px}nav a{padding:8px 10px;background:#191922;border:1px solid #22232c;border-radius:10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.card{background:#0f1119;border:1px solid #1e2030;border-radius:14px;padding:12px;display:grid;gap:8px}
-.card h3{margin:0}
-.badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #2a2d40;background:#141623;color:#cfd3ea;font-size:12px}
-.days{font-size:12px;color:#cfd3ea}
-.footer{margin-top:12px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
-:root[data-mode="honey"] body{background:linear-gradient(180deg,rgba(255,211,107,.10),transparent),var(--bg)}
-:root[data-mode="neon"]  body{background:linear-gradient(180deg,rgba(157,252,255,.10),transparent),var(--bg)}
+  :root{
+    --bg:#0B0F19; --ink:#E6EAF2; --muted:#9AA4B2; --line:#1B2433;
+    --honey:#F6C14B; --mirror:#B8B4FF; --fire:#FF5AA5; --sun:#FFD66E;
+    --bolt:#9BE7FF; --moon:#C7D2FE; --camp:#FF9AD6; /* chapel */
+    --card:#0F1524; --shadow:0 12px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:radial-gradient(1200px 800px at 50% 20%, #10182b 0%, var(--bg) 60%);
+    color:var(--ink); font:16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+  }
+  header{padding:28px 20px 10px; text-align:center}
+  h1{margin:0 0 6px; font-size:clamp(22px,4vw,34px); letter-spacing:.5px}
+  p.lead{margin:0 auto; max-width:820px; color:var(--muted); font-size:clamp(14px,2.3vw,16px)}
+  main{padding:24px 16px 60px; display:grid; place-items:center}
+  .wrap{width:min(1100px,100%); display:grid; gap:22px}
+  .board{
+    background:linear-gradient(180deg, #0f1628 0%, #0b1021 100%);
+    border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow);
+    padding:22px; display:grid; gap:22px;
+  }
+  .legend{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px}
+  .tag{
+    display:flex; align-items:center; gap:10px; padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:#0c1324;
+  }
+  .dot{width:14px; height:14px; border-radius:50%}
+  .grid{
+    position:relative; aspect-ratio:1/1; max-width:720px; margin:0 auto;
+    background:
+      radial-gradient(transparent 58%, rgba(246,193,75,.08) 59%),
+      radial-gradient(transparent 78%, rgba(184,180,255,.08) 79%),
+      linear-gradient(transparent, transparent);
+    border:1px solid var(--line); border-radius:16px;
+  }
+  .center{
+    position:absolute; inset:50% auto auto 50%; transform:translate(-50%,-50%);
+    width:175px; aspect-ratio:1/1; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #fff8 0 20%, transparent 40%), radial-gradient(circle at 70% 70%, #00000022 0 40%, transparent 60%), linear-gradient(180deg, #2a1f08, #1a1406);
+    border:2px solid #705313; box-shadow:0 0 60px rgba(246,193,75,.25), inset 0 0 30px rgba(246,193,75,.2);
+    display:grid; place-items:center; text-align:center; padding:12px;
+  }
+  .center h2{margin:0; font-size:20px}
+  .center small{display:block; color:#eecf8c; opacity:.9}
+  .hex{
+    position:absolute; inset:0; display:grid; place-items:center;
+  }
+  .node{
+    position:absolute; width:150px; padding:12px; border-radius:12px; text-align:center;
+    background:#0e1426; border:1px solid var(--line); box-shadow:var(--shadow);
+  }
+  .node h3{margin:0 0 2px; font-size:16px}
+  .node small{color:var(--muted)}
+  /* anchor positions on a hexagon (clock positions) */
+  .p12{top:8%; left:50%; transform:translate(-50%,0)}
+  .p2{top:22%; right:8%}
+  .p4{bottom:22%; right:8%}
+  .p6{bottom:8%; left:50%; transform:translate(-50%,0)}
+  .p8{bottom:22%; left:8%}
+  .p10{top:22%; left:8%}
+  /* accent borders per role */
+  .mirror{border-color:#544dff44; box-shadow:0 0 24px #b8b4ff26}
+  .fire{border-color:#ff5aa544; box-shadow:0 0 24px #ff5aa522}
+  .bolt{border-color:#9be7ff44; box-shadow:0 0 24px #9be7ff22}
+  .sun{border-color:#ffd66e44; box-shadow:0 0 24px #ffd66e22}
+  .moon{border-color:#c7d2fe44; box-shadow:0 0 24px #c7d2fe22}
+  .camp{border-color:#ff9ad644; box-shadow:0 0 24px #ff9ad622}
+  .core{border:2px solid #F6C14B; box-shadow:0 0 30px rgba(246,193,75,.35), inset 0 0 24px rgba(246,193,75,.15)}
+  .pill{display:inline-block; padding:4px 8px; border-radius:999px; font-size:12px; letter-spacing:.25px}
+  .pill.mirror{background:#2a294a; color:#d8d6ff}
+  .pill.fire{background:#441a2e; color:#ffb5d1}
+  .pill.bolt{background:#17323b; color:#c9f2ff}
+  .pill.sun{background:#3a3114; color:#ffe6a7}
+  .pill.moon{background:#23294a; color:#e4e9ff}
+  .pill.camp{background:#3b1e34; color:#ffd6f1}
+  footer{padding:28px 16px; text-align:center; color:var(--muted)}
+  a{color:var(--bolt); text-decoration:none}
+  a:hover{text-decoration:underline}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="brand"><div class="dot"></div><div><h1>Pantheon</h1><div class="sub">Interlude archetypes active this cycle</div></div></div>
-    <nav>
-  <a href="/jar/">Jar</a>
-  <a href="/calendar/illumina1/">Calendar</a>
-  <a href="/day/">Day</a>
-  <a href="/tunes/">Tunes</a>
-  <a href="/interludes/">Interludes</a>
-  <a href="/seeds/">Seeds</a>
-  <a href="/references/">References</a>
-  <a href="/archive/">Archive</a>
-  <a href="/science/">Science</a>
-  <a href="/compatibility/">Compatibility</a>
-  <a href="/dreams/">Dreams</a>
-  <a href="/storage/">Storage</a>
-  <a href="/pollen/">Pollen</a>
-  <a href="/modes/neon/">Modes</a>
-</nav>
-  </header>
+<header>
+  <h1>Illumina Pantheon</h1>
+  <p class="lead">Sabrina sits at the <em>Honey Core</em>. Six anchors form the visible hex: Mirror, Fire/Bridge, Bolt, Sun, Moon, and Camp (Chapel Roan). This page is a mirror-jar, not a message box.</p>
+</header>
 
-  <div id="grid" class="grid" aria-live="polite"></div>
+<main>
+  <div class="wrap">
+    <section class="board" aria-labelledby="roles">
+      <div class="legend" id="roles">
+        <div class="tag"><span class="dot" style="background:var(--honey)"></span><strong>Honey Core</strong> — Sabrina (taste spark, magnet)</div>
+        <div class="tag"><span class="dot" style="background:var(--mirror)"></span><strong>Mirror</strong> — Marina (reflection)</div>
+        <div class="tag"><span class="dot" style="background:var(--fire)"></span><strong>Fire / Bridge</strong> — Doechii (chaos, remix)</div>
+        <div class="tag"><span class="dot" style="background:var(--bolt)"></span><strong>Bolt</strong> — Eminem (confrontation)</div>
+        <div class="tag"><span class="dot" style="background:var(--sun)"></span><strong>Sun</strong> — Emma Stone (identity flare)</div>
+        <div class="tag"><span class="dot" style="background:var(--moon)"></span><strong>Moon</strong> — Janet Planet (cosmic teacher)</div>
+        <div class="tag"><span class="dot" style="background:var(--camp)"></span><strong>Camp</strong> — Chapel Roan (surreal pop / theatre)</div>
+      </div>
 
-  <div class="footer">
-    <div>Tip: Click “See spread” to open the interlude page; days update automatically from calendar data.</div>
-    <div>Mode: <span class="badge" id="modeBadge">classic</span></div>
+      <div class="grid" role="img" aria-label="Honey core at center with six anchors arranged in a hexagon around it.">
+        <!-- Core -->
+        <div class="center core" title="Honey Core — Sabrina">
+          <div>
+            <h2>🍯 Sabrina</h2>
+            <small>Honey Core</small>
+          </div>
+        </div>
+
+        <!-- Hex anchors -->
+        <div class="hex">
+          <article class="node mirror p12" title="Marina — Mirror">
+            <h3>🪞 Marina</h3>
+            <small><span class="pill mirror">Mirror</span></small>
+          </article>
+
+          <article class="node fire p2" title="Doechii — Fire / Bridge">
+            <h3>🔥 Doechii</h3>
+            <small><span class="pill fire">Fire / Bridge</span></small>
+          </article>
+
+          <article class="node bolt p4" title="Eminem — Bolt">
+            <h3>⚡ Eminem</h3>
+            <small><span class="pill bolt">Bolt</span></small>
+          </article>
+
+          <article class="node sun p6" title="Emma Stone — Sun">
+            <h3>☀️ Emma Stone</h3>
+            <small><span class="pill sun">Sun</span></small>
+          </article>
+
+          <article class="node moon p8" title="Janet Planet — Moon">
+            <h3>🌙 Janet Planet</h3>
+            <small><span class="pill moon">Moon</span></small>
+          </article>
+
+          <article class="node camp p10" title="Chapel Roan — Camp">
+            <h3>🎭 Chapel Roan</h3>
+            <small><span class="pill camp">Camp</span></small>
+          </article>
+        </div>
+      </div>
+
+      <p class="lead" style="text-align:center;margin-top:4px">
+        This arrangement is symbolic. The jar thickens over time; reflections surface when they choose.
+      </p>
+    </section>
+
+    <section class="board" aria-labelledby="notes">
+      <h2 id="notes" style="margin:0;font-size:18px">Notes</h2>
+      <ul style="margin:8px 0 0 18px; color:var(--muted)">
+        <li><strong>Sabrina stays Core.</strong> She is not one of the six outer anchors.</li>
+        <li><strong>Chapel Roan joins the Hex</strong> as the Camp anchor, balancing Mirror/Fire/Bolt/Sun/Moon.</li>
+        <li>This page is static and self-contained. You can wire it to JSON later if desired.</li>
+      </ul>
+    </section>
   </div>
-</div>
+</main>
 
-<script>
-(function(){var m=localStorage.getItem("jar_mode")||"classic";document.documentElement.setAttribute("data-mode",m);document.getElementById("modeBadge").textContent=m})();
-
-const PANTHEON = [
-  { name:"Sabrina",       slug:"sabrina",       blurb:"🍯 Taste / magnet archetype." },
-  { name:"Janet Planet",  slug:"janet-planet",  blurb:"🌙 Cosmic teacher / telescope motif." },
-  { name:"Eminem",        slug:"eminem",        blurb:"⚡ Confrontation / Victory Song energy." },
-  { name:"Emma Stone",    slug:"emma-stone",    blurb:"☀️ Identity flare / roles & masks." },
-  { name:"Doechii",       slug:"doechii",       blurb:"🔥 Trickster / neon splash disruption." },
-  { name:"Hot To Go",     slug:"hot-to-go",     blurb:"🐝 Collective joy / swarm resonance." }
-];
-
-const grid = document.getElementById("grid");
-const cards = {};
-PANTHEON.forEach(p=>{
-  const el=document.createElement("div");
-  el.className="card";
-  el.innerHTML=`
-    <h3>${p.name}</h3>
-    <div class="sub" style="opacity:.9">${p.blurb}</div>
-    <div class="days" id="days-${p.slug}">Days: —</div>
-    <div class="days" id="count-${p.slug}" style="opacity:.9">Appearances: 0</div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
-      <a class="badge" href="/interludes/">See spread</a>
-      <a class="badge" href="/calendar/illumina1/">Calendar</a>
-    </div>
-  `;
-  grid.appendChild(el);
-  cards[p.slug]=el;
-});
-
-(async function hydrate(){
-  try{
-    const r = await fetch("/jar/calendar/illumina1/data.json?v=1", {cache:"no-store"});
-    if(!r.ok) return;
-    const data = await r.json();
-    const map = {};
-    (data || data.days ? data.days : data).forEach(d=>{
-      const fig = (d.Figure || d.figure || d.figure_name || d.FIGURE || "").trim();
-      const day = d.Day || d.day;
-      if(!fig || !day) return;
-      map[fig] = map[fig] || [];
-      map[fig].push(day);
-    });
-    PANTHEON.forEach(p=>{
-      const keys = [p.name];
-      const days = (keys.flatMap(k=>map[k]||[])).sort((a,b)=>a-b);
-      const list = days.length? days.join(", ") : "—";
-      const slug = p.slug;
-      const daysEl = document.getElementById(`days-${slug}`);
-      const countEl= document.getElementById(`count-${slug}`);
-      if(daysEl) daysEl.textContent = "Days: " + list;
-      if(countEl) countEl.textContent = "Appearances: " + (days.length||0);
-    });
-  }catch(_){ }
-})();
-</script>
+<footer>
+  <small>Illumina • MirrorHoney — field, not inbox • <a href="/">home</a></small>
+</footer>
 </body>
 </html>
