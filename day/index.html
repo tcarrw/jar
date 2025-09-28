@@ -3,199 +3,270 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>JAR — Day Index • Honey Core with Mirror/Fire/Camp tints</title>
-<meta name="description" content="Illumina Jar Day Index — Sabrina as Honey Core, with Mirror (Marina), Fire/Bridge (Doechii), Camp (Chapel Roan) tints. Field, not inbox.">
-<meta name="robots" content="index,follow,max-image-preview:large">
+<title>Jar — Day</title>
 <meta name="theme-color" content="#0B0F19">
+<meta name="description" content="Illumina Day: sticky player with prev/next controls, playlist switcher, seed/task integration, and flexible player layout.">
 <style>
   :root{
-    /* base */
-    --bg:#0B0F19; --ink:#E6EAF2; --muted:#9AA4B2; --line:#1B2433; --card:#0F1524;
-    --shadow:0 12px 30px rgba(0,0,0,.35);
-    /* honey core */
-    --honey:#F6C14B; --honey-ink:#1C1406; --honey-glow:rgba(246,193,75,.28);
-    /* mirror (marina) */
-    --mirror:#B8B4FF; --mirror-glow:#B8B4FF33;
-    /* fire (doechii) */
-    --fire:#FF5AA5; --fire-glow:#FF5AA533;
-    /* camp (chapel) */
-    --camp:#FF9AD6; --camp-glow:#FF9AD633;
-    /* subtle accents */
-    --sun:#FFD66E; --bolt:#9BE7FF; --moon:#C7D2FE;
+    --bg:#0B0F19;--ink:#E6EAF2;--muted:#94A3B8;--line:rgba(255,255,255,.12);--card:#0F1524;--hi:#A4E8FF;--ok:#34D399;--warn:#FBBF24;
+    --player-col:560px;
   }
   *{box-sizing:border-box}
-  body{margin:0;background:radial-gradient(1200px 800px at 50% 15%, #10182b 0%, var(--bg) 60%);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Inter,Roboto,"Helvetica Neue",Arial,sans-serif}
-  header{padding:28px 16px 8px;text-align:center}
-  h1{margin:0 0 4px;font-size:clamp(22px,4vw,34px)}
-  .lead{margin:0 auto;max-width:860px;color:var(--muted)}
-  main{padding:16px}
-  .wrap{width:min(1100px,100%);margin:0 auto;display:grid;gap:18px}
-  .banner{
-    border:1px solid var(--line);border-radius:16px;background:
-      linear-gradient(180deg,#121a30 0%,#0b1021 100%),
-      radial-gradient(800px 400px at 50% -10%, var(--honey-glow), transparent 60%);
-    box-shadow:var(--shadow);padding:18px 16px;display:grid;gap:8px;text-align:center
-  }
-  .honey-pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:6px 12px;background:#2a1f08;color:#f8e2a4;border:1px solid #6f5312}
-  .tints{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:6px}
-  .btn{
-    cursor:pointer;border:1px solid var(--line);background:#0c1324;color:var(--ink);
-    border-radius:999px;padding:6px 12px;font-size:14px
-  }
-  .btn[data-tint="mirror"]{border-color:#3c38a8;background:#1a183b}
-  .btn[data-tint="fire"]{border-color:#7a1f46;background:#271222}
-  .btn[data-tint="camp"]{border-color:#6a2a57;background:#231225}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-  .card{
-    background:linear-gradient(180deg,#0e1426 0%,#0b1122 100%);border:1px solid var(--line);
-    border-radius:14px;box-shadow:var(--shadow);padding:14px;display:grid;gap:8px;min-height:140px
-  }
-  .card h3{margin:0;font-size:16px}
-  .meta{display:flex;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px}
-  .pill{display:inline-block;padding:3px 8px;border-radius:999px;font-size:12px}
-  .p-honey{background:#3a2a0a;color:#ffdfa3;border:1px solid #6f5312}
-  .p-mirror{background:#2a294a;color:#dcdafe;border:1px solid #3c38a8}
-  .p-fire{background:#3a1526;color:#ffc1da;border:1px solid #7a1f46}
-  .p-camp{background:#3b1e34;color:#ffd6f1;border:1px solid #6a2a57}
-  footer{padding:26px 16px;text-align:center;color:var(--muted)}
-  a{color:var(--bolt);text-decoration:none}
-  a:hover{text-decoration:underline}
-  /* tint states (light, symbolic—not a theme overhaul) */
-  body.mirror .banner{background:
-    linear-gradient(180deg,#121327 0%,#0b1021 100%),
-    radial-gradient(800px 400px at 50% -10%, var(--mirror-glow), transparent 60%)
-  }
-  body.fire .banner{background:
-    linear-gradient(180deg,#201125 0%,#0b1021 100%),
-    radial-gradient(800px 400px at 50% -10%, var(--fire-glow), transparent 60%)
-  }
-  body.camp .banner{background:
-    linear-gradient(180deg,#1c1120 0%,#0b1021 100%),
-    radial-gradient(800px 400px at 50% -10%, var(--camp-glow), transparent 60%)
-  }
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Inter,Roboto,Arial}
+  a{color:#BBD7FF;text-decoration:none}
+  .wrap{max-width:1100px;margin:0 auto;padding:16px 16px 48px}
+
+  header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#0B0F19 70%,rgba(11,15,25,.85));border-bottom:1px solid var(--line);backdrop-filter:saturate(140%) blur(8px)}
+  .head{display:grid;grid-template-columns:1fr var(--player-col);gap:14px;align-items:center;padding:10px 16px}
+  body.dock-left .head{grid-template-columns:var(--player-col) 1fr}
+  body.dock-inline .head{grid-template-columns:1fr}
+  body.dock-inline #playerBox{display:none}
+  body.dock-inline #playerInline{display:block}
+  body.size-s{--player-col:420px}
+  body.size-m{--player-col:560px}
+  body.size-l{--player-col:720px}
+
+  h1{margin:0;font-size:22px}
+  .sub{color:var(--muted);font-size:13px}
+  .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;border:1px solid var(--line);font-size:12px}
+  .ok{color:var(--ok);border-color:rgba(52,211,153,.35);background:rgba(52,211,153,.12)}
+  .warn{color:var(--warn);border-color:rgba(251,191,36,.35);background:rgba(251,191,36,.12)}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+  .player{position:relative;aspect-ratio:16/9;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#000}
+  .player iframe{width:100%;height:100%;border:0}
+
+  .controls{display:flex;gap:8px;align-items:center;margin-top:8px}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);font-weight:700;cursor:pointer}
+  .btn:hover{border-color:rgba(164,232,255,.35)}
+  .select{appearance:none;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02)), var(--card);color:var(--ink);border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:6px 10px}
+  .select:focus{outline:2px solid var(--hi);outline-offset:2px;box-shadow:0 0 0 2px rgba(164,232,255,.18)}
+
+  .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:16px}
+  @media (max-width:980px){.grid{grid-template-columns:1fr}}
+  .card{background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .card h3{margin:0 0 6px;font-size:18px}
+  .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:var(--muted)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px;background:rgba(255,255,255,.02)}
+  .big{font-size:28px;line-height:1.1;font-weight:800;letter-spacing:.2px}
+  .muted{color:var(--muted)}
+  .footer{margin-top:18px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  #playerInline{display:none;margin:12px 0 0 0}
 </style>
 </head>
-<body>
+<body class="dock-right size-m">
 <header>
-  <h1>Jar — Day Index</h1>
-  <p class="lead">Sabrina is the <strong>Honey Core</strong> (🍯). Days can be tinted by Mirror (🪞 Marina), Fire/Bridge (🔥 Doechii), or Camp (🎭 Chapel Roan). This is a field, not an inbox.</p>
+  <div class="head wrap">
+    <div>
+      <h1 id="dayTitle">Day —</h1>
+      <div class="row">
+        <span id="dateOut" class="pill">—</span>
+        <span id="phaseOut" class="pill">—</span>
+        <span id="tscale" class="pill">t‑scale —</span>
+
+        <label class="pill">Playlist:
+          <select id="plist" class="select">
+            <option value="anchor-public">Anchor · Public</option>
+            <option value="explainer">Explainer</option>
+            <option value="anchor-built">Anchor · Built</option>
+          </select>
+        </label>
+
+        <label class="pill">Dock:
+          <select id="dockSel" class="select">
+            <option value="right">Right</option>
+            <option value="left">Left</option>
+            <option value="inline">Inline</option>
+          </select>
+        </label>
+
+        <label class="pill">Size:
+          <select id="sizeSel" class="select">
+            <option value="s">S</option>
+            <option value="m" selected>M</option>
+            <option value="l">L</option>
+          </select>
+        </label>
+
+        <label class="pill" title="When on: repeat this track. When off: auto-next on end.">
+          <input id="loop" type="checkbox" style="accent-color:#5eead4"> Loop this track
+        </label>
+      </div>
+      <div class="sub">Sticky player • repeat‑track or auto‑next • Reads lane JSON from <span class="mono">/data/illumina/1/tracks/</span></div>
+      <div class="controls">
+        <button id="prevBtn" class="btn" title="Previous (⌥←)">⟵ Prev</button>
+        <button id="nextBtn" class="btn" title="Next (⌥→)">Next ⟶</button>
+        <a class="btn" id="openInYT" target="_blank" rel="noopener">Open on YouTube</a>
+        <a class="btn" href="/map/">✨ Map</a>
+        <a class="btn" href="https://tunes.plnt.earth" target="_blank" rel="noopener">🎶 Tunes</a>
+      </div>
+    </div>
+    <div class="player" id="playerBox"></div>
+  </div>
 </header>
 
-<main>
-  <div class="wrap">
-    <section class="banner" aria-labelledby="honey">
-      <div class="honey-pill" id="honey">🍯 Honey Core — Sabrina Carpenter</div>
-      <div class="tints" role="group" aria-label="Anchor tints">
-        <button class="btn" data-tint="honey" aria-pressed="true">Honey</button>
-        <button class="btn" data-tint="mirror">Mirror — Marina</button>
-        <button class="btn" data-tint="fire">Fire / Bridge — Doechii</button>
-        <button class="btn" data-tint="camp">Camp — Chapel Roan</button>
+<div class="wrap"><div class="player" id="playerInline"></div></div>
+
+<div class="wrap">
+  <div class="grid">
+    <section class="card" id="nowCard">
+      <h3>Now Playing</h3>
+      <div id="trackTitle" class="big">—</div>
+      <div class="chips" style="margin-top:8px">
+        <span id="artistChip" class="chip">Artist —</span>
+        <span id="seedChip" class="chip">Seed —</span>
+        <span id="figureChip" class="chip">Figure —</span>
+        <span id="phaseChip" class="chip">Phase —</span>
       </div>
-      <small class="lead">Choose a tint to feel the day through that anchor’s lens. The jar stays honey; the light shifts.</small>
+      <div class="mono" id="urlOut" style="margin-top:8px">—</div>
+      <p id="seedCue" class="muted" style="margin-top:8px"></p>
     </section>
 
-    <section aria-labelledby="days">
-      <h2 id="days" style="position:absolute;left:-9999px">Days</h2>
-      <div class="grid" id="dayGrid">
-        <!-- Cards populated by playlists (explainer, anchor-public, anchor-built) -->
-      </div>
-    </section>
+    <aside class="card">
+      <h3>Daily Task / Ritual</h3>
+      <div id="taskText" class="muted">—</div>
+      <hr style="border:none;border-top:1px solid var(--line);margin:12px 0">
+      <h3>Beacon (this week)</h3>
+      <div id="beacon" class="muted">—</div>
+      <div style="margin-top:8px"><a class="btn" href="https://tunes.plnt.earth/beacon/index.html" target="_blank" rel="noopener">Open Beacon</a></div>
+    </aside>
   </div>
-</main>
 
-<footer>
-  <small>Illumina • Honey Core + Hex Anchors • <a href="/pantheon/">Pantheon</a></small>
-</footer>
+  <div class="footer">
+    <div>© <span id="yy"></span> PLNT.earth — Jar Day</div>
+    <div><a href="/map/">Constellation</a> • <a href="https://time.plnt.earth" target="_blank" rel="noopener">Time</a> • <a href="https://zeta.plnt.earth" target="_blank" rel="noopener">Zeta</a></div>
+  </div>
+</div>
 
 <script>
-(function(){
-  var tintButtons = document.querySelectorAll('.btn[data-tint]');
-  function setTint(t){
-    document.body.classList.remove('mirror','fire','camp');
-    if(t==='mirror'||t==='fire'||t==='camp'){ document.body.classList.add(t); }
-    tintButtons.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.tint===t)); });
-  }
-  tintButtons.forEach(function(b){
-    b.addEventListener('click', function(){ setTint(b.dataset.tint); });
-  });
-  setTint('honey');
+const QS = new URLSearchParams(location.search);
+const DAYQ = parseInt(QS.get("day")||"0",10) || null;
+const DATEQ = QS.get("date") || null;
+function normLane(v){ v=(v||'anchor-public').toLowerCase(); if(v==='anchorpublic') v='anchor-public'; if(v==='anchorbuilt') v='anchor-built'; return v; }
+const PLAYLISTQ = normLane(QS.get("playlist"));
 
-  // minimal loader: merges three track lists into day cards (no logs, no tracking)
-  var sources=[
-    '/data/illumina/1/tracks/explainer.json',
-    '/data/illumina/1/tracks/anchor-public.json',
-    '/data/illumina/1/tracks/anchor-built.json'
-  ];
-  Promise.all(sources.map(function(u){ return fetch(u).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];}); }))
-    .then(function(payloads){
-      // Expecting arrays or objects mapping Day -> track; normalize into a simple per-day view.
-      var days = {};
-      payloads.forEach(function(p){
-        if(Array.isArray(p)){ p.forEach(function(entry){ addEntry(entry); }); }
-        else if(p && typeof p==='object' && Array.isArray(p.PerDay)){
-          p.PerDay.forEach(function(entry){ addEntry(entry); });
-        }
-        else if(p && typeof p==='object' && Array.isArray(p.tracks)){
-          p.tracks.forEach(function(entry){ addEntry(entry); });
-        }
-      });
-      function addEntry(e){
-        var d = e.Day || e.day || e.date || null;
-        if(!d) return;
-        var key = String(d).padStart(2,'0');
-        if(!days[key]) days[key] = { day: key, entries: [] };
-        days[key].entries.push({
-          title: (e.title || e.song || e.name || 'Untitled'),
-          artist: (e.artist || e.by || ''),
-          url: e.url || (e.Platforms && e.Platforms.YouTube && e.Platforms.YouTube.url) || ''
-        });
-      }
-      var grid = document.getElementById('dayGrid');
-      Object.keys(days).sort().forEach(function(k){
-        var d = days[k];
-        var el = document.createElement('article');
-        el.className='card';
-        var first = d.entries[0] || {};
-        var title = document.createElement('h3');
-        title.textContent='Day '+Number(d.day);
-        var meta = document.createElement('div');
-        meta.className='meta';
-        var pill = document.createElement('span');
-        pill.className='pill p-honey';
-        pill.textContent='Honey Core';
-        meta.appendChild(pill);
-        var link = document.createElement('a');
-        link.href = first.url || '#';
-        link.textContent = first.title + (first.artist ? ' — ' + first.artist : '');
-        link.rel='noopener';
-        link.target='_blank';
-        var p = document.createElement('p');
-        p.style.margin='0';
-        p.appendChild(link);
-        el.appendChild(title);
-        el.appendChild(meta);
-        el.appendChild(p);
+document.getElementById('yy').textContent = new Date().getFullYear();
+const plistEl = document.getElementById('plist'); plistEl.value = PLAYLISTQ || 'anchor-public';
+const loopEl  = document.getElementById('loop');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const dockSel = document.getElementById('dockSel');
+const sizeSel = document.getElementById('sizeSel');
+const openInYT = document.getElementById('openInYT');
 
-        if(d.entries.length>1){
-          var ul = document.createElement('ul');
-          ul.style.margin='6px 0 0 18px';
-          ul.style.color='var(--muted)';
-          d.entries.slice(1,4).forEach(function(e2){
-            var li=document.createElement('li');
-            if(e2.url){
-              var a=document.createElement('a'); a.href=e2.url; a.target='_blank'; a.rel='noopener';
-              a.textContent = (e2.title || 'Track') + (e2.artist ? ' — ' + e2.artist : '');
-              li.appendChild(a);
-            }else{
-              li.textContent = (e2.title || 'Track') + (e2.artist ? ' — ' + e2.artist : '');
-            }
-            ul.appendChild(li);
-          });
-          el.appendChild(ul);
-        }
-        grid.appendChild(el);
-      });
-    });
+plistEl.addEventListener('change', ()=> switchLane(plistEl.value));
+dockSel.addEventListener('change', applyLayout);
+sizeSel.addEventListener('change', applyLayout);
+
+const NAME_FIX = new Map([["beyonce","Beyoncé"],["beyoncé","Beyoncé"],["maneskin","Måneskin"],["måneskin","Måneskin"],["chloe","Chlöe"],["chloë","Chloë"]]);
+function fixName(raw){ if(!raw) return ""; const n=raw.normalize?raw.normalize('NFC'):raw; const k=n.trim().toLowerCase(); return NAME_FIX.get(k)||n; }
+function fixMojibake(s){ if(typeof s!=="string") return s; return s.normalize('NFC').replace(/Beyonc\u00c3\u00a9/gi,'Beyoncé').replace(/M\u00c3\u00a5neskin/gi,'Måneskin').replace(/\u2019/g,'’'); }
+
+const BASE = '/data/illumina/1/tracks';
+const FILES = {'explainer':'explainer.json','anchor-public':'anchor-public.json','anchor-built':'anchor-built.json'};
+
+async function fetchJSON(url){ const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw 0; return await r.json(); }
+
+function safeURL(h){ try{ return new URL(h,'https://youtube.com').href; }catch{ return ''; } }
+function vidFromURL(h){ try{ const u=new URL(h,'https://youtube.com'); return u.searchParams.get('v')||u.pathname.split('/').pop(); }catch{ return ''; } }
+function beaconForDay(dayNum){ const idx = Math.floor((+dayNum-1)/7); const names=['Voice','Honey','Stage','Cosmos','Neon','Edge']; const icons=['📣','🍯','🎭','🌌','🕺','🗡️']; return (idx>=0&&idx<6)?(icons[idx]+' '+names[idx]):'—'; }
+
+/* Player */
+let player=null, currentVideoId="", queue=[], qIndex=0;
+function hostEl(){ return (document.body.classList.contains('dock-inline') ? document.getElementById('playerInline') : document.getElementById('playerBox')); }
+function renderYouTube(videoId){
+  const box = hostEl();
+  const src=`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&enablejsapi=1&modestbranding=1&playsinline=1`;
+  box.innerHTML=`<iframe id="yt" src="${src}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+  currentVideoId = videoId;
+  setupYTAPI();
+}
+function setupYTAPI(){ if(window.YT&&YT.Player) return initYT(); const s=document.createElement('script'); s.src='https://www.youtube.com/iframe_api'; document.head.appendChild(s); window.onYouTubeIframeAPIReady=initYT; }
+function initYT(){ player=new YT.Player('yt',{events:{onStateChange:ev=>{ if(ev.data===0){ if(loopEl.checked){ if(player && player.seekTo){ player.seekTo(0,true); player.playVideo(); } else { renderYouTube(currentVideoId); } } else { next(); } } }}}); }
+
+function prev(){ if(queue.length===0) return; qIndex = (qIndex - 1 + queue.length) % queue.length; playIndex(qIndex); }
+function next(){ if(queue.length===0) return; qIndex = (qIndex + 1) % queue.length; playIndex(qIndex); }
+prevBtn.onclick=prev; nextBtn.onclick=next;
+window.addEventListener('keydown', e=>{ if(e.altKey && (e.key==='ArrowLeft')) prev(); if(e.altKey && (e.key==='ArrowRight')) next(); });
+
+function applyLayout(){
+  const dock = dockSel.value; const size = sizeSel.value;
+  document.body.classList.toggle('dock-left', dock==='left');
+  document.body.classList.toggle('dock-right', dock==='right');
+  document.body.classList.toggle('dock-inline', dock==='inline');
+  document.body.classList.toggle('size-s', size==='s');
+  document.body.classList.toggle('size-m', size==='m');
+  document.body.classList.toggle('size-l', size==='l');
+  try{ localStorage.setItem('jar.day.layout', dock); localStorage.setItem('jar.day.size', size); }catch(e){}
+  if(currentVideoId){ renderYouTube(currentVideoId); }
+}
+(function restoreLayout(){
+  try{
+    const d = localStorage.getItem('jar.day.layout')||'right';
+    const s = localStorage.getItem('jar.day.size')||'m';
+    dockSel.value = d; sizeSel.value = s;
+  }catch(e){}
+  applyLayout();
+})();
+
+function updateNow(it){
+  const title = (it.title||'—').trim();
+  const parts = title.split(' - ');
+  const artist = parts.length>1 ? fixName(parts[0]) : '';
+  document.getElementById('dayTitle').textContent=`Day ${it.day||'—'}`;
+  document.getElementById('dateOut').textContent=it.date||'—';
+  document.getElementById('phaseOut').textContent=it.moonPhase||'—';
+  document.getElementById('phaseChip').textContent=it.moonPhase||'—';
+  document.getElementById('trackTitle').textContent=title;
+  document.getElementById('artistChip').textContent=artist||'—';
+  const seedLabel = it.seedRitual || '';
+  document.getElementById('seedChip').textContent = seedLabel || '—';
+  document.getElementById('figureChip').textContent=it.figure||'—';
+  const url = (it.urls&&it.urls.youtube)||'';
+  document.getElementById('urlOut').textContent=url||'—';
+  openInYT.href = url? safeURL(url) : 'https://youtube.com';
+  document.getElementById('taskText').textContent = seedLabel || '—';
+  document.getElementById('beacon').textContent = beaconForDay(it.day||1);
+}
+
+function playIndex(i){
+  const it=queue[i]; if(!it) return;
+  const url=(it.urls&&it.urls.youtube)||'';
+  const vid=vidFromURL(url);
+  if(player&&player.loadVideoById){ player.loadVideoById(vid); currentVideoId = vid; }
+  else { renderYouTube(vid); }
+  updateNow(it);
+}
+
+/* State */
+let cache={}, items=[];
+async function switchLane(key){
+  key = normLane(key);
+  const u = new URL(location.href); u.searchParams.set('playlist', key); history.replaceState(null,'',u.toString());
+  plistEl.value = key;
+  if(cache[key]){ items = cache[key]; initQueue(); return; }
+  const data = await fetchJSON(`${BASE}/${FILES[key]}`).catch(()=>({items:[]}));
+  items = Array.isArray(data.items)? data.items.slice().sort((a,b)=>(a.day||0)-(b.day||0)) : [];
+  cache[key]=items;
+  initQueue();
+}
+
+function initQueue(){
+  queue = items.filter(it => it && it.urls && it.urls.youtube);
+  if(queue.length===0){ updateNow({}); return; }
+  let startIdx = 0;
+  if(DAYQ!=null){ const i = queue.findIndex(x=>x.day===DAYQ); if(i>=0) startIdx=i; }
+  else if(DATEQ){ const i = queue.findIndex(x=>x.date===DATEQ); if(i>=0) startIdx=i; }
+  qIndex = startIdx;
+  const url0 = (queue[qIndex].urls&&queue[qIndex].urls.youtube)||'';
+  updateNow(queue[qIndex]);
+  renderYouTube(vidFromURL(url0));
+}
+
+(async function(){
+  await switchLane(PLAYLISTQ || 'anchor-public');
 })();
 </script>
 </body>
