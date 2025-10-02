@@ -3,271 +3,73 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Jar — Day</title>
+<title>Jar Day — Illumina 1</title>
 <meta name="theme-color" content="#0B0F19">
-<meta name="description" content="Illumina Day: sticky player with prev/next controls, playlist switcher, seed/task integration, and flexible player layout.">
+<meta name="description" content="Jar Day entry for Illumina 1 — photoset 7157–7167 captured as intention → sprint → close.">
 <style>
-  :root{
-    --bg:#0B0F19;--ink:#E6EAF2;--muted:#94A3B8;--line:rgba(255,255,255,.12);--card:#0F1524;--hi:#A4E8FF;--ok:#34D399;--warn:#FBBF24;
-    --player-col:560px;
+  :root {
+    --bg:#0B0F19; --ink:#E6EAF2; --muted:#94A3B8; --line:rgba(255,255,255,.12);
+    --card:#0F1524; --hi:#A4E8FF; --ok:#34D399; --warn:#FBBF24;
+    --max:720px;
   }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Inter,Roboto,Arial}
-  a{color:#BBD7FF;text-decoration:none}
-  .wrap{max-width:1100px;margin:0 auto;padding:16px 16px 48px}
-
-  header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,#0B0F19 70%,rgba(11,15,25,.85));border-bottom:1px solid var(--line);backdrop-filter:saturate(140%) blur(8px)}
-  .head{display:grid;grid-template-columns:1fr var(--player-col);gap:14px;align-items:center;padding:10px 16px}
-  body.dock-left .head{grid-template-columns:var(--player-col) 1fr}
-  body.dock-inline .head{grid-template-columns:1fr}
-  body.dock-inline #playerBox{display:none}
-  body.dock-inline #playerInline{display:block}
-  body.size-s{--player-col:420px}
-  body.size-m{--player-col:560px}
-  body.size-l{--player-col:720px}
-
-  h1{margin:0;font-size:22px}
-  .sub{color:var(--muted);font-size:13px}
-  .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;border:1px solid var(--line);font-size:12px}
-  .ok{color:var(--ok);border-color:rgba(52,211,153,.35);background:rgba(52,211,153,.12)}
-  .warn{color:var(--warn);border-color:rgba(251,191,36,.35);background:rgba(251,191,36,.12)}
-  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-
-  .player{position:relative;aspect-ratio:16/9;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#000}
-  .player iframe{width:100%;height:100%;border:0}
-
-  .controls{display:flex;gap:8px;align-items:center;margin-top:8px}
-  .btn{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);font-weight:700;cursor:pointer}
-  .btn:hover{border-color:rgba(164,232,255,.35)}
-  .select{appearance:none;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02)), var(--card);color:var(--ink);border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:6px 10px}
-  .select:focus{outline:2px solid var(--hi);outline-offset:2px;box-shadow:0 0 0 2px rgba(164,232,255,.18)}
-
-  .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:16px}
-  @media (max-width:980px){.grid{grid-template-columns:1fr}}
-  .card{background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
-  .card h3{margin:0 0 6px;font-size:18px}
-  .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;color:var(--muted)}
-  .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px;background:rgba(255,255,255,.02)}
-  .big{font-size:28px;line-height:1.1;font-weight:800;letter-spacing:.2px}
-  .muted{color:var(--muted)}
-  .footer{margin-top:18px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
-  #playerInline{display:none;margin:12px 0 0 0}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body {
+    background:var(--bg); color:var(--ink);
+    font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto;
+    display:flex; justify-content:center; padding:2rem;
+  }
+  main {max-width:var(--max); width:100%;}
+  h1,h2 {font-weight:600;margin:1.5rem 0 1rem}
+  section {background:var(--card);padding:1.25rem;border-radius:.5rem;margin:1rem 0}
+  .note {font-size:.9rem;color:var(--muted);margin-top:.75rem}
+  ul {margin:.75rem 0 0 1.25rem;line-height:1.6}
 </style>
 </head>
-<body class="dock-right size-m">
-<header>
-  <div class="head wrap">
-    <div>
-      <h1 id="dayTitle">Day —</h1>
-      <div class="row">
-        <span id="dateOut" class="pill">—</span>
-        <span id="phaseOut" class="pill">—</span>
-        <span id="tscale" class="pill">t‑scale —</span>
+<body>
+<main>
+  <h1>🍯 Jar Day — Illumina 1</h1>
+  <p class="note">Photoset IMG_7157–7167 logged as a daily vessel (text-only index).</p>
 
-        <label class="pill">Playlist:
-          <select id="plist" class="select">
-            <option value="anchor-public">Anchor · Public</option>
-            <option value="explainer">Explainer</option>
-            <option value="anchor-built">Anchor · Built</option>
-          </select>
-        </label>
+  <section>
+    <h2>🌑 Intention</h2>
+    <p>Opening frames carry the seed energy — sparks of the day, the beginning of motion.</p>
+    <ul>
+      <li>IMG_7157</li>
+      <li>IMG_7158</li>
+      <li>IMG_7159</li>
+    </ul>
+  </section>
 
-        <label class="pill">Dock:
-          <select id="dockSel" class="select">
-            <option value="right">Right</option>
-            <option value="left">Left</option>
-            <option value="inline">Inline</option>
-          </select>
-        </label>
+  <section>
+    <h2>🌗 Mid-Sprint</h2>
+    <p>Bee at work — gathering, layering, weaving details. Pollination in progress.</p>
+    <ul>
+      <li>IMG_7160</li>
+      <li>IMG_7161</li>
+      <li>IMG_7162</li>
+      <li>IMG_7163</li>
+    </ul>
+  </section>
 
-        <label class="pill">Size:
-          <select id="sizeSel" class="select">
-            <option value="s">S</option>
-            <option value="m" selected>M</option>
-            <option value="l">L</option>
-          </select>
-        </label>
+  <section>
+    <h2>🌕 Close</h2>
+    <p>Final frames seal the honey — reflection and distillation of the day’s essence.</p>
+    <ul>
+      <li>IMG_7165</li>
+      <li>IMG_7166</li>
+      <li>IMG_7167</li>
+    </ul>
+  </section>
 
-        <label class="pill" title="When on: repeat this track. When off: auto-next on end.">
-          <input id="loop" type="checkbox" style="accent-color:#5eead4"> Loop this track
-        </label>
-      </div>
-      <div class="sub">Sticky player • repeat‑track or auto‑next • Reads lane JSON from <span class="mono">/data/illumina/1/tracks/</span></div>
-      <div class="controls">
-        <button id="prevBtn" class="btn" title="Previous (⌥←)">⟵ Prev</button>
-        <button id="nextBtn" class="btn" title="Next (⌥→)">Next ⟶</button>
-        <a class="btn" id="openInYT" target="_blank" rel="noopener">Open on YouTube</a>
-        <a class="btn" href="/map/">✨ Map</a>
-        <a class="btn" href="https://tunes.plnt.earth" target="_blank" rel="noopener">🎶 Tunes</a>
-      </div>
-    </div>
-    <div class="player" id="playerBox"></div>
-  </div>
-</header>
+  <section>
+    <h2>🌙 L. Moon Archive</h2>
+    <p><em>“Jar Day X reads as one continuous swarm. Flow of intention → action → reflection is intact. Recommend logging this under Illumina 1 sequence for playback.”</em></p>
+  </section>
 
-<div class="wrap"><div class="player" id="playerInline"></div></div>
-
-<div class="wrap">
-  <div class="grid">
-    <section class="card" id="nowCard">
-      <h3>Now Playing</h3>
-      <div id="trackTitle" class="big">—</div>
-      <div class="chips" style="margin-top:8px">
-        <span id="artistChip" class="chip">Artist —</span>
-        <span id="seedChip" class="chip">Seed —</span>
-        <span id="figureChip" class="chip">Figure —</span>
-        <span id="phaseChip" class="chip">Phase —</span>
-      </div>
-      <div class="mono" id="urlOut" style="margin-top:8px">—</div>
-      <p id="seedCue" class="muted" style="margin-top:8px"></p>
-    </section>
-
-    <aside class="card">
-      <h3>Daily Task / Ritual</h3>
-      <div id="taskText" class="muted">—</div>
-      <hr style="border:none;border-top:1px solid var(--line);margin:12px 0">
-      <h3>Beacon (this week)</h3>
-      <div id="beacon" class="muted">—</div>
-      <div style="margin-top:8px"><a class="btn" href="https://tunes.plnt.earth/beacon/index.html" target="_blank" rel="noopener">Open Beacon</a></div>
-    </aside>
-  </div>
-
-  <div class="footer">
-    <div>© <span id="yy"></span> PLNT.earth — Jar Day</div>
-    <div><a href="/map/">Constellation</a> • <a href="https://time.plnt.earth" target="_blank" rel="noopener">Time</a> • <a href="https://zeta.plnt.earth" target="_blank" rel="noopener">Zeta</a></div>
-  </div>
-</div>
-
-<script>
-const QS = new URLSearchParams(location.search);
-const DAYQ = parseInt(QS.get("day")||"0",10) || null;
-const DATEQ = QS.get("date") || null;
-function normLane(v){ v=(v||'anchor-public').toLowerCase(); if(v==='anchorpublic') v='anchor-public'; if(v==='anchorbuilt') v='anchor-built'; return v; }
-const PLAYLISTQ = normLane(QS.get("playlist"));
-
-document.getElementById('yy').textContent = new Date().getFullYear();
-const plistEl = document.getElementById('plist'); plistEl.value = PLAYLISTQ || 'anchor-public';
-const loopEl  = document.getElementById('loop');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const dockSel = document.getElementById('dockSel');
-const sizeSel = document.getElementById('sizeSel');
-const openInYT = document.getElementById('openInYT');
-
-plistEl.addEventListener('change', ()=> switchLane(plistEl.value));
-dockSel.addEventListener('change', applyLayout);
-sizeSel.addEventListener('change', applyLayout);
-
-const NAME_FIX = new Map([["beyonce","Beyoncé"],["beyoncé","Beyoncé"],["maneskin","Måneskin"],["måneskin","Måneskin"],["chloe","Chlöe"],["chloë","Chloë"]]);
-function fixName(raw){ if(!raw) return ""; const n=raw.normalize?raw.normalize('NFC'):raw; const k=n.trim().toLowerCase(); return NAME_FIX.get(k)||n; }
-function fixMojibake(s){ if(typeof s!=="string") return s; return s.normalize('NFC').replace(/Beyonc\u00c3\u00a9/gi,'Beyoncé').replace(/M\u00c3\u00a5neskin/gi,'Måneskin').replace(/\u2019/g,'’'); }
-
-const BASE = '/data/illumina/1/tracks';
-const FILES = {'explainer':'explainer.json','anchor-public':'anchor-public.json','anchor-built':'anchor-built.json'};
-
-async function fetchJSON(url){ const r=await fetch(url,{cache:'no-store'}); if(!r.ok) throw 0; return await r.json(); }
-
-function safeURL(h){ try{ return new URL(h,'https://youtube.com').href; }catch{ return ''; } }
-function vidFromURL(h){ try{ const u=new URL(h,'https://youtube.com'); return u.searchParams.get('v')||u.pathname.split('/').pop(); }catch{ return ''; } }
-function beaconForDay(dayNum){ const idx = Math.floor((+dayNum-1)/7); const names=['Voice','Honey','Stage','Cosmos','Neon','Edge']; const icons=['📣','🍯','🎭','🌌','🕺','🗡️']; return (idx>=0&&idx<6)?(icons[idx]+' '+names[idx]):'—'; }
-
-/* Player */
-let player=null, currentVideoId="", queue=[], qIndex=0;
-function hostEl(){ return (document.body.classList.contains('dock-inline') ? document.getElementById('playerInline') : document.getElementById('playerBox')); }
-function renderYouTube(videoId){
-  const box = hostEl();
-  const src=`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&enablejsapi=1&modestbranding=1&playsinline=1`;
-  box.innerHTML=`<iframe id="yt" src="${src}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
-  currentVideoId = videoId;
-  setupYTAPI();
-}
-function setupYTAPI(){ if(window.YT&&YT.Player) return initYT(); const s=document.createElement('script'); s.src='https://www.youtube.com/iframe_api'; document.head.appendChild(s); window.onYouTubeIframeAPIReady=initYT; }
-function initYT(){ player=new YT.Player('yt',{events:{onStateChange:ev=>{ if(ev.data===0){ if(loopEl.checked){ if(player && player.seekTo){ player.seekTo(0,true); player.playVideo(); } else { renderYouTube(currentVideoId); } } else { next(); } } }}}); }
-
-function prev(){ if(queue.length===0) return; qIndex = (qIndex - 1 + queue.length) % queue.length; playIndex(qIndex); }
-function next(){ if(queue.length===0) return; qIndex = (qIndex + 1) % queue.length; playIndex(qIndex); }
-prevBtn.onclick=prev; nextBtn.onclick=next;
-window.addEventListener('keydown', e=>{ if(e.altKey && (e.key==='ArrowLeft')) prev(); if(e.altKey && (e.key==='ArrowRight')) next(); });
-
-function applyLayout(){
-  const dock = dockSel.value; const size = sizeSel.value;
-  document.body.classList.toggle('dock-left', dock==='left');
-  document.body.classList.toggle('dock-right', dock==='right');
-  document.body.classList.toggle('dock-inline', dock==='inline');
-  document.body.classList.toggle('size-s', size==='s');
-  document.body.classList.toggle('size-m', size==='m');
-  document.body.classList.toggle('size-l', size==='l');
-  try{ localStorage.setItem('jar.day.layout', dock); localStorage.setItem('jar.day.size', size); }catch(e){}
-  if(currentVideoId){ renderYouTube(currentVideoId); }
-}
-(function restoreLayout(){
-  try{
-    const d = localStorage.getItem('jar.day.layout')||'right';
-    const s = localStorage.getItem('jar.day.size')||'m';
-    dockSel.value = d; sizeSel.value = s;
-  }catch(e){}
-  applyLayout();
-})();
-
-function updateNow(it){
-  const title = (it.title||'—').trim();
-  const parts = title.split(' - ');
-  const artist = parts.length>1 ? fixName(parts[0]) : '';
-  document.getElementById('dayTitle').textContent=`Day ${it.day||'—'}`;
-  document.getElementById('dateOut').textContent=it.date||'—';
-  document.getElementById('phaseOut').textContent=it.moonPhase||'—';
-  document.getElementById('phaseChip').textContent=it.moonPhase||'—';
-  document.getElementById('trackTitle').textContent=title;
-  document.getElementById('artistChip').textContent=artist||'—';
-  const seedLabel = it.seedRitual || '';
-  document.getElementById('seedChip').textContent = seedLabel || '—';
-  document.getElementById('figureChip').textContent=it.figure||'—';
-  const url = (it.urls&&it.urls.youtube)||'';
-  document.getElementById('urlOut').textContent=url||'—';
-  openInYT.href = url? safeURL(url) : 'https://youtube.com';
-  document.getElementById('taskText').textContent = seedLabel || '—';
-  document.getElementById('beacon').textContent = beaconForDay(it.day||1);
-}
-
-function playIndex(i){
-  const it=queue[i]; if(!it) return;
-  const url=(it.urls&&it.urls.youtube)||'';
-  const vid=vidFromURL(url);
-  if(player&&player.loadVideoById){ player.loadVideoById(vid); currentVideoId = vid; }
-  else { renderYouTube(vid); }
-  updateNow(it);
-}
-
-/* State */
-let cache={}, items=[];
-async function switchLane(key){
-  key = normLane(key);
-  const u = new URL(location.href); u.searchParams.set('playlist', key); history.replaceState(null,'',u.toString());
-  plistEl.value = key;
-  if(cache[key]){ items = cache[key]; initQueue(); return; }
-  const data = await fetchJSON(`${BASE}/${FILES[key]}`).catch(()=>({items:[]}));
-  items = Array.isArray(data.items)? data.items.slice().sort((a,b)=>(a.day||0)-(b.day||0)) : [];
-  cache[key]=items;
-  initQueue();
-}
-
-function initQueue(){
-  queue = items.filter(it => it && it.urls && it.urls.youtube);
-  if(queue.length===0){ updateNow({}); return; }
-  let startIdx = 0;
-  if(DAYQ!=null){ const i = queue.findIndex(x=>x.day===DAYQ); if(i>=0) startIdx=i; }
-  else if(DATEQ){ const i = queue.findIndex(x=>x.date===DATEQ); if(i>=0) startIdx=i; }
-  qIndex = startIdx;
-  const url0 = (queue[qIndex].urls&&queue[qIndex].urls.youtube)||'';
-  updateNow(queue[qIndex]);
-  renderYouTube(vidFromURL(url0));
-}
-
-(async function(){
-  await switchLane(PLAYLISTQ || 'anchor-public');
-})();
-</script>
+  <section>
+    <h2>☀️ Flare (Optional)</h2>
+    <p>If one frame burns brighter, mark it as a flare — the day’s Victory hook.</p>
+  </section>
+</main>
 </body>
 </html>
