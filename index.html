@@ -3,84 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Jar — Day Map & Skill Network</title>
-<meta name="description" content="Jar is the Illumina map and project network. Track daily skills, link to Froot lessons, and soundtrack with Tunes.">
-<link rel="canonical" href="https://jar.plnt.earth/">
-<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
-<meta property="og:title" content="Jar — Day Map & Skill Network">
-<meta property="og:description" content="Daily map for Illumina. Now featuring the Voice & Resonance skill.">
-<meta property="og:url" content="https://jar.plnt.earth/">
-<meta property="og:type" content="website">
-<meta name="theme-color" content="#0B0F19">
+<title>Jar — Illumina Day Index</title>
+<meta name="description" content="Jar — the 42-day rhythm engine of Illumina.">
 <style>
-  :root{--bg:#0B0F19;--ink:#E6EAF2;--muted:#A7B0C2;--card:#101728;--line:rgba(230,234,242,.14);--hi:#A4E8FF}
-  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Inter,Roboto}
-  .wrap{max-width:1000px;margin:0 auto;padding:24px} a{color:var(--hi);text-decoration:none}
-  header h1{margin:0 0 6px;font-size:22px} .sub{color:var(--muted)}
-  .grid{display:grid;gap:12px} @media(min-width:860px){.grid{grid-template-columns:1fr 1fr 1fr}}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
-  .tile{background:#101728;border:1px solid var(--line);border-radius:14px}
-  .tile a{display:block;color:#E6EAF2;padding:14px}
-  .tag{font-size:11px;padding:3px 8px;border:1px solid var(--line);border-radius:999px;color:#C1C9D8}
-  .badge{font-size:12px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:#A4E8FF;white-space:nowrap}
-  footer{margin-top:24px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:12px}
+  :root{--bg:#0B0F19;--ink:#E6EAF2;--accent:#A4E8FF;--muted:#94A3B8}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui;
+       max-width:760px;padding:24px;margin:auto;text-align:center}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  footer{margin-top:2rem;color:var(--muted);font-size:.9rem}
 </style>
-<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>Jar — Day Map & Skill Network</h1>
-    <div class="sub">Your Illumina index. Practice a 3-day skill, log one line, keep momentum.</div>
-  </header>
-
-  <main class="grid">
-    <!-- Voice & Resonance tile -->
-    <article class="tile">
-      <a href="https://froot.plnt.earth/voice/" rel="noopener">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-          <span class="tag">Skill</span>
-          <span id="voiceBadge" class="badge">In progress</span>
-        </div>
-        <h3 style="margin:4px 0 2px;font-size:16px">Voice &amp; Resonance (Oct 4–7)</h3>
-        <p style="margin:0;color:#A7B0C2;font-size:13px">Hums + pop blend • Calm expression under pressure</p>
-        <div style="margin-top:10px;font-size:13px;color:#A4E8FF">Open skill →</div>
-      </a>
-    </article>
-
-    <!-- Example placeholders for other day cards / projects -->
-    <section class="card">
-      <h2>Today</h2>
-      <p>Pick one micro-task. Finish it fully. Log one line.</p>
-      <p><a href="https://froot.plnt.earth/">Go to Froot</a> • <a href="https://tunes.plnt.earth/">Open Tunes</a></p>
-    </section>
-
-    <section class="card">
-      <h2>Network</h2>
-      <ul>
-        <li><a href="https://froot.plnt.earth/voice/">Voice Skill</a></li>
-        <li><a href="https://quietmoon.plnt.earth/">Quiet Moon (NICU pilot)</a></li>
-      </ul>
-    </section>
-  </main>
-
-  <footer>
-    Network: <a href="https://froot.plnt.earth/">Froot</a> • <a href="https://tunes.plnt.earth/">Tunes</a> • <a href="https://quietmoon.plnt.earth/">Quiet Moon</a>
-  </footer>
-</div>
-
-<script>
-(function(){
-  try{
-    var badge = document.getElementById('voiceBadge');
-    var line = localStorage.getItem('voice-badge-line');
-    if(line && line.trim()){ badge.textContent = line.trim(); return; }
-    var passed = localStorage.getItem('voice-checkpoint-passed');
-    if(passed === 'true'){ badge.textContent = 'Checkpoint ✅ Ready'; return; }
-    if(passed === 'false'){ badge.textContent = 'Keep practicing'; return; }
-    badge.textContent = 'In progress';
-  }catch(e){}
-})();
-</script>
+<h1>🐝 Jar</h1>
+<p>The daily engine of Illumina — tracking seeds, songs, and sprints.</p>
+<p><a href="/spreads/">Spreads</a> · <a href="/about/">About</a></p>
+<footer>Connected sites · <a href="https://froot.plnt.earth/">Froot</a> · <a href="https://tunes.plnt.earth/">Tunes</a></footer>
 </body>
 </html>
