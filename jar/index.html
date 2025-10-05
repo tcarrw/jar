@@ -1,105 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<title>Jar · jar.plnt.earth</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🫙%3C/text%3E%3C/svg%3E">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jar — Day Map & Skill Network</title>
+<meta name="description" content="Jar is the Illumina map and project network. Track daily skills, link to Froot lessons, and soundtrack with Tunes.">
+<link rel="canonical" href="https://jar.plnt.earth/">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+<meta property="og:title" content="Jar — Day Map & Skill Network">
+<meta property="og:description" content="Daily map for Illumina. Now featuring the Voice & Resonance skill.">
+<meta property="og:url" content="https://jar.plnt.earth/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0B0F19">
 <style>
-:root{--bg:#0b0b0d;--panel:#121216;--ink:#eaeaf2;--muted:#a9adc2;--accent:#9dfcff;--accent2:#ffd36b;--ring:rgba(157,252,255,.35)}
-*{box-sizing:border-box}html,body{height:100%}
-body{margin:0;background:radial-gradient(1200px 800px at 10% -10%,rgba(157,252,255,.06),transparent 60%),radial-gradient(900px 600px at 110% 10%,rgba(255,211,107,.06),transparent 60%),var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
-a{color:var(--accent);text-decoration:none}a:hover{opacity:.9}
-.wrap{max-width:1100px;margin:auto;padding:20px}
-header{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;margin-bottom:16px}
-.brand{display:flex;align-items:center;gap:10px}.dot{width:12px;height:12px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent2))}
-h1{font-size:28px;margin:8px 0 4px}.sub{color:var(--muted)}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.card{background:var(--panel);border:1px solid #1e2030;border-radius:16px;padding:14px;display:grid;gap:8px}
-.card h3{margin:0 0 4px}
-.badge{display:inline-block;padding:2px 8px;border-radius:999px;border:1px solid #2a2d40;background:#141623;color:#cfd3ea;font-size:12px}
-.btn{padding:10px 12px;border-radius:10px;border:1px solid #23263a;background:#151726;color:#e9ecff;display:inline-block}
-.footer{margin-top:12px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
-@media (max-width:900px){.grid{grid-template-columns:1fr}}
-/* mode-aware tint */
-:root[data-mode="honey"] body{background:linear-gradient(180deg,rgba(255,211,107,.12),transparent),var(--bg)}
-:root[data-mode="neon"]  body{background:linear-gradient(180deg,rgba(157,252,255,.12),transparent),var(--bg)}
+  :root{--bg:#0B0F19;--ink:#E6EAF2;--muted:#A7B0C2;--card:#101728;--line:rgba(230,234,242,.14);--hi:#A4E8FF}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Inter,Roboto}
+  .wrap{max-width:1000px;margin:0 auto;padding:24px} a{color:var(--hi);text-decoration:none}
+  header h1{margin:0 0 6px;font-size:22px} .sub{color:var(--muted)}
+  .grid{display:grid;gap:12px} @media(min-width:860px){.grid{grid-template-columns:1fr 1fr 1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .tile{background:#101728;border:1px solid var(--line);border-radius:14px}
+  .tile a{display:block;color:#E6EAF2;padding:14px}
+  .tag{font-size:11px;padding:3px 8px;border:1px solid var(--line);border-radius:999px;color:#C1C9D8}
+  .badge{font-size:12px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:#A4E8FF;white-space:nowrap}
+  footer{margin-top:24px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:12px}
 </style>
+<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
 </head>
 <body>
 <div class="wrap">
   <header>
-    <div class="brand">
-      <div class="dot"></div>
-      <div>
-        <h1>Jar</h1>
-        <div class="sub">Hub for calendar, daily notes, and references</div>
-      </div>
-    </div>
-    <div>
-      <span class="badge">mode: <span id="modeBadge">classic</span></span>
-      <a class="btn" href="/modes/neon/">Change mode</a>
-    </div>
+    <h1>Jar — Day Map & Skill Network</h1>
+    <div class="sub">Your Illumina index. Practice a 3-day skill, log one line, keep momentum.</div>
   </header>
 
-  <div class="grid">
-    <div class="card">
-      <h3>Calendar</h3>
-      <div class="sub">Illumina 1 (Nov 5 – Dec 17, 2025)</div>
-      <a class="btn" href="/jar/calendar/illumina1/">Open calendar</a>
-    </div>
+  <main class="grid">
+    <!-- Voice & Resonance tile -->
+    <article class="tile">
+      <a href="https://froot.plnt.earth/voice/" rel="noopener">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span class="tag">Skill</span>
+          <span id="voiceBadge" class="badge">In progress</span>
+        </div>
+        <h3 style="margin:4px 0 2px;font-size:16px">Voice &amp; Resonance (Oct 4–7)</h3>
+        <p style="margin:0;color:#A7B0C2;font-size:13px">Hums + pop blend • Calm expression under pressure</p>
+        <div style="margin-top:10px;font-size:13px;color:#A4E8FF">Open skill →</div>
+      </a>
+    </article>
 
-    <div class="card">
-      <h3>Day</h3>
-      <div class="sub">Moon notes, seed actions, links out</div>
-      <a class="btn" href="/jar/day/">Open day view</a>
-    </div>
+    <!-- Example placeholders for other day cards / projects -->
+    <section class="card">
+      <h2>Today</h2>
+      <p>Pick one micro-task. Finish it fully. Log one line.</p>
+      <p><a href="https://froot.plnt.earth/">Go to Froot</a> • <a href="https://tunes.plnt.earth/">Open Tunes</a></p>
+    </section>
 
-    <div class="card">
-      <h3>Constellation</h3>
-      <div class="sub">Pantheon / watchmen overlay</div>
-      <a class="btn" href="/jar/constellation/">Open constellation</a>
-    </div>
+    <section class="card">
+      <h2>Network</h2>
+      <ul>
+        <li><a href="https://froot.plnt.earth/voice/">Voice Skill</a></li>
+        <li><a href="https://quietmoon.plnt.earth/">Quiet Moon (NICU pilot)</a></li>
+      </ul>
+    </section>
+  </main>
 
-    <div class="card">
-      <h3>Seeds</h3>
-      <div class="sub">Methods, timing, pairings</div>
-      <a class="btn" href="/seeds/">Go to seeds</a>
-    </div>
-
-    <div class="card">
-      <h3>References</h3>
-      <div class="sub">Axioms, archive, science</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <a class="btn" href="/references/">References</a>
-        <a class="btn" href="/references/archive/">Archive</a>
-        <a class="btn" href="/references/science/">Science</a>
-      </div>
-    </div>
-
-    <div class="card">
-      <h3>Global Tools</h3>
-      <div class="sub">Live across the site (rooted pages)</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <a class="btn" href="/compatibility/">Compatibility</a>
-        <a class="btn" href="/dreams/">Dreams</a>
-        <a class="btn" href="/storage/">Storage</a>
-        <a class="btn" href="/pollen/">Pollen</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer">
-    <div>Tip: set your mode (Classic/Honey/Neon) to tint all pages.</div>
-    <div>jar.plnt.earth</div>
-  </div>
+  <footer>
+    Network: <a href="https://froot.plnt.earth/">Froot</a> • <a href="https://tunes.plnt.earth/">Tunes</a> • <a href="https://quietmoon.plnt.earth/">Quiet Moon</a>
+  </footer>
 </div>
 
 <script>
-(function init(){
-  var mode = localStorage.getItem("jar_mode") || "classic";
-  document.documentElement.setAttribute("data-mode", mode);
-  var mb = document.getElementById("modeBadge"); if(mb) mb.textContent = mode;
+(function(){
+  try{
+    var badge = document.getElementById('voiceBadge');
+    var line = localStorage.getItem('voice-badge-line');
+    if(line && line.trim()){ badge.textContent = line.trim(); return; }
+    var passed = localStorage.getItem('voice-checkpoint-passed');
+    if(passed === 'true'){ badge.textContent = 'Checkpoint ✅ Ready'; return; }
+    if(passed === 'false'){ badge.textContent = 'Keep practicing'; return; }
+    badge.textContent = 'In progress';
+  }catch(e){}
 })();
 </script>
 </body>
