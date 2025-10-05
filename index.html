@@ -1,260 +1,86 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <!-- Ensure extended characters render correctly -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Jar — Illumina Hub</title>
-  <meta name="description" content="Jar is the Illumina hub: days, seeds, anchors, interludes, and archives.">
-  <meta name="theme-color" content="#0B0F19">
-  <style>
-    :root{
-      --bg:#0B0F19;           /* pepper black */
-      --ink:#E6EAF2;          /* soft off-white */
-      --muted:#94A3B8;        /* slate */
-      --line:rgba(255,255,255,.12);
-      --card:#0F1524;         /* deep ink */
-      --accent:#A4E8FF;       /* ice blue */
-      --honey:#F7C948;        /* honey gold */
-      --good:#34D399;
-      --danger:#F87171;
-      --shadow:0 16px 40px rgba(0,0,0,.35);
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;background:var(--bg);color:var(--ink);
-      font:15px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,Roboto,Arial,"Apple Color Emoji","Segoe UI Emoji";
-    }
-    a{color:inherit;text-decoration:none}
-    .wrap{max-width:1200px;margin:0 auto;padding:24px}
-    header{
-      display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;
-      border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:18px
-    }
-    .brand{display:flex;align-items:center;gap:10px}
-    .logo{font-size:22px}
-    h1{margin:0;font-size:26px;letter-spacing:.2px}
-    nav{display:flex;gap:10px;flex-wrap:wrap}
-    .btn{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;border:1px solid var(--line);border-radius:12px;
-      background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);
-      transition:transform .15s ease, border-color .15s ease, box-shadow .15s ease;
-      font-weight:600;color:var(--ink)
-    }
-    .btn:hover{transform:translateY(-2px);border-color:rgba(164,232,255,.35);box-shadow:var(--shadow)}
-    .btn.gold{border-color:rgba(247,201,72,.35)}
-    .pill{
-      display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;
-      background:rgba(164,232,255,.12); border:1px solid rgba(164,232,255,.35);
-      color:#c8f1ff; font-size:12px
-    }
-    .grid{
-      display:grid;gap:14px;margin-top:18px;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-    }
-    @media (max-width:1024px){ .grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
-    @media (max-width:640px){  .grid{grid-template-columns:repeat(1,minmax(0,1fr));} }
-
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%) , var(--card);
-      border:1px solid var(--line);border-radius:16px;padding:14px;position:relative;overflow:hidden;
-      transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-      min-height:140px
-    }
-    .card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:rgba(164,232,255,.35)}
-    .card h3{margin:2px 0 6px 0;font-size:18px}
-    .muted{color:var(--muted)}
-    .mono{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:var(--muted)}
-    .row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-    .emoji{font-size:20px}
-    .footer{margin-top:28px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:13px}
-    .link{color:#BBD7FF;text-decoration:underline dotted 1px}
-    .kbd{font:12px/1 ui-monospace,Menlo,Consolas,monospace;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:6px;padding:2px 6px}
-    .ok{color:var(--good)} .bad{color:var(--danger)}
-    /* small helper for sections */
-    .section-title{margin-top:10px;font-weight:800;color:#BBD7FF;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
-    .list{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
-    .chip{font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.02)}
-    /* name preview */
-    .namefix{display:flex;gap:8px;align-items:center;margin-top:8px}
-    input[type="text"]{
-      width:100%;max-width:520px;background:var(--card);border:1px solid var(--line);color:var(--ink);
-      padding:10px 12px;border-radius:12px;outline:none
-    }
-    .mini{font-size:12px;color:var(--muted)}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jar — Day Map & Skill Network</title>
+<meta name="description" content="Jar is the Illumina map and project network. Track daily skills, link to Froot lessons, and soundtrack with Tunes.">
+<link rel="canonical" href="https://jar.plnt.earth/">
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1">
+<meta property="og:title" content="Jar — Day Map & Skill Network">
+<meta property="og:description" content="Daily map for Illumina. Now featuring the Voice & Resonance skill.">
+<meta property="og:url" content="https://jar.plnt.earth/">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0B0F19">
+<style>
+  :root{--bg:#0B0F19;--ink:#E6EAF2;--muted:#A7B0C2;--card:#101728;--line:rgba(230,234,242,.14);--hi:#A4E8FF}
+  *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Inter,Roboto}
+  .wrap{max-width:1000px;margin:0 auto;padding:24px} a{color:var(--hi);text-decoration:none}
+  header h1{margin:0 0 6px;font-size:22px} .sub{color:var(--muted)}
+  .grid{display:grid;gap:12px} @media(min-width:860px){.grid{grid-template-columns:1fr 1fr 1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .tile{background:#101728;border:1px solid var(--line);border-radius:14px}
+  .tile a{display:block;color:#E6EAF2;padding:14px}
+  .tag{font-size:11px;padding:3px 8px;border:1px solid var(--line);border-radius:999px;color:#C1C9D8}
+  .badge{font-size:12px;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:#A4E8FF;white-space:nowrap}
+  footer{margin-top:24px;color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:12px}
+</style>
+<link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <div class="logo">🍯</div>
-        <div>
-          <h1>Jar</h1>
-          <div class="mini">Illumina hub — days, seeds, anchors, archives</div>
-        </div>
-      </div>
-      <nav>
-        <a class="btn" href="/map/" title="See the PLNT constellation">✨ Constellation Map</a>
-        <a class="btn" href="https://tunes.plnt.earth" target="_blank" rel="noopener">🎶 Tunes</a>
-        <a class="btn" href="https://time.plnt.earth" target="_blank" rel="noopener">⏳ Time</a>
-        <a class="btn" href="https://zeta.plnt.earth" target="_blank" rel="noopener">🌀 Zeta</a>
-        <span class="pill" title="plnt.earth currently serves Jar">Apex <strong>plnt.earth</strong> → Jar</span>
-      </nav>
-    </header>
+<div class="wrap">
+  <header>
+    <h1>Jar — Day Map & Skill Network</h1>
+    <div class="sub">Your Illumina index. Practice a 3-day skill, log one line, keep momentum.</div>
+  </header>
 
-    <section class="grid">
-      <!-- Calendar / Days -->
-      <a class="card" href="/calendar/illumina1/">
-        <div class="row"><div class="emoji">🌕</div><h3>Illumina 1 Calendar</h3></div>
-        <p class="muted">42-day rhythm of seeds, phases, and anchors. View days and notes.</p>
-        <div class="section-title">Quick links</div>
-        <div class="list">
-          <span class="chip"><span class="emoji">🗓️</span> Today view</span>
-          <span class="chip"><span class="emoji">🍯</span> Seeds</span>
-          <span class="chip"><span class="emoji">🎧</span> Daily track</span>
+  <main class="grid">
+    <!-- Voice & Resonance tile -->
+    <article class="tile">
+      <a href="https://froot.plnt.earth/voice/" rel="noopener">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <span class="tag">Skill</span>
+          <span id="voiceBadge" class="badge">In progress</span>
         </div>
+        <h3 style="margin:4px 0 2px;font-size:16px">Voice &amp; Resonance (Oct 4–7)</h3>
+        <p style="margin:0;color:#A7B0C2;font-size:13px">Hums + pop blend • Calm expression under pressure</p>
+        <div style="margin-top:10px;font-size:13px;color:#A4E8FF">Open skill →</div>
       </a>
+    </article>
 
-      <!-- Science / Axioms -->
-      <a class="card" href="/science/">
-        <div class="row"><div class="emoji">🔭</div><h3>Science & Axioms</h3></div>
-        <p class="muted">Time scaling visuals, axioms, and links out to Time + Zeta.</p>
-        <div class="section-title">Includes</div>
-        <div class="list">
-          <span class="chip">t = Gm/c³ ladder</span>
-          <span class="chip">α, β live constants</span>
-          <span class="chip">Infinity games</span>
-        </div>
-      </a>
-
-      <!-- Map -->
-      <a class="card" href="/map/">
-        <div class="row"><div class="emoji">✨</div><h3>PLNT Constellation</h3></div>
-        <p class="muted">See all tracks orbiting Jar — Time, Zeta, DNA, Lighthouse, and more.</p>
-        <div class="section-title">Why it’s here</div>
-        <div class="list">
-          <span class="chip">Jar as hub</span>
-          <span class="chip">Track timelines</span>
-          <span class="chip">Live vs TBD</span>
-        </div>
-      </a>
-
-      <!-- Honey explainer -->
-      <a class="card" href="https://honey.plnt.earth" target="_blank" rel="noopener">
-        <div class="row"><div class="emoji">🐝</div><h3>Honey</h3></div>
-        <p class="muted">Taste notes and rituals — the Bee track that keeps the rhythm sticky.</p>
-        <div class="section-title">You’ll find</div>
-        <div class="list">
-          <span class="chip">Seed FAQ</span>
-          <span class="chip">Ritual tips</span>
-          <span class="chip">Dream trace</span>
-        </div>
-      </a>
-
-      <!-- Seeds & Rituals -->
-      <a class="card" href="/seeds/" title="Seeds overview">
-        <div class="row"><div class="emoji">🌱</div><h3>Seeds & Rituals</h3></div>
-        <p class="muted">Six weekly seeds × 7 days. Small daily cues that keep the cycle sticky.</p>
-        <div class="section-title">Feeds</div>
-        <div class="list">
-          <span class="chip"><span class="emoji">📄</span> <span class="mono">/data/illumina1_seeds.json</span></span>
-          <span class="chip"><span class="emoji">📄</span> <span class="mono">/data/illumina1_tasks.json</span></span>
-        </div>
-      </a>
-
-      <!-- Tunes -->
-      <a class="card" href="https://tunes.plnt.earth" target="_blank" rel="noopener">
-        <div class="row"><div class="emoji">🎶</div><h3>Tunes</h3></div>
-        <p class="muted">Daily player with anchors/interludes — stays in view while you scroll.</p>
-        <div class="section-title">Status</div>
-        <div class="list">
-          <span class="chip">Autoplay next</span>
-          <span class="chip">Sticky header</span>
-          <span class="chip">YouTube & local</span>
-        </div>
-      </a>
-
-      <!-- Time -->
-      <a class="card" href="https://time.plnt.earth" target="_blank" rel="noopener">
-        <div class="row"><div class="emoji">⏳</div><h3>Time Track</h3></div>
-        <p class="muted">Public 42-day proof sprint: fit α, β; publish predictions; score outcomes.</p>
-        <div class="section-title">Artifacts</div>
-        <div class="list">
-          <span class="chip">SVG ladder</span>
-          <span class="chip">Forecast ledger</span>
-          <span class="chip">DOI snapshots</span>
-        </div>
-      </a>
+    <!-- Example placeholders for other day cards / projects -->
+    <section class="card">
+      <h2>Today</h2>
+      <p>Pick one micro-task. Finish it fully. Log one line.</p>
+      <p><a href="https://froot.plnt.earth/">Go to Froot</a> • <a href="https://tunes.plnt.earth/">Open Tunes</a></p>
     </section>
 
-    <!-- UTF/diacritics fixer + live preview -->
-    <section class="card" style="margin-top:18px;">
-      <div class="row"><div class="emoji">🛠️</div><h3>Text Helper — fix artist names</h3></div>
-      <p class="muted">Jar renders UTF-8 (see <span class="mono">&lt;meta charset="utf-8"&gt;</span>). If your data feed has ASCII fallbacks (“Beyonce”, “Maneskin”, “Chloe”), this helper normalizes to the correct names for display.</p>
-      <div class="namefix">
-        <input id="nameIn" type="text" placeholder="Type a name (e.g., Beyonce, Maneskin, Chloe, A$AP Rocky)">
-        <span id="nameOut" class="pill">→ </span>
-      </div>
-      <div class="mini" style="margin-top:6px">This runs on render; your stored data can remain unchanged if you prefer.</div>
+    <section class="card">
+      <h2>Network</h2>
+      <ul>
+        <li><a href="https://froot.plnt.earth/voice/">Voice Skill</a></li>
+        <li><a href="https://quietmoon.plnt.earth/">Quiet Moon (NICU pilot)</a></li>
+      </ul>
     </section>
+  </main>
 
-    <div class="footer">
-      <div>© <span id="yy"></span> PLNT.earth — Jar</div>
-      <div>
-        <a class="link" href="/map/">Constellation</a> •
-        <a class="link" href="https://time.plnt.earth" target="_blank" rel="noopener">Time</a> •
-        <a class="link" href="https://zeta.plnt.earth" target="_blank" rel="noopener">Zeta</a>
-      </div>
-    </div>
-  </div>
+  <footer>
+    Network: <a href="https://froot.plnt.earth/">Froot</a> • <a href="https://tunes.plnt.earth/">Tunes</a> • <a href="https://quietmoon.plnt.earth/">Quiet Moon</a>
+  </footer>
+</div>
 
-  <script>
-    // Year
-    document.getElementById('yy').textContent = new Date().getFullYear();
-
-    // Minimal name normalizer for common cases.
-    // 1) Unicode NFC normalization (handles accent composition).
-    // 2) Dictionary-based replacements for common ASCII fallbacks/variants.
-    const NAME_FIX = new Map([
-      // Core examples you mentioned
-      ["beyonce", "Beyoncé"],
-      ["beyoncé", "Beyoncé"],
-      ["maneskin", "Måneskin"],
-      ["måneskin", "Måneskin"],
-      ["chloe", "Chlöe"],      // the artist "Chlöe" (Bailey)
-      ["chloë", "Chloë"],      // keep option for diaeresis variant
-      // A few other frequent offenders (optional)
-      ["rosalia", "Rosalía"],
-      ["jose gonzalez", "José González"],
-      ["asap rocky", "A$AP Rocky"], // stylistic name
-      ["dua lipa", "Dua Lipa"],     // casing
-      ["bts", "BTS"]
-    ]);
-
-    function fixName(raw){
-      if(!raw) return "";
-      // Unicode normalize (NFC) then lowercase for lookup
-      const nfc = raw.normalize ? raw.normalize('NFC') : raw;
-      const key = nfc.trim().toLowerCase();
-      return NAME_FIX.get(key) || nfc; // default to original if unknown
-    }
-
-    // Live preview for the helper
-    const $in = document.getElementById('nameIn');
-    const $out = document.getElementById('nameOut');
-    function render(){
-      const val = $in.value || "";
-      const fixed = fixName(val);
-      $out.textContent = "→ " + fixed;
-    }
-    $in.addEventListener('input', render);
-    render();
-
-    // Example usage in your app code:
-    // displayName = fixName(rawArtistNameFromJSON)
-  </script>
+<script>
+(function(){
+  try{
+    var badge = document.getElementById('voiceBadge');
+    var line = localStorage.getItem('voice-badge-line');
+    if(line && line.trim()){ badge.textContent = line.trim(); return; }
+    var passed = localStorage.getItem('voice-checkpoint-passed');
+    if(passed === 'true'){ badge.textContent = 'Checkpoint ✅ Ready'; return; }
+    if(passed === 'false'){ badge.textContent = 'Keep practicing'; return; }
+    badge.textContent = 'In progress';
+  }catch(e){}
+})();
+</script>
 </body>
 </html>
