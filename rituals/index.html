@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Rituals — jar.plnt.earth</title>
+  <meta name="description" content="A living shelf of Illumina rituals for morning, mid-day, and moonlight alignment." />
+  <meta name="theme-color" content="#f6f4ff" />
+  <style>
+    :root{
+      --bg1:#f9f7ff;
+      --bg2:#eef7ff;
+      --ink:#1a1a22;
+      --accent:#8b7bff;
+      --aqua:#9ee6ff;
+      --card:#ffffffcc;
+      --shadow:0 8px 24px rgba(70,70,90,.1);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto;
+      color:var(--ink);
+      background:
+        radial-gradient(1000px 500px at 80% 0%, var(--aqua) 0%, transparent 60%),
+        radial-gradient(1200px 800px at -10% 20%, var(--accent) 0%, transparent 60%),
+        linear-gradient(180deg,var(--bg1),var(--bg2));
+      min-height:100vh;
+    }
+    header{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:20px clamp(16px,3vw,32px);
+    }
+    .brand{
+      display:flex;align-items:center;gap:10px;text-decoration:none;
+      color:var(--ink);font-weight:700;
+      background:linear-gradient(135deg,#ffffffaa,#ffffff60);
+      padding:8px 12px;border-radius:12px;backdrop-filter:blur(6px);
+      box-shadow:var(--shadow);
+    }
+    .glyph{
+      width:28px;height:28px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%,#fff,#f3f0ff);
+      border:1px solid #ece8ff;display:grid;place-items:center;font-weight:700;
+    }
+    main{
+      max-width:880px;margin:0 auto;padding:10px clamp(16px,3vw,28px) 60px;
+    }
+    h1{font-size:clamp(1.6rem,3vw,2.3rem);margin:.4em 0 .2em}
+    p.lede{font-size:1.05rem;line-height:1.6;opacity:.95}
+    .grid{display:grid;gap:20px;margin-top:30px}
+    .ritual{
+      background:var(--card);border:1px solid #ece8ff;border-radius:var(--radius);
+      box-shadow:var(--shadow);padding:20px;
+      transition:transform .1s ease,box-shadow .2s ease;
+    }
+    .ritual:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(60,60,80,.12)}
+    .ritual a{color:var(--ink);text-decoration:none}
+    .ritual h2{margin:0 0 6px;font-size:1.2rem}
+    .ritual p{margin:0;font-size:.95rem;opacity:.9}
+    footer{text-align:center;font-size:.85rem;opacity:.75;padding:20px 0}
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="/index.html">
+      <div class="glyph">J</div><span>jar.plnt.earth</span>
+    </a>
+    <div style="opacity:.8">/ rituals /</div>
+  </header>
+
+  <main>
+    <h1>🕊 Rituals Index</h1>
+    <p class="lede">Moments of tuning — breath, hum, focus, or stillness — that align the Bee with field rhythm. Choose one each morning or moonrise.</p>
+
+    <section class="grid">
+      <article class="ritual">
+        <a href="/rituals/mirror-open.html">
+          <h2>🌊 Mirror Open, Heart True</h2>
+          <p>Morning Marina alignment — breath, hum, and Bee focus to begin in flow.</p>
+        </a>
+      </article>
+
+      <!-- Future rituals can be added below -->
+      <!--
+      <article class="ritual">
+        <a href="/rituals/dream-trace.html">
+          <h2>🌙 Dream Trace</h2>
+          <p>Record fragments before waking fully; connects nightly images to the cycle map.</p>
+        </a>
+      </article>
+
+      <article class="ritual">
+        <a href="/rituals/quiet-hum.html">
+          <h2>🪶 Quiet Hum</h2>
+          <p>Mid-day reset — hum the color you feel until it clears the mind’s static.</p>
+        </a>
+      </article>
+      -->
+    </section>
+  </main>
+
+  <footer>☀️ Sun • 🐝 Bee • 🌙 L. Moon — Illumina field shelf</footer>
+</body>
+</html>
