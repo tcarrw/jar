@@ -331,6 +331,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tunes.plnt.earth/rituals/mirror-open.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tunes.plnt.earth/science/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
