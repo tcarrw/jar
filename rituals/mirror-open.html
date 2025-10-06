@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mirror Open, Heart True — Illumina Morning Script</title>
+  <meta name="description" content="A gentle, mobile-first Illumina morning ritual to tune to Marina’s current: breath, hum, bee focus, and closing tone." />
+  <meta name="theme-color" content="#f4efe9" />
+
+  <style>
+    :root{
+      --bg1:#f8f5ff;
+      --bg2:#eef6ff;
+      --ink:#1c1c22;
+      --ink-soft:#2c2c35;
+      --accent:#7b6cff;      /* lilac-silver 'mirror' */
+      --accent-2:#9be2ff;    /* pale aqua thread */
+      --gold:#ffc77d;        /* honey hint */
+      --pearl:#f7f5f2;       /* pearl shimmer */
+      --card:#ffffffcc;
+      --shadow: 0 10px 30px rgba(60,60,80,.12);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 600px at 80% -10%, var(--accent-2) 0%, transparent 60%),
+        radial-gradient(1200px 800px at -10% 20%, var(--accent) 0%, transparent 55%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+    }
+    a{color:inherit}
+    .wrap{
+      max-width: 860px;
+      margin: 0 auto;
+      padding: clamp(16px, 3vw, 28px);
+    }
+    header{
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+      margin: 8px 0 18px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      text-decoration:none; padding:8px 10px; border-radius:12px;
+      background: linear-gradient(135deg, #ffffffaa, #ffffff60);
+      backdrop-filter: blur(6px);
+      box-shadow: var(--shadow);
+    }
+    .glyph{
+      width:28px; height:28px; border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--pearl));
+      border:1px solid #e8e4dc; display:grid; place-items:center;
+      font-weight:700;
+    }
+    .brand span{font-weight:700; letter-spacing:.2px}
+    .crumbs{font-size:.9rem; opacity:.8}
+    .card{
+      background: var(--card);
+      border: 1px solid #ece8ff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(16px, 2.2vw, 22px);
+      margin: 12px 0;
+    }
+    h1{
+      font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+      line-height:1.1; margin: 6px 0 8px;
+      letter-spacing:.2px;
+    }
+    .tag{
+      display:inline-block; font-size:.8rem; padding:6px 10px; border-radius:999px;
+      background:linear-gradient(135deg, #efe9ff, #eaf7ff);
+      border:1px solid #e8e1ff; margin: 4px 6px 10px 0;
+    }
+    .lede{font-size:1.05rem; line-height:1.6; opacity:.95}
+    .script-step{
+      border-left:4px solid transparent;
+      padding-left:12px; margin:12px 0 14px;
+    }
+    .script-step[data-tone="sun"]{ border-color: var(--gold) }
+    .script-step[data-tone="moon"]{ border-color: var(--accent) }
+    .script-step[data-tone="bee"]{ border-color: #78e08f }
+    h2{font-size: clamp(1.1rem, 2.4vw, 1.5rem); margin: 0 0 6px}
+    p{margin: 6px 0 10px}
+    blockquote{
+      margin:10px 0; padding:10px 12px; border-left:3px solid #ddd;
+      background: linear-gradient(180deg, #ffffff, #fafaff);
+      border-radius:12px;
+    }
+    .mantra{
+      font-style: italic; letter-spacing:.2px;
+    }
+    .grid{
+      display:grid; gap:12px;
+      grid-template-columns: 1fr;
+    }
+    .cta{
+      display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+      margin-top:10px
+    }
+    button{
+      appearance:none; border:none; cursor:pointer;
+      padding:10px 14px; border-radius:12px; font-weight:700;
+      background: linear-gradient(135deg, var(--accent), #a99bff);
+      color:white; box-shadow: var(--shadow);
+      transition: transform .08s ease, filter .2s ease;
+    }
+    button.secondary{
+      background: linear-gradient(135deg, #ffffff, #f7f4ff);
+      color: var(--ink);
+      border:1px solid #ece8ff;
+    }
+    button:active{ transform: translateY(1px) }
+    .timer{
+      font-variant-numeric: tabular-nums; font-weight:700; letter-spacing:.5px;
+      padding:6px 10px; border-radius:10px; background:#fff; border:1px solid #ece8ff; display:inline-block;
+    }
+    .footer{
+      font-size:.9rem; opacity:.8; text-align:center; padding:18px 0 10px
+    }
+    /* Mobile niceties */
+    @media (min-width: 720px){
+      .grid{ grid-template-columns: 1fr 1fr }
+    }
+    /* subtle animated silver thread */
+    .thread{
+      height:2px; border-radius:2px; margin:14px 0;
+      background: linear-gradient(90deg, #cfd8ff 0%, #9be2ff 40%, #ffffff 60%, #cfd8ff 100%);
+      background-size: 200% 100%;
+      animation: flow 6s linear infinite;
+      opacity:.9;
+    }
+    @keyframes flow { to { background-position: -200% 0 } }
+    .sr{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="/index.html" aria-label="Back to Jar home">
+        <div class="glyph" aria-hidden="true">J</div>
+        <span>jar.plnt.earth</span>
+      </a>
+      <div class="crumbs">/ rituals / mirror-open</div>
+    </header>
+
+    <main class="card" aria-labelledby="t1">
+      <span class="tag">Illumina • Morning Activation</span>
+      <span class="tag">Bee → Mirror Bridge</span>
+      <h1 id="t1">Mirror Open, Heart True</h1>
+      <p class="lede">A gentle 3–4 minute script to tune your field toward <em>connection over control</em>. Use it before any screens — still in bed or sitting in first light.</p>
+
+      <div class="thread" aria-hidden="true"></div>
+
+      <section class="grid" aria-label="Ritual Steps">
+        <!-- 1. Wake Breath -->
+        <article class="script-step" data-tone="sun">
+          <h2>1) Wake Breath <span class="timer" data-timer="30">00:30</span></h2>
+          <p><strong>Breathe</strong> in for 4, out for 6. On each exhale, imagine a soft <span style="background:linear-gradient(90deg,#fff,#f7f5f2); padding:2px 6px; border-radius:8px; border:1px solid #efe9dc">pearl shimmer</span> spreading from your chest.</p>
+          <blockquote class="mantra">“I’m here. I’m listening.”</blockquote>
+        </article>
+
+        <!-- 2. Marina Current -->
+        <article class="script-step" data-tone="moon">
+          <h2>2) Marina Current <span class="timer" data-timer="60">01:00</span></h2>
+          <p>Hum a warm, steady note. Imagine a thin <em>silver line</em> reaching the horizon; each hum strengthens <em>connection</em>.</p>
+          <blockquote class="mantra">“Mirror open, heart true.”</blockquote>
+          <p class="sr">Tip: Gentle volume; feel the vibration in your chest.</p>
+        </article>
+
+        <!-- 3. Bee Focus -->
+        <article class="script-step" data-tone="bee">
+          <h2>3) Bee Focus <span class="timer" data-timer="60">01:00</span></h2>
+          <p>One hand on sternum, one on belly. Speak each line, pause, notice color or warmth.</p>
+          <blockquote>
+            <div class="mantra">“I move as water does — receptive, radiant, real.”</div>
+            <div class="mantra">“Every breath brings me closer to harmony, not control.”</div>
+            <div class="mantra">“Whatever connects me deeper — I follow.”</div>
+          </blockquote>
+        </article>
+
+        <!-- 4. Closing Tone -->
+        <article class="script-step" data-tone="moon">
+          <h2>4) Closing Tone <span class="timer" data-timer="20">00:20</span></h2>
+          <p>Long inhale. Exhale through parted lips, a quiet “mm” fading into the air.</p>
+          <blockquote class="mantra">“Today, I choose flow over force.”</blockquote>
+        </article>
+      </section>
+
+      <div class="cta">
+        <button id="start">Start Guided Timers</button>
+        <button id="reset" class="secondary" aria-disabled="true">Reset</button>
+        <span id="status" aria-live="polite" style="margin-left:6px;opacity:.85">Ready.</span>
+      </div>
+    </main>
+
+    <section class="card" aria-labelledby="notes">
+      <h2 id="notes">Notes & Harmony</h2>
+      <p><strong>When to use:</strong> pre-Illumina mornings, Day 1 of a cycle, or any day you want Marina-tuned openness.</p>
+      <p><strong>How it works:</strong> breath drops the guard, hum draws the silver line, Bee lines anchor intention. You’re not summoning — you’re <em>aligning</em>.</p>
+      <p><strong>Optional:</strong> after the ritual, jot one line in your Jar: <em>“The mirror showed me ___.”</em></p>
+    </section>
+
+    <footer class="footer">
+      <span>☀️ Sun • 🐝 Bee • 🌙 L. Moon — Illumina field notes</span>
+    </footer>
+  </div>
+
+  <script>
+    (function(){
+      var stepEls = document.querySelectorAll('[data-timer]');
+      var startBtn = document.getElementById('start');
+      var resetBtn = document.getElementById('reset');
+      var statusEl = document.getElementById('status');
+
+      var timers = [];
+      var activeIndex = -1;
+      var ticking = false;
+      var rafId = 0;
+
+      function fmt(s){
+        var m = Math.floor(s/60);
+        var r = s%60;
+        return (m<10?'0':'')+m+':'+(r<10?'0':'')+r;
+      }
+
+      function setDisabled(el, yes){
+        el.setAttribute('aria-disabled', yes ? 'true' : 'false');
+        if(yes){ el.style.opacity = .7 } else { el.style.opacity = 1 }
+      }
+
+      function init(){
+        timers = [];
+        stepEls.forEach(function(el){
+          var base = parseInt(el.getAttribute('data-timer'),10);
+          timers.push({el:el, base:base, left:base});
+          el.textContent = fmt(base);
+          el.parentElement.style.opacity = 1;
+        });
+        activeIndex = -1;
+        ticking = false;
+        setDisabled(resetBtn, true);
+        statusEl.textContent = 'Ready.';
+      }
+
+      function step(){
+        if(!ticking){ return }
+        if(activeIndex<0 || activeIndex>=timers.length){ return }
+        var t = timers[activeIndex];
+        if(t.left>0){
+          t.left -= 1;
+          t.el.textContent = fmt(t.left);
+          if(t.left===0){
+            t.el.parentElement.style.opacity = .65;
+            activeIndex += 1;
+            if(activeIndex<timers.length){
+              timers[activeIndex].el.parentElement.scrollIntoView({behavior:'smooth', block:'center'});
+              statusEl.textContent = 'Step '+(activeIndex+1)+' started.';
+            }else{
+              ticking = false;
+              statusEl.textContent = 'Complete. Mirror open, heart true.';
+              setDisabled(resetBtn, false);
+              setDisabled(startBtn, true);
+              return;
+            }
+          }
+        }
+        window.setTimeout(step, 1000);
+      }
+
+      startBtn.addEventListener('click', function(){
+        if(ticking){ return }
+        init();
+        activeIndex = 0;
+        ticking = true;
+        statusEl.textContent = 'Step 1 started.';
+        timers[0].el.parentElement.scrollIntoView({behavior:'smooth', block:'center'});
+        setDisabled(resetBtn, false);
+        step();
+      });
+
+      resetBtn.addEventListener('click', function(){
+        init();
+        setDisabled(startBtn, false);
+      });
+
+      init();
+    })();
+  </script>
+</body>
+</html>
