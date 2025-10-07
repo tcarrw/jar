@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Illumina School — Spiral Legend + Case Studies</title>
-  <meta name="description" content="Nine-node Illumina spiral with a Family Jewels case-studies tray mapped to each faculty." />
+  <title>Illumina School — Spiral Legend + Album Case Studies</title>
+  <meta name="description" content="Nine-node Illumina spiral with case-studies mapped to MARINA album eras." />
   <style>
     :root{
       --bg:#0b0d11; --ink:#e8e8ea; --muted:#a9a9b6; --gold:#f6c55c; --honey:#ffcf7a; --rose:#e9a9c3;
@@ -21,8 +21,8 @@
     h1{margin:0; font-weight:700; letter-spacing:.2px; font-size:22px}
     .sub{color:var(--muted); font-size:13px; margin-top:6px}
 
-    .wrap{max-width:1150px; margin:0 auto; padding:16px; display:grid; grid-template-columns: 1.2fr .9fr; gap:18px}
-    @media (max-width:1000px){ .wrap{grid-template-columns:1fr; gap:12px} }
+    .wrap{max-width:1200px; margin:0 auto; padding:16px; display:grid; grid-template-columns: 1.2fr .9fr; gap:18px}
+    @media (max-width:1050px){ .wrap{grid-template-columns:1fr; gap:12px} }
 
     .panel{background:linear-gradient(180deg, #0f1220 0%, var(--card) 100%); border:1px solid var(--ring); border-radius:14px; padding:14px}
     .panel h2{margin:0 0 10px; font-size:15px; letter-spacing:.2px}
@@ -42,6 +42,7 @@
     .node{transition:transform .25s ease; cursor:pointer}
     .n-dot{stroke:#0d0f16; stroke-width:2}
     .n-label{font-size:12px; fill:var(--ink); paint-order:stroke; stroke:#0b0d11; stroke-width:3; stroke-linejoin:round}
+
     .legend{display:grid; grid-template-columns:1fr; gap:10px}
     .card{border:1px solid var(--ring); border-radius:12px; padding:12px; background:linear-gradient(180deg, #101426 0%, #0d111b 100%)}
     .row{display:flex; justify-content:space-between; gap:10px; align-items:baseline}
@@ -88,8 +89,12 @@
           <button id="modeArtist" aria-pressed="false">Artist Lines</button>
         </div>
         <div class="seg" role="group" aria-label="Study source">
-          <button id="modeNone" aria-pressed="false" title="Hide case studies">No Studies</button>
-          <button id="modeFJ" aria-pressed="true"  title="Map The Family Jewels to faculties">Family Jewels</button>
+          <button id="modeNone"  aria-pressed="false" title="Hide case studies">No Studies</button>
+          <button id="modeFJ"    aria-pressed="true"  title="Map The Family Jewels">Family Jewels</button>
+          <button id="modeFROOT" aria-pressed="false" title="Map FROOT">FROOT</button>
+          <button id="modeEH"    aria-pressed="false" title="Map Electra Heart">Electra Heart</button>
+          <button id="modeLAF"   aria-pressed="false" title="Map LOVE + FEAR">LOVE + FEAR</button>
+          <button id="modeADIML" aria-pressed="false" title="Map Ancient Dreams">Ancient Dreams</button>
         </div>
         <span class="pill">Interactive · keyboard friendly</span>
       </div>
@@ -134,10 +139,11 @@
     </aside>
   </main>
 
-  <footer>Illumina School · Spiral Map · v1.1 (with Family Jewels mapping)</footer>
+  <footer>Illumina School · Spiral Map · v1.5 (FJ + FROOT + EH + LAF + ADIML)</footer>
 
   <script>
     (function(){
+      /* ---------------- Core data ---------------- */
       var data = [
         { id:"root",        ring:330, angleDeg:220, color:"earth",     freq:"64 Hz",
           archetype:"Root · Voice · Witness", artist:"Hayley — Root Faculty",
@@ -168,55 +174,97 @@
           desc:"Receive, archive, and re-seed; continuity of the hive." }
       ];
 
-      // Family Jewels mapping (no lyrics, short study notes)
-      var studiesByBand = {
-        root: [
-          { track:"Numb", note:"Ground-truth fatigue; honesty before motion." },
-          { track:"Are You Satisfied?", note:"Restless soil asking for purpose; voice as shovel." }
-        ],
-        architect: [
-          { track:"Obsessions", note:"Compulsion becomes pattern; pattern becomes authorship." }
-        ],
-        mirror: [
-          { track:"The Outsider", note:"Self examined under glass; definition through distance." },
-          { track:"Hermit the Frog", note:"Myth play used to frame identity tension." }
-        ],
-        honey: [
-          { track:"Shampain", note:"Desire, humor, and taste as social magnet." },
-          { track:"Oh No!", note:"Ambition-as-sweetness; drive translated to charm." }
-        ],
-        frequency: [
-          { track:"Hollywood", note:"Tempo as armor; timing sculpts persona." }
-        ],
-        solar: [
-          { track:"Guilty", note:"Public light wrestling with private truth." },
-          { track:"The Family Jewels", note:"The performed self as inheritance made visible." }
-        ],
-        celestial: [
-          { track:"(no direct study)", note:"Use vocal purity exercises or tone mapping at 512 Hz." }
-        ],
-        trickster: [
-          { track:"Mowgli’s Road", note:"Playful rupture; breaking neat frames to stay alive." }
-        ],
-        core: [
-          { track:"I Am Not a Robot", note:"Integration statement; permission to be human inside the machine." }
-        ]
+      /* ---------------- Album datasets ---------------- */
+      // Family Jewels (original mapping)
+      var FJ = {
+        root:[{track:"Numb",note:"Ground-truth fatigue; honesty before motion."},{track:"Are You Satisfied?",note:"Restless soil seeking purpose."}],
+        architect:[{track:"Obsessions",note:"Compulsion → pattern → authorship."}],
+        mirror:[{track:"The Outsider",note:"Self under glass; definition via distance."},{track:"Hermit the Frog",note:"Myth-play frames identity tension."}],
+        honey:[{track:"Shampain",note:"Taste and mischief as magnet."},{track:"Oh No!",note:"Ambition-as-sweetness; drive to charm."}],
+        frequency:[{track:"Hollywood",note:"Tempo as armor; timing sculpts persona."}],
+        solar:[{track:"Guilty",note:"Public light vs private truth."},{track:"The Family Jewels",note:"Performed self as inheritance."}],
+        celestial:[{track:"—",note:"Use clarity drills at 512 Hz; voice as lift."}],
+        trickster:[{track:"Mowgli’s Road",note:"Playful rupture to stay alive."}],
+        core:[{track:"I Am Not a Robot",note:"Integration statement; permission to be human."}]
       };
 
+      // FROOT era
+      var FROOT = {
+        root:[{track:"Savages",note:"Moral witness; soil speaks plainly."},{track:"Weeds",note:"Unwanted growth as truth signal."}],
+        architect:[{track:"Solitaire",note:"Self-structure; edges cut for clarity."},{track:"Gold",note:"Value boundaries; authorship as architecture."}],
+        mirror:[{track:"I'm A Ruin",note:"Reflection without collapse."},{track:"Happy",note:"Choosing light on purpose."}],
+        honey:[{track:"Froot",note:"Taste calibrated to share."},{track:"Blue",note:"Longing distilled into warmth."}],
+        frequency:[{track:"Better Than That",note:"Body-time discipline; confidence as tempo."}],
+        solar:[{track:"Forget",note:"Forward declaration; identity in motion."}],
+        celestial:[{track:"Immortal",note:"Voice lifts into legacy."}],
+        trickster:[{track:"Can't Pin Me Down",note:"Refuses labels; renewal by misdirection."}],
+        core:[{track:"Froot (leitmotif)",note:"Carry sweetness into the hive."}]
+      };
+
+      // Electra Heart
+      var EH = {
+        root:[{track:"Teen Idle",note:"Loss of innocence named honestly."}],
+        architect:[{track:"Power & Control",note:"Systems and ownership dynamics."}],
+        mirror:[{track:"Valley of the Dolls",note:"Self as constructed persona."}],
+        honey:[{track:"Bubblegum Bitch",note:"Sweetness as deliberate strategy."}],
+        frequency:[{track:"Primadonna",note:"Tempo as confidence engine."}],
+        solar:[{track:"How to Be a Heartbreaker",note:"Stagecraft rules declared."}],
+        celestial:[{track:"Lies (Acoustic)",note:"Stripped vocal clarity."}],
+        trickster:[{track:"Homewrecker",note:"Mischief resets the board."}],
+        core:[{track:"Fear and Loathing",note:"Integrating shadow and light."}]
+      };
+
+      // LOVE + FEAR
+      var LAF = {
+        root:[{track:"To Be Human",note:"Ground-truth empathy; global witness."}],
+        architect:[{track:"Handmade Heaven",note:"Building an inner habitat."}],
+        mirror:[{track:"Emotional Machine",note:"Self vs mechanism."}],
+        honey:[{track:"Orange Trees",note:"Warm communal ease."}],
+        frequency:[{track:"Enjoy Your Life",note:"Rhythm as permission."}],
+        solar:[{track:"Karma",note:"Declarative moral stance."}],
+        celestial:[{track:"End of the Earth",note:"Soaring vow-tone."}],
+        trickster:[{track:"No More Suckers",note:"Boundary with bite."}],
+        core:[{track:"Soft to Be Strong",note:"Reunion of the system."}]
+      };
+
+      // Ancient Dreams in a Modern Land
+      var ADIML = {
+        root:[{track:"Purge the Poison",note:"Witness & accountability."}],
+        architect:[{track:"Man’s World",note:"Redesigning the structure."}],
+        mirror:[{track:"Ancient Dreams in a Modern Land",note:"Myth lens for the present."}],
+        honey:[{track:"Flowers",note:"Tender repair as connection."}],
+        frequency:[{track:"Venus Fly Trap",note:"Elastic swagger timing."}],
+        solar:[{track:"New America",note:"Public thesis/flare."}],
+        celestial:[{track:"I Love You But I Love Me More",note:"Independence as lifted tone."}],
+        trickster:[{track:"Highly Emotional People (Demo/alt)",note:"Breaking form to renew."}],
+        core:[{track:"Goodbye",note:"Archive & release."}]
+      };
+
+      /* ---------------- DOM handles ---------------- */
       var nodesGroup = document.getElementById("nodes");
       var legendEl = document.getElementById("legend");
-      var modeArche = document.getElementById("modeArchetype");
-      var modeArtist = document.getElementById("modeArtist");
-      var modeNone = document.getElementById("modeNone");
-      var modeFJ   = document.getElementById("modeFJ");
       var studiesSection = document.getElementById("studiesSection");
       var studiesGrid = document.getElementById("studiesGrid");
+      var studiesTitle = document.getElementById("studiesTitle");
+
+      var btnArche = document.getElementById("modeArchetype");
+      var btnArtist = document.getElementById("modeArtist");
+
+      var btnNone = document.getElementById("modeNone");
+      var btnFJ = document.getElementById("modeFJ");
+      var btnFROOT = document.getElementById("modeFROOT");
+      var btnEH = document.getElementById("modeEH");
+      var btnLAF = document.getElementById("modeLAF");
+      var btnADIML = document.getElementById("modeADIML");
+
+      /* ---------------- State ---------------- */
       var showArtist = false;
-      var studyMode = "fj"; // "none" | "fj"
+      var studyMode = "fj"; // "none" | "fj" | "froot" | "eh" | "laf" | "adiml"
       var idx = 0;
 
+      /* ---------------- Helpers ---------------- */
       function polar(r, deg){
-        var rad = (deg-90) * Math.PI/180; // rotate so 0° is up
+        var rad = (deg-90) * Math.PI/180;
         return { x: 500 + r*Math.cos(rad), y: 500 + r*Math.sin(rad) };
       }
       function chipColor(c){
@@ -225,7 +273,28 @@
           frequency:"#e9a9c3", solar:"#ffd56e", voice:"#e9e5ff", trick:"#ff77aa", core:"#ffffff"
         }[c] || "#e8e8ea";
       }
+      function titleFor(mode){
+        if(mode==="fj") return "The Family Jewels";
+        if(mode==="froot") return "FROOT";
+        if(mode==="eh") return "Electra Heart";
+        if(mode==="laf") return "LOVE + FEAR";
+        if(mode==="adiml") return "Ancient Dreams";
+        return "";
+      }
+      function datasetFor(mode){
+        if(mode==="fj") return FJ;
+        if(mode==="froot") return FROOT;
+        if(mode==="eh") return EH;
+        if(mode==="laf") return LAF;
+        if(mode==="adiml") return ADIML;
+        return null;
+      }
+      function bandIndexById(id){
+        for(var i=0;i<data.length;i++){ if(data[i].id===id) return i; }
+        return 0;
+      }
 
+      /* ---------------- Render ---------------- */
       function renderLegend(){
         legendEl.innerHTML = "";
         for(var i=0;i<data.length;i++){
@@ -254,9 +323,7 @@
 
       function renderNodes(){
         nodesGroup.innerHTML = "";
-        for(var i=0;i<data.length;i++){
-          injectNode(i);
-        }
+        for(var i=0;i<data.length;i++){ injectNode(i); }
         focusNode(idx);
       }
 
@@ -287,13 +354,14 @@
         g.addEventListener("keydown", function(e){
           if(e.key==="Enter"||e.key===" "){ idx = i; updateStudies(d.id); e.preventDefault(); }
         });
-
         nodesGroup.appendChild(g);
       }
 
       function updateStudies(id){
-        if(studyMode==="none"){ studiesSection.hidden = true; return; }
-        var list = studiesByBand[id] || [];
+        var set = datasetFor(studyMode);
+        if(!set){ studiesSection.hidden = true; return; }
+        studiesTitle.textContent = titleFor(studyMode);
+        var list = (set[id] || []);
         studiesGrid.innerHTML = "";
         for(var i=0;i<list.length;i++){
           var s = document.createElement("div");
@@ -316,39 +384,66 @@
         studiesSection.hidden = list.length===0;
       }
 
-      function setMode(artist){
+      function setLabelMode(artist){
         showArtist = artist;
-        document.getElementById("modeArchetype").setAttribute("aria-pressed", artist? "false":"true");
-        document.getElementById("modeArtist").setAttribute("aria-pressed", artist? "true":"false");
+        btnArche.setAttribute("aria-pressed", artist? "false":"true");
+        btnArtist.setAttribute("aria-pressed", artist? "true":"false");
         renderLegend(); renderNodes(); updateStudies(data[idx].id);
       }
       function setStudies(mode){
-        studyMode = mode; // "none" or "fj"
-        document.getElementById("modeNone").setAttribute("aria-pressed", mode==="none" ? "true":"false");
-        document.getElementById("modeFJ").setAttribute("aria-pressed", mode==="fj" ? "true":"false");
+        studyMode = mode; // "none" | "fj" | "froot" | "eh" | "laf" | "adiml"
+        btnNone.setAttribute("aria-pressed", mode==="none" ? "true":"false");
+        btnFJ.setAttribute("aria-pressed", mode==="fj" ? "true":"false");
+        btnFROOT.setAttribute("aria-pressed", mode==="froot" ? "true":"false");
+        btnEH.setAttribute("aria-pressed", mode==="eh" ? "true":"false");
+        btnLAF.setAttribute("aria-pressed", mode==="laf" ? "true":"false");
+        btnADIML.setAttribute("aria-pressed", mode==="adiml" ? "true":"false");
         updateStudies(data[idx].id);
       }
 
-      // init controls
-      document.getElementById("modeArchetype").addEventListener("click", function(){ setMode(false); });
-      document.getElementById("modeArtist").addEventListener("click", function(){ setMode(true);  });
-      document.getElementById("modeNone").addEventListener("click", function(){ setStudies("none"); });
-      document.getElementById("modeFJ").addEventListener("click", function(){ setStudies("fj");   });
-
-      // keyboard rotate focus on the canvas
+      /* ---------------- Keyboard nav ---------------- */
       var canvas = document.querySelector(".canvas");
       canvas.addEventListener("keydown", function(e){
         if(e.key==="ArrowRight"){ idx = (idx+1)%data.length; focusNode(idx); updateStudies(data[idx].id); e.preventDefault(); }
         if(e.key==="ArrowLeft"){  idx = (idx-1+data.length)%data.length; focusNode(idx); updateStudies(data[idx].id); e.preventDefault(); }
       });
-
       function focusNode(i){
         var n = nodesGroup.children[i];
         if(n){ n.focus(); }
       }
 
-      // first paint
-      renderLegend(); renderNodes(); setStudies("fj"); updateStudies(data[idx].id);
+      /* ---------------- Query parsing ---------------- */
+      function applyQuery(){
+        var q = new URLSearchParams(location.search);
+        var mode = (q.get("mode")||"").toLowerCase();
+        var band = (q.get("band")||"").toLowerCase() || (location.hash? location.hash.replace("#","").toLowerCase() : "");
+
+        // study mode
+        if(["none","fj","froot","eh","laf","adiml"].indexOf(mode)>=0){ setStudies(mode); }
+        else { setStudies("fj"); }
+
+        // band selection
+        if(band){
+          var i = bandIndexById(band);
+          idx = i;
+          focusNode(idx);
+          updateStudies(data[idx].id);
+        }
+      }
+
+      /* ---------------- Wire buttons ---------------- */
+      btnArche.addEventListener("click", function(){ setLabelMode(false); });
+      btnArtist.addEventListener("click", function(){ setLabelMode(true);  });
+
+      btnNone.addEventListener("click", function(){ setStudies("none");  });
+      btnFJ.addEventListener("click", function(){ setStudies("fj");    });
+      btnFROOT.addEventListener("click", function(){ setStudies("froot"); });
+      btnEH.addEventListener("click", function(){ setStudies("eh");    });
+      btnLAF.addEventListener("click", function(){ setStudies("laf");   });
+      btnADIML.addEventListener("click", function(){ setStudies("adiml");});
+
+      /* ---------------- First paint ---------------- */
+      renderLegend(); renderNodes(); setStudies("fj"); updateStudies(data[idx].id); applyQuery();
     })();
   </script>
 </body>
