@@ -401,6 +401,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tunes.plnt.earth/tunes.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tunes.plnt.earth/victory/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
