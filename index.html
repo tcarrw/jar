@@ -1,39 +1,133 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Tunes — Illumina Audio</title>
-<meta name="description" content="Tunes — playlists and mixes for the Illumina cycles.">
-<style>
-  :root{--bg:#0B0F19;--ink:#E6EAF2;--accent:#A4E8FF;--muted:#94A3B8}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui}
-  .wrap{max-width:760px;margin:0 auto;padding:24px;text-align:center}
-  a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
-  .pill{display:inline-block;margin-top:8px;padding:.25rem .6rem;border:1px solid rgba(255,255,255,.15);border-radius:999px;color:var(--muted);font-size:13px}
-  footer{margin-top:2rem;color:var(--muted);font-size:.9rem}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jar — Illumina Weekcards</title>
+  <meta name="description" content="Jar: Illumina weekcards, seeds, and logs with School case-study deep-links." />
+  <meta name="theme-color" content="#0b0d11">
+  <style>
+    :root{
+      --bg:#0b0d11; --card:#101422; --ring:#1b2030; --ink:#e8e8ea; --muted:#a9a9b6; --accent:#ffd56e; --pill:#0f1322;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0; background:radial-gradient(1200px 1200px at 80% -10%, #111726 0%, var(--bg) 50%, #07090d 100%); color:var(--ink); font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial}
+    header{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 16px; border-bottom:1px solid var(--ring)}
+    .brand{font-weight:700; letter-spacing:.2px}
+    nav{display:flex; gap:10px; flex-wrap:wrap}
+    .navlink{display:inline-block; padding:6px 10px; border:1px solid var(--ring); border-radius:999px; text-decoration:none; color:var(--ink); background:linear-gradient(180deg,#101426 0%,#0d111b 100%); font-size:12px}
+    .wrap{max-width:1000px; margin:0 auto; padding:16px}
+    .grid{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+    @media (max-width:860px){ .grid{grid-template-columns:1fr} }
+    .card{background:linear-gradient(180deg, #0f1220 0%, var(--card) 100%); border:1px solid var(--ring); border-radius:14px; padding:14px}
+    .card h2{margin:0 0 8px; font-size:15px; letter-spacing:.2px}
+    .muted{color:var(--muted); font-size:13px}
+    .footer{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+    .btn{display:inline-block; padding:6px 10px; border:1px solid var(--ring); border-radius:999px; text-decoration:none; color:var(--ink); background:linear-gradient(180deg,#101426 0%,#0d111b 100%); font-size:12px}
+    .badge{display:inline-block; padding:2px 8px; border:1px solid var(--ring); border-radius:999px; background:var(--pill); color:var(--muted); font-size:11px}
+    .meta{display:flex; gap:8px; align-items:center; margin:6px 0 2px}
+    .k{font-size:12px; color:var(--muted)}
+  </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>🎧 Tunes</h1>
-  <div class="pill" id="seedChip">Seed: —</div>
-  <p>Illumina’s sound tower — mixes that hum across the 42-day rhythm.</p>
-  <p><a href="/mixes/">Browse mixes</a> · <a href="/about/">About</a></p>
-  <footer>Connected · <a href="https://jar.plnt.earth/">Jar</a> · <a href="https://froot.plnt.earth/">Froot</a></footer>
-</div>
-<script>
-(function(){
-  var map={apple:"#FAD02C",pumpkin:"#FF8A3D",cumin:"#D0A15F",cinnamon:"#D66A4E",clove:"#B55B3A",fennel:"#7DE2A7",cardamom:"#C7B3FF"};
-  function getParam(k){var u=new URL(location.href);return (u.searchParams.get(k)||"").toLowerCase();}
-  var p=getParam("seed");
-  var key=p && map[p]? p : (localStorage.getItem("tunes_seed")||"").toLowerCase();
-  if(!map[key]) key="apple";
-  localStorage.setItem("tunes_seed",key);
-  document.documentElement.style.setProperty("--accent", map[key]);
-  var chip=document.getElementById("seedChip"); if(chip){ chip.textContent="Seed: "+key.charAt(0).toUpperCase()+key.slice(1); }
-})();
-</script>
+  <header>
+    <div class="brand">Jar · Illumina</div>
+    <nav>
+      <a class="navlink" href="/index.html">Weekcards</a>
+      <a class="navlink" href="/school.html">School</a>
+      <a class="navlink" href="/tunes.html">Tunes</a>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="grid">
+
+      <!-- Week 1 example -->
+      <article class="card weekcard" data-band="mirror" data-album="froot">
+        <h2>Week 1 — Mirror</h2>
+        <div class="meta">
+          <span class="badge">Band: Mirror</span>
+          <span class="badge">Album: FROOT</span>
+        </div>
+        <p class="muted">Intention: refine perception; name what you see without judgment. Daily tone: 128 Hz.</p>
+        <div class="footer">
+          <a class="btn" href="/school.html?mode=froot&band=mirror&focus=1" aria-label="Open School case studies for FROOT · Mirror">Case Study (FROOT · Mirror)</a>
+          <a class="btn" href="/school.html?mode=fj&band=mirror&focus=1" aria-label="Open School case studies for Family Jewels · Mirror">Alt: FJ · Mirror</a>
+        </div>
+      </article>
+
+      <!-- Week 2 example -->
+      <article class="card weekcard" data-band="honey" data-album="eh">
+        <h2>Week 2 — Honey</h2>
+        <div class="meta">
+          <span class="badge">Band: Honey</span>
+          <span class="badge">Album: Electra Heart</span>
+        </div>
+        <p class="muted">Intention: convert clarity into warmth; practice joyful invitations. Daily tone: 144 Hz.</p>
+        <div class="footer">
+          <a class="btn" href="/school.html?mode=eh&band=honey&focus=1" aria-label="Open School case studies for Electra Heart · Honey">Case Study (EH · Honey)</a>
+          <a class="btn" href="/school.html?mode=froot&band=frequency&focus=1" aria-label="Open School case studies for FROOT · Frequency">Next: FROOT · Frequency</a>
+        </div>
+      </article>
+
+      <!-- Week 3 example -->
+      <article class="card weekcard" data-band="frequency" data-album="froot">
+        <h2>Week 3 — Frequency</h2>
+        <div class="meta">
+          <span class="badge">Band: Frequency</span>
+          <span class="badge">Album: FROOT</span>
+        </div>
+        <p class="muted">Intention: time your actions; tempo creates confidence. Daily tone: 180 Hz.</p>
+        <div class="footer">
+          <a class="btn" href="/school.html?mode=froot&band=frequency&focus=1" aria-label="Open School case studies for FROOT · Frequency">Case Study (FROOT · Frequency)</a>
+          <a class="btn" href="/school.html?mode=adiml&band=solar&focus=1" aria-label="Open School case studies for Ancient Dreams · Solar">Next: ADIML · Solar</a>
+        </div>
+      </article>
+
+      <!-- Week 4 example -->
+      <article class="card weekcard" data-band="solar" data-album="adiml">
+        <h2>Week 4 — Solar</h2>
+        <div class="meta">
+          <span class="badge">Band: Solar</span>
+          <span class="badge">Album: Ancient Dreams</span>
+        </div>
+        <p class="muted">Intention: declare without burn; presence as clean light. Daily tone: 256 Hz.</p>
+        <div class="footer">
+          <a class="btn" href="/school.html?mode=adiml&band=solar&focus=1">Case Study (Ancient Dreams · Solar)</a>
+          <a class="btn" href="/school.html?mode=laf&band=celestial&focus=1">Next: L+F · Celestial</a>
+        </div>
+      </article>
+
+      <!-- Week 5 example -->
+      <article class="card weekcard" data-band="celestial" data-album="laf">
+        <h2>Week 5 — Celestial Voice</h2>
+        <div class="meta">
+          <span class="badge">Band: Celestial</span>
+          <span class="badge">Album: LOVE + FEAR</span>
+        </div>
+        <p class="muted">Intention: breath into tone; lift through resonance. Daily tone: 512 Hz.</p>
+        <div class="footer">
+          <a class="btn" href="/school.html?mode=laf&band=celestial&focus=1">Case Study (L+F · Celestial)</a>
+          <a class="btn" href="/school.html?mode=fj&band=trickster&focus=1">Next: FJ · Trickster</a>
+        </div>
+      </article>
+
+      <!-- Week 6 example -->
+      <article class="card weekcard" data-band="trickster" data-album="fj">
+        <h2>Week 6 — Trickster</h2>
+        <div class="meta">
+          <span class="badge">Band: Trickster</span>
+          <span class="badge">Album: Family Jewels</span>
+        </div>
+        <p class="muted">Intention: break symmetry to renew; keep the hive alive. Tone: variable.</p>
+        <div class="footer">
+          <a class="btn" href="/school.html?mode=fj&band=trickster&focus=1">Case Study (FJ · Trickster)</a>
+          <a class="btn" href="/school.html?mode=froot&band=core&focus=1">Close: FROOT · Core</a>
+        </div>
+      </article>
+
+    </section>
+  </main>
 </body>
 </html>
