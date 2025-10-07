@@ -9,8 +9,10 @@
     :root{
       --bg:#0b0d11; --ink:#e8e8ea; --muted:#a9a9b6; --gold:#f6c55c; --honey:#ffcf7a; --rose:#e9a9c3;
       --sun:#ffd56e; --aqua:#c6e7ff; --ember:#ff77aa; --earth:#c9b08a; --card:#11141b; --ring:#1b2030; --focus:#b2f5ea;
+      --hl:#89f0ff;
     }
     *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
     html,body{height:100%}
     body{
       margin:0; background:radial-gradient(1200px 1200px at 80% -10%, #111726 0%, var(--bg) 50%, #07090d 100%);
@@ -39,7 +41,11 @@
     svg{display:block; width:100%; height:100%}
     .grid circle{fill:none; stroke:#1f2636; stroke-width:1}
     .spiral path{fill:none; stroke:var(--gold); stroke-opacity:.65; stroke-width:2}
-    .node{transition:transform .25s ease; cursor:pointer}
+    .node{transition:transform .25s ease, filter .25s ease; cursor:pointer}
+    .node:focus{outline:none}
+    .focused .n-dot{filter:drop-shadow(0 0 6px var(--hl))}
+    .focused .n-label{fill:#fff}
+
     .n-dot{stroke:#0d0f16; stroke-width:2}
     .n-label{font-size:12px; fill:var(--ink); paint-order:stroke; stroke:#0b0d11; stroke-width:3; stroke-linejoin:round}
 
@@ -139,7 +145,7 @@
     </aside>
   </main>
 
-  <footer>Illumina School · Spiral Map · v1.5 (FJ + FROOT + EH + LAF + ADIML)</footer>
+  <footer>Illumina School · Spiral Map · v1.6 (albums + deep-links + focus scroll)</footer>
 
   <script>
     (function(){
@@ -175,7 +181,6 @@
       ];
 
       /* ---------------- Album datasets ---------------- */
-      // Family Jewels (original mapping)
       var FJ = {
         root:[{track:"Numb",note:"Ground-truth fatigue; honesty before motion."},{track:"Are You Satisfied?",note:"Restless soil seeking purpose."}],
         architect:[{track:"Obsessions",note:"Compulsion → pattern → authorship."}],
@@ -188,7 +193,6 @@
         core:[{track:"I Am Not a Robot",note:"Integration statement; permission to be human."}]
       };
 
-      // FROOT era
       var FROOT = {
         root:[{track:"Savages",note:"Moral witness; soil speaks plainly."},{track:"Weeds",note:"Unwanted growth as truth signal."}],
         architect:[{track:"Solitaire",note:"Self-structure; edges cut for clarity."},{track:"Gold",note:"Value boundaries; authorship as architecture."}],
@@ -201,7 +205,6 @@
         core:[{track:"Froot (leitmotif)",note:"Carry sweetness into the hive."}]
       };
 
-      // Electra Heart
       var EH = {
         root:[{track:"Teen Idle",note:"Loss of innocence named honestly."}],
         architect:[{track:"Power & Control",note:"Systems and ownership dynamics."}],
@@ -214,7 +217,6 @@
         core:[{track:"Fear and Loathing",note:"Integrating shadow and light."}]
       };
 
-      // LOVE + FEAR
       var LAF = {
         root:[{track:"To Be Human",note:"Ground-truth empathy; global witness."}],
         architect:[{track:"Handmade Heaven",note:"Building an inner habitat."}],
@@ -227,7 +229,6 @@
         core:[{track:"Soft to Be Strong",note:"Reunion of the system."}]
       };
 
-      // Ancient Dreams in a Modern Land
       var ADIML = {
         root:[{track:"Purge the Poison",note:"Witness & accountability."}],
         architect:[{track:"Man’s World",note:"Redesigning the structure."}],
@@ -324,7 +325,7 @@
       function renderNodes(){
         nodesGroup.innerHTML = "";
         for(var i=0;i<data.length;i++){ injectNode(i); }
-        focusNode(idx);
+        focusNode(idx,true);
       }
 
       function injectNode(i){
@@ -334,8 +335,8 @@
         g.setAttribute("class","node");
         g.setAttribute("tabindex","0");
         g.setAttribute("data-id", d.id);
-        g.setAttribute("aria-label",(showArtist? d.artist : d.archetype) + " at " + d.freq);
         g.setAttribute("role","group");
+        g.setAttribute("aria-label",(showArtist? d.artist : d.archetype) + " at " + d.freq);
 
         var dot = document.createElementNS("http://www.w3.org/2000/svg","circle");
         dot.setAttribute("cx", p.x); dot.setAttribute("cy", p.y);
@@ -350,9 +351,9 @@
         label.textContent = showArtist ? d.artist : d.archetype;
         g.appendChild(label);
 
-        g.addEventListener("click", function(){ idx = i; updateStudies(d.id); focusNode(i); });
+        g.addEventListener("click", function(){ idx = i; updateStudies(d.id); focusNode(i,false); });
         g.addEventListener("keydown", function(e){
-          if(e.key==="Enter"||e.key===" "){ idx = i; updateStudies(d.id); e.preventDefault(); }
+          if(e.key==="Enter"||e.key===" "){ idx = i; updateStudies(d.id); e.preventDefault(); focusNode(i,false); }
         });
         nodesGroup.appendChild(g);
       }
@@ -404,12 +405,18 @@
       /* ---------------- Keyboard nav ---------------- */
       var canvas = document.querySelector(".canvas");
       canvas.addEventListener("keydown", function(e){
-        if(e.key==="ArrowRight"){ idx = (idx+1)%data.length; focusNode(idx); updateStudies(data[idx].id); e.preventDefault(); }
-        if(e.key==="ArrowLeft"){  idx = (idx-1+data.length)%data.length; focusNode(idx); updateStudies(data[idx].id); e.preventDefault(); }
+        if(e.key==="ArrowRight"){ idx = (idx+1)%data.length; focusNode(idx,false); updateStudies(data[idx].id); e.preventDefault(); }
+        if(e.key==="ArrowLeft"){  idx = (idx-1+data.length)%data.length; focusNode(idx,false); updateStudies(data[idx].id); e.preventDefault(); }
       });
-      function focusNode(i){
-        var n = nodesGroup.children[i];
-        if(n){ n.focus(); }
+      function focusNode(i, isInitial){
+        var kids = nodesGroup.children;
+        for(var k=0;k<kids.length;k++){ kids[k].classList.remove("focused"); }
+        var n = kids[i];
+        if(n){ n.classList.add("focused"); n.focus(); }
+        if(!isInitial && !studiesSection.hidden){
+          var y = document.getElementById("studiesSection").getBoundingClientRect().top + window.scrollY - 10;
+          window.scrollTo({top:y, behavior:"smooth"});
+        }
       }
 
       /* ---------------- Query parsing ---------------- */
@@ -417,6 +424,7 @@
         var q = new URLSearchParams(location.search);
         var mode = (q.get("mode")||"").toLowerCase();
         var band = (q.get("band")||"").toLowerCase() || (location.hash? location.hash.replace("#","").toLowerCase() : "");
+        var focus = (q.get("focus")||"").toString() === "1";
 
         // study mode
         if(["none","fj","froot","eh","laf","adiml"].indexOf(mode)>=0){ setStudies(mode); }
@@ -426,8 +434,17 @@
         if(band){
           var i = bandIndexById(band);
           idx = i;
-          focusNode(idx);
+          renderNodes(); // ensure nodes exist before focusing
           updateStudies(data[idx].id);
+          if(focus){
+            // ensure tray visible, then scroll
+            if(!studiesSection.hidden){
+              var y = studiesSection.getBoundingClientRect().top + window.scrollY - 10;
+              window.scrollTo({top:y, behavior:"smooth"});
+            }
+          }
+        } else {
+          renderNodes(); updateStudies(data[idx].id);
         }
       }
 
@@ -443,7 +460,7 @@
       btnADIML.addEventListener("click", function(){ setStudies("adiml");});
 
       /* ---------------- First paint ---------------- */
-      renderLegend(); renderNodes(); setStudies("fj"); updateStudies(data[idx].id); applyQuery();
+      renderLegend(); setStudies("fj"); applyQuery();
     })();
   </script>
 </body>
