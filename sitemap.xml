@@ -191,6 +191,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tunes.plnt.earth/interludes/redroom.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tunes.plnt.earth/interludes/sabrina.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
