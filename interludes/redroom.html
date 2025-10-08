@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>The Red Room — girl in red Interlude</title>
+  <meta name="description" content="Illumina Interlude: The Red Room — girl in red as the Red Witness. Confession Heat (Sun/Bee) and Moon Witness Log." />
+  <meta name="theme-color" content="#0b0d11" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#0b0d11">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <style>
+    :root{
+      --bg:#0b0d11;
+      --ink:#f2f2f2;
+      --muted:#b9b9c0;
+      --red1:#21070b;
+      --red2:#3a0a12;
+      --red3:#8a1020;
+      --red4:#d91e3a;
+      --silver:#dfe3ea;
+      --card:#10131a;
+      --line:#1b2029;
+      --accent:#ff3b62;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:
+      radial-gradient(1200px 800px at 70% 10%, rgba(217,30,58,.25), transparent 60%),
+      radial-gradient(900px 600px at 20% 90%, rgba(138,16,32,.35), transparent 65%),
+      linear-gradient(180deg, var(--bg), #0a0c12 60%, #07090e);
+      color:var(--ink); font:16px/1.5 ui-sans-serif,system-ui,Segoe UI,Inter,Roboto,Apple Color Emoji,Segoe UI Emoji;
+      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility}
+    a{color:var(--accent);text-decoration:none}
+    .wrap{max-width:1100px;margin:0 auto;padding:20px 16px 48px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:6px 0 18px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .dot{width:14px;height:14px;border-radius:50%;background:
+      radial-gradient(circle at 35% 35%, #ff97ab 0 18%, #ff3b62 22% 60%, #8a1020 62% 100%);
+      box-shadow:0 0 24px 6px rgba(255,59,98,.25)}
+    h1{font-size:20px;margin:0;letter-spacing:.3px}
+    .tag{display:inline-block;padding:6px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted);font-size:12px}
+    .grid{display:grid;grid-template-columns:1fr;gap:16px}
+    @media(min-width:920px){.grid{grid-template-columns:1fr 1fr}}
+    .card{background:linear-gradient(180deg, rgba(16,19,26,.7), rgba(16,19,26,.55)); border:1px solid var(--line); border-radius:14px; padding:18px}
+    .card h2{margin:2px 0 8px; font-size:16px; letter-spacing:.2px}
+    .sub{color:var(--muted);font-size:13px}
+    .glyph{font-size:18px;margin-right:6px}
+    .confession{min-height:200px;background:linear-gradient(180deg, rgba(58,10,18,.5), rgba(33,7,11,.45)); border:1px solid rgba(217,30,58,.25); border-radius:12px; padding:14px}
+    textarea{
+      width:100%;min-height:160px;background:transparent;border:none;color:var(--silver);
+      resize:vertical;outline:none;font:14px/1.6 "SF Mono","JetBrains Mono","Menlo",monospace; letter-spacing:.2px}
+    .prompt li{margin:6px 0}
+    .loggrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+    .input{display:flex;flex-direction:column;gap:6px}
+    .input label{font-size:12px;color:var(--muted)}
+    .input input,.input select{
+      background:#0f1218;border:1px solid var(--line);border-radius:10px;color:var(--ink);padding:10px 12px;font-size:14px;outline:none}
+    .save{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(180deg,#2a303b,#1b2029);border:1px solid var(--line);border-radius:999px;color:var(--ink);padding:10px 14px;font-weight:600;cursor:pointer}
+    .save:active{transform:translateY(1px)}
+    .table{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+    .table th,.table td{border-bottom:1px solid var(--line);padding:10px 8px;text-align:left}
+    .pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;background:#1a1f28;color:#cbd5e1;border:1px solid var(--line)}
+    .axis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+    .axis .node{background:#121620;border:1px dashed #232a36;border-radius:12px;padding:10px;text-align:center}
+    footer{margin-top:28px;color:#9aa3b2;font-size:12px}
+    .quote{font-style:italic;color:#ffd7de}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <span class="dot" aria-hidden="true"></span>
+        <div>
+          <h1>The Red Room — <span style="color:#ff6f88">girl in red</span></h1>
+          <div class="sub">Interlude · Archetype: <strong>Red Witness</strong> · Element: Fire / Root</div>
+        </div>
+      </div>
+      <span class="tag">Illumina Interlude</span>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <h2><span class="glyph">🔥</span>Confession Heat (☀️ / 🐝)</h2>
+        <div class="sub quote">“I only tell the truth when it hurts enough.”</div>
+        <div class="confession">
+          <textarea id="confess" placeholder="Write the line you would never post. Keep it. Let it sting."></textarea>
+        </div>
+        <div class="card" style="margin-top:10px">
+          <div class="sub" style="margin-bottom:6px">Prompts</div>
+          <ul class="prompt">
+            <li>What truth burns under my calm?</li>
+            <li>Whose gaze am I still performing for?</li>
+            <li>What would I say if the mic was already broken?</li>
+            <li>Write one line that feels <em>too much</em> — then keep it.</li>
+          </ul>
+        </div>
+        <button class="save" onclick="saveRedRoom()">Save session to device</button>
+      </section>
+
+      <section class="card">
+        <h2><span class="glyph">🩸</span>Moon Witness Log (🌙)</h2>
+        <div class="sub quote">“I watch myself confess. I call it data.”</div>
+
+        <div class="loggrid">
+          <div class="input">
+            <label for="subject">Subject</label>
+            <input id="subject" type="text" placeholder="e.g., ‘Too-loud honesty about X’"/>
+          </div>
+          <div class="input">
+            <label for="temperature">Temperature</label>
+            <input id="temperature" type="text" placeholder="e.g., 99.1°F / cool / burning"/>
+          </div>
+          <div class="input">
+            <label for="time">Confession event time</label>
+            <input id="time" type="text" placeholder="e.g., 01:13 AM"/>
+          </div>
+          <div class="input">
+            <label for="effect">Observed effect</label>
+            <select id="effect">
+              <option>muscle tension</option>
+              <option>tears</option>
+              <option>laugh</option>
+              <option>silence</option>
+              <option>steady breath</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input">
+          <label for="interpret">Interpretation</label>
+          <input id="interpret" type="text" placeholder='Emotion = data sample #___'/>
+        </div>
+
+        <button class="save" style="margin-top:10px" onclick="saveMoon()">Archive Moon log</button>
+
+        <table class="table" id="logtable" aria-label="Moon Witness Archive">
+          <thead><tr><th>Subject</th><th>Temp</th><th>Time</th><th>Effect</th><th>Interpretation</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+    </div>
+
+    <section class="card" style="margin-top:16px">
+      <h2>Cycle Function</h2>
+      <table class="table">
+        <tbody>
+          <tr><td><span class="pill">Cycle Fit</span></td><td>Illumina 6 — Autumn Shift · Illumina 7 — Year-End Reflection</td></tr>
+          <tr><td><span class="pill">Purpose</span></td><td>Ground emotional truth so the next bloom isn’t fake.</td></tr>
+          <tr><td><span class="pill">Element Pair</span></td><td>Fire × Water (confession × forgiveness)</td></tr>
+          <tr><td><span class="pill">Companions</span></td><td>Doechii (🔥 Chaos) · Emma Stone (☀️ Identity Flare)</td></tr>
+          <tr><td><span class="pill">Dream Overlay</span></td><td>“Red Thread” — halls glowing crimson signal unprocessed memory surfacing.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="axis">
+        <div class="node">☀️ Emma Stone<br><span class="sub">Identity Flare</span></div>
+        <div class="node">🔥 Doechii<br><span class="sub">Chaos</span></div>
+        <div class="node">🌹 girl in red<br><span class="sub">Red Witness</span></div>
+        <div class="node">🍯 Sabrina<br><span class="sub">Honey</span></div>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:16px">
+      <h2>Soundtrack Portal</h2>
+      <div class="sub">Play these while writing, then end in silence.</div>
+      <ul class="prompt" style="margin-top:8px">
+        <li><span class="pill">Serotonin</span> — diagnostic honesty</li>
+        <li><span class="pill">October Passed Me By</span> — seasonal shift</li>
+        <li><span class="pill">I’ll Call You Mine</span> — truth as intimacy</li>
+        <li><span class="pill">Dead Girl in the Pool</span> — illusion collapse</li>
+      </ul>
+    </section>
+
+    <footer>The Red Room keeps the flame honest.</footer>
+  </div>
+
+  <script>
+    function saveRedRoom(){
+      var t=document.getElementById('confess').value.trim();
+      if(!t)return;
+      try{
+        var k='redroom/confessions', arr=JSON.parse(localStorage.getItem(k)||'[]');
+        arr.unshift({ts:new Date().toISOString(), text:t});
+        localStorage.setItem(k, JSON.stringify(arr));
+        document.getElementById('confess').value='';
+        alert('Saved to device.');
+      }catch(e){}
+    }
+    function saveMoon(){
+      var S=(id)=>document.getElementById(id).value.trim();
+      var row={subject:S('subject'),temperature:S('temperature'),time:S('time'),effect:S('effect'),interpret:S('interpret')};
+      if(!row.subject && !row.interpret)return;
+      try{
+        var k='redroom/moonlog', arr=JSON.parse(localStorage.getItem(k)||'[]');
+        arr.unshift({ts:new Date().toISOString(), ...row});
+        localStorage.setItem(k, JSON.stringify(arr));
+        addRow(row);
+        ['subject','temperature','time','interpret'].forEach(id=>document.getElementById(id).value='');
+      }catch(e){}
+    }
+    function addRow(row){
+      var tb=document.querySelector('#logtable tbody');
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td>'+esc(row.subject)+'</td><td>'+esc(row.temperature)+'</td><td>'+esc(row.time)+'</td><td>'+esc(row.effect)+'</td><td>'+esc(row.interpret)+'</td>';
+      tb.prepend(tr);
+    }
+    function esc(s){return (s||'').replace(/[&<>"']/g,m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]))}
+    (function boot(){
+      try{
+        var k='redroom/moonlog', arr=JSON.parse(localStorage.getItem(k)||'[]');
+        arr.forEach(addRow);
+      }catch(e){}
+    })();
+  </script>
+</body>
+</html>
