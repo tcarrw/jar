@@ -146,6 +146,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tunes.plnt.earth/egg-map.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tunes.plnt.earth/index2.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
