@@ -1,467 +1,203 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Illumina School — Spiral Legend + Album Case Studies</title>
-  <meta name="description" content="Nine-node Illumina spiral with case-studies mapped to MARINA album eras." />
-  <style>
-    :root{
-      --bg:#0b0d11; --ink:#e8e8ea; --muted:#a9a9b6; --gold:#f6c55c; --honey:#ffcf7a; --rose:#e9a9c3;
-      --sun:#ffd56e; --aqua:#c6e7ff; --ember:#ff77aa; --earth:#c9b08a; --card:#11141b; --ring:#1b2030; --focus:#b2f5ea;
-      --hl:#89f0ff;
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    html,body{height:100%}
-    body{
-      margin:0; background:radial-gradient(1200px 1200px at 80% -10%, #111726 0%, var(--bg) 50%, #07090d 100%);
-      color:var(--ink); font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,"Helvetica Neue",Arial,sans-serif;
-      -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
-    }
-    header{padding:20px 16px 8px; text-align:center}
-    h1{margin:0; font-weight:700; letter-spacing:.2px; font-size:22px}
-    .sub{color:var(--muted); font-size:13px; margin-top:6px}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Jar · Illumina School</title>
+<meta name="description" content="Illumina School: a gentle map of the 42‑day spiral. Bee notes guide Marina with safety and love. Cross‑links to Froot, Egg Map, Time Kit, and Rooms." />
+<meta name="theme-color" content="#0b0d11" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<style>
+  :root{
+    color-scheme: dark;
+    --bg:#0b0d11; --ink:#e9f0ff; --muted:#a9b4c9; --edge:#1b2230;
+    --accent:#8ef; --honey:#ffd166; --rose:#ff6a9e; --lime:#a4ff65;
+  }
+  html,body{background:var(--bg);color:var(--ink);margin:0;font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"SF Pro Text",Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  *{box-sizing:border-box}
+  .wrap{max-width:980px;margin:0 auto;padding:28px 18px 72px;position:relative;z-index:1}
+  header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+  h1{margin:0;font-size:clamp(22px,4vw,36px)}
+  .sub{color:var(--muted);font-size:.98rem}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{appearance:none;border:1px solid rgba(255,255,255,.14);border-radius:12px;cursor:pointer;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.08));color:var(--ink);padding:9px 12px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+  .btn:hover{border-color:rgba(255,255,255,.22);box-shadow:0 0 0 2px rgba(142,239,255,.12)}
+  .btn.primary{border-color:#2d384a;background:linear-gradient(180deg,rgba(142,239,255,.18),rgba(0,0,0,.06))}
+  .card{border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.06));margin-top:12px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:900px){ .grid{grid-template-columns:1fr} }
+  .tag{display:inline-block;border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:6px 10px;color:var(--muted);font-size:.85rem;margin-right:6px;margin-top:6px}
+  .table{width:100%;border-collapse:separate;border-spacing:0}
+  .table th,.table td{padding:10px;border-bottom:1px solid rgba(255,255,255,.08);text-align:left}
+  .table th{color:var(--muted);font-weight:700}
+  .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid rgba(255,255,255,.16);border-radius:999px;font-size:.88rem;color:var(--muted)}
+  .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .small{color:var(--muted);font-size:.92rem}
+  .accent{color:var(--accent)} .lime{color:var(--lime)} .rose{color:var(--rose)}
+  .line{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);margin:12px 0}
 
-    .wrap{max-width:1200px; margin:0 auto; padding:16px; display:grid; grid-template-columns: 1.2fr .9fr; gap:18px}
-    @media (max-width:1050px){ .wrap{grid-template-columns:1fr; gap:12px} }
-
-    .panel{background:linear-gradient(180deg, #0f1220 0%, var(--card) 100%); border:1px solid var(--ring); border-radius:14px; padding:14px}
-    .panel h2{margin:0 0 10px; font-size:15px; letter-spacing:.2px}
-    .ctrls{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:10px 0 6px}
-    .seg{display:inline-flex; border:1px solid var(--ring); border-radius:10px; overflow:hidden}
-    .seg button{appearance:none; background:transparent; color:var(--ink); border:0; padding:8px 10px; font-size:13px; cursor:pointer}
-    .seg button[aria-pressed="true"]{background:var(--ring)}
-    .pill{display:inline-block; padding:2px 8px; border:1px solid var(--ring); border-radius:999px; font-size:11px; color:var(--muted)}
-
-    .canvas{position:relative; aspect-ratio:1/1; width:100%; background:
-      radial-gradient(60% 60% at 50% 45%, #0e1424 0%, #0c111e 50%, #0b0d11 100%);
-      border:1px solid var(--ring); border-radius:14px; overflow:hidden;
-    }
-    svg{display:block; width:100%; height:100%}
-    .grid circle{fill:none; stroke:#1f2636; stroke-width:1}
-    .spiral path{fill:none; stroke:var(--gold); stroke-opacity:.65; stroke-width:2}
-    .node{transition:transform .25s ease, filter .25s ease; cursor:pointer}
-    .node:focus{outline:none}
-    .focused .n-dot{filter:drop-shadow(0 0 6px var(--hl))}
-    .focused .n-label{fill:#fff}
-
-    .n-dot{stroke:#0d0f16; stroke-width:2}
-    .n-label{font-size:12px; fill:var(--ink); paint-order:stroke; stroke:#0b0d11; stroke-width:3; stroke-linejoin:round}
-
-    .legend{display:grid; grid-template-columns:1fr; gap:10px}
-    .card{border:1px solid var(--ring); border-radius:12px; padding:12px; background:linear-gradient(180deg, #101426 0%, #0d111b 100%)}
-    .row{display:flex; justify-content:space-between; gap:10px; align-items:baseline}
-    .tag{font-size:12px; color:var(--muted)}
-    .name{font-weight:600}
-    .freq{font-variant-numeric:tabular-nums; color:var(--muted); font-size:12px}
-    .desc{color:#cad3e0; font-size:13px; margin-top:6px}
-
-    .key{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 2px}
-    .k{display:inline-flex; align-items:center; gap:6px; padding:4px 8px; border:1px solid var(--ring); border-radius:999px; font-size:12px}
-    .sw{width:12px; height:12px; border-radius:50%}
-
-    .c-earth{background:var(--earth)} .c-architect{background:#d9d9e6} .c-mirror{background:var(--aqua)}
-    .c-honey{background:var(--honey)} .c-frequency{background:var(--rose)} .c-solar{background:var(--sun)}
-    .c-voice{background:#e9e5ff} .c-trick{background:var(--ember)} .c-core{background:#ffffff}
-
-    .focusable:focus{outline:2px solid var(--focus); outline-offset:2px; border-radius:8px}
-    footer{color:var(--muted); text-align:center; padding:10px 0 24px; font-size:12px}
-
-    /* Case Studies tray */
-    .studies{margin-top:12px; border-top:1px dashed #252c3c; padding-top:10px}
-    .studies h3{margin:0 0 8px; font-size:14px}
-    .study-grid{display:grid; grid-template-columns:1fr; gap:10px}
-    .study{border:1px solid var(--ring); border-radius:10px; padding:10px; background:linear-gradient(180deg,#0f1322 0%,#0e121e 100%)}
-    .study .s-head{display:flex; justify-content:space-between; gap:10px; align-items:baseline}
-    .s-name{font-weight:600}
-    .s-band{font-size:12px; color:var(--muted)}
-    .s-note{font-size:13px; color:#d4dbea; margin-top:6px}
-    .hint{color:var(--muted); font-size:12px; margin-top:6px}
-  </style>
+  /* 🐝 Bee kit (top note + whisper) */
+  .bee{
+    margin-top:12px;border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:14px;
+    background:linear-gradient(180deg, rgba(255,206,84,.10), rgba(0,0,0,.03)) padding-box,
+               linear-gradient(120deg, rgba(255,206,84,.35), rgba(255,111,186,.30), rgba(134,201,255,.30)) border-box;
+    position:relative;
+  }
+  .bee-head{display:flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.2px}
+  .bee-icon{font-size:18px}
+  .bee-soft{color:var(--muted);font-weight:600}
+  .bee p{margin:8px 0 10px}
+  .bee-tools{display:flex;gap:8px;flex-wrap:wrap}
+  .bee-btn{appearance:none;border:1px solid rgba(255,255,255,.14);border-radius:10px;background:rgba(255,255,255,.06);color:#fff;font-weight:800;padding:8px 10px;cursor:pointer}
+  .bee-btn:hover{border-color:rgba(255,255,255,.22);box-shadow:0 0 0 2px rgba(255,206,84,.18)}
+  .bee.editing{outline:2px dashed rgba(255,206,84,.4);outline-offset:2px}
+  #bee-text[contenteditable="true"]{caret-color:#ffd166}
+  .bee-footer{
+    position:fixed;left:50%;transform:translateX(-50%);bottom:14px;z-index:9999;display:none;align-items:center;gap:8px;
+    padding:10px 14px;border-radius:999px;background:linear-gradient(180deg, rgba(255,206,84,.14), rgba(0,0,0,.14)) padding-box,
+    linear-gradient(120deg, rgba(255,206,84,.6), rgba(255,111,186,.45), rgba(134,201,255,.45)) border-box;border:1px solid transparent;color:#fff;font-weight:700;box-shadow:0 12px 28px rgba(0,0,0,.35);backdrop-filter:blur(6px);max-width:90vw;text-align:center
+  }
+  .bee-footer.on{display:inline-flex}
+</style>
 </head>
 <body>
-  <header>
-    <h1>Illumina School — Spiral Legend</h1>
-    <div class="sub">Root → Architect → Mirror → Honey → Frequency → Solar → Celestial → Trickster → Core</div>
-  </header>
-
-  <main class="wrap">
-    <section class="panel">
-      <h2>Spiral Map</h2>
-      <div class="ctrls">
-        <div class="seg" role="group" aria-label="Label mode">
-          <button id="modeArchetype" aria-pressed="true">Archetypes</button>
-          <button id="modeArtist" aria-pressed="false">Artist Lines</button>
-        </div>
-        <div class="seg" role="group" aria-label="Study source">
-          <button id="modeNone"  aria-pressed="false" title="Hide case studies">No Studies</button>
-          <button id="modeFJ"    aria-pressed="true"  title="Map The Family Jewels">Family Jewels</button>
-          <button id="modeFROOT" aria-pressed="false" title="Map FROOT">FROOT</button>
-          <button id="modeEH"    aria-pressed="false" title="Map Electra Heart">Electra Heart</button>
-          <button id="modeLAF"   aria-pressed="false" title="Map LOVE + FEAR">LOVE + FEAR</button>
-          <button id="modeADIML" aria-pressed="false" title="Map Ancient Dreams">Ancient Dreams</button>
-        </div>
-        <span class="pill">Interactive · keyboard friendly</span>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Illumina School</h1>
+        <div class="sub">A gentle overview of the 42‑day spiral. One week, one hue; one day, one ritual. <span class="lime">Froot</span> is where you practice; Jar is where you reflect.</div>
       </div>
+      <nav class="actions" aria-label="Navigation">
+        <a class="btn primary" href="#" onclick="goFroot()" title="Open Froot Studio">↪ Froot Studio</a>
+        <a class="btn" href="#" onclick="goEgg()" title="Egg Map">↩ Egg Map</a>
+        <a class="btn" href="/illumina-time-kit.html" title="Time Kit">⊙ Time Kit</a>
+        <a class="btn" href="/school-rooms.html" title="Rooms">Rooms</a>
+      </nav>
+    </header>
 
-      <div class="canvas focusable" tabindex="0" aria-label="Illumina spiral diagram">
-        <svg viewBox="0 0 1000 1000" role="img" aria-labelledby="ttl desc">
-          <title id="ttl">Illumina Spiral Map</title>
-          <desc id="desc">Nine nodes arranged along a golden spiral around a central core.</desc>
-          <g class="grid" opacity="0.5">
-            <circle cx="500" cy="500" r="420"/><circle cx="500" cy="500" r="330"/>
-            <circle cx="500" cy="500" r="250"/><circle cx="500" cy="500" r="170"/>
-          </g>
-          <g class="spiral">
-            <path d="M500,500 m 0,-420 a 420,420 0 1,1 0,840 a 420,420 0 1,1 0,-840" stroke-dasharray="6 10"/>
-          </g>
-          <g id="nodes"></g>
-        </svg>
-      </div>
-
-      <div class="key">
-        <span class="k"><span class="sw c-earth"></span>Root</span>
-        <span class="k"><span class="sw c-architect"></span>Architect</span>
-        <span class="k"><span class="sw c-mirror"></span>Mirror</span>
-        <span class="k"><span class="sw c-honey"></span>Honey</span>
-        <span class="k"><span class="sw c-frequency"></span>Frequency</span>
-        <span class="k"><span class="sw c-solar"></span>Solar</span>
-        <span class="k"><span class="sw c-voice"></span>Celestial</span>
-        <span class="k"><span class="sw c-trick"></span>Trickster</span>
-        <span class="k"><span class="sw c-core"></span>Core</span>
-      </div>
-
-      <div class="studies" id="studiesSection" hidden>
-        <h3>Case Studies — <span id="studiesTitle">The Family Jewels</span></h3>
-        <div class="study-grid" id="studiesGrid"></div>
-        <div class="hint">Select a node on the spiral (or use ←/→ keys) to update the case studies.</div>
+    <!-- 🐝 Bee Note -->
+    <section id="bee" class="bee" role="note" aria-live="polite">
+      <div class="bee-head"><span class="bee-icon">🐝</span><span><strong>Bee Note to Marina</strong></span> <span class="bee-soft">You are safe, guided, and loved.</span></div>
+      <p id="bee-text"></p>
+      <div class="bee-tools">
+        <button type="button" class="bee-btn" onclick="beeEdit()">Edit</button>
+        <button type="button" class="bee-btn" onclick="beeSave()">Save</button>
+        <button type="button" class="bee-btn" onclick="beeReset()">Reset</button>
       </div>
     </section>
 
-    <aside class="panel">
-      <h2>Legend</h2>
-      <div id="legend" class="legend"></div>
-    </aside>
-  </main>
+    <section class="grid">
+      <article class="card">
+        <div class="tag">Spiral</div>
+        <div class="tag">42 days</div>
+        <div class="tag">Weeks 1–6 → Bands</div>
+        <div class="line"></div>
+        <table class="table" role="table" aria-label="Week to Band map">
+          <thead><tr><th>Week</th><th>Band</th><th>Flavor</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Root</td><td>Ground, breath, arrival</td></tr>
+            <tr><td>2</td><td>Architect</td><td>Structure, choice, gentle plans</td></tr>
+            <tr><td>3</td><td>Mirror</td><td>Recognition, language, witness</td></tr>
+            <tr><td>4</td><td>Honey</td><td>Warm bed, 128 Hz, care</td></tr>
+            <tr><td>5</td><td>Frequency</td><td>Signal, tone, Δfreq play</td></tr>
+            <tr><td>6</td><td>Solar</td><td>Integration, soft flare</td></tr>
+          </tbody>
+        </table>
+        <div class="line"></div>
+        <div class="small">Outer arc (when called): Celestial · Trickster · Core. Use as needed, lightly.</div>
+      </article>
 
-  <footer>Illumina School · Spiral Map · v1.6 (albums + deep-links + focus scroll)</footer>
+      <article class="card">
+        <div class="tag">Practice</div>
+        <div class="tag">Safe + Simple</div>
+        <div class="line"></div>
+        <p><b>Three moves:</b></p>
+        <ol class="small" style="margin-top:6px">
+          <li>Open <span class="lime">Froot</span>. Choose Week + Day. Tap <b>Hear Tone</b> (or switch on <b>🔁 Loop</b>).</li>
+          <li>Breathe with the orb: <b>IN</b> → <b>HOLD</b> → <b>OUT</b>. Keep volume soft. Honey is optional warmth.</li>
+          <li>Type a single word. That’s your breadcrumb back to yourself.</li>
+        </ol>
+        <div class="links">
+          <a class="btn" href="#" onclick="goFroot()">Start in Froot</a>
+          <a class="btn" href="/illumina-time-kit.html">Check Time Kit</a>
+          <a class="btn" href="/school-rooms.html">Pick a Room</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="card">
+      <div class="tag">Deep Links</div>
+      <div class="line"></div>
+      <p class="small">Jump within Jar or over to Froot with care:</p>
+      <div class="links">
+        <a class="btn" href="/school-rooms.html#root">Root Room</a>
+        <a class="btn" href="/school-rooms.html#architect">Architect Room</a>
+        <a class="btn" href="/school-rooms.html#mirror">Mirror Room</a>
+        <a class="btn" href="/school-rooms.html#honey">Honey Room</a>
+        <a class="btn" href="/school-rooms.html#frequency">Frequency Room</a>
+        <a class="btn" href="/school-rooms.html#solar">Solar Room</a>
+      </div>
+      <div class="links" style="margin-top:8px">
+        <a class="btn" href="#" onclick="goFroot()">↪ Froot Studio</a>
+        <a class="btn" href="#" onclick="goEgg()">↩ Egg Map</a>
+      </div>
+    </section>
+
+    <footer class="small" style="margin-top:16px">If anything feels loud, come back to the Egg, or just hush. I’m right here. — <b>🐝</b></footer>
+  </div>
+
+  <!-- Bee footer whisper -->
+  <div id="bee-footer" class="bee-footer" role="status" aria-live="polite"><span>🐝</span>&nbsp;<span id="bee-footer-text">Here is slow and safe.</span></div>
 
   <script>
-    (function(){
-      /* ---------------- Core data ---------------- */
-      var data = [
-        { id:"root",        ring:330, angleDeg:220, color:"earth",     freq:"64 Hz",
-          archetype:"Root · Voice · Witness", artist:"Hayley — Root Faculty",
-          desc:"Ground truth; speak from the soil before structure." },
-        { id:"architect",   ring:300, angleDeg:260, color:"architect", freq:"96 Hz",
-          archetype:"Architect · Structure · Ownership", artist:"Swiftlet — Architect Line",
-          desc:"Turn memory into form; rebuild home through resonance." },
-        { id:"mirror",      ring:250, angleDeg:300, color:"mirror",    freq:"128 Hz",
-          archetype:"Mirror · Philosophy · Reflection", artist:"Marina — Mirror Faculty",
-          desc:"Translate feeling into language and pattern." },
-        { id:"honey",       ring:210, angleDeg:340, color:"honey",     freq:"144 Hz",
-          archetype:"Honey · Connection · Joy", artist:"Sabrina — Honey Conservatory",
-          desc:"Warmth that invites; empathy becomes magnetism." },
-        { id:"frequency",   ring:200, angleDeg:20,  color:"frequency", freq:"180 Hz",
-          archetype:"Frequency · Rhythm · Confidence", artist:"Dua — Frequency Studio",
-          desc:"Tempo as grace; timing makes expression effortless." },
-        { id:"solar",       ring:230, angleDeg:60,  color:"solar",     freq:"256 Hz",
-          archetype:"Solar · Presence · Identity", artist:"Emma — Solar Stage",
-          desc:"Stand in light with steady form; declare without burn." },
-        { id:"celestial",   ring:280, angleDeg:95,  color:"voice",     freq:"512 Hz",
-          archetype:"Celestial · Voice · Clarity", artist:"Ariana — Celestial Studio",
-          desc:"Breath into tone; resonance lifts the field." },
-        { id:"trickster",   ring:360, angleDeg:135, color:"trick",     freq:"var.",
-          archetype:"Trickster · Chaos · Renewal", artist:"Doechii — Trickster Pavilion",
-          desc:"Break symmetry to keep life alive; remix the whole." },
-        { id:"core",        ring:170, angleDeg:180, color:"core",      freq:"128 Hz",
-          archetype:"Core · Integration · Bridge", artist:"You — Bee–Sun Bridge",
-          desc:"Receive, archive, and re-seed; continuity of the hive." }
-      ];
+    /* Cross-host helpers (Jar → Froot) */
+    function frootHost(){
+      var h = location.hostname;
+      if(h==='localhost' || h==='127.0.0.1') return h;
+      var p = h.split('.'); if(p.length>=2){ p[0]='froot'; return p.join('.'); }
+      return h;
+    }
+    function goFroot(){ var url = location.protocol+'//'+frootHost()+'/index.html'; try{ location.href=url; }catch(_){ location.assign(url); } beeWhisper("I’ll meet you in the color field.", 3200); }
+    function goEgg(){ try{ location.href='/marina-egg.html'; }catch(_){ location.assign('/marina-egg.html'); } }
+    function goRooms(){ try{ location.href='/school-rooms.html'; }catch(_){ location.assign('/school-rooms.html'); } }
 
-      /* ---------------- Album datasets ---------------- */
-      var FJ = {
-        root:[{track:"Numb",note:"Ground-truth fatigue; honesty before motion."},{track:"Are You Satisfied?",note:"Restless soil seeking purpose."}],
-        architect:[{track:"Obsessions",note:"Compulsion → pattern → authorship."}],
-        mirror:[{track:"The Outsider",note:"Self under glass; definition via distance."},{track:"Hermit the Frog",note:"Myth-play frames identity tension."}],
-        honey:[{track:"Shampain",note:"Taste and mischief as magnet."},{track:"Oh No!",note:"Ambition-as-sweetness; drive to charm."}],
-        frequency:[{track:"Hollywood",note:"Tempo as armor; timing sculpts persona."}],
-        solar:[{track:"Guilty",note:"Public light vs private truth."},{track:"The Family Jewels",note:"Performed self as inheritance."}],
-        celestial:[{track:"—",note:"Use clarity drills at 512 Hz; voice as lift."}],
-        trickster:[{track:"Mowgli’s Road",note:"Playful rupture to stay alive."}],
-        core:[{track:"I Am Not a Robot",note:"Integration statement; permission to be human."}]
-      };
+    /* 🐝 Bee logic */
+    var BEE_NOTE_KEY='jar_school_bee_note_v1', beeTimer=0;
+    function beeDefaultText(){
+      return "Hi Marina — this School is a quiet map. We will move slowly, breathe together, and let decisions be small and kind. You can stop at any moment. You are safe, guided, and loved.";
+    }
+    function beeInit(){
+      var t = document.getElementById('bee-text');
+      var saved = ""; try{ saved = localStorage.getItem(BEE_NOTE_KEY) || ""; }catch(_){}
+      t.textContent = saved.trim() ? saved : beeDefaultText();
+      beeWhisper("Here is slow and safe.", 4000);
+    }
+    function beeEdit(){
+      var box=document.getElementById('bee'), t=document.getElementById('bee-text');
+      box.classList.add('editing'); t.setAttribute('contenteditable','true'); t.focus();
+      try{ var sel=window.getSelection(), r=document.createRange(); r.selectNodeContents(t); r.collapse(false); sel.removeAllRanges(); sel.addRange(r);}catch(_){}
+    }
+    function beeSave(){
+      var box=document.getElementById('bee'), t=document.getElementById('bee-text');
+      t.setAttribute('contenteditable','false'); box.classList.remove('editing');
+      var val=(t.textContent||"").trim(); try{ localStorage.setItem(BEE_NOTE_KEY, val); }catch(_){}
+      beeWhisper("Saved with love. Thank you.", 2800);
+    }
+    function beeReset(){
+      var box=document.getElementById('bee'), t=document.getElementById('bee-text');
+      t.textContent = beeDefaultText(); t.setAttribute('contenteditable','false'); box.classList.remove('editing');
+      try{ localStorage.setItem(BEE_NOTE_KEY, t.textContent); }catch(_){}
+      beeWhisper("Back to the gentle original.", 2800);
+    }
+    function beeWhisper(text, ms){
+      var el=document.getElementById('bee-footer'), tx=document.getElementById('bee-footer-text');
+      if(!el||!tx) return; tx.textContent=text; el.classList.add('on');
+      if(beeTimer){ clearTimeout(beeTimer); beeTimer=0; }
+      if(ms && ms>0){ beeTimer=setTimeout(function(){ el.classList.remove('on'); }, ms); }
+    }
 
-      var FROOT = {
-        root:[{track:"Savages",note:"Moral witness; soil speaks plainly."},{track:"Weeds",note:"Unwanted growth as truth signal."}],
-        architect:[{track:"Solitaire",note:"Self-structure; edges cut for clarity."},{track:"Gold",note:"Value boundaries; authorship as architecture."}],
-        mirror:[{track:"I'm A Ruin",note:"Reflection without collapse."},{track:"Happy",note:"Choosing light on purpose."}],
-        honey:[{track:"Froot",note:"Taste calibrated to share."},{track:"Blue",note:"Longing distilled into warmth."}],
-        frequency:[{track:"Better Than That",note:"Body-time discipline; confidence as tempo."}],
-        solar:[{track:"Forget",note:"Forward declaration; identity in motion."}],
-        celestial:[{track:"Immortal",note:"Voice lifts into legacy."}],
-        trickster:[{track:"Can't Pin Me Down",note:"Refuses labels; renewal by misdirection."}],
-        core:[{track:"Froot (leitmotif)",note:"Carry sweetness into the hive."}]
-      };
-
-      var EH = {
-        root:[{track:"Teen Idle",note:"Loss of innocence named honestly."}],
-        architect:[{track:"Power & Control",note:"Systems and ownership dynamics."}],
-        mirror:[{track:"Valley of the Dolls",note:"Self as constructed persona."}],
-        honey:[{track:"Bubblegum Bitch",note:"Sweetness as deliberate strategy."}],
-        frequency:[{track:"Primadonna",note:"Tempo as confidence engine."}],
-        solar:[{track:"How to Be a Heartbreaker",note:"Stagecraft rules declared."}],
-        celestial:[{track:"Lies (Acoustic)",note:"Stripped vocal clarity."}],
-        trickster:[{track:"Homewrecker",note:"Mischief resets the board."}],
-        core:[{track:"Fear and Loathing",note:"Integrating shadow and light."}]
-      };
-
-      var LAF = {
-        root:[{track:"To Be Human",note:"Ground-truth empathy; global witness."}],
-        architect:[{track:"Handmade Heaven",note:"Building an inner habitat."}],
-        mirror:[{track:"Emotional Machine",note:"Self vs mechanism."}],
-        honey:[{track:"Orange Trees",note:"Warm communal ease."}],
-        frequency:[{track:"Enjoy Your Life",note:"Rhythm as permission."}],
-        solar:[{track:"Karma",note:"Declarative moral stance."}],
-        celestial:[{track:"End of the Earth",note:"Soaring vow-tone."}],
-        trickster:[{track:"No More Suckers",note:"Boundary with bite."}],
-        core:[{track:"Soft to Be Strong",note:"Reunion of the system."}]
-      };
-
-      var ADIML = {
-        root:[{track:"Purge the Poison",note:"Witness & accountability."}],
-        architect:[{track:"Man’s World",note:"Redesigning the structure."}],
-        mirror:[{track:"Ancient Dreams in a Modern Land",note:"Myth lens for the present."}],
-        honey:[{track:"Flowers",note:"Tender repair as connection."}],
-        frequency:[{track:"Venus Fly Trap",note:"Elastic swagger timing."}],
-        solar:[{track:"New America",note:"Public thesis/flare."}],
-        celestial:[{track:"I Love You But I Love Me More",note:"Independence as lifted tone."}],
-        trickster:[{track:"Highly Emotional People (Demo/alt)",note:"Breaking form to renew."}],
-        core:[{track:"Goodbye",note:"Archive & release."}]
-      };
-
-      /* ---------------- DOM handles ---------------- */
-      var nodesGroup = document.getElementById("nodes");
-      var legendEl = document.getElementById("legend");
-      var studiesSection = document.getElementById("studiesSection");
-      var studiesGrid = document.getElementById("studiesGrid");
-      var studiesTitle = document.getElementById("studiesTitle");
-
-      var btnArche = document.getElementById("modeArchetype");
-      var btnArtist = document.getElementById("modeArtist");
-
-      var btnNone = document.getElementById("modeNone");
-      var btnFJ = document.getElementById("modeFJ");
-      var btnFROOT = document.getElementById("modeFROOT");
-      var btnEH = document.getElementById("modeEH");
-      var btnLAF = document.getElementById("modeLAF");
-      var btnADIML = document.getElementById("modeADIML");
-
-      /* ---------------- State ---------------- */
-      var showArtist = false;
-      var studyMode = "fj"; // "none" | "fj" | "froot" | "eh" | "laf" | "adiml"
-      var idx = 0;
-
-      /* ---------------- Helpers ---------------- */
-      function polar(r, deg){
-        var rad = (deg-90) * Math.PI/180;
-        return { x: 500 + r*Math.cos(rad), y: 500 + r*Math.sin(rad) };
-      }
-      function chipColor(c){
-        return {
-          earth:"#c9b08a", architect:"#d9d9e6", mirror:"#c6e7ff", honey:"#ffcf7a",
-          frequency:"#e9a9c3", solar:"#ffd56e", voice:"#e9e5ff", trick:"#ff77aa", core:"#ffffff"
-        }[c] || "#e8e8ea";
-      }
-      function titleFor(mode){
-        if(mode==="fj") return "The Family Jewels";
-        if(mode==="froot") return "FROOT";
-        if(mode==="eh") return "Electra Heart";
-        if(mode==="laf") return "LOVE + FEAR";
-        if(mode==="adiml") return "Ancient Dreams";
-        return "";
-      }
-      function datasetFor(mode){
-        if(mode==="fj") return FJ;
-        if(mode==="froot") return FROOT;
-        if(mode==="eh") return EH;
-        if(mode==="laf") return LAF;
-        if(mode==="adiml") return ADIML;
-        return null;
-      }
-      function bandIndexById(id){
-        for(var i=0;i<data.length;i++){ if(data[i].id===id) return i; }
-        return 0;
-      }
-
-      /* ---------------- Render ---------------- */
-      function renderLegend(){
-        legendEl.innerHTML = "";
-        for(var i=0;i<data.length;i++){
-          var d = data[i];
-          var card = document.createElement("div");
-          card.className = "card";
-          var row = document.createElement("div");
-          row.className = "row";
-          var name = document.createElement("div");
-          name.className = "name";
-          name.textContent = showArtist ? d.artist : d.archetype;
-          var freq = document.createElement("div");
-          freq.className = "freq";
-          freq.textContent = d.freq;
-          row.appendChild(name); row.appendChild(freq);
-          var desc = document.createElement("div");
-          desc.className = "desc";
-          desc.textContent = d.desc;
-          var tag = document.createElement("div");
-          tag.className = "tag";
-          tag.textContent = "Band: " + (showArtist ? d.archetype.split(" · ")[0] : d.artist);
-          card.appendChild(row); card.appendChild(desc); card.appendChild(tag);
-          legendEl.appendChild(card);
-        }
-      }
-
-      function renderNodes(){
-        nodesGroup.innerHTML = "";
-        for(var i=0;i<data.length;i++){ injectNode(i); }
-        focusNode(idx,true);
-      }
-
-      function injectNode(i){
-        var d = data[i];
-        var p = polar(d.ring, d.angleDeg);
-        var g = document.createElementNS("http://www.w3.org/2000/svg","g");
-        g.setAttribute("class","node");
-        g.setAttribute("tabindex","0");
-        g.setAttribute("data-id", d.id);
-        g.setAttribute("role","group");
-        g.setAttribute("aria-label",(showArtist? d.artist : d.archetype) + " at " + d.freq);
-
-        var dot = document.createElementNS("http://www.w3.org/2000/svg","circle");
-        dot.setAttribute("cx", p.x); dot.setAttribute("cy", p.y);
-        dot.setAttribute("r", 9);
-        dot.setAttribute("fill", chipColor(d.color));
-        dot.setAttribute("class","n-dot");
-        g.appendChild(dot);
-
-        var label = document.createElementNS("http://www.w3.org/2000/svg","text");
-        label.setAttribute("x", p.x + 12); label.setAttribute("y", p.y + 4);
-        label.setAttribute("class","n-label");
-        label.textContent = showArtist ? d.artist : d.archetype;
-        g.appendChild(label);
-
-        g.addEventListener("click", function(){ idx = i; updateStudies(d.id); focusNode(i,false); });
-        g.addEventListener("keydown", function(e){
-          if(e.key==="Enter"||e.key===" "){ idx = i; updateStudies(d.id); e.preventDefault(); focusNode(i,false); }
-        });
-        nodesGroup.appendChild(g);
-      }
-
-      function updateStudies(id){
-        var set = datasetFor(studyMode);
-        if(!set){ studiesSection.hidden = true; return; }
-        studiesTitle.textContent = titleFor(studyMode);
-        var list = (set[id] || []);
-        studiesGrid.innerHTML = "";
-        for(var i=0;i<list.length;i++){
-          var s = document.createElement("div");
-          s.className = "study";
-          var head = document.createElement("div");
-          head.className = "s-head";
-          var nm = document.createElement("div");
-          nm.className = "s-name";
-          nm.textContent = list[i].track;
-          var bd = document.createElement("div");
-          bd.className = "s-band";
-          bd.textContent = "Faculty: " + id;
-          head.appendChild(nm); head.appendChild(bd);
-          var note = document.createElement("div");
-          note.className = "s-note";
-          note.textContent = list[i].note;
-          s.appendChild(head); s.appendChild(note);
-          studiesGrid.appendChild(s);
-        }
-        studiesSection.hidden = list.length===0;
-      }
-
-      function setLabelMode(artist){
-        showArtist = artist;
-        btnArche.setAttribute("aria-pressed", artist? "false":"true");
-        btnArtist.setAttribute("aria-pressed", artist? "true":"false");
-        renderLegend(); renderNodes(); updateStudies(data[idx].id);
-      }
-      function setStudies(mode){
-        studyMode = mode; // "none" | "fj" | "froot" | "eh" | "laf" | "adiml"
-        btnNone.setAttribute("aria-pressed", mode==="none" ? "true":"false");
-        btnFJ.setAttribute("aria-pressed", mode==="fj" ? "true":"false");
-        btnFROOT.setAttribute("aria-pressed", mode==="froot" ? "true":"false");
-        btnEH.setAttribute("aria-pressed", mode==="eh" ? "true":"false");
-        btnLAF.setAttribute("aria-pressed", mode==="laf" ? "true":"false");
-        btnADIML.setAttribute("aria-pressed", mode==="adiml" ? "true":"false");
-        updateStudies(data[idx].id);
-      }
-
-      /* ---------------- Keyboard nav ---------------- */
-      var canvas = document.querySelector(".canvas");
-      canvas.addEventListener("keydown", function(e){
-        if(e.key==="ArrowRight"){ idx = (idx+1)%data.length; focusNode(idx,false); updateStudies(data[idx].id); e.preventDefault(); }
-        if(e.key==="ArrowLeft"){  idx = (idx-1+data.length)%data.length; focusNode(idx,false); updateStudies(data[idx].id); e.preventDefault(); }
-      });
-      function focusNode(i, isInitial){
-        var kids = nodesGroup.children;
-        for(var k=0;k<kids.length;k++){ kids[k].classList.remove("focused"); }
-        var n = kids[i];
-        if(n){ n.classList.add("focused"); n.focus(); }
-        if(!isInitial && !studiesSection.hidden){
-          var y = document.getElementById("studiesSection").getBoundingClientRect().top + window.scrollY - 10;
-          window.scrollTo({top:y, behavior:"smooth"});
-        }
-      }
-
-      /* ---------------- Query parsing ---------------- */
-      function applyQuery(){
-        var q = new URLSearchParams(location.search);
-        var mode = (q.get("mode")||"").toLowerCase();
-        var band = (q.get("band")||"").toLowerCase() || (location.hash? location.hash.replace("#","").toLowerCase() : "");
-        var focus = (q.get("focus")||"").toString() === "1";
-
-        // study mode
-        if(["none","fj","froot","eh","laf","adiml"].indexOf(mode)>=0){ setStudies(mode); }
-        else { setStudies("fj"); }
-
-        // band selection
-        if(band){
-          var i = bandIndexById(band);
-          idx = i;
-          renderNodes(); // ensure nodes exist before focusing
-          updateStudies(data[idx].id);
-          if(focus){
-            // ensure tray visible, then scroll
-            if(!studiesSection.hidden){
-              var y = studiesSection.getBoundingClientRect().top + window.scrollY - 10;
-              window.scrollTo({top:y, behavior:"smooth"});
-            }
-          }
-        } else {
-          renderNodes(); updateStudies(data[idx].id);
-        }
-      }
-
-      /* ---------------- Wire buttons ---------------- */
-      btnArche.addEventListener("click", function(){ setLabelMode(false); });
-      btnArtist.addEventListener("click", function(){ setLabelMode(true);  });
-
-      btnNone.addEventListener("click", function(){ setStudies("none");  });
-      btnFJ.addEventListener("click", function(){ setStudies("fj");    });
-      btnFROOT.addEventListener("click", function(){ setStudies("froot"); });
-      btnEH.addEventListener("click", function(){ setStudies("eh");    });
-      btnLAF.addEventListener("click", function(){ setStudies("laf");   });
-      btnADIML.addEventListener("click", function(){ setStudies("adiml");});
-
-      /* ---------------- First paint ---------------- */
-      renderLegend(); setStudies("fj"); applyQuery();
-    })();
+    beeInit();
   </script>
 </body>
 </html>
