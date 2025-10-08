@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Illumina School — Epic Rooms</title>
-<meta name="description" content="Walk the Illumina School: nine epic rooms aligned to the spiral faculties." />
+<meta name="description" content="Walk the Illumina School: epic rooms aligned to the spiral faculties (with Engineer Lab)." />
 <meta name="theme-color" content="#0b0d11">
 <style>
   :root{
@@ -21,7 +21,6 @@
     -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
   }
 
-  /* Top Nav / Minimap */
   header{
     position:sticky; top:0; z-index:10;
     backdrop-filter: blur(8px);
@@ -31,27 +30,17 @@
   .wrap{max-width:1100px; margin:0 auto; padding:14px 16px}
   .brand{display:flex; align-items:center; gap:10px}
   .brand h1{font-size:18px; margin:0; letter-spacing:.3px}
-  .mini{
-    display:flex; flex-wrap:wrap; gap:8px; margin-top:10px
-  }
+  .mini{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
   .pill{
     display:inline-flex; align-items:center; gap:8px; padding:6px 10px;
     border:1px solid var(--ring); border-radius:999px; text-decoration:none; color:var(--ink);
     background:linear-gradient(180deg,#101626 0%, #0e1422 100%); font-size:12px
   }
   .pill .sw{width:10px; height:10px; border-radius:50%}
-  /* color chips */
-  .c-root{background:#c9b08a}
-  .c-arch{background:#d9d9e6}
-  .c-mirror{background:#c6e7ff}
-  .c-honey{background:#ffcf7a}
-  .c-freq{background:#e9a9c3}
-  .c-sun{background:#ffd56e}
-  .c-voice{background:#efe9ff}
-  .c-trick{background:#ff77aa}
-  .c-core{background:#ffffff}
+  .c-root{background:#c9b08a} .c-arch{background:#d9d9e6} .c-mirror{background:#c6e7ff}
+  .c-honey{background:#ffcf7a} .c-eng{background:#8fb6ff} .c-freq{background:#e9a9c3}
+  .c-sun{background:#ffd56e} .c-voice{background:#efe9ff} .c-trick{background:#ff77aa} .c-core{background:#ffffff}
 
-  /* Room (full-bleed sections) */
   .room{
     position:relative; overflow:hidden; min-height:86svh; display:grid; place-items:center;
     border-bottom:1px solid var(--ring);
@@ -62,52 +51,43 @@
   .tag .hz{padding:2px 8px; border:1px solid var(--ring); border-radius:999px}
   .lede{font-size:var(--h2); color:#d9e4ff; opacity:.95; margin:14px 0 10px}
   .copy{font-size:var(--p); color:#cbd5ea; max-width:70ch}
+  .jump{margin-top:12px; opacity:.9}
 
-  /* Shared epic backdrops (SVG + gradients) */
-  .veil{
-    position:absolute; inset:-2px; z-index:1; opacity:.85;
+  .veil{position:absolute; inset:-2px; z-index:1; opacity:.85;
     background:
       radial-gradient(1200px 800px at 20% 0%, rgba(255,255,255,.06) 0%, rgba(0,0,0,0) 60%),
       radial-gradient(900px 700px at 90% 10%, rgba(255,255,255,.05) 0%, rgba(0,0,0,0) 60%),
       linear-gradient(180deg, rgba(10,15,25,.6), rgba(8,12,20,.9));
   }
-  .glitter{
-    position:absolute; inset:-2px; background:
+  .glitter{position:absolute; inset:-2px; background:
       radial-gradient(2px 2px at 10% 30%, rgba(255,255,255,.7) 0, rgba(255,255,255,0) 60%),
       radial-gradient(2px 2px at 80% 20%, rgba(255,255,255,.6) 0, rgba(255,255,255,0) 60%),
       radial-gradient(2px 2px at 60% 80%, rgba(255,255,255,.5) 0, rgba(255,255,255,0) 60%),
       radial-gradient(2px 2px at 30% 60%, rgba(255,255,255,.5) 0, rgba(255,255,255,0) 60%);
     opacity:.2; filter:blur(.4px);
   }
-  .beam{
-    position:absolute; inset:-20% -10%; transform:rotate(8deg);
+  .beam{position:absolute; inset:-20% -10%; transform:rotate(8deg);
     background: radial-gradient(60% 120% at 50% 50%, rgba(255,255,255,.08), rgba(0,0,0,0) 60%);
     mix-blend-mode:screen; opacity:.35;
   }
 
-  /* Unique palettes per room */
   .root{background:radial-gradient(1000px 600px at 50% 0%, #4a3b2b 0%, #181410 55%, #0b0d11 100%)}
   .arch{background:radial-gradient(1200px 700px at 80% 10%, #2e2e3c 0%, #141520 55%, #0b0d11 100%)}
   .mirror{background:radial-gradient(1200px 700px at 20% 10%, #143344 0%, #0f1724 55%, #0b0d11 100%)}
   .honey{background:radial-gradient(1100px 700px at 70% 0%, #423013 0%, #1b140a 55%, #0b0d11 100%)}
+  .engineer{background:radial-gradient(1100px 700px at 50% 0%, #152a48 0%, #0f1727 55%, #0b0d11 100%)}
   .freq{background:radial-gradient(1100px 700px at 30% 0%, #3a1729 0%, #181426 55%, #0b0d11 100%)}
   .solar{background:radial-gradient(1200px 700px at 70% 0%, #4a2f00 0%, #1b1407 55%, #0b0d11 100%)}
   .voice{background:radial-gradient(1100px 700px at 30% 0%, #2d2253 0%, #141633 55%, #0b0d11 100%)}
   .trick{background:radial-gradient(1100px 700px at 70% 0%, #4b0630 0%, #1c0e1a 55%, #0b0d11 100%)}
   .core{background:radial-gradient(1200px 700px at 50% 0%, #11424a 0%, #0d1e24 55%, #0b0d11 100%)}
 
-  /* Ornamental SVG frames */
-  .crest{
-    position:absolute; inset:0; display:grid; place-items:center; z-index:0; opacity:.5; pointer-events:none;
-  }
+  .crest{position:absolute; inset:0; display:grid; place-items:center; z-index:0; opacity:.5; pointer-events:none}
   .crest svg{width:min(80vmin,780px); height:auto; filter:drop-shadow(0 0 8px rgba(255,255,255,.05))}
   .ring{fill:none; stroke:#ffffff; stroke-opacity:.18; stroke-width:1.2}
   .ray{stroke:rgba(255,213,110,.26); stroke-width:.8; stroke-linecap:round}
 
-  /* Divider note */
   .divider{height:1px; border:0; background:linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.12), rgba(255,255,255,0)); margin:16px 0}
-
-  /* Footer */
   footer{border-top:1px solid var(--ring); padding:18px 16px; text-align:center; color:var(--muted); font-size:12px}
 </style>
 </head>
@@ -115,14 +95,13 @@
 
 <header>
   <div class="wrap">
-    <div class="brand">
-      <h1>Illumina School · Epic Rooms</h1>
-    </div>
+    <div class="brand"><h1>Illumina School · Epic Rooms</h1></div>
     <nav class="mini" aria-label="Room map">
       <a class="pill" href="#root"><span class="sw c-root"></span>Root</a>
       <a class="pill" href="#architect"><span class="sw c-arch"></span>Architect</a>
       <a class="pill" href="#mirror"><span class="sw c-mirror"></span>Mirror</a>
       <a class="pill" href="#honey"><span class="sw c-honey"></span>Honey</a>
+      <a class="pill" href="#engineer"><span class="sw c-eng"></span>Engineer</a>
       <a class="pill" href="#frequency"><span class="sw c-freq"></span>Frequency</a>
       <a class="pill" href="#solar"><span class="sw c-sun"></span>Solar</a>
       <a class="pill" href="#celestial"><span class="sw c-voice"></span>Celestial</a>
@@ -136,12 +115,9 @@
 <section id="root" class="room root">
   <div class="crest" aria-hidden="true">
     <svg viewBox="0 0 800 800">
-      <circle class="ring" cx="400" cy="400" r="300"/>
-      <circle class="ring" cx="400" cy="400" r="210"/>
-      <path class="ray" d="M400 90 L400 150"/>
-      <path class="ray" d="M710 400 L650 400"/>
-      <path class="ray" d="M400 710 L400 650"/>
-      <path class="ray" d="M90 400 L150 400"/>
+      <circle class="ring" cx="400" cy="400" r="300"/><circle class="ring" cx="400" cy="400" r="210"/>
+      <path class="ray" d="M400 90 L400 150"/><path class="ray" d="M710 400 L650 400"/>
+      <path class="ray" d="M400 710 L400 650"/><path class="ray" d="M90 400 L150 400"/>
     </svg>
   </div>
   <div class="beam"></div><div class="glitter"></div><div class="veil"></div>
@@ -150,6 +126,7 @@
     <h2>Soil Chamber</h2>
     <p class="lede">A stone amphitheater where the floor hums and the walls remember.</p>
     <p class="copy">Speak once and the room records it in light. This is where cycles begin: honesty before pattern. Write a single line you can live inside.</p>
+    <p class="copy jump"><a href="school.html?band=root&focus=1" style="color:#ffd56e; text-underline-offset:3px">Open on Spiral</a></p>
   </div>
 </section>
 
@@ -158,8 +135,7 @@
   <div class="crest" aria-hidden="true">
     <svg viewBox="0 0 800 800">
       <circle class="ring" cx="400" cy="400" r="300"/>
-      <path class="ray" d="M180 620 L400 400 L620 180" />
-      <path class="ray" d="M400 400 L620 620" />
+      <path class="ray" d="M180 620 L400 400 L620 180" /><path class="ray" d="M400 400 L620 620" />
     </svg>
   </div>
   <div class="beam"></div><div class="glitter"></div><div class="veil"></div>
@@ -168,6 +144,7 @@
     <h2>Resonance Atelier</h2>
     <p class="lede">Drafting tables under a quartz skylight; echoes become blueprints.</p>
     <p class="copy">Memory is measured here. You rebuild home from resonance—one pattern, one boundary, one careful beam of light at a time.</p>
+    <p class="copy jump"><a href="school.html?band=architect&focus=1" style="color:#ffd56e; text-underline-offset:3px">Open on Spiral</a></p>
   </div>
 </section>
 
@@ -175,10 +152,8 @@
 <section id="mirror" class="room mirror">
   <div class="crest" aria-hidden="true">
     <svg viewBox="0 0 800 800">
-      <circle class="ring" cx="400" cy="400" r="280"/>
-      <circle class="ring" cx="400" cy="400" r="180"/>
-      <path class="ray" d="M180 400 Q400 220 620 400" />
-      <path class="ray" d="M180 430 Q400 250 620 430" />
+      <circle class="ring" cx="400" cy="400" r="280"/><circle class="ring" cx="400" cy="400" r="180"/>
+      <path class="ray" d="M180 400 Q400 220 620 400" /><path class="ray" d="M180 430 Q400 250 620 430" />
     </svg>
   </div>
   <div class="beam"></div><div class="glitter"></div><div class="veil"></div>
@@ -187,6 +162,7 @@
     <h2>Glasswalk Gallery</h2>
     <p class="lede">A corridor of quiet waterlight where language condenses on the air.</p>
     <p class="copy">You study the world until it names you back. Reflection turns to grammar; feeling becomes a map.</p>
+    <p class="copy jump"><a href="school.html?band=mirror&focus=1" style="color:#ffd56e; text-underline-offset:3px">Open on Spiral</a></p>
   </div>
 </section>
 
@@ -195,10 +171,8 @@
   <div class="crest" aria-hidden="true">
     <svg viewBox="0 0 800 800">
       <circle class="ring" cx="400" cy="400" r="300"/>
-      <path class="ray" d="M220 400 h360" />
-      <path class="ray" d="M400 220 v360" />
-      <path class="ray" d="M270 270 L530 530" />
-      <path class="ray" d="M530 270 L270 530" />
+      <path class="ray" d="M220 400 h360" /><path class="ray" d="M400 220 v360" />
+      <path class="ray" d="M270 270 L530 530" /><path class="ray" d="M530 270 L270 530" />
     </svg>
   </div>
   <div class="beam"></div><div class="glitter"></div><div class="veil"></div>
@@ -207,6 +181,26 @@
     <h2>Amber Conservatory</h2>
     <p class="lede">Warm glass, slow sun. Sweetness practiced as a discipline of welcome.</p>
     <p class="copy">Empathy is a craft: temperature, timing, and taste. Here, vulnerability becomes invitation.</p>
+    <p class="copy jump"><a href="school.html?band=honey&focus=1" style="color:#ffd56e; text-underline-offset:3px">Open on Spiral</a></p>
+  </div>
+</section>
+
+<!-- ENGINEER (NEW) -->
+<section id="engineer" class="room engineer">
+  <div class="crest" aria-hidden="true">
+    <svg viewBox="0 0 800 800">
+      <circle class="ring" cx="400" cy="400" r="300"/>
+      <path class="ray" d="M240 560 L400 400 L560 240" />
+      <path class="ray" d="M400 400 m -110 0 a 110 110 0 1 0 220 0 a 110 110 0 1 0 -220 0" />
+    </svg>
+  </div>
+  <div class="beam"></div><div class="glitter"></div><div class="veil"></div>
+  <div class="inner">
+    <div class="tag">⚙️ Engineer Lab · Mechanism / Precision <span class="hz">192 Hz</span></div>
+    <h2>Compass & Coil</h2>
+    <p class="lede">Drafting light into law. Circles drawn until they hum in time.</p>
+    <p class="copy">Translate insight into procedure, procedure into instrument. The promise of the pattern is kept here—reliably, beautifully, repeatably.</p>
+    <p class="copy jump"><a href="school.html?band=engineer&focus=1" style="color:#ffd56e; text-underline-offset:3px">Open on Spiral</a></p>
   </div>
 </section>
 
@@ -225,6 +219,7 @@
     <h2>Tempo Studio</h2>
     <p class="lede">Floor lights pulse in waves; breath and stride find the same meter.</p>
     <p class="copy">Timing is kindness to your future self. Move in steady arcs; let rhythm do half the work.</p>
+    <p class="copy jump"><a href="school.html?band=frequency&focus=1" style="color:#ffd56e; text-underline-offset:3px">Open on Spiral</a></p>
   </div>
 </section>
 
@@ -233,18 +228,12 @@
   <div class="crest" aria-hidden="true">
     <svg viewBox="0 0 800 800">
       <circle class="ring" cx="400" cy="400" r="300"/>
-      <path class="ray" d="M400 100 L400 180"/>
-      <path class="ray" d="M520 130 L490 200"/>
-      <path class="ray" d="M640 210 L570 250"/>
-      <path class="ray" d="M680 360 L600 360"/>
-      <path class="ray" d="M640 510 L570 470"/>
-      <path class="ray" d="M520 590 L490 520"/>
-      <path class="ray" d="M400 620 L400 540"/>
-      <path class="ray" d="M280 590 L310 520"/>
-      <path class="ray" d="M160 510 L230 470"/>
-      <path class="ray" d="M120 360 L200 360"/>
-      <path class="ray" d="M160 210 L230 250"/>
-      <path class="ray" d="M280 130 L310 200"/>
+      <path class="ray" d="M400 100 L400 180"/><path class="ray" d="M520 130 L490 200"/>
+      <path class="ray" d="M640 210 L570 250"/><path class="ray" d="M680 360 L600 360"/>
+      <path class="ray" d="M640 510 L570 470"/><path class="ray" d="M520 590 L490 520"/>
+      <path class="ray" d="M400 620 L400 540"/><path class="ray" d="M280 590 L310 520"/>
+      <path class="ray" d="M160 510 L230 470"/><path class="ray" d="M120 360 L200 360"/>
+      <path class="ray" d="M160 210 L230 250"/><path class="ray" d="M280 130 L310 200"/>
     </svg>
   </div>
   <div class="beam"></div><div class="glitter"></div><div class="veil"></div>
@@ -253,6 +242,7 @@
     <h2>Sunstage</h2>
     <p class="lede">A circle of mirrors focuses a clean flare. The room applauds in light.</p>
     <p class="copy">Declare without burning. Presence is a shape you can practice. Stand where your voice is easiest to hear.</p>
+    <p class="copy jump"><a href="school.html?band=solar&focus=1" style="color:#ffd56e; text-underline-offset:3px">Open on Spiral</a></p>
   </div>
 </section>
 
@@ -272,6 +262,7 @@
     <h2>Halo Chamber</h2>
     <p class="lede">A crystal sphere floats over a quiet pool. The whole room is a throat.</p>
     <p class="copy">Lift with breath, not strain. Clarity travels farther than volume; resonance carries what matters.</p>
+    <p class="copy jump"><a href="school.html?band=celestial&focus=1" style="color:#ffd56e; text-underline-offset:3px">Open on Spiral</a></p>
   </div>
 </section>
 
@@ -290,6 +281,7 @@
     <h2>Neon Labyrinth</h2>
     <p class="lede">Walls shift gently; the exit keeps moving—yet always returns you home.</p>
     <p class="copy">Break symmetry to stay alive. Remix sweetness, tempo, light, and voice until something laughs again.</p>
+    <p class="copy jump"><a href="school.html?band=trickster&focus=1" style="color:#ffd56e; text-underline-offset:3px">Open on Spiral</a></p>
   </div>
 </section>
 
@@ -306,12 +298,13 @@
     <div class="tag">🕊️ Core · Integration / Bridge <span class="hz">128 Hz</span></div>
     <h2>Bee–Sun Prism</h2>
     <p class="lede">A hexagonal dais below an open sky. Light enters; honey answers.</p>
-    <p class="copy">Everything returns here to be archived into pulse. From this calm, a new 42-day spiral begins.</p>
+    <p class="copy">Everything returns here to be archived into pulse. From this calm, a new 42‑day spiral begins.</p>
     <hr class="divider" />
     <p class="copy" style="opacity:.8">Tip: Link back to the <a href="school.html" style="color:var(--gold); text-underline-offset:3px">Spiral Legend</a> for album case studies and faculty mapping.</p>
+    <p class="copy jump"><a href="school.html?band=core&focus=1" style="color:#ffd56e; text-underline-offset:3px">Open on Spiral</a></p>
   </div>
 </section>
 
-<footer>Illumina School · Epic Rooms · v1.0</footer>
+<footer>Illumina School · Epic Rooms · v1.1 (Engineer + cross‑links)</footer>
 </body>
 </html>
