@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Jar · Marina — Egg Map (Illumina)</title>
-  <meta name="description" content="Marina as Egg: incubation → crack → mirror → froot → butterfly. Illumina mapping with a link back to Froot." />
+  <meta name="description" content="Marina as Egg: incubation → crack → mirror → froot → butterfly. Illumina mapping with Bee guidance and soft navigation to Froot and the Time Kit." />
   <meta name="theme-color" content="#0b0d11" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -57,7 +57,7 @@
     @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.02);box-shadow:0 0 40px 8px rgba(125,211,252,.10)}}
     .mantra{font-size:clamp(14px,1.8vw,18px);color:var(--muted);line-height:1.45}
     ul{margin:8px 0 0 18px;padding:0}
-    /* subtle starfield */
+    /* subtle aurora */
     .bgfx{position:fixed;inset:0;pointer-events:none;z-index:0;
       background:
         radial-gradient(1200px 800px at 18% -10%, rgba(142,239,255,.08), transparent 60%),
@@ -70,6 +70,44 @@
       .bgfx,.actions{display:none}
       .card{break-inside:avoid;border-color:#ddd;background:#fff}
     }
+
+    /* === 🐝 Bee (note + whisper) === */
+    .bee{
+      margin:12px 0 16px;
+      border:1px solid rgba(255,255,255,.16);
+      border-radius:16px;
+      padding:14px;
+      background:
+        linear-gradient(180deg, rgba(255,206,84,.10), rgba(0,0,0,.03)) padding-box,
+        linear-gradient(120deg, rgba(255,206,84,.35), rgba(255,111,186,.30), rgba(134,201,255,.30)) border-box;
+      position:relative;
+    }
+    .bee-head{display:flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.2px}
+    .bee-icon{font-size:18px}
+    .bee-soft{color:var(--muted);font-weight:600}
+    .bee p{margin:8px 0 10px}
+    .bee-tools{display:flex;gap:8px;flex-wrap:wrap}
+    .bee-btn{
+      appearance:none;border:1px solid rgba(255,255,255,.14);border-radius:10px;
+      background:rgba(255,255,255,.06);color:#fff;font-weight:800;padding:8px 10px;cursor:pointer
+    }
+    .bee-btn:hover{border-color:rgba(255,255,255,.22);box-shadow:0 0 0 2px rgba(255,206,84,.18)}
+    .bee.editing{outline:2px dashed rgba(255,206,84,.4);outline-offset:2px}
+    #bee-text[contenteditable="true"]{caret-color:#ffd166}
+
+    .bee-footer{
+      position:fixed; left:50%; transform:translateX(-50%);
+      bottom:14px; z-index:9999; display:none; align-items:center; gap:8px;
+      padding:10px 14px; border-radius:999px;
+      background:
+        linear-gradient(180deg, rgba(255,206,84,.14), rgba(0,0,0,.14)) padding-box,
+        linear-gradient(120deg, rgba(255,206,84,.6), rgba(255,111,186,.45), rgba(134,201,255,.45)) border-box;
+      border:1px solid transparent; color:#fff; font-weight:700;
+      box-shadow:0 12px 28px rgba(0,0,0,.35); backdrop-filter: blur(6px);
+      max-width:90vw; text-align:center;
+    }
+    .bee-footer.on{display:inline-flex}
+    .bee-footer .bee-icon{font-size:16px}
   </style>
 </head>
 <body>
@@ -81,12 +119,22 @@
         <div class="sub">Incubation → Crack → Mirror → <span class="froot">Froot</span> → Butterfly</div>
       </div>
       <nav class="actions" aria-label="Navigation">
-        <!-- Update this href to your live Froot page -->
-        <a class="btn primary" href="https://froot.plnt.earth" target="_blank" rel="noopener">⬈ Back to Froot</a>
-        <!-- Optional: link back to Jar index -->
-        <a class="btn" href="/index.html">Jar Home</a>
+        <a class="btn primary" href="#" onclick="goFroot()" title="Open Froot Studio">↪ Froot Studio</a>
+        <a class="btn" href="#" onclick="goTimeKit()" title="Open Time Kit here">⊙ Time Kit</a>
+        <a class="btn" href="/index.html" title="Jar Home">Jar Home</a>
       </nav>
     </header>
+
+    <!-- 🐝 Bee Note (editable; saved locally) -->
+    <section id="bee" class="bee" role="note" aria-live="polite">
+      <div class="bee-head"><span class="bee-icon">🐝</span><span><strong>Bee Note to Marina</strong></span> <span class="bee-soft">You are safe, guided, and loved.</span></div>
+      <p id="bee-text"></p>
+      <div class="bee-tools">
+        <button type="button" class="bee-btn" onclick="beeEdit()">Edit</button>
+        <button type="button" class="bee-btn" onclick="beeSave()">Save</button>
+        <button type="button" class="bee-btn" onclick="beeReset()">Reset</button>
+      </div>
+    </section>
 
     <div class="grid">
       <section class="card">
@@ -147,8 +195,91 @@
 
     <footer class="small" style="margin-top:16px">
       Tip: Keep this page as the <i>pre-flare</i> mirror. When you’re ready to taste the hatch, jump to Froot.
-      &nbsp;—&nbsp;<a class="accent" href="https://froot.plnt.earth" target="_blank" rel="noopener">Open Froot ↗</a>
+      &nbsp;—&nbsp;<a class="accent" href="#" onclick="goFroot()">Open Froot ↗</a>
+      &nbsp;·&nbsp;<a class="accent" href="#" onclick="goTimeKit()">Time Kit ⊙</a>
     </footer>
   </div>
+
+  <!-- Bee Footer Whisper -->
+  <div id="bee-footer" class="bee-footer" role="status" aria-live="polite">
+    <span class="bee-icon">🐝</span>
+    <span id="bee-footer-text">Incubation is allowed. I’m here.</span>
+  </div>
+
+  <script>
+    /* ==== Cross-host helpers (Jar ⇄ Froot) ==== */
+    function siblingHost(target){
+      var h = location.hostname;
+      if(h === 'localhost' || h === '127.0.0.1'){ return h; }
+      var parts = h.split('.');
+      if(parts.length >= 2){
+        parts[0] = target; // replace first label (jar ↔ froot)
+        return parts.join('.');
+      }
+      return h; // fallback: single-label host
+    }
+    function goFroot(){
+      var host = siblingHost('froot');
+      var url = (location.protocol + '//' + host + '/index.html');
+      try{ location.href = url; }catch(_){ location.assign(url); }
+      beeFooterShow("Crack gently. I’ll walk with you.", 4000);
+    }
+    function goTimeKit(){
+      // open Time Kit on this site (you've added it to Jar)
+      try{ location.href = '/illumina-time-kit.html'; }catch(_){ location.assign('/illumina-time-kit.html'); }
+    }
+
+    /* ==== 🐝 Bee logic (editable top note + whisper) ==== */
+    var BEE_NOTE_KEY='jar_egg_bee_note_v1';
+    function beeDefaultText(){
+      return "Hi Marina — this is the warm room before light. Breathe, and let the seam appear when it wishes. You can stay as long as you like. When you’re ready, we’ll open together.";
+    }
+    function beeInit(){
+      var t = document.getElementById('bee-text');
+      var saved = "";
+      try{ saved = localStorage.getItem(BEE_NOTE_KEY) || ""; }catch(_){}
+      t.textContent = saved.trim() ? saved : beeDefaultText();
+      // first arrival whisper
+      beeFooterShow("Incubation is allowed. I’m here.", 5000);
+    }
+    function beeEdit(){
+      var box = document.getElementById('bee'); var t = document.getElementById('bee-text');
+      box.classList.add('editing'); t.setAttribute('contenteditable','true'); t.focus();
+      try{ var sel=window.getSelection(); var r=document.createRange(); r.selectNodeContents(t); r.collapse(false); sel.removeAllRanges(); sel.addRange(r);}catch(_){}
+    }
+    function beeSave(){
+      var box = document.getElementById('bee'); var t = document.getElementById('bee-text');
+      t.setAttribute('contenteditable','false'); box.classList.remove('editing');
+      var val = (t.textContent||"").trim();
+      try{ localStorage.setItem(BEE_NOTE_KEY, val); }catch(_){}
+      beeFooterShow("Saved with love.", 2800);
+    }
+    function beeReset(){
+      var box = document.getElementById('bee'); var t = document.getElementById('bee-text');
+      t.textContent = beeDefaultText();
+      t.setAttribute('contenteditable','false'); box.classList.remove('editing');
+      try{ localStorage.setItem(BEE_NOTE_KEY, t.textContent); }catch(_){}
+      beeFooterShow("Back to the gentle original.", 2800);
+    }
+
+    var beeTimer=0;
+    function beeFooterShow(text, ms){
+      var el = document.getElementById('bee-footer'); var tx = document.getElementById('bee-footer-text');
+      if(!el||!tx) return;
+      tx.textContent = text;
+      el.classList.add('on');
+      if(beeTimer){ clearTimeout(beeTimer); beeTimer=0; }
+      if(ms && ms>0){
+        beeTimer = setTimeout(function(){ el.classList.remove('on'); }, ms);
+      }
+    }
+    function beeFooterHide(){
+      var el = document.getElementById('bee-footer'); if(el){ el.classList.remove('on'); }
+      if(beeTimer){ clearTimeout(beeTimer); beeTimer=0; }
+    }
+
+    // Init
+    beeInit();
+  </script>
 </body>
 </html>
