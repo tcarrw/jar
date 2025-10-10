@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Honey Discipline — Flame Check · Jar</title>
+<meta name="description" content="A 2-minute pre-decision ritual to stay open and sovereign: pause, feel, mantra, signal, decide." />
+<meta name="theme-color" content="#0b0d11" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#0b0d11">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+  :root { --bg:#0b0d11; --fg:#e9edf2; --muted:#a9b4c0; --accent:#ffd26f; --line:#1a1f27; --ok:#7fffbf; --warn:#ffb37f; }
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:720px;margin:0 auto;padding:28px}
+  header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  .hex{width:28px;height:28px;background:conic-gradient(from 0turn,#ffd26f,#ffefb0,#ffd26f);clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);filter:drop-shadow(0 0 6px rgba(255,210,111,.35))}
+  h1{font-size:20px;letter-spacing:.2px;margin:0}
+  .tag{font-size:12px;color:var(--muted)}
+  .card{border:1px solid var(--line);border-radius:14px;padding:18px 16px;margin:14px 0;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.00))}
+  .title{font-weight:600;margin-bottom:10px}
+  .step{display:none}
+  .step.active{display:block}
+  .mantra{font-size:18px;line-height:1.4;margin:8px 0 0;color:var(--accent)}
+  .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  button{appearance:none;border:1px solid var(--line);background:#121722;color:var(--fg);padding:12px 14px;border-radius:12px;font-weight:600;font-size:15px;cursor:pointer;transition:transform .02s ease}
+  button:active{transform:translateY(1px)}
+  .primary{border-color:#273041}
+  .ghost{background:transparent}
+  .pill{font-size:12px;border-radius:999px;padding:6px 10px;border:1px solid var(--line);color:var(--muted);display:inline-block}
+  .meter{height:8px;background:#0e141c;border:1px solid var(--line);border-radius:999px;overflow:hidden;margin:12px 0 0}
+  .fill{height:100%;width:0;background:linear-gradient(90deg,#ffd26f,#fff0c2)}
+  .grid{display:grid;grid-template-columns:1fr;gap:10px}
+  .hint{color:var(--muted);font-size:14px;line-height:1.5}
+  .affirm{color:var(--ok)}
+  .warn{color:var(--warn)}
+  .foot{margin-top:18px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+  a{color:var(--accent);text-decoration:none}
+  @media(min-width:720px){ .grid{grid-template-columns:1fr 1fr} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="hex" aria-hidden="true"></div>
+    <div>
+      <h1>Honey Discipline — Flame Check</h1>
+      <div class="tag">2-minute pre-decision ritual · openness with boundaries</div>
+    </div>
+  </header>
+
+  <div class="card">
+    <div class="title">How to use</div>
+    <div class="hint">
+      Before you share energy, money, trust, or affection, run this sequence. If at any point your signal feels thin or pressured, you can stop. Love stays wide; the hive stays intact.
+    </div>
+    <div class="btnrow">
+      <button class="primary" id="startBtn">Start 2-minute Flow</button>
+      <button class="ghost" id="resetBtn" aria-label="Reset">Reset</button>
+      <span class="pill" id="statusPill">Idle</span>
+    </div>
+    <div class="meter"><div class="fill" id="meterFill"></div></div>
+  </div>
+
+  <!-- Steps -->
+  <div class="card step active" data-step="1">
+    <div class="title">1) Pause · 20s</div>
+    <div class="hint">Close your eyes or soften your gaze. One slow breath in the dark hive. The world can wait.</div>
+  </div>
+
+  <div class="card step" data-step="2">
+    <div class="title">2) Touch your flame · 30s</div>
+    <div class="hint">Hand to chest. Ask: <em>“Is this warmth mine, or someone else’s pull?”</em> Calm & steady → <span class="affirm">yours</span>. Buzzy, pressured → <span class="warn">step back</span>.</div>
+  </div>
+
+  <div class="card step" data-step="3">
+    <div class="title">3) Whisper the mantra · 10s</div>
+    <div class="mantra">“I share light freely, but I keep my flame in my own hive.” 🐝</div>
+  </div>
+
+  <div class="card step" data-step="4">
+    <div class="title">4) Sense your signal · 30s</div>
+    <div class="hint">Picture a small golden hexagon at your center. If edges feel thin, breathe once and seal them. If bright, proceed.</div>
+  </div>
+
+  <div class="card step" data-step="5">
+    <div class="title">5) Decide · 30s</div>
+    <div class="hint">Act only when body says “yes” <strong>and</strong> mind agrees. Loving and sovereign.</div>
+    <div class="btnrow">
+      <button id="markYes" class="primary">Body+Mind = YES</button>
+      <button id="markNo" class="ghost">Not yet</button>
+    </div>
+    <div class="hint" id="decisionMsg" style="margin-top:8px;"></div>
+  </div>
+
+  <div class="card">
+    <div class="title">Honey Covenant (pinned)</div>
+    <div class="hint">
+      I’m made for connection, not confusion. My love is generous and aware. I show up where I’m truly received, protect my resources, and keep my hive intact. My openness is sacred.
+    </div>
+  </div>
+
+  <div class="foot">
+    <div>Jar · Illumina practice</div>
+    <div>
+      <a href="https://froot.plnt.earth" rel="noopener">Froot</a> ·
+      <a href="https://mirrorhoney.plnt.earth" rel="noopener">MirrorHoney</a> ·
+      <a href="https://jar.plnt.earth" rel="noopener">Jar Home</a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var seq = [
+    { s:1, ms:20000, label:"Pause" },
+    { s:2, ms:30000, label:"Touch your flame" },
+    { s:3, ms:10000, label:"Mantra" },
+    { s:4, ms:30000, label:"Sense your signal" },
+    { s:5, ms:30000, label:"Decide" }
+  ];
+  var i=0, t=null, start=0, elapsed=0, total=seq.reduce(function(a,b){return a+b.ms},0);
+  var startBtn = document.getElementById('startBtn');
+  var resetBtn = document.getElementById('resetBtn');
+  var statusPill = document.getElementById('statusPill');
+  var fill = document.getElementById('meterFill');
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
+  var decisionMsg = document.getElementById('decisionMsg');
+  var yesBtn = document.getElementById('markYes');
+  var noBtn = document.getElementById('markNo');
+
+  function showStep(n){
+    steps.forEach(function(el){ el.classList.remove('active'); });
+    var el = document.querySelector('.step[data-step="'+n+'"]');
+    if(el){ el.classList.add('active'); }
+  }
+  function fmt(ms){
+    var s = Math.ceil(ms/1000);
+    return s+"s";
+  }
+  function tick(){
+    var now = Date.now();
+    var seg = seq[i];
+    var segElapsed = now - start;
+    var done = elapsed + segElapsed;
+    var pct = Math.max(0, Math.min(100, (done/total)*100));
+    fill.style.width = pct + "%";
+    statusPill.textContent = seg.label + " · " + fmt(seg.ms - segElapsed);
+    if(segElapsed >= seg.ms){
+      elapsed += seg.ms;
+      i++;
+      if(i >= seq.length){ finish(); return; }
+      start = now;
+      showStep(seq[i].s);
+    }
+    t = requestAnimationFrame(tick);
+  }
+  function finish(){
+    cancelAnimationFrame(t);
+    t=null;
+    fill.style.width = "100%";
+    statusPill.textContent = "Complete";
+  }
+  function startFlow(){
+    i=0; elapsed=0; start=Date.now();
+    decisionMsg.textContent = "";
+    showStep(seq[0].s);
+    if(t) cancelAnimationFrame(t);
+    t = requestAnimationFrame(tick);
+  }
+  function resetFlow(){
+    if(t) cancelAnimationFrame(t);
+    t=null; i=0; elapsed=0; start=0;
+    fill.style.width="0%";
+    statusPill.textContent="Idle";
+    decisionMsg.textContent="";
+    showStep(1);
+  }
+
+  startBtn.addEventListener('click', startFlow);
+  resetBtn.addEventListener('click', resetFlow);
+  yesBtn.addEventListener('click', function(){
+    decisionMsg.textContent = "Clear to proceed — loving and sovereign.";
+    decisionMsg.className = "hint affirm";
+  });
+  noBtn.addEventListener('click', function(){
+    decisionMsg.textContent = "Pause and protect the hive. You can revisit later.";
+    decisionMsg.className = "hint warn";
+  });
+
+  // Respect reduced motion
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelector('.meter').style.transition = "none";
+    fill.style.transition = "none";
+  }
+})();
+</script>
+</body>
+</html>
