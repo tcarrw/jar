@@ -1,22 +1,341 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Illumina Day</title>
-<meta name="description" content="Template for a single Illumina day entry.">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Jar · Day — No Kings Day (NYC)</title>
+<meta name="theme-color" content="#0b0d11" />
+<meta name="description" content="Jar · Day for No Kings Day — Oct 18 (NYC). Marina × Sabrina × Doechii on SNL. Join in NYC. Color‑breath in Froot, playlists in Tunes, and a safe 128 Hz Honey bed." />
 <style>
-  :root{--bg:#0B0F19;--ink:#E6EAF2;--accent:#A4E8FF}
-  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui;
-       max-width:720px;padding:24px;margin:auto}
+  :root{
+    color-scheme: dark;
+    --bg:#0b0d11; --ink:#e9f0ff; --muted:#a9b4c9; --edge:#1b2230;
+    --panel:#101423; --ring:#2c3444; --accent:#8ef; --lime:#a4ff65;
+    --ctaGlow:rgba(142,239,255,.18); --primaryEdge:#2f4a2f;
+  }
+  html,body{background:var(--bg);color:var(--ink);margin:0;font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"SF Pro Text",Segoe UI,Roboto,Helvetica,Arial;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  *{box-sizing:border-box}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  /* CTA ribbon */
+  .cta{
+    position:sticky; top:0; z-index:10000;
+    display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:space-between;
+    padding:10px 12px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.12)) padding-box,
+      linear-gradient(120deg, rgba(134,201,255,.35), rgba(164,255,101,.30)) border-box;
+    border:1px solid transparent; border-bottom-color:rgba(255,255,255,.14);
+    box-shadow:0 10px 28px rgba(0,0,0,.35); backdrop-filter: blur(6px)
+  }
+  .badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .badge{
+    display:inline-flex; align-items:center; gap:8px; padding:7px 10px; border-radius:999px;
+    background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.10));
+    border:1px solid rgba(255,255,255,.16); color:#fff; font-weight:800; white-space:nowrap
+  }
+  .count{display:inline-flex;gap:8px;align-items:center;font-variant-numeric:tabular-nums;letter-spacing:.2px}
+  .count b{font-size:1.02rem}
+  .right{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .btn{
+    appearance:none; border:1px solid var(--edge); border-radius:12px; cursor:pointer;
+    background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.06)),var(--panel); color:var(--ink);
+    padding:9px 12px; font-weight:750; text-decoration:none; display:inline-flex; align-items:center; gap:8px
+  }
+  .btn:hover{border-color:var(--ring); box-shadow:0 0 0 2px var(--ctaGlow)}
+  .btn.primary{border-color:var(--primaryEdge); background:linear-gradient(180deg, rgba(164,255,101,.18), rgba(0,0,0,.06))}
+
+  /* Page */
+  header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:18px 16px 8px}
+  h1{margin:0;font-size:clamp(22px,4vw,36px)}
+  .sub{color:var(--muted)}
+  .wrap{max-width:980px;margin:0 auto;padding:6px 16px 96px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:900px){ .grid{grid-template-columns:1fr} }
+  .card{
+    border:1px solid rgba(255,255,255,.12); border-radius:16px; padding:16px;
+    background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.06));
+    box-shadow:0 10px 24px rgba(0,0,0,.28) inset;
+  }
+  .title{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .hue{height:6px;border-radius:999px;background:linear-gradient(90deg,#1b2a40,#a4ff65);box-shadow:0 0 0 1px rgba(255,255,255,.06) inset}
+  .links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .note{color:var(--muted)}
+  .steps{margin:8px 0 0;padding-left:18px}
+  .chip{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--edge);border-radius:999px;color:var(--ink);text-decoration:none;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.07))}
+  .range{appearance:none;width:180px;height:4px;border-radius:999px;background:#1a2332;outline:none}
+  .range::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid #000}
+
+  /* Floating Honey pill */
+  .pillToggle{
+    position:fixed; right:14px; bottom:16px; z-index:10001; border-radius:999px;
+    display:inline-flex; align-items:center; gap:8px; padding:9px 12px; font-weight:800;
+    border:1px solid rgba(255,255,255,.16);
+    background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.12));
+    color:#fff; text-decoration:none; box-shadow:0 10px 30px rgba(0,0,0,.38)
+  }
+  .pillToggle[aria-pressed="true"]{ border-color:#3a5f44; background:linear-gradient(180deg,rgba(164,255,101,.22),rgba(0,0,0,.10)) }
+
+  footer{color:var(--muted);font-size:.95rem;margin-top:18px}
 </style>
 </head>
 <body>
-<h1>Illumina Day Template</h1>
-<p><strong>Day #:</strong> _</p>
-<p><strong>Date:</strong> _</p>
-<p><strong>Seed / Theme:</strong> _</p>
-<section><h2>Notes</h2><p>Write your daily log here.</p></section>
-<section><h2>Reflection</h2><p>What did you learn or notice today?</p></section>
+  <!-- CTA Ribbon -->
+  <div class="cta" role="banner" aria-label="No Kings Day actions">
+    <div class="badges">
+      <span class="badge">🗓️ No Kings Day · Oct 18 · NYC</span>
+      <span class="badge">🎤 Call: Marina × Sabrina × Doechii on SNL</span>
+      <span class="badge count" id="countWrap" aria-live="polite"><span>⏳</span><b id="countTxt">—</b></span>
+    </div>
+    <div class="right" role="toolbar" aria-label="Share and join">
+      <a id="shareX" class="btn" href="#" target="_blank" rel="noopener" aria-label="Share this page on X">Share on X</a>
+      <a id="ics" class="btn" download="no-kings-day.ics" href="#" aria-label="Add No Kings Day to your calendar">Add to Calendar</a>
+      <a class="btn primary" href="https://jar.plnt.earth" aria-label="Join in NYC via Jar">Join in NYC → Jar</a>
+    </div>
+  </div>
+
+  <header>
+    <div>
+      <h1>Jar · Day — No Kings Day (NYC)</h1>
+      <p class="sub">We can walk on water — we are doing it. Color‑breath in <b>Froot</b>, playlists in <b>Tunes</b>, and a safe <b>Honey 128 Hz</b> bed here. No autoplay; iOS‑safe; one shared audio context.</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card" aria-labelledby="ask-title">
+      <div class="title"><h2 id="ask-title" style="margin:0">Ask</h2><div class="hue" aria-hidden="true"></div></div>
+      <p>No Kings Day — <b>Oct 18, NYC</b>. <b>Marina × Sabrina × Doechii</b> on SNL. Join us.</p>
+      <div class="links">
+        <a class="btn primary" href="https://jar.plnt.earth">Join in NYC → Jar</a>
+        <a class="btn" href="#honey">Start Honey 128 Hz</a>
+        <a class="btn" href="/school-rooms.html#honey">Flame Check → Honey Room</a>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="Routes">
+      <article class="card">
+        <div class="title"><h2 style="margin:0">Froot — Color‑Breath</h2><div class="hue" aria-hidden="true"></div></div>
+        <p class="note">Tone + breath + one word. The orb guides <b>IN / HOLD / OUT</b>. Keep it soft; you can layer Honey for warmth.</p>
+        <div class="links">
+          <a class="chip" href="https://froot.plnt.earth">↪ Open Froot Studio</a>
+          <a class="chip" href="https://tunes.plnt.earth">Tunes — Archetype Playlists</a>
+        </div>
+      </article>
+      <article class="card">
+        <div class="title"><h2 style="margin:0">Arrive & Ritual</h2><div class="hue" aria-hidden="true"></div></div>
+        <p class="note">When language wants to arrive, cross to Jar. Rooms are short, kind rituals. Start with Flame Check → Honey if you’re new today.</p>
+        <div class="links">
+          <a class="chip" href="/school.html">Jar · School</a>
+          <a class="chip" href="/school-rooms.html#honey">Flame Check</a>
+          <a class="chip" href="/school-rooms.html#root">Root Room</a>
+        </div>
+      </article>
+    </section>
+
+    <section id="honey" class="card" aria-labelledby="honey-title">
+      <div class="title"><h2 id="honey-title" style="margin:0">🍯 Honey — 128 Hz Bed</h2><div class="hue" aria-hidden="true"></div></div>
+      <p class="note">Keep volume low, like lamplight. Tap once to unlock audio. Smooth fades; iOS respected; no autoplay.</p>
+      <div role="group" aria-label="Honey controls" class="links">
+        <button id="hStart" class="btn" type="button">Start 128 Hz</button>
+        <button id="hStop" class="btn" type="button">Stop</button>
+        <label class="chip">Volume
+          <input id="hVol" class="range" type="range" min="0" max="100" value="28" aria-label="Honey volume (0–100)" />
+        </label>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="wtdn-title">
+      <div class="title"><h2 id="wtdn-title" style="margin:0">What to do now</h2><div class="hue" aria-hidden="true"></div></div>
+      <ol class="steps">
+        <li><b>Listen</b> — tap <em>Start 128 Hz</em> or open Froot/Tunes.</li>
+        <li><b>Breathe</b> — match a simple rhythm; shoulders down; jaw soft.</li>
+        <li><b>Share / Arrive</b> — use the ribbon to <em>Share on X</em>, <em>Add to Calendar</em>, or <em>Join in NYC</em>.</li>
+      </ol>
+      <div class="links">
+        <a class="btn primary" href="https://jar.plnt.earth">Join in NYC → Jar</a>
+        <a class="btn" href="https://froot.plnt.earth">Froot — Color‑Breath Studio</a>
+        <a class="btn" href="https://tunes.plnt.earth">Tunes — Archetype Playlists</a>
+      </div>
+    </section>
+
+    <footer>If anything feels loud, pause. Quiet counts.</footer>
+  </main>
+
+  <!-- Floating Honey pill -->
+  <button id="pill" class="pillToggle" type="button" aria-pressed="false" aria-label="Toggle Honey 128 Hz">🍯 <span id="pillTxt">Honey</span></button>
+
+  <!-- Hidden audio pipe for iOS -->
+  <audio id="pipe" preload="auto" playsinline style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0"></audio>
+
+<script>
+/* ProAudio — single shared context; gesture‑unlock; safe fades; kill on hide/close */
+(function(){
+  const ProAudio = {
+    ctx:null, master:null, comp:null, hpf:null, usePipe:false, pipe:document.getElementById('pipe'),
+    nodes:new Set(), unlocked:false, starting:false,
+    ensure(){
+      if(this.ctx) return this.ctx;
+      const AC = window.AudioContext||window.webkitAudioContext;
+      this.ctx = new AC({latencyHint:'interactive'});
+      this.master = this.ctx.createGain(); this.master.gain.value = 0.85;
+      this.comp = this.ctx.createDynamicsCompressor();
+      this.comp.threshold.value=-18; this.comp.knee.value=12; this.comp.ratio.value=2; this.comp.attack.value=.01; this.comp.release.value=.30;
+      this.hpf = this.ctx.createBiquadFilter(); this.hpf.type='highpass'; this.hpf.frequency.value=18;
+
+      const iOS = /iP(hone|ad|od)/.test(navigator.userAgent||'');
+      if(iOS){
+        this.usePipe = true;
+        const msd = this.ctx.createMediaStreamDestination();
+        this.master.connect(this.comp); this.comp.connect(this.hpf); this.hpf.connect(msd);
+        try{ this.pipe.srcObject = msd.stream; this.pipe.loop = true; }catch(_){}
+      }else{
+        this.master.connect(this.comp); this.comp.connect(this.hpf); this.hpf.connect(this.ctx.destination);
+      }
+      return this.ctx;
+    },
+    unlock(){
+      try{
+        this.ensure();
+        if(this.ctx && this.ctx.state==='suspended'){ this.ctx.resume(); }
+        if(this.usePipe && this.pipe && this.pipe.paused){ this.pipe.play().catch(()=>{}); }
+        this.unlocked = true;
+      }catch(_){}
+    },
+    track(obj){ if(obj) this.nodes.add(obj); return obj; },
+    fade(param, to, tc=0.06){
+      const t=this.ctx.currentTime;
+      param.cancelScheduledValues(t);
+      param.setTargetAtTime(to, t, tc);
+    },
+    kill(){
+      try{
+        if(!this.ctx) return;
+        const t = this.ctx.currentTime;
+        this.nodes.forEach(n=>{
+          try{
+            if(n.g && n.g.gain){ n.g.gain.setTargetAtTime(0.0001, t, 0.05); }
+            if(n.stop){ n.stop(t+0.12); }
+          }catch(_){}
+        });
+        this.nodes.clear();
+        setTimeout(()=>{ try{ this.ctx.close(); }catch(_){} this.ctx=null; this.unlocked=false; }, 180);
+      }catch(_){}
+    },
+    honey:{
+      osc:null, gain:null, on:false,
+      start(freq=128){
+        const PA=ProAudio; if(PA.starting) return; PA.starting=true; setTimeout(()=>PA.starting=false, 160);
+        PA.unlock(); PA.ensure();
+        if(this.on) return;
+        const now=PA.ctx.currentTime;
+        this.osc = PA.ctx.createOscillator();
+        this.gain= PA.ctx.createGain();
+        this.osc.type='sine'; this.osc.frequency.setValueAtTime(freq, now);
+        this.gain.gain.setValueAtTime(0.0001, now);
+        this.osc.connect(this.gain); this.gain.connect(PA.master);
+        try{ this.osc.start(now); }catch(_){}
+        PA.fade(this.gain.gain, 0.12, 0.10);
+        this.on=true;
+        PA.track({ stop:(t)=>{ try{ this.osc && this.osc.stop(t); }catch(_){ } }, g:this.gain });
+        return true;
+      },
+      stop(){
+        const PA=ProAudio; if(!this.on || !PA.ctx) return;
+        const now=PA.ctx.currentTime;
+        try{
+          PA.fade(this.gain.gain, 0.0001, 0.06);
+          setTimeout(()=>{ try{ this.osc.stop(now+0.02); }catch(_){}
+            try{ this.osc.disconnect(); this.gain.disconnect(); }catch(_){}
+            this.osc=null; this.gain=null; this.on=false;
+          }, 220);
+        }catch(_){ this.on=false; }
+      },
+      volume(x){ const PA=ProAudio; if(!this.gain||!PA.ctx) return; const v=Math.max(0,Math.min(1,Number(x)||0)); PA.fade(this.gain.gain, v*0.30, 0.05); }
+    }
+  };
+  window.ProAudio = ProAudio;
+
+  document.addEventListener('pointerdown', ()=>ProAudio.unlock(), {once:true, passive:true});
+  document.addEventListener('keydown', ()=>ProAudio.unlock(), {once:true});
+  document.addEventListener('visibilitychange', ()=>{ if(document.hidden) ProAudio.kill(); }, false);
+  window.addEventListener('pagehide', ()=>ProAudio.kill(), false);
+  window.addEventListener('beforeunload', ()=>ProAudio.kill(), false);
+})();
+
+/* Honey controls + floating pill */
+(function(){
+  const startBtn=document.getElementById('hStart');
+  const stopBtn =document.getElementById('hStop');
+  const vol     =document.getElementById('hVol');
+  const pill    =document.getElementById('pill');
+  const pillTxt =document.getElementById('pillTxt');
+
+  function syncPill(){ pill.setAttribute('aria-pressed', String(!!(ProAudio.honey && ProAudio.honey.on))); pillTxt.textContent = ProAudio.honey.on ? 'On' : 'Honey'; }
+  function start(){ if(ProAudio.honey.start(128)){ syncPill(); } }
+  function stop(){ ProAudio.honey.stop(); syncPill(); }
+  function setVol(){ const v = Number(vol.value||28); ProAudio.honey.volume(v/100); }
+
+  startBtn.addEventListener('click', start, false);
+  stopBtn .addEventListener('click', stop,  false);
+  vol     .addEventListener('input', setVol, false);
+  pill.addEventListener('click', ()=>{ ProAudio.honey.on ? stop() : start(); }, false);
+
+  syncPill(); setVol();
+})();
+
+/* Share on X, inline .ics, live ET countdown */
+(function(){
+  const share = document.getElementById('shareX');
+  const ics   = document.getElementById('ics');
+
+  function buildShare(){
+    const msg = "No Kings Day — Oct 18, NYC. Marina × Sabrina × Doechii on SNL. Join us.";
+    const url = location.href;
+    const u = "https://twitter.com/intent/tweet?text="+encodeURIComponent(msg)+"&url="+encodeURIComponent(url)+"&hashtags=NoKingsDay,NYC";
+    share.setAttribute('href', u);
+  }
+  function buildICS(){
+    const now = new Date();
+    const dtstamp = now.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z$/,'Z');
+    const icsText = [
+      "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//PLNT Earth//No Kings Day//EN","CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:No Kings Day","X-WR-TIMEZONE:America/New_York",
+      "BEGIN:VEVENT",
+      "UID:nkd-20251018-"+Date.now()+"@plnt.earth",
+      "DTSTAMP:"+dtstamp,
+      "SUMMARY:No Kings Day — NYC",
+      "DESCRIPTION:Marina × Sabrina × Doechii on SNL. Join in NYC → https://jar.plnt.earth",
+      "DTSTART;VALUE=DATE:20251018",
+      "DTEND;VALUE=DATE:20251019",
+      "URL:https://jar.plnt.earth",
+      "END:VEVENT","END:VCALENDAR"
+    ].join("\r\n");
+    ics.setAttribute('href', "data:text/calendar;charset=utf-8,"+encodeURIComponent(icsText));
+  }
+  function two(n){ return (n<10?'0':'')+n; }
+  const target = new Date("2025-10-18T00:00:00-04:00").getTime();
+  const box = document.getElementById('countTxt');
+  function tick(){
+    const now = Date.now();
+    let diff = Math.max(0, target - now);
+    const d = Math.floor(diff/86400000); diff%=86400000;
+    const h = Math.floor(diff/3600000);  diff%=3600000;
+    const m = Math.floor(diff/60000);    diff%=60000;
+    const s = Math.floor(diff/1000);
+    box.textContent = d+"d "+two(h)+"h "+two(m)+"m "+two(s)+"s";
+  }
+  buildShare(); buildICS(); tick();
+  setInterval(tick, 1000);
+})();
+
+/* Smooth anchor to Honey */
+document.querySelectorAll('a[href="#honey"]').forEach(a=>{
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    const el=document.getElementById('honey');
+    if(!el) return;
+    el.scrollIntoView({behavior:'smooth',block:'start'});
+  }, false);
+});
+</script>
 </body>
 </html>
