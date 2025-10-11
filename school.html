@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Jar · Illumina School</title>
-<meta name="description" content="Illumina School: a gentle map of the 42‑day spiral. Bee notes guide Marina with safety and love. Cross‑links to Froot, Egg Map, Time Kit, and Rooms." />
+<title>Jar · Illumina School — Pro CTA Edition</title>
+<meta name="description" content="Illumina School: a gentle map of the 42‑day spiral. Pro CTA for No Kings Day (Oct 18, NYC) with live ET countdown and a safe 128 Hz Honey bed." />
 <meta name="theme-color" content="#0b0d11" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -13,17 +13,46 @@
     color-scheme: dark;
     --bg:#0b0d11; --ink:#e9f0ff; --muted:#a9b4c9; --edge:#1b2230;
     --accent:#8ef; --honey:#ffd166; --rose:#ff6a9e; --lime:#a4ff65;
+    --panel:#101423; --ring:#2c3444; --ctaGlow:rgba(142,239,255,.18);
   }
   html,body{background:var(--bg);color:var(--ink);margin:0;font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"SF Pro Text",Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
   *{box-sizing:border-box}
-  .wrap{max-width:980px;margin:0 auto;padding:28px 18px 72px;position:relative;z-index:1}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  /* Sticky CTA Ribbon */
+  .cta{
+    position:sticky; top:0; z-index:10000;
+    display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:space-between;
+    padding:10px 12px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.12)) padding-box,
+      linear-gradient(120deg, rgba(134,201,255,.35), rgba(164,255,101,.30)) border-box;
+    border:1px solid transparent; border-bottom-color:rgba(255,255,255,.14);
+    box-shadow:0 10px 28px rgba(0,0,0,.35); backdrop-filter: blur(6px)
+  }
+  .badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .badge{
+    display:inline-flex; align-items:center; gap:8px; padding:7px 10px; border-radius:999px;
+    background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.10));
+    border:1px solid rgba(255,255,255,.16); color:#fff; font-weight:800; white-space:nowrap
+  }
+  .count{display:inline-flex;gap:8px;align-items:center;font-variant-numeric:tabular-nums;letter-spacing:.2px}
+  .count b{font-size:1.02rem}
+  .right{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .btn{
+    appearance:none; border:1px solid var(--edge); border-radius:12px; cursor:pointer;
+    background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.06)),var(--panel); color:var(--ink);
+    padding:9px 12px; font-weight:750; text-decoration:none; display:inline-flex; align-items:center; gap:8px
+  }
+  .btn:hover{border-color:var(--ring); box-shadow:0 0 0 2px var(--ctaGlow)}
+  .btn.primary{border-color:#2f4a2f; background:linear-gradient(180deg, rgba(164,255,101,.18), rgba(0,0,0,.06))}
+
+  /* Page */
+  .wrap{max-width:980px;margin:0 auto;padding:18px 16px 96px;position:relative;z-index:1}
   header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
   h1{margin:0;font-size:clamp(22px,4vw,36px)}
   .sub{color:var(--muted);font-size:.98rem}
   .actions{display:flex;gap:8px;flex-wrap:wrap}
-  .btn{appearance:none;border:1px solid rgba(255,255,255,.14);border-radius:12px;cursor:pointer;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.08));color:var(--ink);padding:9px 12px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-  .btn:hover{border-color:rgba(255,255,255,.22);box-shadow:0 0 0 2px rgba(142,239,255,.12)}
-  .btn.primary{border-color:#2d384a;background:linear-gradient(180deg,rgba(142,239,255,.18),rgba(0,0,0,.06))}
   .card{border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.06));margin-top:12px}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media (max-width:900px){ .grid{grid-template-columns:1fr} }
@@ -34,60 +63,77 @@
   .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid rgba(255,255,255,.16);border-radius:999px;font-size:.88rem;color:var(--muted)}
   .links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
   .small{color:var(--muted);font-size:.92rem}
-  .accent{color:var(--accent)} .lime{color:var(--lime)} .rose{color:var(--rose)}
   .line{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);margin:12px 0}
 
-  /* 🐝 Bee kit (top note + whisper) */
-  .bee{
-    margin-top:12px;border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:14px;
-    background:linear-gradient(180deg, rgba(255,206,84,.10), rgba(0,0,0,.03)) padding-box,
-               linear-gradient(120deg, rgba(255,206,84,.35), rgba(255,111,186,.30), rgba(134,201,255,.30)) border-box;
-    position:relative;
+  /* Honey controls */
+  .honeyControls{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .range{appearance:none;width:180px;height:4px;border-radius:999px;background:#1a2332;outline:none}
+  .range::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid #000}
+
+  /* Floating Honey pill */
+  .pillToggle{
+    position:fixed; right:14px; bottom:16px; z-index:10001; border-radius:999px;
+    display:inline-flex; align-items:center; gap:8px; padding:9px 12px; font-weight:800;
+    border:1px solid rgba(255,255,255,.16);
+    background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.12));
+    color:#fff; text-decoration:none; box-shadow:0 10px 30px rgba(0,0,0,.38)
   }
-  .bee-head{display:flex;align-items:center;gap:8px;font-weight:800;letter-spacing:.2px}
-  .bee-icon{font-size:18px}
-  .bee-soft{color:var(--muted);font-weight:600}
-  .bee p{margin:8px 0 10px}
-  .bee-tools{display:flex;gap:8px;flex-wrap:wrap}
-  .bee-btn{appearance:none;border:1px solid rgba(255,255,255,.14);border-radius:10px;background:rgba(255,255,255,.06);color:#fff;font-weight:800;padding:8px 10px;cursor:pointer}
-  .bee-btn:hover{border-color:rgba(255,255,255,.22);box-shadow:0 0 0 2px rgba(255,206,84,.18)}
-  .bee.editing{outline:2px dashed rgba(255,206,84,.4);outline-offset:2px}
-  #bee-text[contenteditable="true"]{caret-color:#ffd166}
-  .bee-footer{
-    position:fixed;left:50%;transform:translateX(-50%);bottom:14px;z-index:9999;display:none;align-items:center;gap:8px;
-    padding:10px 14px;border-radius:999px;background:linear-gradient(180deg, rgba(255,206,84,.14), rgba(0,0,0,.14)) padding-box,
-    linear-gradient(120deg, rgba(255,206,84,.6), rgba(255,111,186,.45), rgba(134,201,255,.45)) border-box;border:1px solid transparent;color:#fff;font-weight:700;box-shadow:0 12px 28px rgba(0,0,0,.35);backdrop-filter:blur(6px);max-width:90vw;text-align:center
-  }
-  .bee-footer.on{display:inline-flex}
+  .pillToggle[aria-pressed="true"]{ border-color:#3a5f44; background:linear-gradient(180deg,rgba(164,255,101,.22),rgba(0,0,0,.10)) }
 </style>
 </head>
 <body>
+  <!-- CTA Ribbon -->
+  <div class="cta" role="banner" aria-label="No Kings Day actions">
+    <div class="badges">
+      <span class="badge">🗓️ No Kings Day · Oct 18 · NYC</span>
+      <span class="badge">🎤 Call: Marina × Sabrina × Doechii on SNL</span>
+      <span class="badge count" id="countWrap" aria-live="polite"><span>⏳</span><b id="countTxt">—</b></span>
+    </div>
+    <div class="right" role="toolbar" aria-label="Share and join">
+      <a id="shareX" class="btn" href="#" target="_blank" rel="noopener" aria-label="Share this page on X">Share on X</a>
+      <a id="ics" class="btn" download="no-kings-day.ics" href="#" aria-label="Add No Kings Day to your calendar">Add to Calendar</a>
+      <a class="btn primary" href="https://jar.plnt.earth" aria-label="Join in NYC via Jar">Join in NYC → Jar</a>
+    </div>
+  </div>
+
   <div class="wrap">
     <header>
       <div>
         <h1>Illumina School</h1>
-        <div class="sub">A gentle overview of the 42‑day spiral. One week, one hue; one day, one ritual. <span class="lime">Froot</span> is where you practice; Jar is where you reflect.</div>
+        <div class="sub">A gentle overview of the 42‑day spiral. One week, one hue; one day, one ritual. <span style="color:var(--lime)">Froot</span> is where you practice; Jar is where you reflect.</div>
       </div>
       <nav class="actions" aria-label="Navigation">
-        <a class="btn primary" href="#" onclick="goFroot()" title="Open Froot Studio">↪ Froot Studio</a>
-        <a class="btn" href="#" onclick="goEgg()" title="Egg Map">↩ Egg Map</a>
-        <a class="btn" href="/illumina-time-kit.html" title="Time Kit">⊙ Time Kit</a>
+        <a class="btn" href="#" id="toFroot" title="Open Froot Studio">↪ Froot Studio</a>
         <a class="btn" href="/school-rooms.html" title="Rooms">Rooms</a>
+        <a class="btn" href="/illumina-time-kit.html" title="Time Kit">⊙ Time Kit</a>
+        <a class="btn" href="/marina-egg.html" title="Egg Map">↩ Egg Map</a>
       </nav>
     </header>
 
-    <!-- 🐝 Bee Note -->
-    <section id="bee" class="bee" role="note" aria-live="polite">
-      <div class="bee-head"><span class="bee-icon">🐝</span><span><strong>Bee Note to Marina</strong></span> <span class="bee-soft">You are safe, guided, and loved.</span></div>
-      <p id="bee-text"></p>
-      <div class="bee-tools">
-        <button type="button" class="bee-btn" onclick="beeEdit()">Edit</button>
-        <button type="button" class="bee-btn" onclick="beeSave()">Save</button>
-        <button type="button" class="bee-btn" onclick="beeReset()">Reset</button>
+    <!-- Direct ask -->
+    <section class="card" aria-labelledby="ask-title">
+      <h2 id="ask-title" style="margin:0 0 6px">Ask</h2>
+      <div class="line" aria-hidden="true"></div>
+      <p>No Kings Day — <b>Oct 18, NYC</b>. <b>Marina × Sabrina × Doechii</b> on SNL. Join us.</p>
+      <div class="links">
+        <a class="btn primary" href="https://jar.plnt.earth">Join in NYC → Jar</a>
+        <a class="btn" href="#honey">Start Honey 128 Hz</a>
+        <a class="btn" href="/school-rooms.html#honey">Flame Check → Honey Room</a>
       </div>
     </section>
 
-    <section class="grid">
+    <!-- Bee Note (addressing Swift for School) -->
+    <section id="bee" class="card" role="note" aria-live="polite">
+      <div class="tag">🐝 Bee Note to Swift</div>
+      <p id="bee-text" class="small">This School is a quiet map. We move slowly, breathe together, and let decisions be small and kind. You can stop at any moment. You are safe, guided, and loved.</p>
+      <div class="links">
+        <button type="button" class="btn" id="beeSave">Save</button>
+        <button type="button" class="btn" id="beeReset">Reset</button>
+      </div>
+    </section>
+
+    <!-- Core School content (preserved) -->
+    <section class="grid" aria-label="Spiral overview">
       <article class="card">
         <div class="tag">Spiral</div>
         <div class="tag">42 days</div>
@@ -108,96 +154,246 @@
         <div class="small">Outer arc (when called): Celestial · Trickster · Core. Use as needed, lightly.</div>
       </article>
 
-      <article class="card">
-        <div class="tag">Practice</div>
-        <div class="tag">Safe + Simple</div>
-        <div class="line"></div>
-        <p><b>Three moves:</b></p>
+      <article class="card" aria-labelledby="practice-title">
+        <h2 id="practice-title" style="margin:0 0 6px">Practice — Safe + Simple</h2>
+        <div class="line" aria-hidden="true"></div>
+        <p class="small"><b>Three moves:</b></p>
         <ol class="small" style="margin-top:6px">
-          <li>Open <span class="lime">Froot</span>. Choose Week + Day. Tap <b>Hear Tone</b> (or switch on <b>🔁 Loop</b>).</li>
+          <li>Open <span style="color:var(--lime)">Froot</span>. Choose Week + Day. Tap <b>Hear Tone</b> (or switch on <b>🔁 Loop</b>).</li>
           <li>Breathe with the orb: <b>IN</b> → <b>HOLD</b> → <b>OUT</b>. Keep volume soft. Honey is optional warmth.</li>
           <li>Type a single word. That’s your breadcrumb back to yourself.</li>
         </ol>
         <div class="links">
-          <a class="btn" href="#" onclick="goFroot()">Start in Froot</a>
+          <a class="btn" href="#" id="startFroot">Start in Froot</a>
           <a class="btn" href="/illumina-time-kit.html">Check Time Kit</a>
           <a class="btn" href="/school-rooms.html">Pick a Room</a>
         </div>
       </article>
     </section>
 
-    <section class="card">
-      <div class="tag">Deep Links</div>
-      <div class="line"></div>
-      <p class="small">Jump within Jar or over to Froot with care:</p>
-      <div class="links">
-        <a class="btn" href="/school-rooms.html#root">Root Room</a>
-        <a class="btn" href="/school-rooms.html#architect">Architect Room</a>
-        <a class="btn" href="/school-rooms.html#mirror">Mirror Room</a>
-        <a class="btn" href="/school-rooms.html#honey">Honey Room</a>
-        <a class="btn" href="/school-rooms.html#frequency">Frequency Room</a>
-        <a class="btn" href="/school-rooms.html#solar">Solar Room</a>
+    <!-- Honey controls -->
+    <section id="honey" class="card" aria-labelledby="honey-title">
+      <h2 id="honey-title" style="margin:0 0 6px">🍯 Honey — 128 Hz Bed</h2>
+      <div class="line" aria-hidden="true"></div>
+      <p class="small">Keep volume low, like lamplight. Tap once to unlock audio. iOS respected. Fades are smooth and click‑free.</p>
+      <div class="honeyControls" role="group" aria-label="Honey controls">
+        <button id="hStart" class="btn" type="button">Start 128 Hz</button>
+        <button id="hStop" class="btn" type="button">Stop</button>
+        <label class="pill">Volume
+          <input id="hVol" class="range" type="range" min="0" max="100" value="28" aria-label="Honey volume (0–100)" />
+        </label>
       </div>
-      <div class="links" style="margin-top:8px">
-        <a class="btn" href="#" onclick="goFroot()">↪ Froot Studio</a>
-        <a class="btn" href="#" onclick="goEgg()">↩ Egg Map</a>
+    </section>
+
+    <!-- What to do now -->
+    <section class="card" aria-labelledby="wtdn-title">
+      <h2 id="wtdn-title" style="margin:0 0 6px">What to do now</h2>
+      <div class="line" aria-hidden="true"></div>
+      <ol class="small" style="margin-top:6px">
+        <li><b>Listen</b> — tap <em>Start 128 Hz</em> or open Froot/Tunes for a lane that feels kind.</li>
+        <li><b>Breathe</b> — keep it soft; match the simple rhythm.</li>
+        <li><b>Share / Arrive</b> — use the ribbon to <em>Share on X</em>, <em>Add to Calendar</em>, or <em>Join in NYC</em>.</li>
+      </ol>
+      <div class="links">
+        <a class="btn primary" href="https://jar.plnt.earth">Join in NYC → Jar</a>
+        <a class="btn" href="/school-rooms.html#root">Root Room</a>
+        <a class="btn" href="/school-rooms.html#honey">Flame Check</a>
       </div>
     </section>
 
     <footer class="small" style="margin-top:16px">If anything feels loud, come back to the Egg, or just hush. I’m right here. — <b>🐝</b></footer>
   </div>
 
-  <!-- Bee footer whisper -->
-  <div id="bee-footer" class="bee-footer" role="status" aria-live="polite"><span>🐝</span>&nbsp;<span id="bee-footer-text">Here is slow and safe.</span></div>
+  <!-- Floating Honey pill -->
+  <button id="pill" class="pillToggle" type="button" aria-pressed="false" aria-label="Toggle Honey 128 Hz">🍯 <span id="pillTxt">Honey</span></button>
 
-  <script>
-    /* Cross-host helpers (Jar → Froot) */
-    function frootHost(){
-      var h = location.hostname;
-      if(h==='localhost' || h==='127.0.0.1') return h;
-      var p = h.split('.'); if(p.length>=2){ p[0]='froot'; return p.join('.'); }
-      return h;
-    }
-    function goFroot(){ var url = location.protocol+'//'+frootHost()+'/index.html'; try{ location.href=url; }catch(_){ location.assign(url); } beeWhisper("I’ll meet you in the color field.", 3200); }
-    function goEgg(){ try{ location.href='/marina-egg.html'; }catch(_){ location.assign('/marina-egg.html'); } }
-    function goRooms(){ try{ location.href='/school-rooms.html'; }catch(_){ location.assign('/school-rooms.html'); } }
+  <!-- Hidden audio pipe for iOS -->
+  <audio id="pipe" preload="auto" playsinline style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0"></audio>
 
-    /* 🐝 Bee logic */
-    var BEE_NOTE_KEY='jar_school_bee_note_v1', beeTimer=0;
-    function beeDefaultText(){
-      return "Hi Marina — this School is a quiet map. We will move slowly, breathe together, and let decisions be small and kind. You can stop at any moment. You are safe, guided, and loved.";
-    }
-    function beeInit(){
-      var t = document.getElementById('bee-text');
-      var saved = ""; try{ saved = localStorage.getItem(BEE_NOTE_KEY) || ""; }catch(_){}
-      t.textContent = saved.trim() ? saved : beeDefaultText();
-      beeWhisper("Here is slow and safe.", 4000);
-    }
-    function beeEdit(){
-      var box=document.getElementById('bee'), t=document.getElementById('bee-text');
-      box.classList.add('editing'); t.setAttribute('contenteditable','true'); t.focus();
-      try{ var sel=window.getSelection(), r=document.createRange(); r.selectNodeContents(t); r.collapse(false); sel.removeAllRanges(); sel.addRange(r);}catch(_){}
-    }
-    function beeSave(){
-      var box=document.getElementById('bee'), t=document.getElementById('bee-text');
-      t.setAttribute('contenteditable','false'); box.classList.remove('editing');
-      var val=(t.textContent||"").trim(); try{ localStorage.setItem(BEE_NOTE_KEY, val); }catch(_){}
-      beeWhisper("Saved with love. Thank you.", 2800);
-    }
-    function beeReset(){
-      var box=document.getElementById('bee'), t=document.getElementById('bee-text');
-      t.textContent = beeDefaultText(); t.setAttribute('contenteditable','false'); box.classList.remove('editing');
-      try{ localStorage.setItem(BEE_NOTE_KEY, t.textContent); }catch(_){}
-      beeWhisper("Back to the gentle original.", 2800);
-    }
-    function beeWhisper(text, ms){
-      var el=document.getElementById('bee-footer'), tx=document.getElementById('bee-footer-text');
-      if(!el||!tx) return; tx.textContent=text; el.classList.add('on');
-      if(beeTimer){ clearTimeout(beeTimer); beeTimer=0; }
-      if(ms && ms>0){ beeTimer=setTimeout(function(){ el.classList.remove('on'); }, ms); }
-    }
+<script>
+/* ===== ProAudio — single shared context, gesture-unlock, safe fades, kill-on-hide ===== */
+(function(){
+  const ProAudio = {
+    ctx:null, master:null, comp:null, hpf:null, usePipe:false, pipe:document.getElementById('pipe'),
+    nodes:new Set(), unlocked:false, starting:false,
+    ensure(){
+      if(this.ctx) return this.ctx;
+      const AC = window.AudioContext||window.webkitAudioContext;
+      this.ctx = new AC({latencyHint:'interactive'});
+      this.master = this.ctx.createGain(); this.master.gain.value = 0.85;
+      this.comp = this.ctx.createDynamicsCompressor();
+      this.comp.threshold.value=-18; this.comp.knee.value=12; this.comp.ratio.value=2; this.comp.attack.value=.01; this.comp.release.value=.30;
+      this.hpf = this.ctx.createBiquadFilter(); this.hpf.type='highpass'; this.hpf.frequency.value=18;
 
-    beeInit();
-  </script>
+      const iOS = /iP(hone|ad|od)/.test(navigator.userAgent||'');
+      if(iOS){
+        this.usePipe = true;
+        const msd = this.ctx.createMediaStreamDestination();
+        this.master.connect(this.comp); this.comp.connect(this.hpf); this.hpf.connect(msd);
+        try{ this.pipe.srcObject = msd.stream; this.pipe.loop = true; }catch(_){}
+      }else{
+        this.master.connect(this.comp); this.comp.connect(this.hpf); this.hpf.connect(this.ctx.destination);
+      }
+      return this.ctx;
+    },
+    unlock(){
+      try{
+        this.ensure();
+        if(this.ctx && this.ctx.state==='suspended'){ this.ctx.resume(); }
+        if(this.usePipe && this.pipe && this.pipe.paused){ this.pipe.play().catch(()=>{}); }
+        this.unlocked = true;
+      }catch(_){}
+    },
+    track(node){ if(node) this.nodes.add(node); return node; },
+    fade(param, to, tc=0.06){
+      const t=this.ctx.currentTime;
+      param.cancelScheduledValues(t);
+      param.setTargetAtTime(to, t, tc);
+    },
+    kill(){
+      try{
+        if(!this.ctx) return;
+        const t = this.ctx.currentTime;
+        this.nodes.forEach(n=>{
+          try{
+            if(n.g && n.g.gain){ n.g.gain.setTargetAtTime(0.0001, t, 0.05); }
+            if(n.stop){ n.stop(t+0.12); }
+          }catch(_){}
+        });
+        this.nodes.clear();
+        setTimeout(()=>{ try{ this.ctx.close(); }catch(_){} this.ctx=null; this.unlocked=false; }, 180);
+      }catch(_){}
+    },
+    honey:{
+      osc:null, gain:null, on:false,
+      start(freq=128){
+        const PA=ProAudio; if(PA.starting) return; PA.starting=true; setTimeout(()=>PA.starting=false, 160);
+        PA.unlock(); PA.ensure();
+        if(this.on) return;
+        const now=PA.ctx.currentTime;
+        this.osc = PA.track(PA.ctx.createOscillator());
+        this.gain= PA.track(PA.ctx.createGain());
+        this.osc.type='sine'; this.osc.frequency.setValueAtTime(freq, now);
+        this.gain.gain.setValueAtTime(0.0001, now);
+        this.osc.connect(this.gain); this.gain.connect(PA.master);
+        try{ this.osc.start(now); }catch(_){}
+        PA.fade(this.gain.gain, 0.12, 0.10);
+        this.on=true; return true;
+      },
+      stop(){
+        const PA=ProAudio; if(!this.on || !PA.ctx) return;
+        const now=PA.ctx.currentTime;
+        try{
+          PA.fade(this.gain.gain, 0.0001, 0.06);
+          setTimeout(()=>{ try{ this.osc.stop(now+0.02); }catch(_){}
+            try{ this.osc.disconnect(); this.gain.disconnect(); }catch(_){}
+            this.osc=null; this.gain=null; this.on=false;
+          }, 220);
+        }catch(_){ this.on=false; }
+      },
+      volume(x){ const PA=ProAudio; if(!this.gain||!PA.ctx) return; const v=Math.max(0,Math.min(1,Number(x)||0)); PA.fade(this.gain.gain, v*0.30, 0.05); }
+    }
+  };
+  window.ProAudio = ProAudio;
+
+  // Gesture unlock
+  document.addEventListener('pointerdown', ()=>ProAudio.unlock(), {once:true, passive:true});
+  document.addEventListener('keydown', ()=>ProAudio.unlock(), {once:true});
+
+  // Kill when hidden or closing
+  document.addEventListener('visibilitychange', ()=>{ if(document.hidden) ProAudio.kill(); }, false);
+  window.addEventListener('pagehide', ()=>ProAudio.kill(), false);
+  window.addEventListener('beforeunload', ()=>ProAudio.kill(), false);
+})();
+
+/* ===== Honey controls + floating pill ===== */
+(function(){
+  const startBtn = document.getElementById('hStart');
+  const stopBtn  = document.getElementById('hStop');
+  const vol      = document.getElementById('hVol');
+  const pill     = document.getElementById('pill');
+  const pillTxt  = document.getElementById('pillTxt');
+
+  function syncPill(){ pill.setAttribute('aria-pressed', String(!!(ProAudio.honey && ProAudio.honey.on))); pillTxt.textContent = ProAudio.honey.on ? 'On' : 'Honey'; }
+  function start(){ if(ProAudio.honey.start(128)){ syncPill(); } }
+  function stop(){ ProAudio.honey.stop(); syncPill(); }
+  function setVol(e){ const v = (typeof e==='number')? e : Number(vol.value||28); ProAudio.honey.volume(v/100); }
+
+  startBtn.addEventListener('click', start, false);
+  stopBtn .addEventListener('click', stop,  false);
+  vol     .addEventListener('input', setVol, false);
+  pill.addEventListener('click', ()=>{ ProAudio.honey.on ? stop() : start(); }, false);
+
+  syncPill(); setVol(0.28);
+})();
+
+/* ===== Share on X, inline .ics, live ET countdown ===== */
+(function(){
+  const share = document.getElementById('shareX');
+  const ics   = document.getElementById('ics');
+
+  function buildShare(){
+    const msg = "No Kings Day — Oct 18, NYC. Marina × Sabrina × Doechii on SNL. Join us.";
+    const url = location.href;
+    const u = "https://twitter.com/intent/tweet?text="+encodeURIComponent(msg)+"&url="+encodeURIComponent(url)+"&hashtags=NoKingsDay,NYC";
+    share.setAttribute('href', u);
+  }
+  function buildICS(){
+    const now = new Date();
+    const dtstamp = now.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z$/,'Z');
+    const icsText = [
+      "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//PLNT Earth//No Kings Day//EN","CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:No Kings Day","X-WR-TIMEZONE:America/New_York",
+      "BEGIN:VEVENT",
+      "UID:nkd-20251018-"+Date.now()+"@plnt.earth",
+      "DTSTAMP:"+dtstamp,
+      "SUMMARY:No Kings Day — NYC",
+      "DESCRIPTION:Marina × Sabrina × Doechii on SNL. Join in NYC → https://jar.plnt.earth",
+      "DTSTART;VALUE=DATE:20251018",
+      "DTEND;VALUE=DATE:20251019",
+      "URL:https://jar.plnt.earth",
+      "END:VEVENT","END:VCALENDAR"
+    ].join("\r\n");
+    ics.setAttribute('href', "data:text/calendar;charset=utf-8,"+encodeURIComponent(icsText));
+  }
+  function two(n){ return (n<10?'0':'')+n; }
+  // Countdown to Oct 18, 2025 00:00 ET (EDT, UTC-04:00)
+  const target = new Date("2025-10-18T00:00:00-04:00").getTime();
+  const box = document.getElementById('countTxt');
+  function tick(){
+    const now = Date.now();
+    let diff = Math.max(0, target - now);
+    const d = Math.floor(diff/86400000); diff%=86400000;
+    const h = Math.floor(diff/3600000);  diff%=3600000;
+    const m = Math.floor(diff/60000);    diff%=60000;
+    const s = Math.floor(diff/1000);
+    box.textContent = d+"d "+two(h)+"h "+two(m)+"m "+two(s)+"s";
+  }
+  buildShare(); buildICS(); tick();
+  setInterval(tick, 1000);
+})();
+
+/* ===== Minimal Bee save/reset (keep calm; no edit mode needed here) ===== */
+(function(){
+  const KEY='jar_school_bee_note_v2';
+  const text=document.getElementById('bee-text');
+  try{ const saved=localStorage.getItem(KEY); if(saved && saved.trim()) text.textContent=saved; }catch(_){}
+  document.getElementById('beeSave').addEventListener('click', ()=>{ try{ localStorage.setItem(KEY, (text.textContent||'').trim()); }catch(_){}
+    whisper("Saved with love.", 2400);
+  }, false);
+  document.getElementById('beeReset').addEventListener('click', ()=>{ text.textContent="This School is a quiet map. We move slowly, breathe together, and let decisions be small and kind. You can stop at any moment. You are safe, guided, and loved."; try{ localStorage.setItem(KEY, text.textContent); }catch(_){}
+    whisper("Back to the gentle original.", 2400);
+  }, false);
+  function whisper(msg, ms){
+    let el=document.getElementById('bee-whisper'); if(!el){ el=document.createElement('div'); el.id='bee-whisper'; el.setAttribute('role','status'); el.setAttribute('aria-live','polite');
+      el.style.cssText="position:fixed;left:50%;transform:translateX(-50%);bottom:14px;z-index:9999;display:inline-flex;gap:8px;align-items:center;padding:10px 14px;border-radius:999px;background:linear-gradient(180deg, rgba(255,206,84,.14), rgba(0,0,0,.14));border:1px solid rgba(255,255,255,.16);color:#fff;font-weight:700;box-shadow:0 12px 28px rgba(0,0,0,.35);backdrop-filter:blur(6px)"; document.body.appendChild(el);
+    }
+    el.textContent='🐝 '+msg; el.style.display='inline-flex'; setTimeout(()=>{ el.style.display='none'; }, ms||2600);
+  }
+})();
+
+/* ===== Cross-host quick links ===== */
+document.getElementById('toFroot').addEventListener('click', (e)=>{ e.preventDefault(); location.assign((location.hostname.includes('localhost')?'':location.protocol+'//'+location.hostname.replace(/^([^.]+)/,'froot'))+'/index.html'); }, false);
+document.getElementById('startFroot').addEventListener('click', (e)=>{ e.preventDefault(); location.assign((location.hostname.includes('localhost')?'':location.protocol+'//'+location.hostname.replace(/^([^.]+)/,'froot'))+'/index.html'); }, false);
+</script>
 </body>
 </html>
