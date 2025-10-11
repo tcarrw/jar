@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#0b0d11" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>Jar — Moon Field Note</title>
+<meta name="description" content="Moon-mode field note to metabolize monumental nonsense into honey: Sun trace, Bee pollen, Honey sample, Moon seal." />
+<style>
+  :root{
+    --bg:#0b0d11; --panel:#12161c; --ink:#e8ecf1; --mute:#9aa4b2; --accent:#aab7ff; --edge:#1f2630;
+    --focus:#5c7cff; --good:#6ee7a5; --warn:#f7b955;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:500 16px/1.5 ui-sans-serif, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, system-ui, "Apple Color Emoji","Segoe UI Emoji";
+    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+  }
+  .wrap{max-width:880px; margin:0 auto; padding:24px 16px 80px}
+  header{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:18px}
+  .title{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px}
+  .glyph{width:28px; height:28px; border-radius:50%; display:grid; place-items:center; background:linear-gradient(180deg,#1c2330,#0f131a); border:1px solid var(--edge); font-size:16px}
+  .sub{color:var(--mute); font-size:13px}
+  .bar{display:flex; flex-wrap:wrap; gap:8px}
+  button, .ghost{
+    appearance:none; border:1px solid var(--edge); background:var(--panel); color:var(--ink);
+    padding:10px 14px; border-radius:10px; font-weight:650; letter-spacing:.2px; cursor:pointer
+  }
+  button:hover{border-color:#2b3645}
+  .ghost{background:transparent}
+  .ok{border-color:#24452f; background:linear-gradient(180deg,#112017,#0d1a13)}
+  .warn{border-color:#4a3a1c; background:linear-gradient(180deg,#211a0d,#181207)}
+  main{display:grid; gap:14px}
+  section{
+    background:var(--panel); border:1px solid var(--edge); border-radius:16px; padding:16px 14px 14px;
+  }
+  h2{margin:0 0 6px; font-size:15px; letter-spacing:.2px}
+  .hint{color:var(--mute); font-size:13px; margin-top:2px}
+  input[type="text"], textarea{
+    width:100%; background:#0e131a; color:var(--ink); border:1px solid var(--edge); border-radius:12px;
+    padding:12px 12px; font:500 16px/1.6 ui-sans-serif, -apple-system, Segoe UI, Roboto, Inter, Arial;
+    outline:none;
+  }
+  input[type="text"]{height:46px}
+  textarea{min-height:130px; resize:vertical}
+  .grid{display:grid; gap:12px}
+  @media (min-width:820px){
+    .grid{grid-template-columns:1fr 1fr}
+  }
+  .seal{font-style:italic}
+  footer{position:fixed; left:0; right:0; bottom:0; background:linear-gradient(180deg,rgba(11,13,17,.0),rgba(11,13,17,.9) 35%, rgba(11,13,17,1));
+    padding:14px 16px; border-top:1px solid var(--edge); display:flex; justify-content:center}
+  .dock{display:flex; gap:10px; flex-wrap:wrap; width:100%; max-width:880px}
+  .tag{display:inline-flex; align-items:center; gap:8px; color:var(--mute); font-size:12px}
+  .dot{width:8px; height:8px; border-radius:50%}
+  .dot.ok{background:var(--good)} .dot.warn{background:var(--warn)} .dot.idle{background:#3a4556}
+  .row{display:flex; align-items:center; justify-content:space-between; gap:12px; margin:6px 0 2px}
+  .inline{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+  .pill{
+    border:1px dashed var(--edge); color:var(--mute); padding:6px 10px; border-radius:999px; font-size:12px
+  }
+  .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size:12px; color:#b7c4ff}
+  .sr{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0}
+</style>
+</head>
+<body>
+  <div class="wrap" id="app">
+    <header>
+      <div>
+        <div class="title"><span class="glyph">🌙</span> Moon Field Note</div>
+        <div class="sub">Metabolize the flare: Sun trace → Bee pollen → Honey sample → Moon seal.</div>
+      </div>
+      <div class="bar">
+        <button id="copyMd">Copy Markdown</button>
+        <button id="exportJson">Export JSON</button>
+        <button id="printNote" class="ghost">Print</button>
+        <button id="newNote" class="warn">New Note</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <h2>Title</h2>
+        <div class="hint">Short and specific. Example: <span class="mono">After the Stallion</span></div>
+        <input type="text" id="title" placeholder="After the ____" autocomplete="off" />
+      </section>
+
+      <div class="grid">
+        <section>
+          <h2>1) What happened — <span class="pill">Sun trace</span></h2>
+          <div class="hint">Two factual sentences. Only the act.</div>
+          <textarea id="sun"></textarea>
+        </section>
+
+        <section>
+          <h2>2) What it revealed — <span class="pill">Bee pollen</span></h2>
+          <div class="hint">Begin with “It showed me…” or “It reminded me…”</div>
+          <textarea id="bee"></textarea>
+        </section>
+      </div>
+
+      <div class="grid">
+        <section>
+          <h2>3) What stays — <span class="pill">Honey sample</span></h2>
+          <div class="hint">One line that remains true/useful now.</div>
+          <textarea id="honey"></textarea>
+        </section>
+
+        <section>
+          <h2>4) Moon seal — <span class="pill">quiet closing</span></h2>
+          <div class="hint">One breath-length sentence to seal it.</div>
+          <textarea id="seal" class="seal" placeholder="I let the flare cool into honey."></textarea>
+        </section>
+      </div>
+
+      <section>
+        <div class="row">
+          <div class="inline">
+            <span class="tag"><span class="dot idle" id="saveDot"></span> <span id="saveText">Idle</span></span>
+            <span class="pill">Autosaves locally</span>
+          </div>
+          <div class="inline">
+            <span class="pill">Note ID: <span id="noteId" class="mono"></span></span>
+            <button id="duplicate" class="ok">Duplicate as Template</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <div class="dock">
+      <button id="quickMantra" class="ok">Apply Moon Mantra</button>
+      <button id="oneBreath" class="ghost">One-Breath Timer (10s)</button>
+    </div>
+  </footer>
+
+<script>
+(function(){
+  const $ = id => document.getElementById(id);
+  const fields = { title:$("title"), sun:$("sun"), bee:$("bee"), honey:$("honey"), seal:$("seal") };
+  const saveDot = $("saveDot"), saveText = $("saveText"), noteIdEl = $("noteId");
+  const STORAGE_KEY = "jar:fieldnote:current";
+  const HISTORY_KEY = "jar:fieldnote:history";
+  let noteId = "";
+  let saveTimer;
+
+  function uid(){
+    const t = new Date();
+    const s = t.toISOString().replace(/[-:TZ.]/g,"").slice(0,14);
+    const r = Math.random().toString(36).slice(2,8);
+    return "moon-" + s + "-" + r;
+  }
+
+  function setStatus(kind, text){
+    saveText.textContent = text;
+    saveDot.className = "dot " + (kind || "idle");
+  }
+
+  function hydrate(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(raw){
+        const data = JSON.parse(raw);
+        fields.title.value = data.title || "";
+        fields.sun.value = data.sun || "";
+        fields.bee.value = data.bee || "";
+        fields.honey.value = data.honey || "";
+        fields.seal.value = data.seal || "";
+        noteId = data.id || uid();
+      }else{
+        noteId = uid();
+      }
+      noteIdEl.textContent = noteId;
+      setStatus("idle","Idle");
+    }catch(_e){
+      noteId = uid();
+      noteIdEl.textContent = noteId;
+      setStatus("warn","Recovery mode");
+    }
+  }
+
+  function currentData(){
+    return {
+      id: noteId,
+      when: new Date().toISOString(),
+      title: fields.title.value.trim(),
+      sun: fields.sun.value.trim(),
+      bee: fields.bee.value.trim(),
+      honey: fields.honey.value.trim(),
+      seal: fields.seal.value.trim(),
+      kind: "moon_field_note",
+      version: "1.0.0"
+    };
+  }
+
+  function queueSave(){
+    setStatus("warn","Editing…");
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(commitSave, 400);
+  }
+
+  function commitSave(){
+    try{
+      const data = currentData();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      setStatus("ok","Saved");
+      setTimeout(()=>setStatus("idle","Idle"), 1200);
+    }catch(_e){
+      setStatus("warn","Storage full");
+    }
+  }
+
+  function toMarkdown(d){
+    const lines = [];
+    lines.push(`# ${d.title || "Moon Field Note"}`);
+    lines.push("");
+    lines.push(`- ID: ${d.id}`);
+    lines.push(`- When: ${d.when}`);
+    lines.push("");
+    lines.push(`## 1) What happened — Sun trace`);
+    lines.push(d.sun || "");
+    lines.push("");
+    lines.push(`## 2) What it revealed — Bee pollen`);
+    lines.push(d.bee || "");
+    lines.push("");
+    lines.push(`## 3) What stays — Honey sample`);
+    lines.push(d.honey || "");
+    lines.push("");
+    lines.push(`## 4) Moon seal`);
+    lines.push(d.seal || "");
+    lines.push("");
+    return lines.join("\n");
+  }
+
+  function download(filename, text){
+    const blob = new Blob([text], {type:"text/plain;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click();
+    a.remove(); URL.revokeObjectURL(url);
+  }
+
+  function duplicateAsTemplate(){
+    const d = currentData();
+    const keep = {
+      title: (d.title ? "After the " + d.title.replace(/^After the\s*/i,"") : "After the ____"),
+      sun:"", bee:"", honey:"", seal:""
+    };
+    noteId = uid();
+    fields.title.value = keep.title;
+    fields.sun.value = keep.sun;
+    fields.bee.value = keep.bee;
+    fields.honey.value = keep.honey;
+    fields.seal.value = keep.seal;
+    noteIdEl.textContent = noteId;
+    commitSave();
+  }
+
+  function exportJson(){
+    const d = currentData();
+    try{
+      const raw = localStorage.getItem(HISTORY_KEY);
+      const history = raw ? JSON.parse(raw) : [];
+      const merged = [...history, d].slice(-200); // keep last 200
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(merged));
+    }catch(_e){}
+    download(`${d.id}.json`, JSON.stringify(d, null, 2));
+  }
+
+  function copyMarkdown(){
+    const md = toMarkdown(currentData());
+    navigator.clipboard.writeText(md).then(function(){
+      setStatus("ok","Markdown copied");
+      setTimeout(()=>setStatus("idle","Idle"), 1200);
+    }, function(){
+      setStatus("warn","Clipboard blocked");
+    });
+  }
+
+  function printNote(){
+    window.print();
+  }
+
+  function newNote(){
+    const confirmText = "Start a new field note?\nThe current one is saved locally as “jar:fieldnote:current”.";
+    if(!confirm(confirmText)) return;
+    fields.title.value = "After the ____";
+    fields.sun.value = "";
+    fields.bee.value = "";
+    fields.honey.value = "";
+    fields.seal.value = "";
+    noteId = uid();
+    noteIdEl.textContent = noteId;
+    commitSave();
+  }
+
+  function applyMoonMantra(){
+    if(!fields.seal.value.trim()){
+      fields.seal.value = "I let the flare cool into honey.";
+    }
+    commitSave();
+  }
+
+  function oneBreathTimer(){
+    setStatus("warn","Breath… 10s");
+    let t = 10;
+    const timer = setInterval(function(){
+      t--;
+      if(t<=0){ clearInterval(timer); setStatus("ok","Breath complete"); setTimeout(()=>setStatus("idle","Idle"), 1200); }
+    }, 1000);
+  }
+
+  for(const k in fields){ fields[k].addEventListener("input", queueSave, {passive:true}); }
+  $("copyMd").addEventListener("click", copyMarkdown);
+  $("exportJson").addEventListener("click", exportJson);
+  $("printNote").addEventListener("click", printNote);
+  $("newNote").addEventListener("click", newNote);
+  $("duplicate").addEventListener("click", duplicateAsTemplate);
+  $("quickMantra").addEventListener("click", applyMoonMantra);
+  $("oneBreath").addEventListener("click", oneBreathTimer);
+
+  hydrate();
+  commitSave();
+})();
+</script>
+</body>
+</html>
