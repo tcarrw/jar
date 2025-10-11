@@ -21,6 +21,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tunes.plnt.earth/anchor-protocol.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tunes.plnt.earth/archive.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
