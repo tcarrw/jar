@@ -146,6 +146,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://tunes.plnt.earth/fieldnotes.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://tunes.plnt.earth/honey-discipline-flame-check.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
