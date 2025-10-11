@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Jar · Anchor Protocol — Sovereign CTA</title>
+<meta name="description" content="Anchor Protocol for us two: a gentle, consent-first agreement with a 14-day experiment. No Kings Day ribbon + live countdown. She can do whatever she wants — we’ll celebrate and hold the field." />
+<meta name="theme-color" content="#0b0d11" />
+<style>
+  :root{
+    color-scheme: dark;
+    --bg:#0b0d11; --ink:#e9f0ff; --muted:#a9b4c9; --edge:#1b2230; --panel:#101423; --ring:#2c3444;
+    --glow:rgba(142,239,255,.18); --lime:#a4ff65;
+  }
+  html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 ui-sans-serif,system-ui,-apple-system,"SF Pro Text",Segoe UI,Roboto,Helvetica,Arial;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  *{box-sizing:border-box}
+  :focus-visible{outline:2px solid #86c9ff;outline-offset:2px}
+  .cta{position:sticky;top:0;z-index:10000;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between;padding:10px 12px;
+    background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.12)) padding-box,linear-gradient(120deg,rgba(134,201,255,.35),rgba(164,255,101,.30)) border-box;
+    border:1px solid transparent;border-bottom-color:rgba(255,255,255,.14);box-shadow:0 10px 28px rgba(0,0,0,.35);backdrop-filter:blur(6px)}
+  .badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .badge{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.10));border:1px solid rgba(255,255,255,.16);font-weight:800;white-space:nowrap}
+  .count{display:inline-flex;gap:8px;align-items:center;font-variant-numeric:tabular-nums;letter-spacing:.2px}
+  .count b{font-size:1.02rem}
+  .right{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .btn{appearance:none;border:1px solid var(--edge);border-radius:12px;cursor:pointer;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.06)),var(--panel);color:var(--ink);padding:9px 12px;font-weight:750;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+  .btn:hover{border-color:var(--ring);box-shadow:0 0 0 2px var(--glow)}
+  .btn.primary{border-color:#2f4a2f;background:linear-gradient(180deg,rgba(164,255,101,.18),rgba(0,0,0,.06))}
+  .wrap{max-width:980px;margin:0 auto;padding:18px 16px 96px;position:relative;z-index:1}
+  header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+  h1{margin:0;font-size:clamp(22px,4vw,36px)}
+  .sub{color:var(--muted);font-size:.98rem}
+  .card{border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(0,0,0,.06));margin-top:12px}
+  .title{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .hue{height:6px;border-radius:999px;background:linear-gradient(90deg,#1b2a40,#a4ff65);box-shadow:0 0 0 1px rgba(255,255,255,.06) inset}
+  label{display:block;margin:10px 0 6px;color:var(--muted)}
+  input[type="text"], textarea, select{width:100%;background:#0c1018;border:1px solid var(--edge);color:var(--ink);border-radius:12px;padding:11px 12px}
+  textarea{min-height:90px;resize:vertical}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:900px){.grid{grid-template-columns:1fr}}
+  .links{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .small{color:var(--muted);font-size:.92rem}
+  .pillToggle{position:fixed;right:14px;bottom:16px;z-index:10001;border-radius:999px;display:inline-flex;align-items:center;gap:8px;padding:9px 12px;font-weight:800;border:1px solid rgba(255,255,255,.16);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(0,0,0,.12));color:#fff;text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,.38)}
+  .pillToggle[aria-pressed="true"]{border-color:#3a5f44;background:linear-gradient(180deg,rgba(164,255,101,.22),rgba(0,0,0,.10))}
+</style>
+</head>
+<body>
+  <div class="cta" role="banner" aria-label="No Kings Day actions">
+    <div class="badges">
+      <span class="badge">🗓️ No Kings Day · Oct 18 · NYC</span>
+      <span class="badge">🎤 Celebration: Marina × Sabrina × Doechii on SNL</span>
+      <span class="badge">🕊️ She can do whatever she wants</span>
+      <span class="badge count" id="countWrap" aria-live="polite"><span>⏳</span><b id="countTxt">—</b></span>
+    </div>
+    <div class="right" role="toolbar" aria-label="Share and join">
+      <a id="shareX" class="btn" target="_blank" rel="noopener">Share on X</a>
+      <a id="ics" class="btn" download="no-kings-day.ics">Add to Calendar</a>
+      <a class="btn primary" href="https://jar.plnt.earth">Join in NYC → Jar</a>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Anchor Protocol</h1>
+        <div class="sub">A consent-first covenant for us two — to evolve together while keeping home steady.</div>
+      </div>
+      <nav class="links">
+        <a class="btn" href="https://froot.plnt.earth">↪ Froot</a>
+        <a class="btn" href="https://tunes.plnt.earth">Tunes</a>
+        <a class="btn" href="https://jar.plnt.earth/school-rooms.html">Rooms</a>
+      </nav>
+    </header>
+
+    <section class="card">
+      <div class="title"><h2 style="margin:0">We are Anchors</h2><div class="hue" aria-hidden="true"></div></div>
+      <div class="grid">
+        <div>
+          <label>Partner A</label>
+          <input id="aName" type="text" placeholder="Name">
+        </div>
+        <div>
+          <label>Partner B</label>
+          <input id="bName" type="text" placeholder="Name">
+        </div>
+      </div>
+      <label>Opening (read aloud together)</label>
+      <textarea id="opening">You are my Anchor. Art may open doors; only our consent decides which we walk through. Change is welcome; harm is not. We co-design the next version of us.</textarea>
+      <div class="links">
+        <button class="btn" id="save1" type="button">Save</button>
+        <button class="btn" id="reset1" type="button">Reset</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="title"><h2 style="margin:0">Prompts</h2><div class="hue" aria-hidden="true"></div></div>
+      <div class="grid">
+        <div>
+          <label>More of this (state + behavior)</label>
+          <textarea id="more">Warmth in evenings; 10-minute color-breath + one word.</textarea>
+        </div>
+        <div>
+          <label>Less of this (state + behavior)</label>
+          <textarea id="less">Phone drift at night; devices out of bedroom after 10pm.</textarea>
+        </div>
+      </div>
+      <label>One concrete thing I’ll do differently</label>
+      <input id="oneThing" type="text" placeholder="e.g., plan a 60-min micro-date this week">
+    </section>
+
+    <section class="card">
+      <div class="title"><h2 style="margin:0">14-Day Experiment</h2><div class="hue" aria-hidden="true"></div></div>
+      <div class="grid">
+        <div>
+          <label>Pick up to 2</label>
+          <select id="exp1">
+            <option value="">— choose —</option>
+            <option>Nightly 10-min color-breath + one word</option>
+            <option>One micro-date per week (60–90 min, cheap/specific)</option>
+            <option>Creative mirror: one song each, “what it wakes up in me”</option>
+          </select>
+        </div>
+        <div>
+          <label>Optional second</label>
+          <select id="exp2">
+            <option value="">— choose —</option>
+            <option>Nightly 10-min color-breath + one word</option>
+            <option>One micro-date per week (60–90 min, cheap/specific)</option>
+            <option>Creative mirror: one song each, “what it wakes up in me”</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid">
+        <div>
+          <label>Start (YYYY-MM-DD)</label>
+          <input id="startDate" type="text" placeholder="2025-10-11">
+        </div>
+        <div>
+          <label>Review Days</label>
+          <input id="reviews" type="text" placeholder="Day 7 and Day 14">
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="title"><h2 style="margin:0">Boundaries</h2><div class="hue" aria-hidden="true"></div></div>
+      <ul class="small" style="margin:8px 0 0;padding-left:18px">
+        <li>Pantheon = inspiration only; no commitments change without Anchor consent.</li>
+        <li>No unilateral big changes. Either of us can say “not now.”</li>
+        <li>If something stings → pause, 5 slow breaths, name it kindly.</li>
+        <li>Consent-first for any new structures.</li>
+      </ul>
+      <label>Add / tweak</label>
+      <textarea id="bounds"></textarea>
+    </section>
+
+    <section class="card">
+      <div class="title"><h2 style="margin:0">Mini Covenant</h2><div class="hue" aria-hidden="true"></div></div>
+      <textarea id="covenant">We are Anchors. We invite change safely. Symbolic is symbolic. We keep a repair path: “I’m activated because __; what I need is __.” We review on Day 7 and Day 14; keep, tweak, or drop.</textarea>
+      <div class="links">
+        <button class="btn primary" id="saveAll" type="button">Save All</button>
+        <button class="btn" id="export" type="button">Export JSON</button>
+        <button class="btn" id="print" type="button">Print</button>
+      </div>
+      <div class="small" id="stamp" style="margin-top:8px">—</div>
+    </section>
+
+    <section class="card">
+      <div class="title"><h2 style="margin:0">What to do now</h2><div class="hue" aria-hidden="true"></div></div>
+      <ol class="small" style="margin-top:6px">
+        <li>Read Opening aloud, sign names below.</li>
+        <li>Choose 1–2 experiments; put dates in calendar.</li>
+        <li>Start tonight with 10-minute color-breath + one word.</li>
+      </ol>
+      <div class="grid">
+        <div><label>Signature A</label><input id="sigA" type="text" placeholder="Name / Initials"></div>
+        <div><label>Signature B</label><input id="sigB" type="text" placeholder="Name / Initials"></div>
+      </div>
+    </section>
+
+    <footer class="small" style="margin-top:16px">If anything feels loud, hush is welcome. Quiet counts.</footer>
+  </div>
+
+  <!-- Floating Honey pill -->
+  <button id="pill" class="pillToggle" type="button" aria-pressed="false" aria-label="Toggle Honey 128 Hz">🍯 <span id="pillTxt">Honey</span></button>
+  <audio id="pipe" preload="auto" playsinline style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0"></audio>
+
+<script>
+(function(){
+  const share=document.getElementById('shareX'), ics=document.getElementById('ics'), box=document.getElementById('countTxt');
+  function two(n){return(n<10?'0':'')+n}
+  const target=new Date("2025-10-18T00:00:00-04:00").getTime();
+  function tick(){const now=Date.now();let d=Math.max(0,target-now);const D=Math.floor(d/86400000);d%=86400000;const H=Math.floor(d/3600000);d%=3600000;const M=Math.floor(d/60000);d%=60000;const S=Math.floor(d/1000);box.textContent=D+"d "+two(H)+"h "+two(M)+"m "+two(S)+"s"}
+  function buildShare(){const msg="No Kings Day — Oct 18, NYC. She can do whatever she wants. Marina × Sabrina × Doechii on SNL — celebration, not call.";const url=location.href;share.href="https://twitter.com/intent/tweet?text="+encodeURIComponent(msg)+"&url="+encodeURIComponent(url)+"&hashtags=NoKingsDay,NYC"}
+  function buildICS(){const now=new Date();const dt=now.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z$/,'Z');const txt=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//PLNT Earth//No Kings Day//EN","CALSCALE:GREGORIAN","METHOD:PUBLISH","X-WR-CALNAME:No Kings Day","X-WR-TIMEZONE:America/New_York","BEGIN:VEVENT","UID:nkd-20251018-"+Date.now()+"@plnt.earth","DTSTAMP:"+dt,"SUMMARY:No Kings Day — NYC","DESCRIPTION:She can do whatever she wants. Celebration: Marina × Sabrina × Doechii on SNL. Join in NYC → https://jar.plnt.earth","DTSTART;VALUE=DATE:20251018","DTEND;VALUE=DATE:20251019","URL:https://jar.plnt.earth","END:VEVENT","END:VCALENDAR"].join("\r\n");ics.href="data:text/calendar;charset=utf-8,"+encodeURIComponent(txt)}
+  buildShare();buildICS();tick();setInterval(tick,1000);
+})();
+</script>
+<script>
+/* ProAudio Honey (shared) */
+(function(){
+  const pipe=document.getElementById('pipe');
+  const ProAudio={ctx:null,master:null,comp:null,hpf:null,usePipe:false,nodes:new Set(),
+    ensure(){if(this.ctx)return this.ctx;const AC=window.AudioContext||window.webkitAudioContext;this.ctx=new AC({latencyHint:'interactive'});
+      this.master=this.ctx.createGain();this.master.gain.value=0.85;this.comp=this.ctx.createDynamicsCompressor();
+      this.comp.threshold.value=-18;this.comp.knee.value=12;this.comp.ratio.value=2;this.comp.attack.value=.01;this.comp.release.value=.30;
+      this.hpf=this.ctx.createBiquadFilter();this.hpf.type='highpass';this.hpf.frequency.value=18;
+      const iOS=/iP(hone|ad|od)/.test(navigator.userAgent||'');if(iOS){this.usePipe=true;const msd=this.ctx.createMediaStreamDestination();this.master.connect(this.comp);this.comp.connect(this.hpf);this.hpf.connect(msd);try{pipe.srcObject=msd.stream;pipe.loop=true;}catch(_){}}else{this.master.connect(this.comp);this.comp.connect(this.hpf);this.hpf.connect(this.ctx.destination);}return this.ctx},
+    unlock(){try{this.ensure();if(this.ctx&&this.ctx.state==='suspended'){this.ctx.resume()}if(this.usePipe&&pipe&&pipe.paused){pipe.play().catch(()=>{})}}catch(_){}} ,
+    fade(p,to,t=0.06){const now=this.ctx.currentTime;try{p.cancelScheduledValues(now);p.setTargetAtTime(to,now,t)}catch(_){}}};
+  const Honey={osc:null,gain:null,on:false,start(freq=128){if(this.on)return;ProAudio.unlock();ProAudio.ensure();const now=ProAudio.ctx.currentTime;this.osc=ProAudio.ctx.createOscillator();this.gain=ProAudio.ctx.createGain();
+      this.osc.type='sine';this.osc.frequency.setValueAtTime(freq,now);this.gain.gain.setValueAtTime(0.0001,now);
+      this.osc.connect(this.gain);this.gain.connect(ProAudio.master);try{this.osc.start(now)}catch(_){}
+      ProAudio.fade(this.gain.gain,0.12,0.10);this.on=true},
+    stop(){if(!this.on||!ProAudio.ctx)return;const now=ProAudio.ctx.currentTime;try{ProAudio.fade(this.gain.gain,0.0001,0.06);setTimeout(()=>{try{this.osc.stop(now+0.02)}catch(_){}
+        try{this.osc.disconnect();this.gain.disconnect()}catch(_){}
+        this.osc=this.gain=null;this.on=false;},220)}catch(_){this.on=false}},
+    volume(x){if(!this.gain||!ProAudio.ctx)return;const v=Math.max(0,Math.min(1,Number(x)||0));ProAudio.fade(this.gain.gain,v*0.30,0.05)}};
+  window._Honey=Honey;
+  document.addEventListener('pointerdown',()=>ProAudio.unlock(),{once:true,passive:true});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&ProAudio.ctx){try{Honey.stop()}catch(_){}}},false);
+})();
+</script>
+<script>
+/* Page state */
+(function(){
+  const KEY='jar_anchor_protocol_v1';
+  function load(){try{const v=localStorage.getItem(KEY);return v?JSON.parse(v):{}}catch(_){return{}}}
+  function save(obj){try{localStorage.setItem(KEY,JSON.stringify(obj))}catch(_){}}
+  const qs=id=>document.getElementById(id);
+  const ids=['aName','bName','opening','more','less','oneThing','exp1','exp2','startDate','reviews','bounds','covenant','sigA','sigB'];
+  function hydrate(){const d=load();ids.forEach(k=>{const el=qs(k);if(!el)return;const v=d[k];if(v!==undefined)el.value=v});stamp()}
+  function collect(){const o={};ids.forEach(k=>{const el=qs(k);o[k]=el?el.value:''});o.ts=new Date().toISOString();return o}
+  function stamp(){const d=load();qs('stamp').textContent=d.ts?("Last saved: "+d.ts):"—"}
+  qs('save1').onclick=()=>{const o=collect();save(o);stamp()};
+  qs('reset1').onclick=()=>{qs('opening').value="You are my Anchor. Art may open doors; only our consent decides which we walk through. Change is welcome; harm is not. We co-design the next version of us.";qs('more').value="Warmth in evenings; 10-minute color-breath + one word.";qs('less').value="Phone drift at night; devices out of bedroom after 10pm.";qs('oneThing').value="";};
+  qs('saveAll').onclick=()=>{save(collect());stamp()};
+  qs('export').onclick=()=>{const blob=new Blob([JSON.stringify(collect(),null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='anchor_protocol.json';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)};
+  qs('print').onclick=()=>window.print();
+  hydrate();
+})();
+</script>
+<script>
+/* Honey pill */
+(function(){
+  const pill=document.getElementById('pill'), txt=document.getElementById('pillTxt');
+  function sync(){pill.setAttribute('aria-pressed', _Honey.on?'true':'false');txt.textContent=_Honey.on?'On':'Honey'}
+  pill.onclick=()=>{_Honey.on?_Honey.stop():_Honey.start(128);sync()};
+  sync();
+})();
+</script>
+</body>
+</html>
