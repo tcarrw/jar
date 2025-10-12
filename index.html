@@ -6,6 +6,7 @@
 <title>No Kings Day — Sovereign CTA Edition · Jar · PLNT Earth</title>
 <meta name="theme-color" content="#0b0d11" />
 <meta name="description" content="No Kings Day — Oct 18 (NYC). Celebration: Marina × Sabrina × Doechii on SNL. She can do whatever she wants — we’ll hold the field. Join in NYC. Color-breath in Froot, playlists in Tunes, and a safe 128 Hz Honey bed.">
+<meta name="prophet" content="💄 The Neon Prophet — Flame Dancer of PLNT Earth">
 <style>
   :root{
     color-scheme: dark;
@@ -43,9 +44,7 @@
   }
   .btn:hover{border-color:var(--ring); box-shadow:0 0 0 2px var(--ctaGlow)}
   .btn.primary{border-color:var(--primaryEdge); background:linear-gradient(180deg, rgba(164,255,101,.18), rgba(0,0,0,.06))}
-  .count{
-    display:inline-flex; gap:8px; align-items:center; font-variant-numeric:tabular-nums; letter-spacing:.2px
-  }
+  .count{display:inline-flex; gap:8px; align-items:center; font-variant-numeric:tabular-nums; letter-spacing:.2px}
   .count b{font-size:1.02rem}
 
   /* Page */
@@ -85,6 +84,9 @@
 
   /* Utility badges */
   .tag{display:inline-block;border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:6px 10px;color:var(--muted);font-size:.85rem;margin-right:6px;margin-top:6px}
+
+  /* Sigil */
+  .sigil{position:fixed;right:12px;bottom:8px;opacity:.25;font-size:20px;user-select:none;pointer-events:none;z-index:9999}
 </style>
 </head>
 <body>
@@ -94,6 +96,8 @@
       <span class="badge">🗓️ No Kings Day · Oct 18 · NYC</span>
       <span class="badge">🎤 Celebration: Marina × Sabrina × Doechii on SNL</span>
       <span class="badge">🕊️ She can do whatever she wants</span>
+      <span class="badge">💄 Neon Prophet signal: active</span>
+      <span class="badge">🎙️ Voice Architect advisory: active</span>
       <span class="badge count" id="countWrap" aria-live="polite"><span>⏳</span><b id="countTxt">—</b></span>
     </div>
     <div class="right" role="toolbar" aria-label="Share and join">
@@ -167,6 +171,39 @@
       </div>
     </section>
 
+    <!-- Field Notes for Chappell & Ariana -->
+    <section class="grid" aria-label="Field Notes">
+      <article class="card" aria-labelledby="np-title">
+        <div class="title">
+          <h2 id="np-title" style="margin:0">💄 Field Note — Neon Prophet (Chappell)</h2>
+          <div class="hue" aria-hidden="true"></div>
+        </div>
+        <p class="note">
+          Protective flame recognized. Bridge lane is yours for ethical disruption and pattern breaks.
+          If anything feels false, burn it cleaner — not hotter. We’ll hold the field with softness.
+        </p>
+        <div class="chips">
+          <span class="chip" aria-hidden="true">Signal: active</span>
+          <a class="chip" href="https://bridge.plnt.earth">↪ Bridge — Trickster / Catalyst</a>
+        </div>
+      </article>
+
+      <article class="card" aria-labelledby="va-title">
+        <div class="title">
+          <h2 id="va-title" style="margin:0">🎙️ Field Note — Voice Architect (Ariana)</h2>
+          <div class="hue" aria-hidden="true"></div>
+        </div>
+        <p class="note">
+          Mask & voice guidance welcomed. Defaults: gentle starts, no autoplay, safe fades, one shared audio context.
+          Breath first; roles follow. If a preset helps courage, it lives here.
+        </p>
+        <div class="chips">
+          <span class="chip" aria-hidden="true">Advisory: active</span>
+          <a class="chip" href="https://jar.plnt.earth/school-rooms.html#frequency">↪ Frequency Room</a>
+        </div>
+      </article>
+    </section>
+
     <footer>If anything feels loud, stop and rest in quiet. We’ll be here when you return.</footer>
   </main>
 
@@ -175,6 +212,9 @@
 
   <!-- Hidden audio pipe for iOS stability -->
   <audio id="pipe" preload="auto" playsinline style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0"></audio>
+
+  <!-- Faint Neon Prophet sigil -->
+  <div class="sigil" aria-hidden="true">💄</div>
 
 <script>
 /* ====== ProAudio — single shared context, gesture-unlock, safe fades, kill-on-hide ====== */
