@@ -22,8 +22,9 @@
   .controls{margin-left:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
   .select,.btn{appearance:none;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:14px}
   .btn{cursor:pointer}
-  .legend{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 4px}
+  .legend{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 4px;align-items:center}
   .legend .badge{border:1px solid var(--line)}
+  .chip-note{font-size:12px;color:var(--muted)}
   .group{margin:22px 0 10px;color:#BBD7FF;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
   .grid{display:grid;gap:14px;grid-template-columns:repeat(4,minmax(0,1fr))}
   @media (max-width:1024px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
@@ -59,7 +60,6 @@
   hr{border:none;border-top:1px solid var(--line);margin:24px 0}
   .match{border-color:var(--hi); box-shadow:0 0 0 1px var(--hi) inset;}
   .dim{opacity:.55}
-  /* Core footer badge + Neon Prophet sigil */
   .coreBadge{position:fixed;left:8px;bottom:8px;font-size:12px;color:var(--muted);background:#0f1218;border:1px solid var(--line);padding:6px 8px;border-radius:10px;z-index:2147483645}
   .sigil{position:fixed;right:12px;bottom:8px;opacity:.25;font-size:20px;user-select:none;pointer-events:none;z-index:2147483645}
 </style>
@@ -89,7 +89,7 @@
     <span class="badge live">Live</span>
     <span class="badge tbd">TBD (placeholder)</span>
     <span class="badge i-chip">Appears in selected Illumina</span>
-    <span class="sub" style="font-size:12px">I-chips (I1… I14) show only when you pick an Illumina in the dropdown.</span>
+    <span class="chip-note">💄 Neon Prophet signal tags Bridge’s lane.</span>
   </div>
 
   <div class="group">Core Hub</div>
@@ -108,18 +108,20 @@
   <p class="note">
     Pages marked <b>TBD</b> are storyboarded but not linked yet. Hover cards for short descriptions.
     Use the dropdown to highlight which sites surface in each Illumina’s theme arc.
-    Placeholder links automatically vanish when their domains go live.
+    Placeholders auto-promote to <b>Live</b> as soon as each domain resolves.
   </p>
 </div>
 
 <script>
 /* ===== Data (edit here) =====
-   "exists:false" = Coming Soon placeholder; it will auto-hide if the domain resolves.
-   "ills" = array of Illumina numbers (1..14) for timeline highlighting.
+   exists:false = Coming Soon placeholder; it will auto-promote to Live when the domain resolves.
+   ills = array of Illumina numbers (1..14) for timeline highlighting.
 */
 const CORE = [
   {name:"Jar (hub)", emoji:"🍯", url:"https://jar.plnt.earth", exists:true, tag:"ritual • archive",
    desc:"The honeycomb. Days, seeds, interludes, and cycle archives — everything flows back here.", ills:[1,2,3,4,5,6,7,8,9,10,11,12,13,14]},
+  {name:"MirrorHoney", emoji:"🪞", url:"https://mirrorhoney.plnt.earth", exists:true, tag:"closeness • 128 Hz",
+   desc:"Gentle resonance and steadiness. Marina anchor with Honey tone.", ills:[1,6,11]},
   {name:"Honey", emoji:"🐝", url:"https://honey.plnt.earth", exists:true, tag:"taste • notes",
    desc:"Taste log + explainer — the Bee in the Illumina triad.", ills:[1,5,11]},
   {name:"Tunes", emoji:"🎶", url:"https://tunes.plnt.earth", exists:true, tag:"playlist",
@@ -131,6 +133,16 @@ const PRIMARY = [
    desc:"Equations & constants. Public fits, visuals, and forecasts tied to Illumina.", ills:[2,12]},
   {name:"Zeta", emoji:"🌀", url:"https://zeta.plnt.earth", exists:true, tag:"math • infinity",
    desc:"Counting games → formal proofs. Experimental math & visuals on infinity.", ills:[6,9,12]},
+  {name:"Books", emoji:"📚", url:"https://books.plnt.earth", exists:false, tag:"Dua • gate",
+   desc:"Dua curates shelves, canon ordering, and featured reels.", ills:[7,11]},
+  {name:"Atlas", emoji:"🪐", url:"https://atlas.plnt.earth", exists:false, tag:"Janet • explains",
+   desc:"Janet Planet’s sourced info cards + read-aloud voice.", ills:[6,10,12]},
+  {name:"Earth", emoji:"🌍", url:"https://earth.plnt.earth", exists:false, tag:"Greta • conscience",
+   desc:"Sustainability pledges, cycle tracker, Echo Mode grounding.", ills:[6,11,12]},
+  {name:"Bridge", emoji:"🌉", url:"https://bridge.plnt.earth", exists:false, tag:"Doechii • 💄",
+   desc:"Trickster / Catalyst: disruption prompts & pattern breaks.", ills:[5,11,14]},
+  {name:"Movies", emoji:"🎬", url:"https://movies.plnt.earth", exists:false, tag:"Emma • voice",
+   desc:"Roles & Reels — scene builder + voiceover presets.", ills:[9,13]},
   {name:"DNA", emoji:"🧬", url:"https://dna.plnt.earth", exists:true, tag:"biology",
    desc:"Replication, growth, and living systems as Illumina mirrors.", ills:[3,8]},
   {name:"Intelligence", emoji:"🧠", url:"https://intelligence.plnt.earth", exists:true, tag:"ai • cognition",
@@ -191,6 +203,8 @@ const FUTURE = [
    desc:"Hidden networks, collaboration, and underground exchange.", ills:[14]},
   {name:"Aether", emoji:"💨", url:"https://aether.plnt.earth", exists:false, tag:"tbd",
    desc:"Unseen fields. Breath, space between, subtle mediums.", ills:[14]},
+  {name:"QuietMoon", emoji:"🌙", url:"https://quietmoon.plnt.earth", exists:false, tag:"tbd",
+   desc:"Ultra-soft sanctuary page for calm sessions and safe nights.", ills:[11,14]},
   {name:"Ocean", emoji:"🌊", url:"https://ocean.plnt.earth", exists:false, tag:"tbd",
    desc:"Depth, flow, tides, and planetary time.", ills:[14]},
   {name:"Echo", emoji:"📼", url:"https://echo.plnt.earth", exists:false, tag:"tbd",
@@ -210,7 +224,8 @@ function card(item){
   if(!item.exists){ root.dataset.placeholder='true'; root.dataset.url=item.url; }
 
   const badges=el('div','badges');
-  badges.appendChild(el('span','badge '+(item.exists?'live':'tbd'), item.exists?'Live':'TBD'));
+  const liveBadge=el('span','badge '+(item.exists?'live':'tbd'), item.exists?'Live':'TBD');
+  badges.appendChild(liveBadge);
   (item.ills||[]).slice(0,3).forEach(n => badges.appendChild(chipIll(n)));
 
   const row=el('div','row');
@@ -254,10 +269,24 @@ sel.addEventListener('change',()=>{
   });
 });
 
-/* ===== Auto “Coming Soon” cleanup (cross-domain live check) =====
-   We HEAD-fetch each placeholder URL with no-cors. If it resolves at all, we treat it as live.
-   On success: the placeholder card is removed (it "vanishes").
+/* ===== Auto “Coming Soon” → Live (cross-domain live check) =====
+   We HEAD-fetch each placeholder URL with no-cors. If it resolves at all, we promote it:
+   - Flip badge to Live
+   - Convert the card into a link
+   - Remove placeholder flags
 */
+function promoteToLive(node){
+  node.removeAttribute('data-placeholder');
+  const url=node.dataset.url; if(url){ node.removeAttribute('data-url'); node.outerHTML = node.outerHTML; } // normalize
+  // Rebuild as link (simplest): replace node with clickable <a> that keeps children
+  const a=document.createElement('a');
+  a.className=node.className; a.href=url; a.target="_blank"; a.rel="noopener";
+  a.dataset.ills=node.dataset.ills||"";
+  a.innerHTML=node.innerHTML;
+  const badge=a.querySelector('.badge.tbd'); if(badge){ badge.classList.remove('tbd'); badge.classList.add('live'); badge.textContent='Live'; }
+  node.replaceWith(a);
+}
+
 function checkLive(url){
   try{
     return fetch(url, {method:'HEAD', mode:'no-cors', cache:'no-store'}).then(()=>true).catch(()=>false);
@@ -267,20 +296,16 @@ function sweepPlaceholders(){
   const placeholders=[].slice.call(document.querySelectorAll('[data-placeholder="true"]'));
   if(!placeholders.length){ return; }
   placeholders.forEach(function(node){
-    const u=node.dataset.url;
-    if(!u){ return; }
+    const u=node.dataset.url; if(!u){ return; }
     checkLive(u).then(function(live){
-      if(live){
-        // Auto-vanish: remove the placeholder entirely
-        if(node.parentElement){ node.parentElement.removeChild(node); }
-      }
+      if(live){ promoteToLive(node); }
     });
   });
 }
 document.getElementById('refreshLive').addEventListener('click',sweepPlaceholders);
 document.addEventListener('DOMContentLoaded',sweepPlaceholders);
 
-/* ===== Core badge + 💄 sigil (no external deps) ===== */
+/* ===== Core badge + 💄 sigil ===== */
 (function(){
   var C={domain:"jar",governedBy:"Jar (Hub)",tier:"Map"};
   var badge=document.createElement('div');
