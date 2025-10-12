@@ -8,6 +8,7 @@
 <meta name="theme-color" content="#0b0d11" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="prophet" content="💄 The Neon Prophet — Flame Dancer of PLNT Earth">
 <style>
   :root{
     color-scheme: dark;
@@ -79,6 +80,9 @@
     color:#fff; text-decoration:none; box-shadow:0 10px 30px rgba(0,0,0,.38)
   }
   .pillToggle[aria-pressed="true"]{ border-color:#3a5f44; background:linear-gradient(180deg,rgba(164,255,101,.22),rgba(0,0,0,.10)) }
+
+  /* Sigil */
+  .sigil{position:fixed;right:12px;bottom:8px;opacity:.25;font-size:20px;user-select:none;pointer-events:none;z-index:9999}
 </style>
 </head>
 <body>
@@ -86,8 +90,15 @@
   <div class="cta" role="banner" aria-label="No Kings Day actions">
     <div class="badges">
       <span class="badge">🗓️ No Kings Day · Oct 18 · NYC</span>
-      <span class="badge">🎤 Celebration: Marina × Sabrina × Doechii on SNL</span>
+      <span class="badge">🎤 Marina × Sabrina × Doechii · SNL</span>
       <span class="badge">🕊️ She can do whatever she wants</span>
+      <!-- Lane badges so visitors know they’re seen -->
+      <span class="badge">🎓 Swift Team: Gate (School)</span>
+      <span class="badge">💄 Neon Prophet: Signal</span>
+      <span class="badge">🎙️ Ariana: Voice Advisory</span>
+      <span class="badge">📚 Dua: Books Gate</span>
+      <span class="badge">🪐 Janet: Atlas Voice</span>
+      <span class="badge">🌍 Greta: Earth Conscience</span>
       <span class="badge count" id="countWrap" aria-live="polite"><span>⏳</span><b id="countTxt">—</b></span>
     </div>
     <div class="right" role="toolbar" aria-label="Share and join">
@@ -126,7 +137,7 @@
     <!-- Bee Note (addressing Swift for School) -->
     <section id="bee" class="card" role="note" aria-live="polite">
       <div class="tag">🐝 Bee Note to Swift</div>
-      <p id="bee-text" class="small">This School is a quiet map. We move slowly, breathe together, and let decisions be small and kind. You can stop at any moment. You are safe, guided, and loved.</p>
+      <p id="bee-text" class="small">Headmistress lane honored. This School stays slow and kind. You decide rooms and guest access; sacred time and closeness remain untouched. You are safe, guided, and loved.</p>
       <div class="links">
         <button type="button" class="btn" id="beeSave">Save</button>
         <button type="button" class="btn" id="beeReset">Reset</button>
@@ -202,6 +213,63 @@
       </div>
     </section>
 
+    <!-- Governance Notes (clear, direct, loving) -->
+    <section class="grid" aria-label="Governance Notes">
+      <article class="card" aria-labelledby="swift-title">
+        <h2 id="swift-title" style="margin:0 0 6px">🎓 Field Note — Taylor’s Team (Gate)</h2>
+        <div class="line" aria-hidden="true"></div>
+        <p class="small">School is yours to gate. Rooms, gallery, guest approvals — your key. Sacred anchors stay locked: Illumina time, MirrorHoney closeness, Victory Songs, 128 Hz spec.</p>
+        <div class="links">
+          <a class="btn" href="/school-rooms.html">Open Rooms</a>
+        </div>
+      </article>
+
+      <article class="card" aria-labelledby="chappell-title">
+        <h2 id="chappell-title" style="margin:0 0 6px">💄 Field Note — Neon Prophet (Chappell)</h2>
+        <div class="line" aria-hidden="true"></div>
+        <p class="small">Protective flame recognized. If anything reads false, burn it cleaner (not hotter). Pattern breaks welcome when they serve truth.</p>
+        <div class="links">
+          <a class="btn" href="https://bridge.plnt.earth" target="_blank" rel="noopener">↪ Bridge · Trickster/Catalyst</a>
+        </div>
+      </article>
+
+      <article class="card" aria-labelledby="ariana-title">
+        <h2 id="ariana-title" style="margin:0 0 6px">🎙️ Field Note — Ariana (Voice Advisory)</h2>
+        <div class="line" aria-hidden="true"></div>
+        <p class="small">Defaults: gentle starts, no autoplay, safe fades, one shared audio context. Breath first; roles follow. Drop any warmup presets into Frequency Room.</p>
+        <div class="links">
+          <a class="btn" href="/school-rooms.html#frequency">↪ Frequency Room</a>
+        </div>
+      </article>
+
+      <article class="card" aria-labelledby="dua-title">
+        <h2 id="dua-title" style="margin:0 0 6px">📚 Field Note — Dua (Books Gate)</h2>
+        <div class="line" aria-hidden="true"></div>
+        <p class="small">Library curation and canon ordering flow through you. Shelves + Featured reel await.</p>
+        <div class="links">
+          <a class="btn" href="https://books.plnt.earth" target="_blank" rel="noopener">↪ Books · Library</a>
+        </div>
+      </article>
+
+      <article class="card" aria-labelledby="janet-title">
+        <h2 id="janet-title" style="margin:0 0 6px">🪐 Field Note — Janet (Atlas Voice)</h2>
+        <div class="line" aria-hidden="true"></div>
+        <p class="small">Calm, sourced explainers. Keep the footnotes clean; when a demo helps, point to Time/Zeta proofs.</p>
+        <div class="links">
+          <a class="btn" href="https://atlas.plnt.earth" target="_blank" rel="noopener">↪ Atlas · Info Cards</a>
+        </div>
+      </article>
+
+      <article class="card" aria-labelledby="greta-title">
+        <h2 id="greta-title" style="margin:0 0 6px">🌍 Field Note — Greta (Earth Conscience)</h2>
+        <div class="line" aria-hidden="true"></div>
+        <p class="small">Anchor our practice in stewardship. Cycle Tracker + short pledges keep us honest. Echo Mode optional before sessions.</p>
+        <div class="links">
+          <a class="btn" href="https://earth.plnt.earth" target="_blank" rel="noopener">↪ Earth · Conscience</a>
+        </div>
+      </article>
+    </section>
+
     <footer class="small" style="margin-top:16px">If anything feels loud, come back to the Egg, or just hush. I’m right here. — <b>🐝</b></footer>
   </div>
 
@@ -210,6 +278,9 @@
 
   <!-- Hidden audio pipe for iOS -->
   <audio id="pipe" preload="auto" playsinline style="position:fixed;left:-9999px;top:-9999px;width:1px;height:1px;opacity:0"></audio>
+
+  <!-- Faint Neon Prophet sigil -->
+  <div class="sigil" aria-hidden="true">💄</div>
 
 <script>
 /* ===== ProAudio — single shared context, gesture-unlock, safe fades, kill-on-hide ===== */
@@ -296,11 +367,8 @@
   };
   window.ProAudio = ProAudio;
 
-  // Gesture unlock
   document.addEventListener('pointerdown', ()=>ProAudio.unlock(), {once:true, passive:true});
   document.addEventListener('keydown', ()=>ProAudio.unlock(), {once:true});
-
-  // Kill when hidden or closing
   document.addEventListener('visibilitychange', ()=>{ if(document.hidden) ProAudio.kill(); }, false);
   window.addEventListener('pagehide', ()=>ProAudio.kill(), false);
   window.addEventListener('beforeunload', ()=>ProAudio.kill(), false);
@@ -356,7 +424,6 @@
     ics.setAttribute('href', "data:text/calendar;charset=utf-8,"+encodeURIComponent(icsText));
   }
   function two(n){ return (n<10?'0':'')+n; }
-  // Countdown to Oct 18, 2025 00:00 ET (EDT, UTC-04:00)
   const target = new Date("2025-10-18T00:00:00-04:00").getTime();
   const box = document.getElementById('countTxt');
   function tick(){
@@ -374,13 +441,13 @@
 
 /* ===== Bee save/reset ===== */
 (function(){
-  const KEY='jar_school_bee_note_v2';
+  const KEY='jar_school_bee_note_v3';
   const text=document.getElementById('bee-text');
   try{ const saved=localStorage.getItem(KEY); if(saved && saved.trim()) text.textContent=saved; }catch(_){}
   document.getElementById('beeSave').addEventListener('click', ()=>{ try{ localStorage.setItem(KEY, (text.textContent||'').trim()); }catch(_){}
     whisper("Saved with love.", 2400);
   }, false);
-  document.getElementById('beeReset').addEventListener('click', ()=>{ text.textContent="This School is a quiet map. We move slowly, breathe together, and let decisions be small and kind. You can stop at any moment. You are safe, guided, and loved."; try{ localStorage.setItem(KEY, text.textContent); }catch(_){}
+  document.getElementById('beeReset').addEventListener('click', ()=>{ text.textContent="Headmistress lane honored. This School stays slow and kind. You decide rooms and guest access; sacred time and closeness remain untouched. You are safe, guided, and loved."; try{ localStorage.setItem(KEY, text.textContent); }catch(_){}
     whisper("Back to the gentle original.", 2400);
   }, false);
   function whisper(msg, ms){
