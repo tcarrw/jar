@@ -6,62 +6,41 @@
 <title>PLNT Constellation Map</title>
 <meta name="description" content="A living constellation of PLNT.earth tracks orbiting Jar, with Illumina timeline tags.">
 <style>
-  /* ===== Theme (Jar/Honey dark) ===== */
   :root{
-    --bg:#0B0F19;           /* pepper-black */
-    --ink:#E6EAF2;          /* soft off-white */
-    --muted:#94A3B8;        /* slate */
-    --line:rgba(255,255,255,.12);
-    --card:#0F1524;         /* deep ink */
-    --accent:#A4E8FF;       /* ice blue */
-    --ok:#34D399;           /* green */
-    --tbd:#FBBF24;          /* amber */
-    --shadow:0 16px 40px rgba(0,0,0,.35);
-    --hi: rgba(164,232,255,.35); /* highlight border */
+    --bg:#0B0F19;--ink:#E6EAF2;--muted:#94A3B8;--line:rgba(255,255,255,.12);
+    --card:#0F1524;--accent:#A4E8FF;--ok:#34D399;--tbd:#FBBF24;
+    --shadow:0 16px 40px rgba(0,0,0,.35);--hi: rgba(164,232,255,.35);
   }
   *{box-sizing:border-box}
   html,body{height:100%}
-  body{
-    margin:0;background:var(--bg);color:var(--ink);
-    font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial;
-  }
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 ui-sans-serif,system-ui,-apple-system,Segoe UI,Inter,Roboto,Arial}
   a{color:inherit;text-decoration:none}
-
   .wrap{max-width:1200px;margin:0 auto;padding:28px}
   header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
   h1{font-size:28px;margin:0;letter-spacing:.2px}
   .sub{color:var(--muted)}
   .controls{margin-left:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-  .select{appearance:none;background:var(--card);color:var(--ink);border:1px solid var(--line);
-          border-radius:10px;padding:8px 12px;font-size:14px}
+  .select,.btn{appearance:none;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:14px}
+  .btn{cursor:pointer}
   .legend{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 4px}
   .legend .badge{border:1px solid var(--line)}
-
-  .group{margin:22px 0 10px;color:#BBD7FF;font-weight:700;font-size:12px;
-         letter-spacing:.08em;text-transform:uppercase}
-  .grid{
-    display:grid;gap:14px;
-    grid-template-columns:repeat(4,minmax(0,1fr));
-  }
+  .group{margin:22px 0 10px;color:#BBD7FF;font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+  .grid{display:grid;gap:14px;grid-template-columns:repeat(4,minmax(0,1fr))}
   @media (max-width:1024px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr));} }
   @media (max-width:768px){  .grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
   @media (max-width:520px){  .grid{grid-template-columns:repeat(1,minmax(0,1fr));} }
-
   .card{
-    background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%) , var(--card);
+    background:linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%), var(--card);
     border:1px solid var(--line);border-radius:16px;padding:14px 14px 54px;position:relative;
     transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease, opacity .2s ease;
     overflow:hidden; isolation:isolate; min-height:138px;
   }
   .card:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--hi)}
-  .card.disabled{opacity:.58;pointer-events:none}
   .row{display:flex;align-items:center;gap:10px}
   .emoji{font-size:22px;line-height:1}
   .title{font-weight:750;letter-spacing:.2px}
-  .tag{margin-top:4px;font-size:11px;padding:4px 8px;border-radius:999px;
-       border:1px solid var(--line);color:var(--muted);display:inline-block}
-  .url{margin-top:10px;font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--muted);
-       font-size:12px;word-break:break-all;opacity:.85}
+  .tag{margin-top:4px;font-size:11px;padding:4px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);display:inline-block}
+  .url{margin-top:10px;font-family:ui-monospace,Menlo,Consolas,monospace;color:var(--muted);font-size:12px;word-break:break-all;opacity:.85}
   .badges{position:absolute;top:10px;right:10px;display:flex;gap:6px;flex-wrap:wrap;max-width:70%}
   .badge{font-size:10px;padding:3px 7px;border-radius:999px;white-space:nowrap}
   .live{background:rgba(52,211,153,.15);color:var(--ok);border:1px solid rgba(52,211,153,.35)}
@@ -72,16 +51,17 @@
   .desc{
     position:absolute;left:0;right:0;bottom:0;padding:10px 14px 12px;
     background:linear-gradient(0deg, rgba(10,14,24,.9), rgba(10,14,24,.0));
-    color:#D7E6FF;font-size:12.5px;line-height:1.4;opacity:.0;transform:translateY(8px);
+    color:#D7E6FF;font-size:12.5px;line-height:1.4;opacity:0;transform:translateY(8px);
     transition:opacity .18s ease, transform .18s ease;border-top:1px solid rgba(255,255,255,.06)
   }
   .card:hover .desc{opacity:1;transform:translateY(0)}
   .note{color:var(--muted);font-size:13px;margin-top:18px}
   hr{border:none;border-top:1px solid var(--line);margin:24px 0}
-
-  /* Highlight cards matching Illumina filter */
   .match{border-color:var(--hi); box-shadow:0 0 0 1px var(--hi) inset;}
   .dim{opacity:.55}
+  /* Core footer badge + Neon Prophet sigil */
+  .coreBadge{position:fixed;left:8px;bottom:8px;font-size:12px;color:var(--muted);background:#0f1218;border:1px solid var(--line);padding:6px 8px;border-radius:10px;z-index:2147483645}
+  .sigil{position:fixed;right:12px;bottom:8px;opacity:.25;font-size:20px;user-select:none;pointer-events:none;z-index:2147483645}
 </style>
 </head>
 <body>
@@ -93,21 +73,15 @@
       <label for="ill" class="sub">Highlight by Illumina:</label>
       <select id="ill" class="select" aria-label="Highlight by Illumina">
         <option value="all">All (no highlight)</option>
-        <option value="1">Illumina 1</option>
-        <option value="2">Illumina 2</option>
-        <option value="3">Illumina 3</option>
-        <option value="4">Illumina 4</option>
-        <option value="5">Illumina 5</option>
-        <option value="6">Illumina 6</option>
-        <option value="7">Illumina 7</option>
-        <option value="8">Illumina 8</option>
-        <option value="9">Illumina 9</option>
-        <option value="10">Illumina 10</option>
-        <option value="11">Illumina 11</option>
-        <option value="12">Illumina 12</option>
-        <option value="13">Illumina 13</option>
-        <option value="14">Illumina 14</option>
+        <option value="1">Illumina 1</option><option value="2">Illumina 2</option>
+        <option value="3">Illumina 3</option><option value="4">Illumina 4</option>
+        <option value="5">Illumina 5</option><option value="6">Illumina 6</option>
+        <option value="7">Illumina 7</option><option value="8">Illumina 8</option>
+        <option value="9">Illumina 9</option><option value="10">Illumina 10</option>
+        <option value="11">Illumina 11</option><option value="12">Illumina 12</option>
+        <option value="13">Illumina 13</option><option value="14">Illumina 14</option>
       </select>
+      <button id="refreshLive" class="btn" aria-label="Refresh live status">Refresh live status</button>
     </div>
   </header>
 
@@ -115,22 +89,18 @@
     <span class="badge live">Live</span>
     <span class="badge tbd">TBD (placeholder)</span>
     <span class="badge i-chip">Appears in selected Illumina</span>
-    <span class="sub" style="font-size:12px">I‑chips (I1… I14) show only when you pick an Illumina in the dropdown.</span>
+    <span class="sub" style="font-size:12px">I-chips (I1… I14) show only when you pick an Illumina in the dropdown.</span>
   </div>
 
-  <!-- CORE -->
   <div class="group">Core Hub</div>
   <div class="grid" id="core"></div>
 
-  <!-- PRIMARY TRACKS -->
   <div class="group">Primary Tracks</div>
   <div class="grid" id="primary"></div>
 
-  <!-- SECONDARY / NARRATIVE -->
   <div class="group">Secondary / Narrative</div>
   <div class="grid" id="secondary"></div>
 
-  <!-- FUTURE (TBD) -->
   <div class="group">Future / TBD</div>
   <div class="grid" id="future"></div>
 
@@ -138,158 +108,118 @@
   <p class="note">
     Pages marked <b>TBD</b> are storyboarded but not linked yet. Hover cards for short descriptions.
     Use the dropdown to highlight which sites surface in each Illumina’s theme arc.
-    Edit the lists in the script to add/remove sites or change Illumina appearances.
+    Placeholder links automatically vanish when their domains go live.
   </p>
 </div>
 
 <script>
-/* ========= Data =========
-   Only include what you want surfaced. Everything here is Live unless exists:false.
-   Removed per your note: beta, blue, cats, comet, float, groweggs, hack, red, shop, yt, mollid, prime, room, my, imoon, hash
-   "ills" = array of Illumina numbers (1..14) when this page shows up as a main theme.
+/* ===== Data (edit here) =====
+   "exists:false" = Coming Soon placeholder; it will auto-hide if the domain resolves.
+   "ills" = array of Illumina numbers (1..14) for timeline highlighting.
 */
-
 const CORE = [
   {name:"Jar (hub)", emoji:"🍯", url:"https://jar.plnt.earth", exists:true, tag:"ritual • archive",
-   desc:"The honeycomb. Days, seeds, interludes, and cycle archives — everything flows back here.",
-   ills:[1,2,3,4,5,6,7,8,9,10,11,12,13,14]},
+   desc:"The honeycomb. Days, seeds, interludes, and cycle archives — everything flows back here.", ills:[1,2,3,4,5,6,7,8,9,10,11,12,13,14]},
   {name:"Honey", emoji:"🐝", url:"https://honey.plnt.earth", exists:true, tag:"taste • notes",
-   desc:"Taste log + explainer — the Bee in the Illumina triad.",
-   ills:[1,5,11]},
+   desc:"Taste log + explainer — the Bee in the Illumina triad.", ills:[1,5,11]},
   {name:"Tunes", emoji:"🎶", url:"https://tunes.plnt.earth", exists:true, tag:"playlist",
-   desc:"Music engine for cycles — anchors, interludes, and overlays.",
-   ills:[1,5,11]}
+   desc:"Music engine for cycles — anchors, interludes, and overlays.", ills:[1,5,11]}
 ];
 
 const PRIMARY = [
   {name:"Time", emoji:"⏳", url:"https://time.plnt.earth", exists:true, tag:"physics",
-   desc:"Equations & constants. Public fits, visuals, and forecasts tied to Illumina.",
-   ills:[2,12]},
+   desc:"Equations & constants. Public fits, visuals, and forecasts tied to Illumina.", ills:[2,12]},
   {name:"Zeta", emoji:"🌀", url:"https://zeta.plnt.earth", exists:true, tag:"math • infinity",
-   desc:"Counting games → formal proofs. Experimental math & visuals on infinity.",
-   ills:[6,9,12]},
+   desc:"Counting games → formal proofs. Experimental math & visuals on infinity.", ills:[6,9,12]},
   {name:"DNA", emoji:"🧬", url:"https://dna.plnt.earth", exists:true, tag:"biology",
-   desc:"Replication, growth, and living systems as Illumina mirrors.",
-   ills:[3,8]},
+   desc:"Replication, growth, and living systems as Illumina mirrors.", ills:[3,8]},
   {name:"Intelligence", emoji:"🧠", url:"https://intelligence.plnt.earth", exists:true, tag:"ai • cognition",
-   desc:"Thinking about thinking. Human/AI co-creation, cognition experiments.",
-   ills:[4,10]},
+   desc:"Thinking about thinking. Human/AI co-creation, cognition experiments.", ills:[4,10]},
   {name:"42", emoji:"❖", url:"https://42.plnt.earth", exists:true, tag:"meta",
-   desc:"Meaning of 42. Meta-layer tying cycles, science, and culture.",
-   ills:[7,9,13]},
+   desc:"Meaning of 42. Meta-layer tying cycles, science, and culture.", ills:[7,9,13]},
   {name:"Lighthouse", emoji:"🗼", url:"https://lighthouse.plnt.earth", exists:true, tag:"guidance",
-   desc:"Signal vs noise. Navigation notes, heuristics, and gentle beacons.",
-   ills:[7,10]},
+   desc:"Signal vs noise. Navigation notes, heuristics, and gentle beacons.", ills:[7,10]},
   {name:"Boiled Peanuts", emoji:"🥜", url:"https://boiledpeanuts.plnt.earth", exists:true, tag:"culture • play",
-   desc:"Playful ritual & taste anchor — southern snack as cultural spark.",
-   ills:[5,11]},
+   desc:"Playful ritual & taste anchor — southern snack as cultural spark.", ills:[5,11]},
   {name:"Beacon", emoji:"📡", url:"https://tunes.plnt.earth/beacon/index.html", exists:true, tag:"signal • ECC",
-   desc:"Signal spec, 31/47 headers, ECC, and the Decoder Lab.",
-   ills:[1,7,13]}
+   desc:"Signal spec, 31/47 headers, ECC, and the Decoder Lab.", ills:[1,7,13]}
 ];
 
 const SECONDARY = [
   {name:"Big Bang", emoji:"💥", url:"https://bigbang.plnt.earth", exists:true, tag:"origin",
-   desc:"Genesis page. First sparks, origin notes, and cosmology metaphors.",
-   ills:[1,8]},
+   desc:"Genesis page. First sparks, origin notes, and cosmology metaphors.", ills:[1,8]},
   {name:"Brain", emoji:"🧩", url:"https://brain.plnt.earth", exists:true, tag:"mind map",
-   desc:"Scratchpad of ideas — nodes that later become full tracks.",
-   ills:[2,10]},
+   desc:"Scratchpad of ideas — nodes that later become full tracks.", ills:[2,10]},
   {name:"Constellation", emoji:"✨", url:"https://constellation.plnt.earth", exists:true, tag:"map",
-   desc:"Alternate star map / experiments in layout.",
-   ills:[1,7,13]},
+   desc:"Alternate star map / experiments in layout.", ills:[1,7,13]},
   {name:"Dimensions", emoji:"📐", url:"https://dimensions.plnt.earth", exists:true, tag:"space • scale",
-   desc:"How size, scale, and perspective change meaning.",
-   ills:[6,12]},
+   desc:"How size, scale, and perspective change meaning.", ills:[6,12]},
   {name:"Heat Death", emoji:"🧊", url:"https://heatdeath.plnt.earth", exists:true, tag:"limits",
-   desc:"Far-future metaphors. What happens when the lights go out.",
-   ills:[12,13]},
+   desc:"Far-future metaphors. What happens when the lights go out.", ills:[12,13]},
   {name:"Hello World", emoji:"👋", url:"https://helloworld.plnt.earth", exists:true, tag:"onboarding",
-   desc:"Start here. A soft hello for new explorers.",
-   ills:[1]},
+   desc:"Start here. A soft hello for new explorers.", ills:[1]},
   {name:"Illumina", emoji:"🌕", url:"https://illumina.plnt.earth", exists:true, tag:"cycles",
-   desc:"The 42-day lunar rhythm. Anchors, interludes, and archives.",
-   ills:[1,7,13]},
+   desc:"The 42-day lunar rhythm. Anchors, interludes, and archives.", ills:[1,7,13]},
   {name:"Manifold Dynamics", emoji:"🧭", url:"https://manifolddynamics.plnt.earth", exists:true, tag:"flows",
-   desc:"Flows on curved spaces. Gentle dynamical systems playground.",
-   ills:[10,12]},
+   desc:"Flows on curved spaces. Gentle dynamical systems playground.", ills:[10,12]},
   {name:"Predictions", emoji:"📈", url:"https://predictions.plnt.earth", exists:true, tag:"forecasts",
-   desc:"Timestamped forecasts, calibration charts, and scoring (log‑loss, Brier).",
-   ills:[2,10,12]},
+   desc:"Timestamped forecasts, calibration charts, and scoring (log-loss, Brier).", ills:[2,10,12]},
   {name:"Return", emoji:"↩️", url:"https://return.plnt.earth", exists:true, tag:"recurrence",
-   desc:"Recurrence & closure — where cycles loop back and feed forward.",
-   ills:[7,13]},
+   desc:"Recurrence & closure — where cycles loop back and feed forward.", ills:[7,13]},
   {name:"Rock", emoji:"🪨", url:"https://rock.plnt.earth", exists:true, tag:"ground",
-   desc:"Grounding pages — materiality, weight, and presence.",
-   ills:[11]},
+   desc:"Wayfinding & real-world anchors (NYC pins, meetups).", ills:[11]},
   {name:"Save Cooper", emoji:"🚀", url:"https://savecooper.plnt.earth", exists:true, tag:"myth • story",
-   desc:"Narrative arc: rescue the explorer. A mythic thread.",
-   ills:[9,13]},
+   desc:"Narrative arc: rescue the explorer. A mythic thread.", ills:[9,13]},
   {name:"Storage", emoji:"🗄️", url:"https://storage.plnt.earth", exists:true, tag:"assets",
-   desc:"Public assets & datasets — the static file store for PLNT (read‑only).",
-   ills:[1,8]},
+   desc:"Public assets & datasets — the static file store for PLNT (read-only).", ills:[1,8]},
   {name:"Time (alt)", emoji:"⏱️", url:"https://time.plnt.earth", exists:true, tag:"physics (mirror)",
-   desc:"Mirror link in case visitors discover it here first.",
-   ills:[2,12]},
+   desc:"Mirror link in case visitors discover it here first.", ills:[2,12]},
   {name:"Travel", emoji:"✈️", url:"https://travel.plnt.earth", exists:true, tag:"journey",
-   desc:"Journeys literal and symbolic — field notes, routes, and time‑dilations.",
-   ills:[9,11]},
+   desc:"Journeys literal and symbolic — field notes, routes, and time-dilations.", ills:[9,11]},
   {name:"Tunes (alt)", emoji:"🎧", url:"https://tunes.plnt.earth", exists:true, tag:"music (mirror)",
-   desc:"Mirror link — quick jump back to the player.",
-   ills:[1,11]},
+   desc:"Mirror link — quick jump back to the player.", ills:[1,11]},
   {name:"Virus", emoji:"🧬", url:"https://virus.plnt.earth", exists:true, tag:"memes",
-   desc:"How ideas spread; memetics and culture drift.",
-   ills:[11]},
+   desc:"How ideas spread; memetics and culture drift.", ills:[11]},
   {name:"Weight Loss", emoji:"⚖️", url:"https://weightloss.plnt.earth", exists:true, tag:"health",
-   desc:"Protocols and experiments around body metrics.",
-   ills:[8]}
+   desc:"Protocols and experiments around body metrics.", ills:[8]}
 ];
 
 const FUTURE = [
   {name:"Fire", emoji:"🔥", url:"https://fire.plnt.earth", exists:false, tag:"tbd",
-   desc:"Transformation, energy, risk — a second-orbit anchor in waiting.",
-   ills:[14]},
+   desc:"Transformation, energy, risk — a second-orbit anchor in waiting.", ills:[14]},
   {name:"Mycelium", emoji:"🍄", url:"https://mycelium.plnt.earth", exists:false, tag:"tbd",
-   desc:"Hidden networks, collaboration, and underground exchange.",
-   ills:[14]},
+   desc:"Hidden networks, collaboration, and underground exchange.", ills:[14]},
   {name:"Aether", emoji:"💨", url:"https://aether.plnt.earth", exists:false, tag:"tbd",
-   desc:"Unseen fields. Breath, space between, subtle mediums.",
-   ills:[14]},
+   desc:"Unseen fields. Breath, space between, subtle mediums.", ills:[14]},
   {name:"Ocean", emoji:"🌊", url:"https://ocean.plnt.earth", exists:false, tag:"tbd",
-   desc:"Depth, flow, tides, and planetary time.",
-   ills:[14]},
+   desc:"Depth, flow, tides, and planetary time.", ills:[14]},
   {name:"Echo", emoji:"📼", url:"https://echo.plnt.earth", exists:false, tag:"tbd",
-   desc:"Memory & resonance — how signals persist across cycles.",
-   ills:[14]}
+   desc:"Memory & resonance — how signals persist across cycles.", ills:[14]}
 ];
 
-/* ========= Render ========= */
+/* ===== Render ===== */
 function el(tag, cls, text){ const n=document.createElement(tag); if(cls)n.className=cls; if(text!=null)n.textContent=text; return n; }
-
-function chipIll(n){
-  const s = el('span','badge i-chip', `I${n}`);
-  s.dataset.ill = n;
-  return s;
-}
+function chipIll(n){ const s=el('span','badge i-chip',`I${n}`); s.dataset.ill=n; return s; }
 
 function card(item){
-  const clickable = item.exists;
-  const root = document.createElement(clickable ? 'a' : 'div');
+  const clickable=item.exists;
+  const root=document.createElement(clickable?'a':'div');
   if(clickable){ root.href=item.url; root.target="_blank"; root.rel="noopener"; }
-  root.className = 'card';
-  root.dataset.ills = (item.ills||[]).join(',');
+  root.className='card';
+  root.dataset.ills=(item.ills||[]).join(',');
+  if(!item.exists){ root.dataset.placeholder='true'; root.dataset.url=item.url; }
 
-  const badges = el('div','badges');
+  const badges=el('div','badges');
   badges.appendChild(el('span','badge '+(item.exists?'live':'tbd'), item.exists?'Live':'TBD'));
-  (item.ills||[]).slice(0,3).forEach(n => badges.appendChild(chipIll(n))); // show up to 3 chips
+  (item.ills||[]).slice(0,3).forEach(n => badges.appendChild(chipIll(n)));
 
-  const row = el('div','row');
+  const row=el('div','row');
   row.appendChild(el('div','emoji',item.emoji));
   row.appendChild(el('div','title',item.name));
 
-  const tag = el('div','tag', item.tag);
-  const url = el('div','url', item.url);
-  const desc = el('div','desc', item.desc || '');
+  const tag=el('div','tag',item.tag);
+  const url=el('div','url',item.url);
+  const desc=el('div','desc',item.desc||'');
 
   root.appendChild(badges);
   root.appendChild(row);
@@ -299,8 +229,8 @@ function card(item){
   return root;
 }
 
-function mount(list, id){
-  const root = document.getElementById(id);
+function mount(list,id){
+  const root=document.getElementById(id);
   list.forEach(x => root.appendChild(card(x)));
 }
 
@@ -309,22 +239,58 @@ mount(PRIMARY,'primary');
 mount(SECONDARY,'secondary');
 mount(FUTURE,'future');
 
-/* ========= Filter by Illumina ========= */
-const sel = document.getElementById('ill');
-sel.addEventListener('change', () => { document.body.classList.toggle('filtering', sel.value!=='all');
-  const v = sel.value;
-  const allCards = Array.from(document.querySelectorAll('.card'));
-  if(v === 'all'){
-    allCards.forEach(c => { c.classList.remove('match','dim'); });
-    return;
-  }
-  allCards.forEach(c => {
-    const arr = (c.dataset.ills||'').split(',').filter(Boolean);
-    const isMatch = arr.includes(v);
-    c.classList.toggle('match', isMatch);
-    c.classList.toggle('dim', !isMatch);
+/* ===== Illumina Highlight Filter ===== */
+const sel=document.getElementById('ill');
+sel.addEventListener('change',()=>{
+  document.body.classList.toggle('filtering', sel.value!=='all');
+  const v=sel.value;
+  const allCards=[].slice.call(document.querySelectorAll('.card'));
+  if(v==='all'){ allCards.forEach(c=>{c.classList.remove('match','dim')}); return; }
+  allCards.forEach(c=>{
+    const arr=(c.dataset.ills||'').split(',').filter(Boolean);
+    const isMatch=arr.includes(v);
+    c.classList.toggle('match',isMatch);
+    c.classList.toggle('dim',!isMatch);
   });
 });
+
+/* ===== Auto “Coming Soon” cleanup (cross-domain live check) =====
+   We HEAD-fetch each placeholder URL with no-cors. If it resolves at all, we treat it as live.
+   On success: the placeholder card is removed (it "vanishes").
+*/
+function checkLive(url){
+  try{
+    return fetch(url, {method:'HEAD', mode:'no-cors', cache:'no-store'}).then(()=>true).catch(()=>false);
+  }catch(e){ return Promise.resolve(false); }
+}
+function sweepPlaceholders(){
+  const placeholders=[].slice.call(document.querySelectorAll('[data-placeholder="true"]'));
+  if(!placeholders.length){ return; }
+  placeholders.forEach(function(node){
+    const u=node.dataset.url;
+    if(!u){ return; }
+    checkLive(u).then(function(live){
+      if(live){
+        // Auto-vanish: remove the placeholder entirely
+        if(node.parentElement){ node.parentElement.removeChild(node); }
+      }
+    });
+  });
+}
+document.getElementById('refreshLive').addEventListener('click',sweepPlaceholders);
+document.addEventListener('DOMContentLoaded',sweepPlaceholders);
+
+/* ===== Core badge + 💄 sigil (no external deps) ===== */
+(function(){
+  var C={domain:"jar",governedBy:"Jar (Hub)",tier:"Map"};
+  var badge=document.createElement('div');
+  badge.className='coreBadge';
+  badge.textContent=(function(){var who=C.governedBy||"";var tier=C.tier||"";var dn=C.domain||location.hostname.split(".")[0];return who?("Governed by: "+who+(tier?(" ("+tier+")"):"")):("PLNT Earth · "+dn)})();
+  document.body.appendChild(badge);
+  var sig=document.createElement('div');
+  sig.className='sigil'; sig.setAttribute('aria-hidden','true'); sig.textContent='💄';
+  document.body.appendChild(sig);
+})();
 </script>
 </body>
 </html>
