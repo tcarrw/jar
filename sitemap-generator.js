@@ -1,8 +1,15 @@
 #!/usr/bin/env node
 /*!
- * sitemap-generator.js — MIT
- * Drop this file in any plnt.earth repo and run: node sitemap-generator.js
+ * sitemap-generator-simple.js — MIT
+ * Drop this file in any plnt.earth repo and run: node sitemap-generator-simple.js
  * Automatically detects domain from directory name (e.g., map.plnt.earth)
+ * 
+ * For Vercel deployment, add to package.json:
+ * {
+ *   "scripts": {
+ *     "build": "node sitemap-generator-simple.js"
+ *   }
+ * }
  */
 const fs = require("fs");
 const path = require("path");
