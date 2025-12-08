@@ -2,23 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://tunes.plnt.earth/</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://tunes.plnt.earth/404.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/about/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/about/index.html</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/anchor-protocol.html</loc>
@@ -33,7 +28,7 @@
   <url>
     <loc>https://tunes.plnt.earth/archive/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/archive/index.html</loc>
@@ -42,78 +37,78 @@
   </url>
   <url>
     <loc>https://tunes.plnt.earth/calendar/illumina1/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/calendar/illumina1/index.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/calendar/illumina2/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/calendar/illumina2/index.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/calendar/illumina3/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/calendar/illumina3/index.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/calendar/illumina4/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/calendar/illumina4/index.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/calendar/illumina5/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/calendar/illumina5/index.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/calendar/illumina6/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/calendar/illumina6/index.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/calendar/illumina7/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/calendar/illumina7/index.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/compatibility/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/compatibility/index.html</loc>
@@ -122,18 +117,18 @@
   </url>
   <url>
     <loc>https://tunes.plnt.earth/day/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/day/index.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/day2/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/day2/index.html</loc>
@@ -143,7 +138,7 @@
   <url>
     <loc>https://tunes.plnt.earth/dreams/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/dreams/index.html</loc>
@@ -173,7 +168,7 @@
   <url>
     <loc>https://tunes.plnt.earth/interludes/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/interludes/doechii.html</loc>
@@ -222,23 +217,23 @@
   </url>
   <url>
     <loc>https://tunes.plnt.earth/jar/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/jar/index.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/map/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/map/index.html</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/marina-egg.html</loc>
@@ -248,7 +243,7 @@
   <url>
     <loc>https://tunes.plnt.earth/modes/neon/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/modes/neon/index.html</loc>
@@ -257,18 +252,18 @@
   </url>
   <url>
     <loc>https://tunes.plnt.earth/notes/day/</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/notes/day/index.html</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/notes/moon/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/notes/moon/index.html</loc>
@@ -278,12 +273,12 @@
   <url>
     <loc>https://tunes.plnt.earth/pantheon/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/pantheon/constellation/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/pantheon/constellation/index.html</loc>
@@ -328,7 +323,7 @@
   <url>
     <loc>https://tunes.plnt.earth/pollen/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/pollen/index.html</loc>
@@ -338,7 +333,7 @@
   <url>
     <loc>https://tunes.plnt.earth/preservation/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/preservation/index.html</loc>
@@ -348,7 +343,7 @@
   <url>
     <loc>https://tunes.plnt.earth/references/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/references/index.html</loc>
@@ -358,7 +353,7 @@
   <url>
     <loc>https://tunes.plnt.earth/rituals/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/rituals/bee-butterfly-conjunction.html</loc>
@@ -388,7 +383,7 @@
   <url>
     <loc>https://tunes.plnt.earth/science/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/science/index.html</loc>
@@ -398,7 +393,7 @@
   <url>
     <loc>https://tunes.plnt.earth/seeds/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/seeds/index.html</loc>
@@ -408,7 +403,7 @@
   <url>
     <loc>https://tunes.plnt.earth/spreads/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/spreads/index.html</loc>
@@ -418,7 +413,7 @@
   <url>
     <loc>https://tunes.plnt.earth/storage/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/storage/index.html</loc>
@@ -428,7 +423,7 @@
   <url>
     <loc>https://tunes.plnt.earth/timeline/illumina1/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/timeline/illumina1/index.html</loc>
@@ -443,7 +438,7 @@
   <url>
     <loc>https://tunes.plnt.earth/victory/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/victory/illumina1.html</loc>
@@ -458,7 +453,7 @@
   <url>
     <loc>https://tunes.plnt.earth/watchmen/aphex-twin/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/watchmen/aphex-twin/index.html</loc>
@@ -468,7 +463,7 @@
   <url>
     <loc>https://tunes.plnt.earth/watchmen/bon-iver/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/watchmen/bon-iver/index.html</loc>
@@ -478,7 +473,7 @@
   <url>
     <loc>https://tunes.plnt.earth/watchmen/mosquito/</loc>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tunes.plnt.earth/watchmen/mosquito/index.html</loc>
