@@ -3,175 +3,114 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Jar · Illumina Index · PLNT Earth</title>
-<meta name="description" content="Jar is the Swiss-style transit map for all Illumina cycles. Each Illumina is a station. Each day is a stop. Addresses exist even when pages do not."/>
-<meta name="theme-color" content="#0b0f19"/>
+<title>Illumina 1 · Jar · PLNT Earth</title>
+<meta name="description" content="Illumina 1 — single-page hub + day system. 42-day cycle anchored to the moon. Swiss transit navigation. One canonical lunar engine."/>
+<meta name="theme-color" content="#0B0F19"/>
 
 <style>
 :root{
-  --bg:#0b0f19;
-  --ink:#e5e7eb;
-  --muted:#9ca3af;
-  --panel:rgba(15,23,42,.55);
-  --panel-edge:rgba(255,255,255,.08);
-  --accent:#7c3aed;
-  --future:rgba(255,255,255,.06);
+  --bg:#0B0F19;
+  --ink:#E5E7EB;
+  --muted:#9CA3AF;
+  --line:rgba(229,231,235,.14);
+  --accent:#F5D142;
+  --accent2:#7C3AED;
+  --panel:rgba(255,255,255,.02);
+  --r:16px;
 }
 
 *{box-sizing:border-box}
-html,body{
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial}
+
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.wrap{max-width:1200px;margin:0 auto;padding:clamp(14px,3.5vw,28px)}
+
+h1{margin:.2em 0 .2em;font-size:clamp(24px,4.8vw,40px)}
+h2{margin:.6em 0 .2em;font-size:clamp(18px,3.4vw,22px)}
+
+.card{
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  padding:20px;
+  background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0));
 }
 
-/* ===== Header ===== */
+.muted{color:var(--muted)}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+
+/* Header */
 header{
-  position:sticky;
-  top:0;
-  z-index:10;
+  position:sticky;top:0;z-index:10;
   backdrop-filter:blur(10px);
-  background:rgba(0,0,0,.35);
-  border-bottom:1px solid var(--panel-edge);
+  background:rgba(0,0,0,.4);
+  border-bottom:1px solid var(--line);
 }
 .header-inner{
-  max-width:1200px;
-  margin:0 auto;
-  padding:14px 16px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  max-width:1200px;margin:0 auto;padding:12px 16px;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
 }
-.logo{
-  letter-spacing:.25em;
-  font-weight:300;
-}
+.brand{letter-spacing:.25em;font-weight:300}
 
-/* ===== Nav ===== */
+/* Nav */
 nav{
-  max-width:1200px;
-  margin:0 auto;
-  padding:8px 16px 12px;
-  display:flex;
-  gap:16px;
-  flex-wrap:wrap;
+  max-width:1200px;margin:0 auto;padding:6px 16px 10px;
+  display:flex;gap:16px;flex-wrap:wrap;font-size:.8rem;
 }
-nav a{
-  color:var(--muted);
-  text-decoration:none;
-  font-size:.8rem;
-  letter-spacing:.08em;
-}
+nav a{color:var(--muted)}
 nav a.active{color:var(--ink)}
 
-/* ===== Layout ===== */
-.wrap{
-  max-width:1200px;
-  margin:0 auto;
-  padding:22px 16px 96px;
+/* Moon */
+.moonWrap{display:flex;gap:10px;align-items:center}
+.moon{
+  width:36px;height:36px;border-radius:50%;
+  background:#f8fafc;position:relative;overflow:hidden;
 }
+.moonShadow{
+  position:absolute;top:0;left:0;height:36px;
+  background:#0B0F19;border-radius:50%;
+}
+.moonMeta{font-size:.75rem;text-align:right}
 
-h1{
-  margin:0 0 6px;
-  font-size:clamp(22px,4vw,34px);
-}
-.sub{
-  color:var(--muted);
-  font-size:.9rem;
-}
+/* Grid */
+.calHead{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:6px}
+.calHead span{text-align:center;font-size:12px;color:#cfd3db}
 
-/* ===== Transit Legend ===== */
-.legend{
-  margin:18px 0 26px;
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-  font-size:.75rem;
-  color:var(--muted);
-}
-.legend span{white-space:nowrap}
-
-/* ===== Illumina Grid ===== */
-.illumina-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:18px;
-}
-
-.station{
-  position:relative;
-  border-radius:16px;
-  border:1px solid var(--panel-edge);
+.calGrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.day{
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:10px;
   background:var(--panel);
-  padding:18px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+  display:grid;gap:6px;
+  min-height:96px;
+  cursor:pointer;
+  position:relative;
 }
+.day:hover{outline:1px solid rgba(245,209,66,.35)}
+.day.future{backdrop-filter:blur(6px);opacity:.65;cursor:default}
+.day.today{outline:2px solid var(--accent2)}
 
-.station.active{
-  outline:2px solid var(--accent);
-  outline-offset:2px;
-}
+.dtop{display:flex;justify-content:space-between;align-items:center}
+.dnum{font-weight:700}
+.badge{font-size:12px;color:var(--muted);border:1px dashed var(--line);border-radius:999px;padding:2px 8px}
 
-.station.future{
-  background:var(--future);
-  backdrop-filter:blur(8px);
-  color:rgba(229,231,235,.75);
+/* Day panel */
+.panel{
+  margin-top:16px;
+  border-top:1px dashed var(--line);
+  padding-top:16px;
 }
+.transit{
+  display:flex;gap:12px;flex-wrap:wrap;font-size:.85rem;margin:8px 0;
+}
+.transit span{white-space:nowrap}
 
-.station-title{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-size:1.05rem;
-  font-weight:600;
-}
-.dot{
-  font-size:.9rem;
-}
-
-.station-meta{
-  font-size:.8rem;
-  color:var(--muted);
-  line-height:1.4;
-}
-
-.station-lines{
-  margin-top:auto;
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.line{
-  text-decoration:none;
-  font-size:.7rem;
-  padding:6px 10px;
-  border-radius:999px;
-  border:1px solid var(--panel-edge);
-  color:var(--ink);
-  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(0,0,0,.12));
-}
-
-.station.future .line{
-  pointer-events:none;
-  opacity:.6;
-}
-
-/* ===== Footer ===== */
-footer{
-  border-top:1px solid var(--panel-edge);
-  padding:18px 16px;
-  text-align:center;
-  font-size:.8rem;
-  color:var(--muted);
-}
-footer a{
-  color:var(--muted);
-  text-decoration:none;
-  margin:0 6px;
+/* Layout */
+.grid{display:grid;gap:16px}
+@media(min-width:980px){
+  .grid{grid-template-columns:1.2fr .8fr}
 }
 </style>
 </head>
@@ -180,9 +119,17 @@ footer a{
 
 <header>
   <div class="header-inner">
-    <div class="logo">PLNT EARTH · JAR</div>
+    <div class="brand">PLNT EARTH · ILLUMINA</div>
+    <div class="moonWrap">
+      <div class="moon">
+        <div id="moonShadow" class="moonShadow"></div>
+      </div>
+      <div class="moonMeta">
+        <div id="moonEmoji"></div>
+        <div id="moonPct" class="muted"></div>
+      </div>
+    </div>
   </div>
-
   <nav>
     <a href="https://earth.plnt.earth">Earth</a>
     <a href="https://map.plnt.earth">Map</a>
@@ -194,83 +141,141 @@ footer a{
   </nav>
 </header>
 
-<main class="wrap">
-  <h1>Jar · Illumina Transit Index</h1>
-  <div class="sub">
-    Swiss-style time navigation.  
-    Illuminas are stations. Days are stops. Transfers are explicit.
+<div class="wrap">
+
+<section class="card">
+  <h1>Illumina 1</h1>
+  <p class="muted">42-day cycle · Swiss transit time map · one page</p>
+</section>
+
+<section class="grid" style="margin-top:16px">
+
+  <!-- Calendar -->
+  <div class="card">
+    <div class="calHead">
+      <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+    </div>
+    <div id="calGrid" class="calGrid"></div>
   </div>
 
-  <div class="legend">
-    <span>● current station</span>
-    <span>○ past station</span>
-    <span>◌ future station</span>
-    <span>← → day line</span>
-    <span>⇄ illumina line</span>
-    <span>⇅ transfer</span>
-  </div>
+  <!-- Day Panel -->
+  <aside class="card" id="dayPanel">
+    <h2>Day</h2>
+    <p class="muted">Select a day to view its station.</p>
+  </aside>
 
-  <section class="illumina-grid">
+</section>
 
-    <!-- Illumina 1 -->
-    <article class="station active">
-      <div class="station-title">
-        <span class="dot">●</span> Illumina 1
-      </div>
-      <div class="station-meta">
-        Anchored full moon · Nov 5, 2025<br/>
-        Status: Active<br/>
-        42 local stops
-      </div>
-      <div class="station-lines">
-        <a class="line" href="/illumina/1/">Enter station ⇅</a>
-        <a class="line" href="/illumina/0/">⇄ Illumina 0</a>
-        <a class="line" href="/illumina/2/">⇄ Illumina 2</a>
-      </div>
-    </article>
+</div>
 
-    <!-- Illumina 2 -->
-    <article class="station future">
-      <div class="station-title">
-        <span class="dot">◌</span> Illumina 2
-      </div>
-      <div class="station-meta">
-        Begins next full moon<br/>
-        Status: Future<br/>
-        Address reserved
-      </div>
-      <div class="station-lines">
-        <a class="line" href="/illumina/2/">View placeholder ⇅</a>
-        <a class="line" href="/illumina/1/">⇄ Illumina 1</a>
-        <a class="line" href="/illumina/3/">⇄ Illumina 3</a>
-      </div>
-    </article>
+<script>
+/* ============================
+   Canonical Lunar Engine
+   ============================ */
+const LUNAR = {
+  CYCLE_DAYS: 29.530588,
+  FULL_MOON_UTC: Date.UTC(2025,10,5,13,19), // Nov 5 2025 08:19 EST
+  MS_PER_DAY: 86400000,
 
-    <!-- Illumina 3 -->
-    <article class="station future">
-      <div class="station-title">
-        <span class="dot">◌</span> Illumina 3
-      </div>
-      <div class="station-meta">
-        Future cycle<br/>
-        Status: Unanchored<br/>
-        Address reserved
-      </div>
-      <div class="station-lines">
-        <a class="line" href="/illumina/3/">View placeholder ⇅</a>
-        <a class="line" href="/illumina/2/">⇄ Illumina 2</a>
-      </div>
-    </article>
+  daysSince(date){
+    const t = (date instanceof Date) ? date.getTime() : date;
+    return (t - this.FULL_MOON_UTC) / this.MS_PER_DAY;
+  },
+  phase(days){
+    return ((days / this.CYCLE_DAYS) % 1 + 1) % 1;
+  },
+  illumination(phase){
+    return 0.5 * (1 + Math.cos(2*Math.PI*phase));
+  },
+  emoji(phase){
+    const EMOJI = ['🌕','🌖','🌗','🌘','🌑','🌒','🌓','🌔','🌕'];
+    return EMOJI[Math.floor(phase*8)];
+  },
+  at(date){
+    const d = this.daysSince(date);
+    const p = this.phase(d);
+    return {
+      daysSince:d,
+      phase:p,
+      illumination:this.illumination(p),
+      emoji:this.emoji(p)
+    };
+  }
+};
 
-  </section>
-</main>
+/* ============================
+   Page Logic
+   ============================ */
+const TOTAL = 42;
+const calGrid = document.getElementById('calGrid');
+const panel = document.getElementById('dayPanel');
 
-<footer>
-  PLNT Earth · Time is navigated, not chosen ·
-  <a href="/illumina/">Illumina Index</a>
-  <a href="https://earth.plnt.earth">Earth</a>
-  <a href="https://time.plnt.earth">Time</a>
-</footer>
+// Header moon (today)
+const nowMoon = LUNAR.at(Date.now());
+document.getElementById('moonEmoji').textContent = nowMoon.emoji;
+document.getElementById('moonPct').textContent =
+  Math.round(nowMoon.illumination*100) + '% illuminated';
+
+const shadow = document.getElementById('moonShadow');
+shadow.style.width = (36*(1-nowMoon.illumination))+'px';
+shadow.style.transform =
+  nowMoon.illumination>0.5 ? `translateX(${36*nowMoon.illumination}px)` : 'translateX(0)';
+
+// Build grid
+const todayIdx = Math.floor(LUNAR.daysSince(Date.now()));
+for(let i=0;i<TOTAL;i++){
+  const dateUTC = LUNAR.FULL_MOON_UTC + i*LUNAR.MS_PER_DAY;
+  const m = LUNAR.at(dateUTC);
+  const w = Math.floor(i/7)+1;
+  const d = i%7+1;
+
+  const el = document.createElement('div');
+  el.className = 'day';
+  if(i === todayIdx) el.classList.add('today');
+  if(i > todayIdx) el.classList.add('future');
+
+  el.innerHTML = `
+    <div class="dtop">
+      <span class="dnum">${w}:${d}</span>
+      <span>${m.emoji}</span>
+    </div>
+    <div class="badge">Day ${i+1} / 42</div>
+  `;
+
+  if(i <= todayIdx){
+    el.addEventListener('click',()=>{
+      openDay(i, m);
+    });
+  }
+
+  calGrid.appendChild(el);
+}
+
+// Open day inline
+function openDay(i, m){
+  const w = Math.floor(i/7)+1;
+  const d = i%7+1;
+  const date = new Date(LUNAR.FULL_MOON_UTC + i*LUNAR.MS_PER_DAY)
+    .toDateString();
+
+  panel.innerHTML = `
+    <h2>● Illumina 1 · ${w}:${d}</h2>
+    <p class="mono">Day ${i+1} of 42</p>
+    <p>${date} · ${m.emoji}</p>
+
+    <div class="transit">
+      <span>${i>0?'← Day '+(i):''}</span>
+      <span>${i<TOTAL-1?'Day '+(i+2)+' →':''}</span>
+    </div>
+
+    <p class="muted">
+      ${i>todayIdx
+        ? 'This day exists but has not been written yet.'
+        : 'This is the station for this day.'}
+    </p>
+  `;
+}
+</script>
 
 </body>
 </html>
