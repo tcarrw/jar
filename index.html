@@ -1,176 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>Jar · Illumina Journal · PLNT Earth</title>
-<meta name="description" content="Jar is the temporal hub for Illumina — a 42-day journal cycle anchored to the full moon. Each square is a day. Some are empty by design." />
-<meta name="theme-color" content="#0b0d11" />
+<meta name="description" content="Jar is the temporal hub for Illumina — a 42-day journal cycle anchored to the full moon. Each square is a day. Some are empty by design."/>
+<meta name="theme-color" content="#0b0f19"/>
 
 <style>
 :root{
-  color-scheme: dark;
-  --bg:#0b0d11;
-  --ink:#e9f0ff;
-  --muted:#a9b4c9;
-  --edge:#1b2230;
-  --panel:#101423;
-  --ring:#222a3a;
-  --accent:#8ef;
+  --bg:#0b0f19;
+  --ink:#e5e7eb;
+  --muted:#9ca3af;
+  --panel:rgba(15,23,42,.55);
+  --panel-edge:rgba(255,255,255,.08);
+  --accent:#7c3aed;
+  --accent2:#f59e0b;
 }
 
+*{box-sizing:border-box}
 html,body{
   margin:0;
   background:var(--bg);
   color:var(--ink);
-  font-family:system-ui,-apple-system,"SF Pro Text",Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
 }
 
-*{box-sizing:border-box}
-
-/* ===== Nav ===== */
-nav{
-  display:flex;
-  gap:14px;
-  padding:12px 16px;
-  border-bottom:1px solid var(--edge);
-  background:rgba(11,13,17,.9);
+/* ===== Header ===== */
+header{
   position:sticky;
   top:0;
   z-index:10;
+  backdrop-filter:blur(10px);
+  background:rgba(0,0,0,.35);
+  border-bottom:1px solid var(--panel-edge);
+}
+.header-inner{
+  max-width:1200px;
+  margin:0 auto;
+  padding:14px 16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:14px;
+}
+
+.logo{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.logo .plnt{
+  letter-spacing:.25em;
+  font-weight:300;
+  background:linear-gradient(90deg,#7c3aed,#3b82f6,#ec4899);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+.logo .earth{
+  font-size:.75rem;
+  letter-spacing:.15em;
+  color:var(--accent2);
+  opacity:.8;
+}
+
+/* Moon */
+.moon-wrap{display:flex;gap:12px;align-items:center}
+.moon{
+  width:40px;height:40px;border-radius:50%;
+  background:#f7fafc;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 0 10px rgba(255,255,255,.3);
+}
+.moon-shadow{
+  position:absolute;top:0;left:0;height:40px;
+  background:#0f172a;border-radius:50%;
+}
+.moon-meta{
+  display:flex;flex-direction:column;align-items:flex-end;
+  font-size:.75rem;
+}
+.moon-meta b{color:var(--accent2);font-weight:500}
+
+/* ===== Nav ===== */
+nav{
+  max-width:1200px;
+  margin:0 auto;
+  padding:8px 16px 12px;
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
 }
 nav a{
   color:var(--muted);
   text-decoration:none;
-  font-weight:600;
+  font-size:.8rem;
+  letter-spacing:.08em;
 }
 nav a.active{color:var(--ink)}
 
 /* ===== Layout ===== */
 .wrap{
-  max-width:1100px;
+  max-width:1200px;
   margin:0 auto;
-  padding:18px 16px 96px;
+  padding:20px 16px 96px;
 }
 
-header{
-  margin-bottom:18px;
-}
-header h1{
-  margin:0;
+h1{
+  margin:0 0 6px;
   font-size:clamp(22px,4vw,34px);
 }
-header .sub{
+.sub{
   color:var(--muted);
-  margin-top:4px;
+  font-size:.9rem;
 }
 
 /* ===== Illumina State ===== */
 .state{
+  margin:18px 0 24px;
   display:flex;
+  gap:10px;
   flex-wrap:wrap;
-  gap:14px;
-  margin:18px 0 22px;
 }
 .badge{
-  border:1px solid var(--edge);
-  border-radius:999px;
   padding:6px 12px;
-  font-weight:600;
-  background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(0,0,0,.12));
+  border-radius:999px;
+  background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(0,0,0,.12));
+  border:1px solid var(--panel-edge);
+  font-size:.8rem;
 }
 
 /* ===== Grid ===== */
 .grid{
   display:grid;
   grid-template-columns:repeat(7,1fr);
-  gap:10px;
+  gap:12px;
 }
 
 .band{
-  grid-column:1 / -1;
-  margin:14px 0 6px;
-  font-weight:700;
-  letter-spacing:.08em;
+  grid-column:1/-1;
+  font-size:.7rem;
+  letter-spacing:.25em;
   color:var(--muted);
+  opacity:.75;
+  margin:14px 0 4px;
 }
 
-.cell{
-  position:relative;
+.day{
   aspect-ratio:1/1;
-  border-radius:14px;
-  border:1px solid var(--edge);
-  background:rgba(255,255,255,.04);
+  border-radius:12px;
+  border:1px solid var(--panel-edge);
+  background:var(--panel);
+  position:relative;
+  overflow:hidden;
   display:flex;
   align-items:flex-end;
   padding:8px;
-  font-weight:700;
-  cursor:pointer;
-  overflow:hidden;
+  font-size:.75rem;
+  font-weight:500;
 }
 
-.cell span{
-  position:relative;
-  z-index:2;
+.day .illum{
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at center,rgba(255,255,255,.85),transparent 70%);
+  pointer-events:none;
 }
 
-.cell.today{
+.day.today{
   outline:2px solid var(--accent);
   outline-offset:2px;
 }
 
-.cell.future{
-  cursor:default;
+.day.future{
+  backdrop-filter:blur(8px);
+  background:rgba(255,255,255,.06);
+  color:rgba(229,231,235,.7);
+  pointer-events:none;
 }
 
-.cell.future::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  backdrop-filter:blur(6px);
-  background:rgba(255,255,255,.06);
-  z-index:1;
-}
+.day span{position:relative;z-index:2}
 
 /* ===== Footer ===== */
 footer{
-  border-top:1px solid var(--edge);
+  border-top:1px solid var(--panel-edge);
   padding:18px 16px;
-  color:var(--muted);
   text-align:center;
-}
-footer a{
+  font-size:.8rem;
   color:var(--muted);
-  text-decoration:none;
-  margin:0 6px;
+}
+footer a{color:var(--muted);text-decoration:none;margin:0 6px}
+
+/* ===== Responsive ===== */
+@media(max-width:768px){
+  .grid{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:480px){
+  .grid{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
 
 <body>
 
-<nav>
-  <a href="https://earth.plnt.earth">Earth</a>
-  <a href="https://map.plnt.earth">Map</a>
-  <a href="https://time.plnt.earth">Time</a>
-  <a href="https://jar.plnt.earth" class="active">Jar</a>
-  <a href="https://honey.plnt.earth">Honey</a>
-  <a href="https://bejeweled.plnt.earth">Bejeweled</a>
-  <a href="https://mirrorhoney.plnt.earth">Mirror Honey</a>
-</nav>
-
-<div class="wrap">
-
 <header>
-  <h1>Jar · Illumina Journal</h1>
-  <div class="sub">Illumina 1 · 42-day cycle anchored to the Nov 5, 2025 full moon</div>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="plnt">PLNT</div>
+      <div class="earth">EARTH</div>
+    </div>
+
+    <div class="moon-wrap">
+      <div class="moon">
+        <div id="moonShadow" class="moon-shadow"></div>
+      </div>
+      <div class="moon-meta">
+        <div id="todayDate"></div>
+        <div id="moonPhase"></div>
+        <b id="moonPct"></b>
+      </div>
+    </div>
+  </div>
+
+  <nav>
+    <a href="https://earth.plnt.earth">Earth</a>
+    <a href="https://map.plnt.earth">Map</a>
+    <a href="https://time.plnt.earth">Time</a>
+    <a href="https://jar.plnt.earth" class="active">Jar</a>
+    <a href="https://honey.plnt.earth">Honey</a>
+    <a href="https://bejeweled.plnt.earth">Bejeweled</a>
+    <a href="https://mirrorhoney.plnt.earth">Mirror Honey</a>
+  </nav>
 </header>
 
-<div class="state" id="state"></div>
+<main class="wrap">
+  <h1>Jar · Illumina Journal</h1>
+  <div class="sub">Illumina 1 · 42-day cycle anchored to the Nov 5, 2025 full moon</div>
 
-<div class="grid" id="grid"></div>
+  <div class="state" id="state"></div>
 
-</div>
+  <div class="grid" id="grid"></div>
+</main>
 
 <footer>
   PLNT Earth · Illumina is a 42-day cycle of preparation and execution ·
@@ -181,52 +254,65 @@ footer a{
 </footer>
 
 <script>
-(function(){
+(() => {
   const FULL_MOON = new Date("2025-11-05T08:19:00-05:00");
   const LUNAR = 29.530588;
-  const TOTAL_DAYS = 42;
+  const TOTAL = 42;
+  const MS_DAY = 86400000;
 
-  const today = new Date();
-  const msPerDay = 86400000;
+  const now = new Date();
+  document.getElementById("todayDate").textContent =
+    now.toLocaleDateString("en-US",{weekday:"long",month:"short",day:"numeric",year:"numeric"});
 
-  function illumination(days){
-    const phase = ((days / LUNAR) % 1 + 1) % 1;
-    return 0.5 * (1 + Math.cos(2 * Math.PI * phase));
+  function illum(days){
+    const p = ((days/LUNAR)%1+1)%1;
+    return 0.5*(1+Math.cos(2*Math.PI*p));
   }
 
-  const grid = document.getElementById("grid");
-  const state = document.getElementById("state");
+  const daysSince = Math.floor((now - FULL_MOON)/MS_DAY);
+  const idx = Math.min(Math.max(daysSince,0),TOTAL-1);
 
-  const daysSince = Math.floor((today - FULL_MOON) / msPerDay);
-  const currentIndex = Math.min(Math.max(daysSince,0), TOTAL_DAYS-1);
-
-  state.innerHTML = `
+  document.getElementById("state").innerHTML = `
     <div class="badge">Illumina 1</div>
-    <div class="badge">Day ${Math.floor(currentIndex/7)+1}:${currentIndex%7+1}</div>
-    <div class="badge">${today.toDateString()}</div>
+    <div class="badge">${Math.floor(idx/7)+1}:${idx%7+1}</div>
+    <div class="badge">${now.toDateString()}</div>
   `;
 
-  for(let i=0;i<TOTAL_DAYS;i++){
+  // Moon header (illumination)
+  const illumNow = illum(daysSince);
+  document.getElementById("moonPct").textContent =
+    Math.round(illumNow*100)+"% illuminated";
+  document.getElementById("moonPhase").textContent =
+    illumNow>0.5?"Waxing":"Waning";
+
+  const shadow = document.getElementById("moonShadow");
+  shadow.style.width = (40*(1-illumNow))+"px";
+  shadow.style.transform = illumNow>0.5
+    ? `translateX(${40*(illumNow)}px)`
+    : `translateX(0)`;
+
+  const grid = document.getElementById("grid");
+
+  for(let i=0;i<TOTAL;i++){
     if(i===0) grid.insertAdjacentHTML("beforeend",`<div class="band">PREPARE · Days 1–14</div>`);
     if(i===14) grid.insertAdjacentHTML("beforeend",`<div class="band">BUILD · Days 15–28</div>`);
     if(i===28) grid.insertAdjacentHTML("beforeend",`<div class="band">COMPLETE · Days 29–42</div>`);
 
-    const dayDate = new Date(FULL_MOON.getTime() + i*msPerDay);
-    const illum = illumination(i);
-    const bg = `rgba(255,255,255,${0.08 + illum*0.25})`;
+    const d = document.createElement("div");
+    d.className = "day";
+    const il = illum(i);
+    d.innerHTML = `
+      <div class="illum" style="opacity:${il*0.4}"></div>
+      <span>Illumina 1 · ${Math.floor(i/7)+1}:${i%7+1}</span>
+    `;
 
-    const cell = document.createElement("div");
-    cell.className = "cell";
-    cell.style.background = bg;
-    cell.innerHTML = `<span>Illumina 1 · ${Math.floor(i/7)+1}:${i%7+1}</span>`;
-
-    if(i === currentIndex) cell.classList.add("today");
-    if(i > currentIndex) cell.classList.add("future");
-    if(i <= currentIndex){
-      cell.addEventListener("click",()=>location.href=`/day/${Math.floor(i/7)+1}-${i%7+1}.html`);
+    if(i===idx) d.classList.add("today");
+    if(i>idx) d.classList.add("future");
+    if(i<=idx){
+      d.addEventListener("click",()=>location.href=`/day/${Math.floor(i/7)+1}-${i%7+1}.html`);
     }
 
-    grid.appendChild(cell);
+    grid.appendChild(d);
   }
 })();
 </script>
